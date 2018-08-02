@@ -1,0 +1,163 @@
+.linkbread,
+.linkbread:visited,
+.linkbread:active,
+.linkbread:focus
+{
+	text-decoration: none;
+	color: #333 !important;
+}
+
+.linkbread:hover
+{
+	color: #333;
+	opacity: 0.85;
+}
+
+p.bloco-imovel-cad
+{
+	text-align: center;
+}
+
+.bloco-imovel-cad i
+{
+	font-size: 4.8em;
+	color: #C2C2C2;
+
+	display: inline-block;
+  	border-radius: 80px;
+  	box-shadow: 0px 0px 2px #888;
+  	padding: 0.40em 0.34em;
+
+  	margin-top: 12px;
+  	margin-bottom: 4px;
+}
+
+.bloco-imovel-cad i.agr
+{
+  	padding: 0.4em 0.50em;
+}
+
+
+
+.bloco-agrupamento-vis i:not(.ext)
+{
+	font-size: 4.8em;
+	color: #C2C2C2;
+
+	display: inline-block;
+  	border-radius: 80px;
+  	box-shadow: 0px 0px 2px #888;
+  	padding: 0.40em 0.50em;
+
+  	margin-top: 12px;
+  	margin-bottom: 4px;
+
+  	display: inline-block;
+}
+
+.bloco-agrupamento-vis i.uni
+{
+	padding: 0.38em 0.44em;	
+}
+
+.bloco-imovel-info
+{
+	text-align: left;
+	padding: 0 2.0em 2.0em 2.0em;
+}
+
+.bloco-imovel-info p:not(.titulo)
+{
+	margin: 0;
+	padding-left: 1.1em;
+}
+
+.bloco-imovel-info p.titulo
+{
+	margin-top: 0.8em;
+	margin-bottom: 0;
+}
+
+.main-header .logo .logo-lg,
+.login-logo a
+{
+	font-family: 'Gugi', cursive;
+}
+
+.bloco-agrupamento-vis
+{
+	display: inline-block;
+}
+
+.agrupamento,
+.unidade
+{
+	text-align: center;
+}
+
+.agrupamento a,
+.agrupamento a:visited,
+.unidade a,
+.unidade a:visited
+{
+	text-decoration: none;
+	color: #333;
+}
+
+.agrupamento a:hover,
+.agrupamento a:active,
+.unidade a:hover,
+.unidade a:active
+{
+	color: #333;
+	opacity: 0.8;
+}
+
+.imolista
+{
+	margin-bottom: 1.2em;
+}
+
+.imolista .imo
+{
+	margin-bottom: 0;
+}
+
+.imobairro
+{
+	color: #9b9b9b;
+}
+
+.pru-box .info-box-icon i.fa
+{
+	line-height: 90px !important;
+}
+
+
+.bloco-imovel-cad i.uni
+{
+	padding: 0.40em 0.54em;
+}
+
+.registronum
+{
+	font-family: 'Orbitron', sans-serif;
+	font-size: 2.8em;
+	color: #f39c12;
+
+	font-weight: bold;
+}
+
+.registronum .unidade
+{
+	font-family: 'Source Sans Pro',sans-serif;
+	font-size: 0.54em;
+	font-weight: 300;
+	color: #333;
+}
+
+.bloco-medicao
+{
+	text-align: center;
+    padding: 0 2.0em 0 2.0em;
+}
