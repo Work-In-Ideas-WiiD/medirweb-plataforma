@@ -83,7 +83,7 @@
 							<div class="row">
 								@if(count($prumadas) > 0)
 									@foreach ($prumadas as $pru)
-										<div class="col-md-12 col-sm-6 col-xs-12">
+										<div class="col-md-4 col-sm-6 col-xs-12">
           									<div class="info-box bg-aqua pru-box">
 	            								<span class="info-box-icon"><i class="fa fa-tachometer"></i></span>
             									<div class="info-box-content">
