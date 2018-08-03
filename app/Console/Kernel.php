@@ -80,7 +80,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
 
-            $unidade = Unidade::find(1);
+            $unidade = Unidade::find(3);
 
             //var_dump($unidade->getPrumadas); die();
             foreach ($unidade->getPrumadas as $prumada)
