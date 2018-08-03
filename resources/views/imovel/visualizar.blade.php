@@ -24,7 +24,7 @@
 				<p>{!! $imovel->IMO_RESPONSAVEIS !!}</p>
 				<p class="titulo"><b><i class="fa fa-phone"></i> Contato</b></p>
 				<p>{!! $imovel->IMO_TELEFONES !!}</p>
-				<p style="margin-top: 0.8em;"><a class="btn btn-flat btn-default" href="" alt="Adicionar Agrupamento" style="width: 100%;" ><i class="fa fa-edit"></i> Editar informações</a></p>
+				<p style="margin-top: 0.8em;"><a class="btn btn-flat btn-default" href="{{ route('imovel.edit', ['user' => $imovel->IMO_ID]) }}" alt="Adicionar Agrupamento" style="width: 100%;" ><i class="fa fa-edit"></i> Editar informações</a></p>
 			</div>
 		</div>
 	</div>

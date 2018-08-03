@@ -91,7 +91,13 @@ class ImovelController extends Controller
      */
     public function edit($id)
     {
-        //
+        $imovel = Imovel::findOrFail($id);
+
+        if(is_null($imovel)){
+            return redirect( URL::previous() );
+        }
+
+        return view('imovel.editar', compact('imovel'));
     }
 
     /**
@@ -103,7 +109,17 @@ class ImovelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $imovel = Imovel::findOrFail($id);
+
+        if(is_null($imovel)){
+            return redirect( URL::previous() );
+        }
+
+        $dataForm = $request->all();
+
+        $imovel->update($dataForm);
+
+        return redirect('imovel/ver/'. $imovel->IMO_ID);
     }
 
     /**
