@@ -33,7 +33,7 @@ class PrumadaController extends Controller
      */
     public function create()
     {
-        return view('Prumada.cadastrar');
+        return view('prumada.cadastrar');
     }
 
     /**
@@ -61,7 +61,7 @@ class PrumadaController extends Controller
      */
     public function show($id)
     {
-        
+
 
     }
 

@@ -11,11 +11,15 @@ class Leitura extends Model
 
     protected $primaryKey = 'LEI_ID';
 
+    protected $fillable = [
+        'LEI_IDPRUMADA', 'LEI_VALOR'
+        ];
+
     protected  $dates = [
         'created_at', 'updated_at'
     ];
 
-    protected $dateFormat = 'Y-m-d H:i:s+';
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     public function prumada()
     {

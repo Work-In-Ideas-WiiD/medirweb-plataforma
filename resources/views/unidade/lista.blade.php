@@ -17,11 +17,20 @@
 				<h3 class="box-title"><i class="fa fa-tachometer"></i> Indicador atual <i class="fa fa-circle" style="color: #009900;"></i></h3>
 			</div>
 			<div class="bloco-medicao">
-				<p class="registronum" >{{ sprintf("%06d", $ultimaleitura->LEI_VALOR) }} <span class="unidade" >m³</span></p>
+				@if(isset($ultimaleitura->LEI_VALOR))
+					<p class="registronum" >{{ sprintf("%06d", $ultimaleitura->LEI_VALOR) }} <span class="unidade" >m³</span></p>
+				@else
+					<p class="registronum" >0000 <span class="unidade" >m³</span></p>
+				@endif
 				<!--<p style="margin-top: 0.8em;"><a class="btn btn-flat btn-default" href="" alt="Adicionar Agrupamento" style="width: 100%;" ><i class="fa fa-edit"></i> Editar informações</a></p>-->
 			</div>
 			<div class="box-footer">
-				<p class="pull-right" style="margin-bottom: 0;" >Consumo do mês corrente: <b>{{ $ultimaleitura->LEI_VALOR }}</b>m³</p>
+				@if(isset($ultimaleitura->LEI_VALOR))
+					<p class="pull-right" style="margin-bottom: 0;" >Consumo do mês corrente: <b>{{ $ultimaleitura->LEI_VALOR }}</b>m³</p>
+				@else
+					<p class="pull-right" style="margin-bottom: 0;" >Consumo do mês corrente: <b>0000</b>m³</p>
+				@endif
+
 			</div>
 		</div>
 		</div>
@@ -74,17 +83,26 @@
 							<div class="row">
 								@if(count($prumadas) > 0)
 									@foreach ($prumadas as $pru)
-										<div class="col-md-3 col-sm-6 col-xs-12">
+										<div class="col-md-12 col-sm-6 col-xs-12">
           									<div class="info-box bg-aqua pru-box">
 	            								<span class="info-box-icon"><i class="fa fa-tachometer"></i></span>
             									<div class="info-box-content">
 	              									<span class="info-box-text">Medidor #1</span>
-              										<span class="info-box-number">{{ sprintf("%06d", $ultimaleitura->LEI_VALOR) }}</span>
+													@if(isset($ultimaleitura->LEI_VALOR))
+														<span class="info-box-number">{{ sprintf("%06d", $ultimaleitura->LEI_VALOR) }}</span>
+													@else
+														<span class="info-box-number">00000000</span>
+													@endif
               										<div class="progress">
 	                									<div class="progress-bar" style="width: 70%"></div>
               										</div>
                   									<span class="progress-description">
-                    										{{ $ultimaleitura->created_at->format('d/m/Y H:i') }}
+														@if(isset($ultimaleitura->created_at))
+															{{ $ultimaleitura->created_at->format('d/m/Y H:i') }}
+														@else
+															00/00/00 - 00:00
+														@endif
+
                   									</span>
             									</div>
             								<!-- /.info-box-content -->

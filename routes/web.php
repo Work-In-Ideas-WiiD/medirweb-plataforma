@@ -49,3 +49,5 @@ Route::post('nova-unidade', array('uses' => 'UnidadeController@store'));
 
 Route::get('/prumada/adicionar', 'PrumadaController@create')->name('Adicionar Prumada');
 Route::post('nova-prumada', array('uses' => 'PrumadaController@store'));
+
+Route::get('/teste/leitura', 'Hello@testeLeitura');
