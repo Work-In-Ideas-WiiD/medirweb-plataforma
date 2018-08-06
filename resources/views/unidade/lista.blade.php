@@ -18,7 +18,7 @@
 			</div>
 			<div class="bloco-medicao">
 				@if(isset($ultimaleitura->LEI_METRO))
-					<p class="registronum" >{{ sprintf("%06d", $ultimaleitura->LEI_METRO) }} <span class="unidade" >m³</span></p>
+					<p class="registronum" >{{ sprintf("%04d", $ultimaleitura->LEI_METRO) }} <span class="unidade" >m³</span></p>
 				@else
 					<p class="registronum" >0000 <span class="unidade" >m³</span></p>
 				@endif
@@ -89,7 +89,7 @@
             									<div class="info-box-content">
 	              									<span class="info-box-text">Medidor #1</span>
 													@if(isset($ultimaleitura->LEI_VALOR))
-														<span class="info-box-number">{{ sprintf("%06d", $ultimaleitura->LEI_VALOR) }}</span>
+														<span class="info-box-number">{{ sprintf("%04d", $ultimaleitura->LEI_VALOR) }}</span>
 													@else
 														<span class="info-box-number">00000000</span>
 													@endif
