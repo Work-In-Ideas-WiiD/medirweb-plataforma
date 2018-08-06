@@ -68,8 +68,13 @@ class Hello extends Controller
             $total = $subtotal.'.'.$mililitro.'';
 
 
+            //var_dump($total); die();
+
             $leitura = [
                 'LEI_IDPRUMADA' => $prumada->PRU_ID,
+                'LEI_METRO' => $metro_cubico,
+                'LEI_LITRO' => $litros,
+                'LEI_MILILITRO' => $mililitro,
                 'LEI_VALOR' => $total,
             ];
 

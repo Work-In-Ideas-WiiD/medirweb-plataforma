@@ -19,6 +19,11 @@ class CreateLeiturasTable extends Migration
             $table->integer('LEI_IDPRUMADA')->unsigned();
             $table->foreign('LEI_IDPRUMADA')->references('PRU_ID')->on('prumadas');
 
+            $table->string('LEI_METRO');
+            $table->string('LEI_LITRO');
+            $table->string('LEI_MILILITRO');
+            $table->string('LEI_DIFERENCA');
+
             $table->integer('LEI_VALOR');
 
             $table->timestamps();

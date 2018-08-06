@@ -12,7 +12,7 @@ class Leitura extends Model
     protected $primaryKey = 'LEI_ID';
 
     protected $fillable = [
-        'LEI_IDPRUMADA', 'LEI_VALOR'
+        'LEI_IDPRUMADA', 'LEI_VALOR', 'LEI_METRO', 'LEI_LITRO', 'LEI_MILILITRO',
         ];
 
     protected  $dates = [

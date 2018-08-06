@@ -17,16 +17,16 @@
 				<h3 class="box-title"><i class="fa fa-tachometer"></i> Indicador atual <i class="fa fa-circle" style="color: #009900;"></i></h3>
 			</div>
 			<div class="bloco-medicao">
-				@if(isset($ultimaleitura->LEI_VALOR))
-					<p class="registronum" >{{ sprintf("%06d", $ultimaleitura->LEI_VALOR) }} <span class="unidade" >m³</span></p>
+				@if(isset($ultimaleitura->LEI_METRO))
+					<p class="registronum" >{{ sprintf("%06d", $ultimaleitura->LEI_METRO) }} <span class="unidade" >m³</span></p>
 				@else
 					<p class="registronum" >0000 <span class="unidade" >m³</span></p>
 				@endif
 				<!--<p style="margin-top: 0.8em;"><a class="btn btn-flat btn-default" href="" alt="Adicionar Agrupamento" style="width: 100%;" ><i class="fa fa-edit"></i> Editar informações</a></p>-->
 			</div>
 			<div class="box-footer">
-				@if(isset($ultimaleitura->LEI_VALOR))
-					<p class="pull-right" style="margin-bottom: 0;" >Consumo do mês corrente: <b>{{ $ultimaleitura->LEI_VALOR }}</b>m³</p>
+				@if(isset($ultimaleitura->LEI_METRO))
+					<p class="pull-right" style="margin-bottom: 0;" >Consumo do mês corrente: <b>{{ $ultimaleitura->LEI_METRO }}</b>m³</p>
 				@else
 					<p class="pull-right" style="margin-bottom: 0;" >Consumo do mês corrente: <b>0000</b>m³</p>
 				@endif
@@ -130,6 +130,9 @@
 						<thead>
 							<th>#</th>
 							<th>ID Funcional</th>
+							<th>m³</th>
+							<th>lt</th>
+							<th>ml</th>
 							<th>Leitura</th>
 							<th>Data da Leitura</th>
 						</thead>
@@ -139,7 +142,10 @@
 							<tr>
 								<td>{{ $lei->LEI_ID }}</td>
 								<td>{{ $lei->LEI_IDPRUMADA }}</td>
-								<td>{{ sprintf("%06d", $lei->LEI_VALOR) }}</td>
+								<td>{{ $lei->LEI_METRO }}</td>
+								<td>{{ $lei->LEI_LITRO }}</td>
+								<td>{{ $lei->LEI_MILILITRO }}</td>
+								<td>{{ $lei->LEI_VALOR }}</td>
 								<td>{{ $lei->created_at->format('d/m/Y H:i') }}</td>
 							</tr>
 							@endforeach
