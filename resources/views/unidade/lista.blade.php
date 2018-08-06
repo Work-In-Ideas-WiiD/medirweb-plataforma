@@ -132,8 +132,8 @@
 							<th>ID Funcional</th>
 							<th>m³</th>
 							<th>lt</th>
-							<th>ml</th>
-							<th>Leitura</th>
+							<th>dl</th>
+							{{--<th>Leitura</th>--}}
 							<th>Data da Leitura</th>
 						</thead>
 						<tbody>
@@ -145,7 +145,7 @@
 								<td>{{ $lei->LEI_METRO }}</td>
 								<td>{{ $lei->LEI_LITRO }}</td>
 								<td>{{ $lei->LEI_MILILITRO }}</td>
-								<td>{{ $lei->LEI_VALOR }}</td>
+								{{--<td>{{ $lei->LEI_VALOR }}</td>--}}
 								<td>{{ $lei->created_at->format('d/m/Y H:i') }}</td>
 							</tr>
 							@endforeach
