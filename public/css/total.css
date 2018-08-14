@@ -1,6 +1,6 @@
-.wrapper .content-wrapper
+.content
 {
-	/*display: inline-block;*/
+     display: flex;
 }
 
 .linkbread,
@@ -162,10 +162,10 @@ p.bloco-imovel-cad
 .registronum
 {
 	font-family: 'Orbitron', sans-serif;
-	font-size: 2.3em;
+	font-size: 3.0em;
 	color: #f39c12;
-
 	font-weight: bold;
+	padding: 0.45em 0;
 }
 
 .registronum .unidade
@@ -232,4 +232,39 @@ p.bloco-imovel-cad
 {
 	margin: 0;
 	padding: 0 0.3em;
+}
+
+.leitura_unidade dd.infoprop:nth-child(2)
+{
+	margin-bottom: 0.4em;
+}
+
+.leitura_unidade dd.infoprop
+{
+	font-size: 1.6em;
+	font-weight: 300;
+}
+
+/* */
+
+.medicao-num
+{
+	background: #F2F2F2;
+	border-radius: 8px;
+	display: block;
+}
+
+.medicao-num h4
+{
+	line-height: 1.8em;
+}
+
+.medicao-num table th
+{
+	font-weight: 400;
+}
+
+#boxdeacoes .btn
+{
+	width: 100%;
 }

@@ -120,11 +120,6 @@ return [
             'icon'    => 'institution',
             'submenu' => [
                 [
-                    'text' => 'Adicionar',
-                    'icon' => 'plus',
-                    'url'  => 'imovel/adicionar',
-                ],
-                [
                     'text' => 'Ver todos',
                     'icon' => 'list',
                     'url'  => 'imovel',
@@ -135,33 +130,18 @@ return [
             'text'    => 'Agrupamentos',
             'icon'    => 'building',
             'submenu' => [
-                [
-                    'text' => 'Adicionar',
-                    'icon' => 'plus',
-                    'url'  => '/agrupamento/adicionar',
-                ]
             ],
         ],
         [
             'text'    => 'Unidades',
             'icon'    => 'th-large',
             'submenu' => [
-                [
-                    'text' => 'Adicionar',
-                    'icon' => 'plus',
-                    'url'  => '/unidade/adicionar',
-                ]
             ],
         ],
         [
             'text'    => 'Prumadas',
             'icon'    => 'tachometer ',
             'submenu' => [
-                [
-                    'text' => 'Adicionar',
-                    'icon' => 'plus',
-                    'url'  => 'prumada/adicionar',
-                ],
             ],
         ],
     ],
