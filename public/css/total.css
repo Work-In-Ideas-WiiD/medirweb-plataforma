@@ -1,3 +1,8 @@
+.wrapper .content-wrapper
+{
+	display: inline-block;
+}
+
 .linkbread,
 .linkbread:visited,
 .linkbread:active,
@@ -11,6 +16,21 @@
 {
 	color: #333;
 	opacity: 0.85;
+}
+
+.collaptitlr a,
+.collaptitlr a:visited,
+.collaptitlr a:active,
+.collaptitlr a:focus
+{
+	text-decoration: none;
+	color: #333 !important;
+}
+
+.collaptitlr a:hover
+{
+	color: #333;
+	opacity: 0.85;	
 }
 
 p.bloco-imovel-cad
@@ -160,4 +180,56 @@ p.bloco-imovel-cad
 {
 	text-align: center;
     padding: 0 2.0em 0 2.0em;
+}
+
+.leituracontainer
+{
+	background: #76afd0;
+	display: flex;
+	border-radius: 4px;
+	padding: 0.2em 0;
+
+	border: 2px solid #3c8dbc;
+	margin-bottom: 0.8em;
+}
+
+.leituracontainer .marcacao,
+.leituracontainer .leitura
+{
+	text-align: center;
+	color: #fff;
+}
+
+.leituracontainer .marcacao p
+{
+	font-size: 1.1em;
+	margin-bottom: 0.4em;
+	font-weight: 600;
+}
+
+.leituracontainer .leitura .small
+{
+	line-height: 1.70em;
+	border-bottom: 1px solid #fff;
+	margin-bottom: 9px;
+}
+
+.leituracontainer .leitura .big
+{
+	background: #fff;
+	display: block;
+	text-align: center;
+}
+
+.leituracontainer .leitura .valor
+{
+	color: #ff6600;
+	font-family: 'Orbitron', sans-serif;
+	font-size: 1.1em;
+}
+
+.leituracontainer .col
+{
+	margin: 0;
+	padding: 0 0.3em;
 }

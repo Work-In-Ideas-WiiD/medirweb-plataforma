@@ -83,6 +83,18 @@ class ImovelController extends Controller
         return view('imovel.visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos]);
     }
 
+    public function show2($id)
+    {
+        $imovel =  Imovel::findorFail($id);
+
+        $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
+        $imovel['IMO_IDESTADO'] = Imovel::find($id)->estado->EST_ABREVIACAO;
+
+        $agrupamentos = Imovel::find($id)->getAgrupamentos;
+
+        return view('imovel.macrovisualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

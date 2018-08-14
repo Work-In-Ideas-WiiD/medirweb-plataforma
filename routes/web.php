@@ -34,6 +34,7 @@ Route::get('/imovel/ver/{id}', array('uses' => 'ImovelController@show'));
 Route::post('/imovel/getImoveisLista', array('uses' => 'ImovelController@getImoveisLista'));
 Route::get('/imovel/editar/{id}', array('as'=>'imovel.edit', 'uses' => 'ImovelController@edit'));
 Route::put('imovel/update/{imovel}', array('as'=>'imovel.update', 'uses'=>'ImovelController@update'));
+Route::get('/imovel/vemver/{id}', array('uses' => 'ImovelController@show2'));
 
 
 
