@@ -80,20 +80,14 @@ class ImovelController extends Controller
 
         $agrupamentos = Imovel::find($id)->getAgrupamentos;
 
+        /* -------------------------------------------------------------------------------- */
+        /* Adicionar UNIDADES de cada um dos agrupamentos e chamar a variavel de $unidades  */
+        /* Adicionar  de cada uma das unidades, a variável $unidade->ULT_LEITURA com        */
+        /* o último valor de leitura daquela unidade.                                       */
+        /* -------------------------------------------------------------------------------- */
+
         return view('imovel.visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos]);
-    }
-
-    public function show2($id)
-    {
-        $imovel =  Imovel::findorFail($id);
-
-        $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
-        $imovel['IMO_IDESTADO'] = Imovel::find($id)->estado->EST_ABREVIACAO;
-
-        $agrupamentos = Imovel::find($id)->getAgrupamentos;
-
-        return view('imovel.macrovisualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos]);
-    }
+    }    
 
     /**
      * Show the form for editing the specified resource.
