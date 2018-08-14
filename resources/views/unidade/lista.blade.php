@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'AdminLTE')
+@section('title', 'MedirWeb')
 
 {!! Html::style( asset('css/total.css')) !!}
 
