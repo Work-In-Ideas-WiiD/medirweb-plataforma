@@ -81,6 +81,30 @@ class ImovelController extends Controller
         $agrupamentos = Imovel::find($id)->getAgrupamentos;
         $unidades = Imovel::findorFail($id)->getUnidades;
 
+        // Ajuste para a criação de abas na view de forma correta
+        $agrupamentos = $agrupamentos->reverse();
+
+        $unid = array();
+
+        foreach ($agrupamentos as $key => $agrup) {
+            foreach($unidades as $uni)
+            {
+                if($uni->UNI_IDAGRUPAMENTO == $agrup->AGR_ID)
+                {
+                    array_push($unid, $uni);
+                }
+            }
+            if(count($unid) > 0)
+            {
+                $agrup->UNIDADES = $unid;
+                $unid = [];
+            }
+            else
+            {
+                $agrup->UNIDADES = null;
+            }
+        }
+
         /* -------------------------------------------------------------------------------- */
         /* Adicionar UNIDADES de cada um dos agrupamentos e chamar a variavel de $unidades  */
         /* Adicionar  de cada uma das unidades, a variável $unidade->ULT_LEITURA com        */

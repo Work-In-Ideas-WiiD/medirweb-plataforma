@@ -3,6 +3,7 @@
 @section('title', 'MedirWeb')
 
 {!! Html::style( asset('css/total.css')) !!}
+{!! Html::style( asset('css/correct_content.css')) !!}
 
 @section('content')
     <div class="col-md-8 row leitura_unidade">
