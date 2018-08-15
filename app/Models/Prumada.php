@@ -20,7 +20,7 @@ class Prumada extends Model
 
     public function getLeituras()
     {
-    	return $this->hasMany('App\Models\Prumada','LEI_IDPRUMADA', 'PRU_ID');
+    	return $this->hasMany('App\Models\Leitura','LEI_IDPRUMADA', 'PRU_ID');
     }
     
 }

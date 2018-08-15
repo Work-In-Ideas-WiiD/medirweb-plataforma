@@ -79,6 +79,7 @@ class ImovelController extends Controller
         $imovel['IMO_IDESTADO'] = Imovel::find($id)->estado->EST_ABREVIACAO;
 
         $agrupamentos = Imovel::find($id)->getAgrupamentos;
+        $unidades = Imovel::findorFail($id)->getUnidades;
 
         /* -------------------------------------------------------------------------------- */
         /* Adicionar UNIDADES de cada um dos agrupamentos e chamar a variavel de $unidades  */
@@ -86,7 +87,7 @@ class ImovelController extends Controller
         /* o último valor de leitura daquela unidade.                                       */
         /* -------------------------------------------------------------------------------- */
 
-        return view('imovel.visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos]);
+        return view('imovel.visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades]);
     }    
 
     /**

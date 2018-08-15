@@ -61,25 +61,26 @@
     	<div class="nav-tabs-custom">
             
             <ul class="nav nav-tabs pull-right">
-            	{{ @foreach ($agrupamentos as $key=>$agrupamento) }}
+            	@foreach ($agrupamentos as $key=>$agrupamento)
               		<li class="{{ $loop->first ? 'active' : '' }}"><a href="#tab_{{ $key }}-{{ $key }}" data-toggle="tab" aria-expanded="false">{{ $agrupamento->AGR_NOME }}</a></li>
-            	{{ @endforeach }}
+            	 @endforeach
 
               	<li class="pull-left header"><h4><i class="fa fa-th-large"></i> Unidades<h4></li>
             </ul>
 
             <div class="tab-content">
 
-              {{ @for ($i = 0; $i < count($agrupamentos); $i++) }}
+              @for ($i = 0; $i < count($agrupamentos); $i++)
               <div class="tab-pane active" id="tab_{{ $i }}-{{ $i }}">
                 <div class="row">
 
                 	<!-- Unidade -->
-                	{{ @foreach($unidades as $key2=>$unidade) }}
+                	 @foreach($unidades as $unidade)
+						 <?php var_dump($unidade->getPrumadas()->count());	 ?>
                 	<div class="col-md-3">
                 		<div class="leituracontainer">
                 			<div class="col col-md-6 marcacao" >
-            					<p>{{ $unidade=>UNI_NOME }}</p>
+            					<p>{{ $unidade->UNI_NOME }}</p>
             					<button type="button" class="btn btn-default">
             						<i class="fa fa-download"></i>
             					</button>
@@ -91,17 +92,17 @@
             				<div class="col col-md-6 leitura">
                 				<p class="small">Consumo</p>
                 				<div class="big">
-                					<a href="{{ url('/unidade/ver/' . $unidade->UNI_ID }}"><p class="valor">{{ $unidade->ULT_LEITURA }}</p></a>
+                					<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}"><p class="valor">@if($unidade->getPrumadas()->count() > 0 ){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 100 @endif</p></a>
                 				</div>
             				</div>
                 		</div> <!-- FIM .leituracontainer -->
                 	</div><!-- FIM .col-md-3 -->
-                	{{ @endforeach }}
+                	 @endforeach
                 	<!-- FIM Unidade -->
 
                 </div> <!-- FIM .row -->
               </div> <!-- FIM .tab-pane -->
-              {{ @endfor }}
+              @endfor
 
             </div> <!-- FIM .tab-content -->
 
