@@ -92,7 +92,7 @@
 	            				<div class="col col-md-6 leitura">
 	                				<p class="small">Consumo</p>
 	                				<div class="big">
-	                					<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}"><p class="valor">@if($unidade->getPrumadas()->count() > 0 ){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 100 @endif</p></a>
+	                					<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}"><p class="valor">@if($unidade->getPrumadas()->count() > 0 ){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 0 @endif</p></a>
 	                				</div>
 	            				</div>
 	                		</div> <!-- FIM .leituracontainer -->
