@@ -81,13 +81,25 @@
 	                		<div class="leituracontainer">
 	                			<div class="col col-md-6 marcacao" >
 	            					<p>{{ $unidade->UNI_NOME }}</p>
-	            					<button type="button" class="btn btn-default">
+	            					<a  href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-default">
 	            						<i class="fa fa-download"></i>
-	            					</button>
+	            					</a>
+									@if($unidade->getPrumadas()->count() > 0 )
 
-									<button type="button" class="btn btn-danger">
-	            						<i class="fa fa-close"></i>
-	            					</button>
+										@if($unidade->getPrumadas()->first()->PRU_STATUS == 1)
+											<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-danger">
+												<i class="fa fa-close"></i>
+											</a>
+										@else
+											<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-success">
+												<i class="fa fa-plus"></i>
+											</a>
+										@endif
+									@else
+										<a type="button" class="btn btn-danger">
+											<i class="fa fa-close"></i>
+										</a>
+									@endif
 	            				</div>
 	            				<div class="col col-md-6 leitura">
 	                				<p class="small">Consumo</p>

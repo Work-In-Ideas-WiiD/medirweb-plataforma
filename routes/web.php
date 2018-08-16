@@ -35,6 +35,12 @@ Route::post('/imovel/getImoveisLista', array('uses' => 'ImovelController@getImov
 Route::get('/imovel/editar/{id}', array('as'=>'imovel.edit', 'uses' => 'ImovelController@edit'));
 Route::put('imovel/update/{imovel}', array('as'=>'imovel.update', 'uses'=>'ImovelController@update'));
 
+/* imóveis */
+Route::get('/imovel/{imovel}/leitura/{unidade}', array('uses' => 'ImovelController@leituraUnidade'));
+
+Route::get('/imovel/{imovel}/ligar/{unidade}', array('uses' => 'ImovelController@ligarUnidade'));
+Route::get('/imovel/{imovel}/desligar/{unidade}', array('uses' => 'ImovelController@desligarUnidade'));
+
 
 
 /* Agrupamentos */
@@ -53,5 +59,11 @@ Route::post('nova-unidade', array('uses' => 'UnidadeController@store'));
 
 Route::get('/prumada/adicionar', 'PrumadaController@create')->name('Adicionar Prumada');
 Route::post('nova-prumada', array('uses' => 'PrumadaController@store'));
+
+Route::get('/unidade/leitura/{unidade}', array('uses' => 'UnidadeController@leituraUnidade'));
+
+Route::get('/unidade/ligar/{unidade}', array('uses' => 'UnidadeController@ligarUnidade'));
+Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
+
 
 Route::get('/teste/leitura', 'Hello@testeLeitura');

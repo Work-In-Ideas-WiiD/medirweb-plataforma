@@ -52,11 +52,23 @@
                 		</div>
               		</div>
               		<div class="col-md-3 text-center">
-              			<a href="#" class="btn btn-success"><i class="fa fa-file-o"></i> Leitura</a>
+              			<a href="{{ url('/unidade/leitura/'.$unidade->UNI_ID) }}" class="btn btn-success"><i class="fa fa-file-o"></i> Leitura</a>
               		</div>
-              		<div class="col-md-3 text-center">
-              			<a href="#" class="btn btn-danger"><i class="fa fa-close"></i> Efetuar corte</a>
-              		</div>
+					@if($unidade->getPrumadas()->count() > 0 )
+						@if($unidade->getPrumadas()->first()->PRU_STATUS == 1)
+							<div class="col-md-3 text-center">
+								<a href="{{ url('/unidade/desligar/'.$unidade->UNI_ID) }}" class="btn btn-danger"><i class="fa fa-close"></i> Efetuar corte</a>
+							</div>
+						@else
+							<div class="col-md-3 text-center">
+								<a href="{{ url('/unidade/ligar/'.$unidade->UNI_ID) }}" class="btn btn-success"><i class="fa fa-plus"></i> Religar</a>
+							</div>
+						@endif
+					@else
+						<div class="col-md-3 text-center">
+							<a href="" class="btn btn-danger"><i class="fa fa-close"></i> Efetuar corte</a>
+						</div>
+					@endif
               		<div class="col-md-3 text-center">
               			<a href="#" class="btn btn-default" disabled><i class="fa fa-calculator"></i> Faturamento</a>
               		</div>
@@ -66,7 +78,7 @@
 
           <div class="box box-warning">
 			<div class="box-header with-border">
-				<h3 class="box-title"><i class="fa fa-tachometer"></i> Consumo atual (m³) <i class="fa fa-circle" style="color: #009900;"></i></h3>
+				<h3 class="box-title"><i class="fa fa-tachometer"></i> Consumo atual (m³) @if($unidade->getPrumadas()->count() > 0 ) @if($unidade->getPrumadas()->first()->PRU_STATUS == 1) <i class="fa fa-circle" style="color: #009900;"></i> @else <i class="fa fa-circle" style="color: #d73925;"></i> @endif @endif</h3>
 			</div>
 
 			<div class="box-body">

@@ -6,10 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Prumada extends Model
 {
+    protected $fillable = [
+        'PRU_ID', 'PRU_IDUNIDADE', 'PRU_IDFUNCIONAL', 'PRU_STATUS'
+    ];
+
+    protected  $dates = [
+        'created_at', 'updated_at'
+    ];
+
 	const created_at = 'tempo_criacao';
     const updated_at = 'tempo_alteracao';
 
-    protected $dateFormat = 'Y-m-d H:i';
+    //protected $dateFormat = 'Y-m-d H:i';
 
     protected $primaryKey = 'PRU_ID';
 
