@@ -124,7 +124,6 @@
 					<table class="table table-bordered" id="tabelaPrincipal">
 						<thead>
 							<th>#</th>
-							<th>ID Funcional</th>
 							<th>m³</th>
 							<th>lt</th>
 							<th>dl</th>
@@ -136,7 +135,6 @@
 							@foreach ($leituras as $lei)
 							<tr>
 								<td>{{ $lei->LEI_ID }}</td>
-								<td>{{ $lei->LEI_IDPRUMADA }}</td>
 								<td>{{ $lei->LEI_METRO }}</td>
 								<td>{{ $lei->LEI_LITRO }}</td>
 								<td>{{ $lei->LEI_MILILITRO }}</td>

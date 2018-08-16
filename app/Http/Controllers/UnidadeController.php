@@ -79,8 +79,9 @@ class UnidadeController extends Controller
                             ->first();
 
         //$ultimaleitura  = Unidade::find($id)->getPrumadas()->lastest();
+        dd($leituras);
 
-        return view('unidade.lista', ['agrupamento' => $agrupamento, 'unidade' => $unidade, 'imovel' => $imovel, 'prumadas' => $prumadas, 'leituras' => $leituras, 'ultimaleitura' => $ultimaleitura]);
+        //return view('unidade.lista', ['agrupamento' => $agrupamento, 'unidade' => $unidade, 'imovel' => $imovel, 'prumadas' => $prumadas, 'leituras' => $leituras, 'ultimaleitura' => $ultimaleitura]);
     }
 
     /**
