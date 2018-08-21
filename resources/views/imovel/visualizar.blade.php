@@ -3,6 +3,7 @@
 @section('title', 'MedirWeb')
 
 {!! Html::style( asset('css/total.css')) !!}
+{!! Html::style( asset('css/correct_content2.css')) !!}
 
 @section('content')
 	<div class="col-md-12">
@@ -26,7 +27,7 @@
 						<p class="titulo"><i class="fa fa-map"></i> <b>Localização</b></p>
 						<p>{{ $imovel->IMO_ENDERECO }}</p>
 						<p>{{ $imovel->IMO_COMPLEMENTO }}</p>
-						<p>{{ $imovel->IMO_IDCIDADE }} - {{ $imovel->IMO_IDESTADO }}</p>
+						<p>Brasília - DF</p>
 						<p>{{ $imovel->IMO_CEP }}</p>
 	          		</div>
 	          	</div>
@@ -65,7 +66,7 @@
               		<li class="{{ $loop->last ? 'active' : '' }}"><a href="#tab_{{ $key }}-{{ $key }}" data-toggle="tab" aria-expanded="false">{{ $agrupamento->AGR_NOME }}</a></li>
             	 @endforeach
 
-              	<li class="pull-left header"><h4><i class="fa fa-th-large"></i> Unidades<h4></li>
+              	<li class="pull-left header"><h4><i class="fa fa-th-large"></i> Unidades <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/atualizar') }}" class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Atualizar todas</a><h4></li>
             </ul>
 
             <div class="tab-content">
@@ -80,32 +81,48 @@
 	                	<div class="col-md-3">
 	                		<div class="leituracontainer">
 	                			<div class="col col-md-6 marcacao" >
-	            					<p>{{ $unidade->UNI_NOME }}</p>
-	            					<a  href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-default">
-	            						<i class="fa fa-download"></i>
+	            					<p>@if($unidade->getPrumadas()->count() > 0 ) {!! $unidade->getPrumadas()->first()->PRU_STATUS == 1 ? "<i class='fa fa-circle' style='color: green;''></i>" : "<i class='fa fa-circle' style='color: red;'></i>" !!} @endif
+	            					{{ $unidade->UNI_NOME }}</p>
+	            					<a  href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+	            						<i class="fa fa-retweet"></i> Leitura
 	            					</a>
 									@if($unidade->getPrumadas()->count() > 0 )
 
 										@if($unidade->getPrumadas()->first()->PRU_STATUS == 1)
-											<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-danger">
-												<i class="fa fa-close"></i>
+											<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
+												<i class="fa fa-close"></i> Corte
 											</a>
 										@else
-											<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-success">
-												<i class="fa fa-plus"></i>
+											<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
+												<i class="fa fa-power-off"></i> Ativação
 											</a>
 										@endif
 									@else
-										<a type="button" class="btn btn-danger">
-											<i class="fa fa-close"></i>
+										<a type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
+											<i class="fa fa-close"></i> Corte
 										</a>
+									@endif
+									@if($unidade->getPrumadas()->count() > 0 )
+										<p>ID: #{{ $unidade->getPrumadas()->first()->PRU_ID }}</p>
 									@endif
 	            				</div>
 	            				<div class="col col-md-6 leitura">
 	                				<p class="small">Consumo</p>
-	                				<div class="big">
-	                					<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}"><p class="valor">@if($unidade->getPrumadas()->count() > 0 ){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 0 @endif</p></a>
+	                				<div class="row">
+	                					<div class="col-md-9" style="margin: 0; padding-right: 0;">
+	                						<div class="big">
+	                							<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}"><p class="valor">@if($unidade->getPrumadas()->count() > 0 ){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 0 @endif</p></a>
+	                							<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}"><p class="valor">@if($unidade->getPrumadas()->count() > 0 ){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_LITRO }} @else 0 @endif</p></a>
+	                							<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}"><p class="valor">@if($unidade->getPrumadas()->count() > 0 ){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_MILILITRO }} @else 0 @endif</p></a>
+	                						</div>
+	                					</div>	
+	                					<div class="col-md-1" style="margin: 0; padding-left: 3px;">
+	                						<p style="line-height: 1.4em;">m³</p>
+	                						<p style="line-height: 2.0em;">L</p>
+	                						<p style="line-height: 1.0em;">dL</p>
+	                					</div>
 	                				</div>
+	                				
 	            				</div>
 	                		</div> <!-- FIM .leituracontainer -->
 	                	</div><!-- FIM .col-md-3 -->

@@ -41,6 +41,8 @@ Route::get('/imovel/{imovel}/leitura/{unidade}', array('uses' => 'ImovelControll
 Route::get('/imovel/{imovel}/ligar/{unidade}', array('uses' => 'ImovelController@ligarUnidade'));
 Route::get('/imovel/{imovel}/desligar/{unidade}', array('uses' => 'ImovelController@desligarUnidade'));
 
+Route::post('/imovel/{imovel}/atualizar', array('uses' => 'ImovelController@atualizarTodasLeituraUnidade'));
+
 
 
 /* Agrupamentos */
