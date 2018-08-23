@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Imovel;
+use App\Models\Unidade;
+use App\Models\Leitura;
+use Session;
 
 class ImovelController extends Controller
 {
@@ -209,31 +212,38 @@ class ImovelController extends Controller
 
             $jsons = json_decode($resp);
 
-            //var_dump($jsons);
+            if($jsons !== NULL)
+            {
+                $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
 
-            $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
+                $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
 
-            $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
-
-            $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
+                $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
 //
 //                var_dump($metro_cubico);
 //                var_dump($litros);
 //                var_dump($mililitro);
 
-            $subtotal = ($metro_cubico * 1000) + $litros;
-            $total = $subtotal.'.'.$mililitro.'';
+                $subtotal = ($metro_cubico * 1000) + $litros;
+                $total = $subtotal.'.'.$mililitro.'';
 
 
-            $leitura = [
-                'LEI_IDPRUMADA' => $prumada->PRU_ID,
-                'LEI_METRO' => $metro_cubico,
-                'LEI_LITRO' => $litros,
-                'LEI_MILILITRO' => $mililitro,
-                'LEI_VALOR' => $total,
-            ];
+                $leitura = [
+                    'LEI_IDPRUMADA' => $prumada->PRU_ID,
+                    'LEI_METRO' => $metro_cubico,
+                    'LEI_LITRO' => $litros,
+                    'LEI_MILILITRO' => $mililitro,
+                    'LEI_VALOR' => $total,
+                ];
 
-            Leitura::create($leitura);
+                Leitura::create($leitura);
+            }
+            else
+            {
+                $prumada->PRU_STATUS = 0;
+                $prumada->save();
+                Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.' );
+            }
 
         }
 
@@ -319,21 +329,31 @@ class ImovelController extends Controller
 
             $jsons = json_decode($resp);
 
-            if($jsons[4] == '00')
+            if($jsons !== NULL)
             {
-                $status = 1;
+                if($jsons[4] == '00')
+                {
+                    $status = 1;
+                }
+                else
+                {
+                    $status = 0;
+                }
+
+
+                $atualizacao = [
+                    'PRU_STATUS' => $status,
+                ];
+
+                $prumada->update($atualizacao);
             }
             else
             {
-                $status = 0;
+                $prumada->PRU_STATUS = 0;
+                $prumada->save();
+                Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
             }
 
-
-            $atualizacao = [
-                'PRU_STATUS' => $status,
-            ];
-
-            $prumada->update($atualizacao);
 
         }
 
@@ -363,21 +383,30 @@ class ImovelController extends Controller
 
             $jsons = json_decode($resp);
 
-            if($jsons[4] == '00')
+            if($jsons !== NULL)
             {
-                $status = '1';
+                if($jsons[4] == '00')
+                {
+                    $status = '1';
+                }
+                else
+                {
+                    $status = '0';
+                }
+
+
+                $atualizacao = [
+                    'PRU_STATUS' => $status,
+                ];
+
+                $prumada->update($atualizacao);
             }
             else
             {
-                $status = '0';
+                $prumada->PRU_STATUS = 1;
+                $prumada->save();
+                Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
             }
-
-
-            $atualizacao = [
-                'PRU_STATUS' => $status,
-            ];
-
-            $prumada->update($atualizacao);
 
         }
 

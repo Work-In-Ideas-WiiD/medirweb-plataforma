@@ -66,7 +66,7 @@
               		<li class="{{ $loop->last ? 'active' : '' }}"><a href="#tab_{{ $key }}-{{ $key }}" data-toggle="tab" aria-expanded="false">{{ $agrupamento->AGR_NOME }}</a></li>
             	 @endforeach
 
-              	<li class="pull-left header"><h4><i class="fa fa-th-large"></i> Unidades <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/atualizar') }}" class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Atualizar todas</a><h4></li>
+              	<li class="pull-left header"><h4><i class="fa fa-th-large"></i> Unidades <!-- <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/atualizar') }}" class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Atualizar todas</a> --><h4></li>
             </ul>
 
             <div class="tab-content">
@@ -81,12 +81,18 @@
 	                	<div class="col-md-3">
 	                		<div class="leituracontainer">
 	                			<div class="col col-md-6 marcacao" >
-	            					<p>@if($unidade->getPrumadas()->count() > 0 ) {!! $unidade->getPrumadas()->first()->PRU_STATUS == 1 ? "<i class='fa fa-circle' style='color: green;''></i>" : "<i class='fa fa-circle' style='color: red;'></i>" !!} @endif
+	            					<p>@if($unidade->getPrumadas()->count() > 0) {!! $unidade->getPrumadas()->first()->PRU_STATUS == 1 ? "<i class='fa fa-circle' style='color: green;''></i>" : "<i class='fa fa-circle' style='color: red;'></i>" !!} @endif
 	            					{{ $unidade->UNI_NOME }}</p>
-	            					<a  href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+
+	            					<!-- <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
 	            						<i class="fa fa-retweet"></i> Leitura
-	            					</a>
-									@if($unidade->getPrumadas()->count() > 0 )
+	            					</a> -->
+
+									@if($unidade->getPrumadas()->count() > 0 && $unidade->UNI_ID < 3)
+
+										<a  href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+											<i class="fa fa-retweet"></i> Leitura
+										</a>
 
 										@if($unidade->getPrumadas()->first()->PRU_STATUS == 1)
 											<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
@@ -98,9 +104,9 @@
 											</a>
 										@endif
 									@else
-										<a type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
+										<!-- <a type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
 											<i class="fa fa-close"></i> Corte
-										</a>
+										</a> -->
 									@endif
 									@if($unidade->getPrumadas()->count() > 0 )
 										<p>ID: #{{ $unidade->getPrumadas()->first()->PRU_ID }}</p>
