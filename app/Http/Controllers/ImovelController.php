@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\Imovel;
 use App\Models\Unidade;
 use App\Models\Leitura;
 use Session;
+
 
 class ImovelController extends Controller
 {
@@ -212,7 +214,7 @@ class ImovelController extends Controller
 
             $jsons = json_decode($resp);
 
-            if($jsons !== NULL)
+            if(($jsons !== NULL )&& (count($jsons) > 13))
             {
                 $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
 
@@ -247,7 +249,8 @@ class ImovelController extends Controller
 
         }
 
-        return redirect('imovel/ver/'.$imovel->IMO_ID);
+        //return redirect('imovel/ver/'.$imovel->IMO_ID);
+        return redirect::back();
     }
 
     public function atualizarTodasLeituraUnidade()

@@ -18,13 +18,13 @@
 					<!-- Estado Imóvel -->
 					<div class="form-group">
 						{{ Form::label('imo_idestado', 'Estado') }}
-						{{ Form::select('imo_idestado', [9 => 'Brasília'], null, ['class' => 'form-control', 'placeholder' => 'Escolha um estado', 'id' => 'imo_idestado' ]) }}
+						{{ Form::select('imo_idestado', [9 => 'Distrito Federal'], null, ['class' => 'form-control', 'placeholder' => 'Escolha um estado', 'id' => 'imo_idestado' ]) }}
 					</div><!-- /.form group -->  		
 				
 					<!-- Cidade Imóvel -->
 					<div class="form-group">
 						{{ Form::label('imo_idcidade', 'Cidade') }}
-						{{ Form::select('imo_idcidade', [1 => 'Distrito Federal'], null, ['class' => 'form-control', 'placeholder' => 'Escolha uma cidade', 'id' => 'imo_idcidade']) }}
+						{{ Form::select('imo_idcidade', [1 => 'Brasília'], null, ['class' => 'form-control', 'placeholder' => 'Escolha uma cidade', 'id' => 'imo_idcidade']) }}
 					</div><!-- /.form group --> 
 
 					{{ Form::button('<i class="fa fa-filter"></i> Filtrar', ['class' => 'btn btn-default', 'style' => 'width: 100%;', 'id' => 'submitFiltro']) }}

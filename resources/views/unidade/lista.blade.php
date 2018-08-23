@@ -20,7 +20,7 @@
                 		<dt>Proprietário</dt>
                 			<dd class="infoprop" >{{ $unidade->UNI_RESPONSAVEL }} - {{ $unidade->UNI_CPFRESPONSAVEL }} - {{ $unidade->UNI_TELRESPONSAVEL }}</dd>
                 		<dt>Idenficação do Apartamento</dt>
-                			<dd class="infoprop" >{{ $unidade->UNI_NOME }} - {{ $agrupamento->AGR_NOME }} - {{ $imovel->IMO_NOME }}</dd>
+						<dd class="infoprop" ><a class="linkbread" href="{{  url('/imovel/ver/'.$imovel->IMO_ID) }}">{{ $unidade->UNI_NOME }} - {{ $agrupamento->AGR_NOME }} - {{ $imovel->IMO_NOME }}</a></dd>
               		</dl>
             	</div> <!-- /.box-body -->
 
@@ -52,7 +52,7 @@
                 		</div>
               		</div>
               		<div class="col-md-3 text-center">
-              			<a href="{{ url('/unidade/leitura/'.$unidade->UNI_ID) }}" class="btn btn-success"><i class="fa fa-file-o"></i> Leitura</a>
+              			<a href="{{ url('/unidade/leitura/'.$unidade->UNI_ID) }}" class="btn btn-default"><i class="fa fa-retweet"></i> Leitura</a>
               		</div>
 					@if($unidade->getPrumadas()->count() > 0 )
 						@if($unidade->getPrumadas()->first()->PRU_STATUS == 1)
@@ -61,7 +61,7 @@
 							</div>
 						@else
 							<div class="col-md-3 text-center">
-								<a href="{{ url('/unidade/ligar/'.$unidade->UNI_ID) }}" class="btn btn-success"><i class="fa fa-plus"></i> Religar</a>
+								<a href="{{ url('/unidade/ligar/'.$unidade->UNI_ID) }}" class="btn btn-success"><i class="fa fa-power-off"></i> Ativação</a>
 							</div>
 						@endif
 					@else
@@ -191,10 +191,10 @@
 	            								<span class="info-box-icon"><i class="fa fa-tachometer"></i></span>
             									<div class="info-box-content">
 	              									<span class="info-box-text">Medidor #1</span>
-													@if(isset($ultimaleitura->LEI_VALOR))
-														<span class="info-box-number">{{ sprintf("%04d", $ultimaleitura->LEI_VALOR) }}</span>
+													@if(isset($ultimaleitura->LEI_METRO))
+														<span class="info-box-number">{{ sprintf("%04d", $ultimaleitura->LEI_METRO) }}</span>
 													@else
-														<span class="info-box-number">00000000</span>
+														<span class="info-box-number">0000</span>
 													@endif
               										<div class="progress">
 	                									<div class="progress-bar" style="width: 70%"></div>
