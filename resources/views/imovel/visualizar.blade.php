@@ -88,9 +88,9 @@
 	            						<i class="fa fa-retweet"></i> Leitura
 	            					</a> -->
 
-									@if($unidade->getPrumadas()->count() > 0 && $unidade->UNI_ID < 3)
+									@if($unidade->getPrumadas()->count() > 0)
 
-										<a  href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
 											<i class="fa fa-retweet"></i> Leitura
 										</a>
 
@@ -117,27 +117,25 @@
 	                				<div class="row">
 	                					<div class="col-md-9" style="margin: 0; padding-right: 0;">
 	                						<div class="big">
-												@if ($unidade->getPrumadas()->first()->PRU_ID == '2')
+												
 	                								<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
-												@endif
+												
 													<p class="valor">@if($unidade->getPrumadas()->count() > 0 ){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 0 @endif</p>
-												@if ($unidade->getPrumadas()->first()->PRU_ID == '2')
+												
 													</a>
-												@endif
-												@if ($unidade->getPrumadas()->first()->PRU_ID == '2')
+												
 	                								<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
-												@endif
+												
 													<p class="valor">@if($unidade->getPrumadas()->count() > 0 ){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_LITRO }} @else 0 @endif</p>
-												@if ($unidade->getPrumadas()->first()->PRU_ID == '2')
+												
 													</a>
-												@endif
-												@if ($unidade->getPrumadas()->first()->PRU_ID == '2')
+												
 	                								<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
-												@endif
+												
 													<p class="valor">@if($unidade->getPrumadas()->count() > 0 ){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_MILILITRO }} @else 0 @endif</p>
-												@if ($unidade->getPrumadas()->first()->PRU_ID === '2')
+												
 													</a>
-												@endif
+												
 	                						</div>
 	                					</div>	
 	                					<div class="col-md-1" style="margin: 0; padding-left: 3px;">

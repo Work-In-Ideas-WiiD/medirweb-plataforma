@@ -204,7 +204,7 @@ class ImovelController extends Controller
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://18.208.209.113/hidromed/leituraID.php?id='.$prumada->PRU_ID,
+                CURLOPT_URL => 'http://52.15.197.19/medirweb/doLeitura.php?id='.$prumada->PRU_ID,
                 CURLOPT_USERAGENT => 'Codular Sample cURL Request'
             ));
             // Send the request & save response to $resp
@@ -267,7 +267,7 @@ class ImovelController extends Controller
                         // Set some options - we are passing in a useragent too here
                         curl_setopt_array($curl, array(
                         CURLOPT_RETURNTRANSFER => 1,
-                        CURLOPT_URL => 'http://18.208.209.113/hidromed/leituraID.php?id='.$prumada->PRU_ID,
+                        CURLOPT_URL => 'http://52.15.197.19/medirweb/doLeitura.php?id='.$prumada->PRU_ID,
                         CURLOPT_USERAGENT => 'Codular Sample cURL Request'
                     ));
                     
@@ -322,7 +322,7 @@ class ImovelController extends Controller
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://18.208.209.113/hidromed/abrir.php?id='.$prumada->PRU_ID,
+                CURLOPT_URL => 'http://52.15.197.19/medirweb/doAtivacao.php?id='.$prumada->PRU_ID,
                 CURLOPT_USERAGENT => 'Codular Sample cURL Request'
             ));
             // Send the request & save response to $resp
@@ -376,7 +376,7 @@ class ImovelController extends Controller
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://18.208.209.113/hidromed/fechar.php?id='.$prumada->PRU_ID,
+                CURLOPT_URL => 'http://52.15.197.19/medirweb/doCorte.php?id='.$prumada->PRU_ID,
                 CURLOPT_USERAGENT => 'Codular Sample cURL Request'
             ));
             // Send the request & save response to $resp
