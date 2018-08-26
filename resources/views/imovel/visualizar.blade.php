@@ -66,7 +66,7 @@
               		<li class="{{ $loop->last ? 'active' : '' }}"><a href="#tab_{{ $key }}-{{ $key }}" data-toggle="tab" aria-expanded="false">{{ $agrupamento->AGR_NOME }}</a></li>
             	 @endforeach
 
-              	<li class="pull-left header"><h4><i class="fa fa-th-large"></i> Unidades <!-- <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/atualizar') }}" class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Atualizar todas</a> --><h4></li>
+              	<li class="pull-left header"><h4><i class="fa fa-th-large"></i> Unidades <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/atualizar') }}" class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Atualizar todas</a><h4></li>
             </ul>
 
             <div class="tab-content">
