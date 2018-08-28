@@ -253,15 +253,16 @@ class ImovelController extends Controller
         return redirect::back();
     }
 
-    public function atualizarTodasLeituraUnidade()
+    public function atualizarTodasLeituraUnidade($id)
     {
-        $imovel = Imovel::all();
+        $imovel = Imovel::find($id);
 
-        foreach ($imovel as $key => $imo) {
-            $unidades = $imo->getUnidades();
-            foreach ($unidades as $unidade)
+        /*foreach ($imovel as $imo) {*/
+            $unidades = Imovel::find($id)->getUnidades;
+            foreach ($unidades as $unid)
             {
-                foreach ($unidade->getPrumadas as $prumada)
+                $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
+                foreach ($prumadas as $prumada)
                 {
                     $curl = curl_init();
                         // Set some options - we are passing in a useragent too here
@@ -279,34 +280,42 @@ class ImovelController extends Controller
                     $jsons = json_decode($resp);
 
                     //var_dump($jsons);
+                    //echo "<br/>";
+                    if($jsons !== NULL && count($jsons) < 16)
+                    {
+                        $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
 
-                    $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
+                        $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
 
-                    $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
+                        $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
+                        
+                        // var_dump($metro_cubico);
+                        // var_dump($litros);
+                        // var_dump($mililitro);
 
-                    $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-                        //
-                        //                var_dump($metro_cubico);
-                        //                var_dump($litros);
-                        //                var_dump($mililitro);
+                        $subtotal = ($metro_cubico * 1000) + $litros;
+                        $total = $subtotal.'.'.$mililitro.'';
 
-                    $subtotal = ($metro_cubico * 1000) + $litros;
-                    $total = $subtotal.'.'.$mililitro.'';
+                        $leitura = [
+                            'LEI_IDPRUMADA' => $prumada->PRU_ID,
+                            'LEI_METRO' => $metro_cubico,
+                            'LEI_LITRO' => $litros,
+                            'LEI_MILILITRO' => $mililitro,
+                            'LEI_VALOR' => $total,
+                        ];
 
-                    $leitura = [
-                        'LEI_IDPRUMADA' => $prumada->PRU_ID,
-                        'LEI_METRO' => $metro_cubico,
-                        'LEI_LITRO' => $litros,
-                        'LEI_MILILITRO' => $mililitro,
-                        'LEI_VALOR' => $total,
-                    ];
-
-                    Leitura::create($leitura);
+                        Leitura::create($leitura);
+                    }
+                    else
+                    {
+                        Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
+                        return redirect('imovel/ver/'.$id);
+                    }
                 }
             }
-        }
+        /*}*/
 
-        return redirect('imovel/ver/1');
+        return redirect('imovel/ver/'.$id);
     }
 
     public function ligarUnidade($imovel, $unidade)
