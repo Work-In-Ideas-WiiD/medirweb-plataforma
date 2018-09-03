@@ -214,7 +214,7 @@ class ImovelController extends Controller
 
             $jsons = json_decode($resp);
 
-            if(($jsons !== NULL )&& (count($jsons) > 13))
+            if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
             {
                 $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
 
@@ -281,7 +281,7 @@ class ImovelController extends Controller
 
                     //var_dump($jsons);
                     //echo "<br/>";
-                    if($jsons !== NULL && count($jsons) < 16)
+                    if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
                     {
                         $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
 
