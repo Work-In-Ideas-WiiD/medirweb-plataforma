@@ -118,9 +118,9 @@ class UnidadeController extends Controller
         //
     }
 
-    public function leituraUnidade($unidade)
+    public function leituraUnidade($undd)
     {
-        $unidade = Unidade::find($unidade);
+        $unidade = Unidade::find($undd);
 
         //var_dump($unidade->getPrumadas); die();
         foreach ($unidade->getPrumadas as $prumada)
@@ -140,40 +140,49 @@ class UnidadeController extends Controller
             $jsons = json_decode($resp);
 
             //var_dump($jsons);
+            if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
+            {
+                $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
 
-            $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
+                $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
 
-            $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
+                $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
+    
+                // var_dump($metro_cubico);
+                // var_dump($litros);
+                // var_dump($mililitro);
 
-            $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-//
-//                var_dump($metro_cubico);
-//                var_dump($litros);
-//                var_dump($mililitro);
-
-            $subtotal = ($metro_cubico * 1000) + $litros;
-            $total = $subtotal.'.'.$mililitro.'';
+                $subtotal = ($metro_cubico * 1000) + $litros;
+                $total = $subtotal.'.'.$mililitro.'';
 
 
-            $leitura = [
-                'LEI_IDPRUMADA' => $prumada->PRU_ID,
-                'LEI_METRO' => $metro_cubico,
-                'LEI_LITRO' => $litros,
-                'LEI_MILILITRO' => $mililitro,
-                'LEI_VALOR' => $total,
-            ];
+                $leitura = [
+                    'LEI_IDPRUMADA' => $prumada->PRU_ID,
+                    'LEI_METRO' => $metro_cubico,
+                    'LEI_LITRO' => $litros,
+                    'LEI_MILILITRO' => $mililitro,
+                    'LEI_VALOR' => $total,
+                ];
 
-            Leitura::create($leitura);
+                Leitura::create($leitura);
+            }
+            else
+            {
+                $prumada->PRU_STATUS = 0;
+                $prumada->save();
+                Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.');
+            }
+            
 
         }
 
-        return redirect('unidade/ver/'.$unidade->UNI_ID);
+        return redirect('unidade/ver/'.$undd);
     }
 
-    public function ligarUnidade($unidade)
+    public function ligarUnidade($undd)
     {
 
-        $unidade = Unidade::find($unidade);
+        $unidade = Unidade::find($undd);
 
         //var_dump($unidade->getPrumadas); die();
         foreach ($unidade->getPrumadas as $prumada)
@@ -192,31 +201,40 @@ class UnidadeController extends Controller
 
             $jsons = json_decode($resp);
 
-            if($jsons[4] == '00')
+            if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
             {
-                $status = 1;
+                if($jsons[4] == '00')
+                {
+                    $status = 1;
+                }
+                else
+                {
+                    $status = 0;
+                }
+
+
+                $atualizacao = [
+                    'PRU_STATUS' => $status,
+                ];
+
+                $prumada->update($atualizacao);
             }
             else
             {
-                $status = 0;
+                $prumada->PRU_STATUS = 0;
+                $prumada->save();
+                Session::flash('error', 'Unidade não pode ser ligada. Por favor, verifique a conexão.');
             }
-
-
-            $atualizacao = [
-                'PRU_STATUS' => $status,
-            ];
-
-            $prumada->update($atualizacao);
 
         }
 
-        return redirect('unidade/ver/'.$unidade->UNI_ID);
+        return redirect('unidade/ver/'.$undd);
     }
 
-    public function desligarUnidade($unidade)
+    public function desligarUnidade($undd)
     {
 
-        $unidade = Unidade::find($unidade);
+        $unidade = Unidade::find($undd);
 
         //var_dump($unidade->getPrumadas); die();
         foreach ($unidade->getPrumadas as $prumada)
@@ -235,25 +253,34 @@ class UnidadeController extends Controller
 
             $jsons = json_decode($resp);
 
-            if($jsons[4] == '00')
+            if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
             {
-                $status = '1';
+                if($jsons[4] == '00')
+                {
+                    $status = '1';
+                }
+                else
+                {
+                    $status = '0';
+                }
+
+
+                $atualizacao = [
+                    'PRU_STATUS' => $status,
+                ];
+
+                $prumada->update($atualizacao);
             }
             else
             {
-                $status = '0';
-            }
-
-
-            $atualizacao = [
-                'PRU_STATUS' => $status,
-            ];
-
-            $prumada->update($atualizacao);
+                $prumada->PRU_STATUS = 0;
+                $prumada->save();
+                Session::flash('error', 'Unidade não pode ser desligada. Por favor, verifique a conexão.');
+            }   
 
         }
 
-        return redirect('unidade/ver/'.$unidade->UNI_ID);
+        return redirect('unidade/ver/'.$unidd);
     }
 
 
