@@ -149,7 +149,7 @@ return [
             'icon'    => 'microchip',
             'submenu' => [
                 [
-                    'text' => 'Testes',
+                    'text' => 'Demonstração',
                     'icon' => 'list',
                     'url'  => 'teste',
                 ],
