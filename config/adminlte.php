@@ -144,6 +144,17 @@ return [
             'submenu' => [
             ],
         ],
+        [
+            'text'    => 'Hidrômetro',
+            'icon'    => 'microchip',
+            'submenu' => [
+                [
+                    'text' => 'Testes',
+                    'icon' => 'list',
+                    'url'  => 'teste',
+                ],
+            ],
+        ],
     ],
 
     /*

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Unidade;
 use App\Models\Leitura;
+use App\Teste;
 
 class Hello extends Controller
 {
@@ -83,5 +84,159 @@ class Hello extends Controller
             echo 'leitura cadastrada';
 
         }
+    }
+
+    public function hidrometroTeste()
+    {
+
+        $unidades = Teste::all();
+
+        return view('teste.index', compact('unidades'));
+    }
+
+    public function leituraTeste()
+    {
+        $teste = Teste::find(3);
+
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://192.168.255.18/api/leitura/03',
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        ));
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
+
+        $jsons = json_decode($resp);
+
+        if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
+        {
+            $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
+
+            $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
+
+            $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
+//
+//                var_dump($metro_cubico);
+//                var_dump($litros);
+//                var_dump($mililitro);
+
+            $subtotal = ($metro_cubico * 1000) + $litros;
+            $total = $subtotal.'.'.$mililitro.'';
+
+
+            $leitura = [
+                'metro' => $metro_cubico,
+                'litro' => $litros,
+                'mililitro' => $mililitro,
+                'valor' => $total,
+            ];
+
+            $teste->update($leitura);
+        }
+        else
+        {
+            $teste->status = 0;
+            $teste->save();
+            Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.' );
+        }
+
+        return redirect('teste');
+    }
+
+    public function ligarTeste()
+    {
+        $teste = Teste::find(3);
+
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://192.168.255.18/api/ativacao/03',
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        ));
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
+
+        $jsons = json_decode($resp);
+
+        if($jsons !== NULL)
+        {
+            if($jsons[4] == '00')
+            {
+                $status = 1;
+            }
+            else
+            {
+                $status = 0;
+            }
+
+
+            $atualizacao = [
+                'status' => $status,
+            ];
+
+            $teste->update($atualizacao);
+        }
+        else
+        {
+            $teste->status = 0;
+            $teste->save();
+            Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
+        }
+
+        return redirect('teste');
+    }
+
+    public function desligarTeste()
+    {
+        $teste = Teste::find(3);
+
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://192.168.255.18/api/corte/03',
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        ));
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
+
+        $jsons = json_decode($resp);
+
+        if($jsons !== NULL)
+        {
+            if($jsons[4] == '00')
+            {
+                $status = '1';
+            }
+            else
+            {
+                $status = '0';
+            }
+
+
+            $atualizacao = [
+                'status' => $status,
+            ];
+
+            $teste->update($atualizacao);
+        }
+        else
+        {
+            $teste->status = 1;
+            $teste->save();
+            Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
+        }
+
+        return redirect('teste');
+
     }
 }
