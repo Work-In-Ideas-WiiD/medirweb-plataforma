@@ -80,17 +80,26 @@ jQuery(document).ready(function(){
         url: "{!! url('/imovel/getImoveisLista') !!}",
         method: 'post',
         data: {
-           IMO_IDESTADO: jQuery('#imo_idestado').val(),
-           IMO_IDCIDADE: jQuery('#imo_idcidade').val()
+           IMO_IDESTADO: jQuery('#IMO_IDESTADO').val(),
+           IMO_IDCIDADE: jQuery('#IMO_IDCIDADE').val()
         },
         success: function(result){
+
+            if(result.imoveis.length < 1)
+            {
+                $('#resultadoPesquisa').html('');
+                $('#resultadoPesquisa').append('<p style="text-align: center;">Sem resultados para mostrar</p>');
+                return;
+            }
+
            //jQuery('.alert').show();
            //jQuery('.alert').html(result.success);
+
            var $html = '';
            $('#resultadoPesquisa').html($html);
 
             $.each(result.imoveis, function () {
-                var $html  = '<div class="col-md-3 agrupamento imolista">';
+                /*var $html  = '<div class="col-md-3 agrupamento imolista">';
                     $html += '<a href="{!! url('imovel/ver/') !!}/' + this.IMO_ID + '" alt=\'"' + this.IMO_NOME + '"\' >' ;
                     $html += '<div class="bloco-agrupamento-vis">';
                     $html +=    '<i class="fa fa-building"></i>';
@@ -98,7 +107,45 @@ jQuery(document).ready(function(){
                     $html +=    '<p class="imo imobairro">' + this.IMO_BAIRRO + '</p>';
                     $html += '</div>';
                     $html += '</a>';
-                    $html += '</div>';                    
+                    $html += '</div>';*/
+
+
+                var $html  = '<div class="col-md-4">';
+                    $html += '<a href="{!! url('imovel/ver/') !!}/' + this.IMO_ID + '" alt="' + this.IMO_NOME + '" style="text-decoration: none; color: #111;" >';
+                    $html +=    '<div class="box box-widget widget-user">';
+                    $html +=        '<div class="widget-user-header bg-black" style="background: url(\'http://www.condominiosc.com.br/media/k2/items/cache/2a7c5a55d24475c5674a6cabf9d5e3d4_XL.jpg\') center center;">';
+                    $html +=            '<h3 class="widget-user-username">' + this.IMO_NOME + '</h3>';
+                    $html +=            '<h5 class="widget-user-desc">' + this.IMO_BAIRRO + '</h5>';
+                    $html +=        '</div>';
+                    $html +=        '<div class="widget-user-image">';
+                    $html +=            '<img class="img-circle" src="http://i63.tinypic.com/nex65y.png" alt="User Avatar">';
+                    $html +=        '</div>';
+                    $html +=        '<div class="box-footer">';
+                    $html +=            '<div class="row">';
+                    $html +=                '<div class="col-sm-4 border-right">';
+                    $html +=                    '<div class="description-block">';
+                    $html +=                        '<h5 class="description-header">' + this.AGR + '</h5>';
+                    $html +=                        '<span class="description-text">Agrupamentos</span>';
+                    $html +=                    '</div>';
+                    $html +=                '</div>';
+                    $html +=                '<div class="col-sm-4 border-right">';
+                    $html +=                    '<div class="description-block">';
+                    $html +=                        '<h5 class="description-header">' + this.UNI + '</h5>';
+                    $html +=                        '<span class="description-text">Unidades</span>'
+                    $html +=                    '</div>';
+                    $html +=                '</div>';
+                    $html +=                '<div class="col-sm-4">';
+                    $html +=                    '<div class="description-block">';
+                    $html +=                        '<h5 class="description-header">0</h5>';
+                    $html +=                        '<span class="description-text">Equipamentos</span>';
+                    $html +=                    '</div>';
+                    $html +=                '</div>';
+                    $html +=            '</div>';
+                    $html +=        '</div>';
+                    $html +=    '</div>';
+                    $html += '</a>';
+                    $html += '</div>';
+
 
                     $('#resultadoPesquisa').append($html);
             });
@@ -111,6 +158,33 @@ jQuery(document).ready(function(){
 <script>
     $(document).ready(function(){
         $('#tabelaPrincipal').DataTable({
+            "order": [[ 0, "desc" ]],
+            "language": {
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sInfoThousands": ".",
+                "sLengthMenu": "_MENU_ resultados por página",
+                "sLoadingRecords": "Carregando...",
+                "sProcessing": "Processando...",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sSearch": "Pesquisar",
+                "oPaginate": {
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior",
+                    "sFirst": "Primeiro",
+                    "sLast": "Último"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                }
+            }
+        });
+
+        $('.powertabela').DataTable({
             "order": [[ 0, "desc" ]],
             "language": {
                 "sEmptyTable": "Nenhum registro encontrado",

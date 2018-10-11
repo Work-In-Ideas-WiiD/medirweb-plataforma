@@ -13,6 +13,11 @@ class Unidade extends Model
 
     protected $primaryKey = 'UNI_ID';
 
+    protected $fillable = [
+        'UNI_NOME', 'UNI_RESPONSAVEL', 'UNI_CPFRESPONSAVEL', 'UNI_TELRESPONSAVEL'
+    ];
+
+
     public function agrupamento()
     {
         return $this->hasOne('App\Models\Agrupamento', 'AGR_ID', 'UNI_IDAGRUPAMENTO');
@@ -26,5 +31,10 @@ class Unidade extends Model
     public function getPrumadas()
     {
     	return $this->hasMany('App\Models\Prumada', 'PRU_IDUNIDADE', 'UNI_ID');
+    }
+
+    public function getEquipamentos()
+    {
+        return $this->hasMany('App\Models\Equipamento', 'EQP_IDUNIDADE', 'UNI_ID');
     }
 }

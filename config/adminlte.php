@@ -108,52 +108,84 @@ return [
     */
 
     'menu' => [
-        'PRINCIPAL',
-        [
-            'text' => 'Perfil',
-            'url'  => '#',
-            'icon' => 'user',
-        ],
         'GERENCIAL',
         [
-            'text'    => 'Imóveis',
-            'icon'    => 'institution',
+            'text' => 'Dashboard',
+            'url'  => 'home',
+            'icon' => 'tasks',
+        ],
+        [
+            'text'    => 'Clientes',
+            'icon'    => 'users',
             'submenu' => [
+                [
+                    'text' => 'Novo cliente',
+                    'icon' => 'plus',
+                    'url'  => 'cliente/adicionar',
+                ],
                 [
                     'text' => 'Ver todos',
                     'icon' => 'list',
-                    'url'  => 'imovel',
+                    'url'  => 'cliente/',
                 ],
             ],
         ],
         [
-            'text'    => 'Agrupamentos',
+            'text'    => 'Imóveis',
             'icon'    => 'building',
             'submenu' => [
-            ],
-        ],
-        [
-            'text'    => 'Unidades',
-            'icon'    => 'th-large',
-            'submenu' => [
-            ],
-        ],
-        [
-            'text'    => 'Prumadas',
-            'icon'    => 'tachometer ',
-            'submenu' => [
-            ],
-        ],
-        [
-            'text'    => 'Hidrômetro',
-            'icon'    => 'microchip',
-            'submenu' => [
                 [
-                    'text' => 'Demonstração',
+                    'text' => 'Novo imóvel',
+                    'icon' => 'plus',
+                    'url'  => 'imovel/adicionar',
+                ],
+                [
+                    'text' => 'Ver todos',
                     'icon' => 'list',
-                    'url'  => 'teste',
+                    'url'  => 'imovel/listar',
                 ],
             ],
+        ],
+        [
+            'text'    => 'Cadastros',
+            'icon'    => 'floppy-o',
+            'submenu' => [
+                [
+                    'text' => 'Agrupamentos',
+                    'icon' => 'plus',
+                    'url'  => 'agrupamento/adicionar',
+                ],
+                [
+                    'text' => 'Unidades',
+                    'icon' => 'home',
+                    'url'  => 'unidade/adicionar',
+                ],
+                [
+                    'text' => 'Equipamentos',
+                    'icon' => 'cog',
+                    'url'  => 'equipamento/adicionar',
+                ]
+            ],
+        ],
+        [
+            'text'    => 'Consulta consumo',
+            'icon'    => 'tachometer',
+            'url'     => '#',
+        ],
+        [
+            'text'    => 'Relatórios',
+            'icon'    => 'file-o ',
+            'url'     => '#',
+        ],
+        [
+            'text'    => 'Liquidação de Faturas',
+            'icon'    => 'money',
+            'url'     => '#',
+        ],
+        [
+            'text'    => 'Agenda Financeira',
+            'icon'    => 'calendar',
+            'url'     => '#',
         ],
     ],
 

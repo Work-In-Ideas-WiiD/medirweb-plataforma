@@ -6,12 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agrupamento extends Model
 {
+    protected $table = 'agrupamentos';
+
     const created_at = 'tempo_criacao';
     const updated_at = 'tempo_alteracao';
 
     protected $dateFormat = 'Y-m-d H:i';
 
     protected $primaryKey = 'AGR_ID';
+
+    protected $fillable = [
+        'AGR_NOME', 'AGR_TAXAFIXA', 'AGR_TAXAVARIAVEL'
+    ];
 
     public function imovel()
     {

@@ -5,49 +5,61 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-    <h1><i class="fa fa-institution"></i> Imóveis</h1>
+	<h1>Imóveis <small>Seus imóveis</small></h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li><a href="#">Imóveis</a></li>
+		<li class="active">Seus imóveis</li>
+	</ol>
 @stop
 
 @section('content')
-	<div class="col-md-3">
-		<div class="box box-primary">
-			<div class="bloco-imovel-info">
-				<h4>Filtro:</h4>
-				{!! Form::open(['id' => 'filtroImoveis']) !!}
-			
-					<!-- Estado Imóvel -->
-					<div class="form-group">
-						{{ Form::label('imo_idestado', 'Estado') }}
-						{{ Form::select('imo_idestado', [9 => 'Distrito Federal'], null, ['class' => 'form-control', 'placeholder' => 'Escolha um estado', 'id' => 'imo_idestado' ]) }}
-					</div><!-- /.form group -->  		
-				
-					<!-- Cidade Imóvel -->
-					<div class="form-group">
-						{{ Form::label('imo_idcidade', 'Cidade') }}
-						{{ Form::select('imo_idcidade', [1 => 'Brasília'], null, ['class' => 'form-control', 'placeholder' => 'Escolha uma cidade', 'id' => 'imo_idcidade']) }}
-					</div><!-- /.form group --> 
+	<div class="row">
+		<div class="col-md-12">
+			<div class="box box-warning">
 
-					{{ Form::button('<i class="fa fa-filter"></i> Filtrar', ['class' => 'btn btn-default', 'style' => 'width: 100%;', 'id' => 'submitFiltro']) }}
-				{!! Form::close() !!}
-			</div>
-		</div>
-	</div>
-    <div class="col-md-9">
-    	<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title"><i class="fa fa-list"></i> Listagem</h3>
-				<div class="box-body">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="row" id="resultadoPesquisa">
-							<p style="text-align: center;">Sem resultados para mostrar</p>
-						</div>
+					<div class="box-header with-border">
+						<h3 class="box-title"><i class="fa fa-filter"></i> Filtro:</h3>
 					</div>
 
-				</div>
-			</div><!-- /.box-body -->
+					<div class="box-body">
+					{!! Form::open(['id' => 'filtroImoveis']) !!}
+						<div class="row">
+							<div class="col-md-4">
+								<!-- Estado Imóvel -->
+								<div class="form-group">
+									{{ Form::label('IMO_IDESTADO', 'Estado') }}
+									{{ Form::select('IMO_IDESTADO', [9 => 'Goiás'], null, ['class' => 'form-control', 'placeholder' => 'Escolha um estado', 'id' => 'IMO_IDESTADO' ]) }}
+								</div><!-- /.form group -->
+							</div>
+
+							<div class="col-md-4">
+								<!-- Cidade Imóvel -->
+								<div class="form-group">
+									{{ Form::label('IMO_IDCIDADE', 'Cidade') }}
+									{{ Form::select('IMO_IDCIDADE', [1 => 'Goiânia'], null, ['class' => 'form-control', 'placeholder' => 'Escolha uma cidade', 'id' => 'IMO_IDCIDADE']) }}
+								</div><!-- /.form group -->
+							</div>
+
+							<div class="col-md-4">
+								<!-- Botão Imóvel -->
+								<div class="form-group">
+									{{ Form::label('', '&nbsp;') }}
+									{{ Form::button('<i class="fa fa-filter"></i> Filtrar', ['class' => 'btn btn-default', 'style' => 'width: 100%;', 'id' => 'submitFiltro']) }}
+								</div>
+							</div>
+						</div>
+					{!! Form::close() !!}
+					</div>
+
 			</div>
-    		
-		</div><!-- /.box .box-primary -->
-	</div><!-- /.col-md-9 -->
+		</div>
+		<div class="col-md-12">
+
+			<div class="row" id="resultadoPesquisa">
+				<p style="text-align: center;">Sem resultados para mostrar</p>
+			</div>
+
+		</div><!-- /.col-md-12 -->
+	</div>
 @stop
