@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Unidade;
 use App\Models\Leitura;
 use App\Teste;
+use Session;
 
 class Hello extends Controller
 {
