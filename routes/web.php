@@ -43,6 +43,8 @@ Route::get('/imovel/{imovel}/desligar/{unidade}', array('uses' => 'ImovelControl
 
 Route::get('/imovel/{imovel}/atualizar', array('uses' => 'ImovelController@atualizarTodasLeituraUnidade'));
 
+Route::get('/imovel/todos', 'ImovelController@showdown')->name('Todos os Imóveis');
+
 
 
 /* Agrupamentos */
@@ -75,3 +77,13 @@ Route::get('/teste', 'Hello@hidrometroTeste');
 Route::get('/teste/ler', 'Hello@leituraTeste');
 Route::get('/teste/ligar', 'Hello@ligarTeste');
 Route::get('/teste/desligar', 'Hello@desligarTeste');
+
+/* Clientes */
+Route::get('/cliente', 'ClienteController@index')->name('Listar Clientes');
+Route::get('/cliente/adicionar', 'ClienteController@create')->name('Adicionar Cliente');
+Route::post('novo-cliente', array('uses' => 'ClienteController@store'));
+
+/* Equipamento */
+Route::get('/equipamento/adicionar', 'EquipamentoController@create')->name('Adicionar Equipamento');
+Route::post('novo-equipamento', array('uses' => 'EquipamentoController@store'));
+Route::get('/equipamento/timeline', 'EquipamentoController@timeline')->name('Timeline');

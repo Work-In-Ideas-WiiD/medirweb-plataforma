@@ -5,59 +5,73 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-    <h1><i class="fa fa-building"></i> Agrupamentos</h1>
+    <h1>Agrupamentos <small>Adicionar Agrupamento</small></h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li><a href="#">Agrupamentos</a></li>
+		<li class="active">Adicionar</li>
+	</ol>
 @stop
 
 @section('content')
-	<div class="col-md-3">
-		<div class="box box-primary">
-			<p class="bloco-imovel-cad">
-				<i class="fa fa-institution"></i>
-			</p>
-			<p style="text-align: center; padding-bottom: 12px;" >Novo Agrupamento</p>
-		</div>
-	</div>
-    <div class="col-md-9">
-    	<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title"><i class="fa fa-plus"></i> Adicionar</h3>
-			</div>
-    		{!! Form::open(['action' => 'AgrupamentoController@store', 'method' => 'POST']) !!}
-			<div class="box-body">
-				<div class="row">
-					<div class="col-md-6">
-						<!-- Estado Agrupamento -->
-						<div class="form-group">
-							 {{ Form::label('AGR_IDESTADO', 'Estado') }}
-							 {{ Form::select('AGR_IDESTADO', [9 => 'Goiás'], null, ['class' => 'form-control', 'placeholder' => 'Escolha um estado']) }}
-						</div><!-- /.form group -->
-						<!-- Imóvel Agrupamento -->
-						<div class="form-group">
-							 {{ Form::label('AGR_IDIMOVEL', 'Imóvel') }}
-							 {{ Form::select('AGR_IDIMOVEL', $imoveis, null, ['class' => 'form-control', 'placeholder' => 'Escolha um imóvel']) }}
-						</div><!-- /.form group --> 
-					</div>
+	<div class="row">
+		<div class="col-md-8">
+			{!! Form::open(['action' => 'AgrupamentoController@store', 'method' => 'POST']) !!}
 
-					<div class="col-md-6">
-						<!-- Cidade Agrupamento -->
-						<div class="form-group">
-							 {{ Form::label('AGR_IDCIDADE', 'Cidade') }}
-							 {{ Form::select('AGR_IDCIDADE', [1 => 'Goiânia'], null, ['class' => 'form-control', 'placeholder' => 'Escolha uma cidade']) }}
-						</div><!-- /.form group --> 
-						<!-- Nome Agrupamento -->
-						<div class="form-group">
-							 {{ Form::label('AGR_NOME', 'Nome') }}
-		      				 {{ Form::text('AGR_NOME', '', ['class' => 'form-control', 'placeholder' => 'Ex.: Torre L']) }}
-						</div><!-- /.form group -->
-					</div>
+			<!-- Dados de Identificação -->
 
+			<div class="box box-warning">
+				<div class="box-header with-border">
+					<h3 class="box-title"><i class="fa fa-home"></i> Dados de identificação</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						</button>
+					</div>
 				</div>
-			</div><!-- /.box-body -->
-			<div class="box-footer">
-				<a href="{{ url()->previous() }}" class="btn btn-default pull-left">Cancelar</a>
-				{{ Form::submit('Adicionar Agrupamento', ['class' => 'btn btn-primary pull-right']) }}
-			</div><!-- /.box-footer -->
+
+				<div class='box-body'>
+					<div class='row'>
+
+						<div class='col-md-6'>
+							<div class='form-group'>
+								{{ Form::label('AGR_IDIMOVEL', 'Imóvel') }}
+								<select name='AGR_IDIMOVEL' class='form-control' >
+									<option value='' selected>Selecione um imóvel</option>
+								</select>
+							</div>
+							<div class='form-group'>
+								{{ Form::label('AGR_NOME', 'Nome') }}
+								{{ Form::text('AGR_NOME', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class='form-group'>
+								{{ Form::label('AGR_TAXAFIXA', 'Taxa fixa (R$)') }}
+								{{ Form::text('AGR_TAXAFIXA', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+							<div class='form-group'>
+								{{ Form::label('AGR_TAXAVARIAVEL', 'Taxa variável (R$/m³)') }}
+								{{ Form::text('AGR_TAXAVARIAVEL', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- [FIM] Dados de Identificação -->
+
 			{!! Form::close() !!}
-		</div><!-- /.box .box-primary -->
-	</div><!-- /.col-md-9 -->
+
+		</div><!-- /.col-md-8 -->
+
+		<div class="col-md-4">
+
+			<button type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
+
+			<button type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
+
+		</div>
+
+	</div>
 @stop

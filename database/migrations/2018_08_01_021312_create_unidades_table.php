@@ -15,17 +15,18 @@ class CreateUnidadesTable extends Migration
     {
         Schema::create('unidades', function (Blueprint $table) {
             $table->increments('UNI_ID');
-            
+
             $table->integer('UNI_IDAGRUPAMENTO')->unsigned();
             $table->foreign('UNI_IDAGRUPAMENTO')->references('AGR_ID')->on('agrupamentos');
 
             $table->integer('UNI_IDIMOVEL')->unsigned();
             $table->foreign('UNI_IDIMOVEL')->references('IMO_ID')->on('imoveis');
 
-            $table->string('UNI_NOME',255);
-            $table->string('UNI_RESPONSAVEL',255);
-            $table->string('UNI_CPFRESPONSAVEL',255);
-            $table->string('UNI_TELRESPONSAVEL',255);
+            $table->string('UNI_NOME', 200);
+            $table->string('UNI_RESPONSAVEL', 200);
+            $table->string('UNI_CPFRESPONSAVEL', 200);
+            $table->string('UNI_TELRESPONSAVEL', 200);
+
             $table->timestamps();
         });
     }

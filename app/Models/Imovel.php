@@ -15,13 +15,14 @@ class Imovel extends Model
     const created_at = 'tempo_criacao';
     const updated_at = 'tempo_alteracao';
 
-    protected $dateFormat = 'Y-m-d H:i:s';
+    protected $dateFormat = 'Y-m-d H:i';
 
     protected $primaryKey = 'IMO_ID';
 
     protected $fillable = [
-        'IMO_NOME', 'IMO_ENDERECO', 'IMO_COMPLEMENTO', 'IMO_NUMERO', 'IMO_NUMERO', 'IMO_BAIRRO', 'IMO_CIDADE', 'IMO_ESTADO', 'IMO_CEP', 'IMO_RESPONSAVEIS'.'IMO_TELEFONES'
+        'IMO_CNPJ', 'IMO_NOME', 'IMO_LOGRADOURO', 'IMO_COMPLEMENTO', 'IMO_NUMERO', 'IMO_BAIRRO', 'IMO_IDCIDADE', 'IMO_IDESTADO', 'IMO_CEP', 'IMO_RESPONSAVEIS', 'IMO_TELEFONES', 'IMO_STATUS', 'IMO_TAXAFIXA', 'IMO_TAXAVARIAVEL'
     ];
+
 
     protected  $dates = [
         'created_at', 'updated_at'
@@ -43,6 +44,11 @@ class Imovel extends Model
 
     public function getUnidades(){
         return $this->hasMany('App\Models\Unidade', 'UNI_IDIMOVEL', 'IMO_ID');
+    }
+
+    public function administrador()
+    {
+        return $this->hasOne('App\Models\Cliente', 'CLI_ID', 'IMO_IDCLIENTE');
     }
 
 }

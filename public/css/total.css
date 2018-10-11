@@ -1,3 +1,7 @@
+textarea {
+    resize: none;
+}
+
 .linkbread,
 .linkbread:visited,
 .linkbread:active,
@@ -25,7 +29,7 @@
 .collaptitlr a:hover
 {
 	color: #333;
-	opacity: 0.85;	
+	opacity: 0.85;
 }
 
 p.bloco-imovel-cad

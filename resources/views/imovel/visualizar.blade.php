@@ -25,9 +25,9 @@
 	          	<div class="col-md-4">
 	          		<div class="bloco-imovel-info">
 						<p class="titulo"><i class="fa fa-map"></i> <b>Localização</b></p>
-						<p>{{ $imovel->IMO_ENDERECO }}</p>
+						<p>{{ $imovel->IMO_LOGRADOURO }}</p>
 						<p>{{ $imovel->IMO_COMPLEMENTO }}</p>
-						<p>Brasília - DF</p>
+						<p>{{ $imovel->IMO_IDCIDADE }} - {{ $imovel->IMO_IDESTADO }}</p>
 						<p>{{ $imovel->IMO_CEP }}</p>
 	          		</div>
 	          	</div>

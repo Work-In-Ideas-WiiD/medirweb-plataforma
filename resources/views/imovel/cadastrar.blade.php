@@ -5,89 +5,213 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-    <h1><i class="fa fa-building"></i> Imóveis</h1>
+    <h1>Imóveis <small>Adicionar Imóveis</small></h1>
+	<ol class="breadcrumb">
+		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+		<li><a href="#">Imóveis</a></li>
+		<li class="active">Adicionar</li>
+	</ol>
 @stop
 
 @section('content')
-	<div class="col-md-3">
-		<div class="box box-primary">
-			<p class="bloco-imovel-cad">
-				<i class="fa fa-institution"></i>
-			</p>
-			<p style="text-align: center; padding-bottom: 12px;" >Novo Imóvel</p>
-		</div>
-	</div>
-    <div class="col-md-9">
-    	<div class="box box-primary">
-			<div class="box-header">
-				<h3 class="box-title"><i class="fa fa-plus"></i> Adicionar</h3>
-			</div>
-    		{!! Form::open(['action' => 'ImovelController@store', 'method' => 'POST']) !!}
-			<div class="box-body">
-				<div class="row">
-					<div class="col-md-6">
-						<!-- Nome Imóvel -->
-						<div class="form-group">
-							 {{ Form::label('imo_nome', 'Nome') }}
-		      				 {{ Form::text('imo_nome', '', ['class' => 'form-control', 'placeholder' => 'Ex.: Condomínio Residencial A']) }}
-						</div><!-- /.form group -->
-						<!-- Endereço Imóvel -->
-						<div class="form-group">
-							 {{ Form::label('imo_endereco', 'Endereço') }}
-		      				 {{ Form::text('imo_endereco', '', ['class' => 'form-control', 'placeholder' => 'Ex.: Rua AB']) }}
-						</div><!-- /.form group --> 
-						<!-- Complemento Imóvel -->
-						<div class="form-group">
-							 {{ Form::label('imo_complemento', 'Complemento') }}
-		      				 {{ Form::text('imo_complemento', '', ['class' => 'form-control', 'placeholder' => 'Ex.: Quadra X, Lote Y']) }}
-						</div><!-- /.form group --> 
-						<!-- Número Imóvel -->
-						<div class="form-group">
-							 {{ Form::label('imo_numero', 'Número') }}
-		      				 {{ Form::text('imo_numero', '', ['class' => 'form-control', 'placeholder' => 'Ex.: Nº 1']) }}
-						</div><!-- /.form group -->
-						<!-- Responsáveis Imóvel -->
-						<div class="form-group">
-							 {{ Form::label('imo_responsaveis', 'Responsáveis') }}
-		      				 {{ Form::textarea('imo_responsaveis', '', ['class' => 'form-control', 'rows' => 4]) }}
-						</div><!-- /.form group -->
-					</div>
+	<div class="row">
+		<div class="col-md-8">
+			{!! Form::open(['action' => 'ImovelController@store', 'method' => 'POST']) !!}
 
-					<div class="col-md-6">
-						<!-- Bairro Imóvel -->
-						<div class="form-group">
-							 {{ Form::label('imo_cep', 'CEP') }}
-		      				 {{ Form::text('imo_cep', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 74000-000']) }}
-						</div><!-- /.form group --> 
-						<!-- Bairro Imóvel -->
-						<div class="form-group">
-							 {{ Form::label('imo_bairro', 'Bairro') }}
-		      				 {{ Form::text('imo_bairro', '', ['class' => 'form-control', 'placeholder' => 'Ex.: Setor Zero']) }}
-						</div><!-- /.form group -->  
-						<!-- Estado Imóvel -->
-						<div class="form-group">
-							 {{ Form::label('imo_idestado', 'Estado') }}
-							 {{ Form::select('imo_idestado', [9 => 'Goiás'], null, ['class' => 'form-control', 'placeholder' => 'Escolha um estado']) }}
-						</div><!-- /.form group -->  		
-						<!-- Cidade Imóvel -->
-						<div class="form-group">
-							 {{ Form::label('imo_idcidade', 'Cidade') }}
-							 {{ Form::select('imo_idcidade', [1 => 'Goiânia'], null, ['class' => 'form-control', 'placeholder' => 'Escolha uma cidade']) }}
-						</div><!-- /.form group --> 
-						<!-- Responsáveis Imóvel -->
-						<div class="form-group">
-							 {{ Form::label('imo_telefones', 'Telefones') }}
-		      				 {{ Form::textarea('imo_telefones', '', ['class' => 'form-control', 'rows' => 4]) }}
-						</div><!-- /.form group -->
-					</div>
+			<!-- Dados de Identificação -->
 
+			<div class="box box-warning">
+				<div class="box-header with-border">
+					<h3 class="box-title"><i class="fa fa-home"></i> Dados de identificação</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+						</button>
+					</div>
 				</div>
-			</div><!-- /.box-body -->
-			<div class="box-footer">
-				<a href="{{ url()->previous() }}" class="btn btn-default pull-left">Cancelar</a>
-				{{ Form::submit('Adicionar Imóvel', ['class' => 'btn btn-primary pull-right']) }}
-			</div><!-- /.box-footer -->
+
+				<div class='box-body'>
+					<div class='row'>
+
+						<div class='col-md-6'>
+							<div class='form-group'>
+								{{ Form::label('IMO_CNPJ', 'CNPJ') }}
+								{{ Form::text('IMO_CNPJ', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+							<div class='form-group'>
+								{{ Form::label('IMO_NOME', 'Nome') }}
+								{{ Form::text('IMO_NOME', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+							<div class='form-group'>
+								{{ Form::label('IMO_LOGRADOURO', 'Logradouro') }}
+								{{ Form::text('IMO_LOGRADOURO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+							<div class='form-group'>
+								{{ Form::label('IMO_COMPLEMENTO', 'Complemento') }}
+								{{ Form::text('IMO_COMPLEMENTO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+							<div class='form-group'>
+								{{ Form::label('IMO_NUMERO', 'Número') }}
+								{{ Form::text('IMO_NUMERO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class='form-group'>
+								{{ Form::label('IMO_BAIRRO', 'Bairro') }}
+								{{ Form::text('IMO_BAIRRO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+							<div class='form-group'>
+								{{ Form::label('IMO_CIDADE', 'Cidade') }}
+								{{ Form::text('IMO_CIDADE', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+							<div class='form-group'>
+								{{ Form::label('IMO_ESTADO', 'Estado') }}
+								{{ Form::text('IMO_ESTADO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+							<div class='form-group'>
+								{{ Form::label('IMO_CEP', 'CEP') }}
+								{{ Form::text('IMO_CEP', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							</div>
+							<div class='form-group'>
+								{{ Form::label('IMO_STATUS', 'STATUS') }}
+								<select name='IMO_STATUS' class='form-control' >
+									<option value='' selected>Selecione</option>
+									<option value='1'>Ativo</option>
+									<option value='0'>Inativo</option>
+								</select>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- [FIM] Dados de Identificação -->
+
+			<!-- Informações de contato -->
+
+			<div class="box box-success collapsed-box">
+				<div class="box-header with-border">
+					<h3 class="box-title"><i class="fa fa-phone"></i> Informações de Contato</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+						</button>
+					</div>
+				</div>
+
+				<div class='box-body'>
+					<div class='row'>
+
+						<div class='col-md-6'>
+							<div class='form-group'>
+								{{ Form::label('IMO_RESPONSAVEIS', 'Responsáveis') }}
+								{{ Form::textarea('IMO_RESPONSAVEIS', '', ['class' => 'form-control', 'rows' => 4]) }}
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class='form-group'>
+								{{ Form::label('IMO_TELEFONES', 'Telefones') }}
+								{{ Form::textarea('IMO_TELEFONES', '', ['class' => 'form-control', 'rows' => 4]) }}
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<!-- [FIM] Informações de contato -->
+
+			<!-- Taxas de cobrança -->
+
+			<div class="box box-danger collapsed-box">
+				<div class="box-header with-border">
+					<h3 class="box-title"><i class="fa fa-money"></i> Taxas de cobrança</h3>
+					<div class="box-tools pull-right">
+						<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+						</button>
+					</div>
+				</div>
+
+				<div class='box-body'>
+					<div class='row'>
+
+						<div class='col-md-6'>
+							<div class='form-group'>
+								{{ Form::label('IMO_TAXAFIXA', 'Taxa Fixa (R$)') }}
+								{{ Form::text('IMO_TAXAFIXA', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 3,99']) }}
+							</div>
+						</div>
+
+						<div class="col-md-6">
+							<div class='form-group'>
+								{{ Form::label('IMO_TAXAVARIAVEL', 'Taxa Variável (R$/m³)') }}
+								{{ Form::text('IMO_TAXAVARIAVEL', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89']) }}
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<!-- [FIM] Taxas de cobrança -->
+
 			{!! Form::close() !!}
-		</div><!-- /.box .box-primary -->
-	</div><!-- /.col-md-9 -->
+		</div>
+
+		<div class="col-md-4">
+
+			<div class="box box-widget widget-user">
+				<!-- Add the bg color to the header using any of the bg-* classes -->
+				<div class="widget-user-header bg-teal" >
+					<h3 class="widget-user-username">Novo imóvel</h3>
+					<h5 class="widget-user-desc">[Bairro]</h5>
+				</div>
+				<div class="widget-user-image">
+					<img class="img-circle" src="http://i63.tinypic.com/nex65y.png" alt="User Avatar">
+				</div>
+				<div class="box-footer">
+					<div class="row">
+						<div class="col-sm-4 border-right">
+							<div class="description-block">
+								<h5 class="description-header">0</h5>
+								<span class="description-text">AGRUPAMENTOS</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-4 border-right">
+							<div class="description-block">
+								<h5 class="description-header">0</h5>
+								<span class="description-text">UNIDADES</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+						<div class="col-sm-4">
+							<div class="description-block">
+								<h5 class="description-header">0</h5>
+								<span class="description-text">EQUIPAMENTOS</span>
+							</div>
+							<!-- /.description-block -->
+						</div>
+						<!-- /.col -->
+					</div>
+					<!-- /.row -->
+				</div>
+			</div>
+
+			<button type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
+
+			<button type="button" class="btn btn-block btn-primary"><i class="fa fa-file-image-o"></i> Fazer upload da foto de perfil</button>
+
+			<button type="button" class="btn btn-block btn-default"><i class="fa fa-file-image-o"></i> Fazer upload da foto de capa</button>
+
+			<button type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
+
+		</div>
+
+
+
+	<!-- /.box .box-primary -->
+	</div>
 @stop

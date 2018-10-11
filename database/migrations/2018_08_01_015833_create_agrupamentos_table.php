@@ -19,8 +19,12 @@ class CreateAgrupamentosTable extends Migration
             $table->integer('AGR_IDIMOVEL')->unsigned();
             $table->foreign('AGR_IDIMOVEL')->references('IMO_ID')->on('imoveis');
 
-            $table->string('AGR_NOME',255);
+            $table->string('AGR_NOME', 300);
+            $table->string('AGR_TAXAFIXA', 200);
+            $table->string('AGR_TAXAVARIAVEL', 200);
+
             $table->timestamps();
+
         });
     }
 

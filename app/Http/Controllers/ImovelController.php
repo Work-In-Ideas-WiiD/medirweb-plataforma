@@ -119,6 +119,12 @@ class ImovelController extends Controller
         return view('imovel.visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades]);
     }
 
+    public function showdown()
+    {
+        $imoveis = Imovel::all();
+
+        return view('imovel.lista2', ['imoveis' => $imoveis]);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -181,9 +187,12 @@ class ImovelController extends Controller
         foreach($imoveis as $imo)
         {
             $retorno[] = [
-                'IMO_ID' => $imo->IMO_ID,
-                'IMO_NOME' => $imo->IMO_NOME,
-                'IMO_BAIRRO' => $imo->IMO_BAIRRO
+                'IMO_ID'        => $imo->IMO_ID,
+                'IMO_NOME'      => $imo->IMO_NOME,
+                'IMO_BAIRRO'    => $imo->IMO_BAIRRO,
+                'AGR'           => $imo->getAgrupamentos->count(),
+                'UNI'           => $imo->getUnidades->count(),
+                //'EQP'           => $imo->getUnidades->getEquipamentos->count()
             ];
         }
 
