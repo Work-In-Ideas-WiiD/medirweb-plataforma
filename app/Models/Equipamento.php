@@ -11,7 +11,7 @@ class Equipamento extends Model
     const created_at = 'tempo_criacao';
     const updated_at = 'tempo_alteracao';
 
-    protected $dateFormat = 'Y-m-d H:i:s';
+    protected $dateFormat = 'Y-m-d H:i';
 
     protected $primaryKey = 'EQP_ID';
 

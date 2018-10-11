@@ -187,6 +187,11 @@ return [
             'icon'    => 'calendar',
             'url'     => '#',
         ],
+        [
+            'text'    => 'Hidrômetro',
+            'icon'    => 'microchip',
+            'url'     => 'teste',
+        ],
     ],
 
     /*
