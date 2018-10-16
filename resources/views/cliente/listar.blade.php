@@ -39,7 +39,7 @@
                                     @foreach ($clientes as $cliente)
                                         <tr>
                                             <td>{{ $cliente->CLI_ID  }}</td>
-                                            <td>{{ date('d/m/Y H:i', strtotime($cliente->created_at)) }}</td>
+                                            <td>{{ $cliente->created_at->format('d/m/Y H:i') }}</td>
                                             <td>{{ $cliente->CLI_DOCUMENTO }}</td>
                                             <td>{{ $cliente->CLI_NOMEJUR }}</td>
                                             <td>{{ $cliente->CLI_CIDADE }} - {{ $cliente->CLI_ESTADO }}</td>

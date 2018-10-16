@@ -21,7 +21,7 @@ class Cliente extends Model
         'created_at', 'updated_at'
     ];
 
-    protected $dateFormat = 'Y-m-d H:i';
+    //protected $dateFormat = 'Y-m-d H:i';
 
     public function estado()
     {

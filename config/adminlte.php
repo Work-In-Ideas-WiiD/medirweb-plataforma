@@ -142,7 +142,7 @@ return [
                 [
                     'text' => 'Ver todos',
                     'icon' => 'list',
-                    'url'  => 'imovel/listar',
+                    'url'  => 'imovel',
                 ],
             ],
         ],
