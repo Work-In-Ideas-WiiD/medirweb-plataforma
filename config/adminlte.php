@@ -168,6 +168,17 @@ return [
             ],
         ],
         [
+            'text'    => 'Infos',
+            'icon'    => 'info-circle',
+            'submenu' => [
+                [
+                    'text' => 'Equipamentos',
+                    'icon' => 'cog',
+                    'url'  => 'equipamento/timeline',
+                ]
+            ],
+        ],
+        [
             'text'    => 'Consulta consumo',
             'icon'    => 'tachometer',
             'url'     => '#',
