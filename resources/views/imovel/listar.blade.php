@@ -29,7 +29,7 @@
 								<!-- Estado Imóvel -->
 								<div class="form-group">
 									{{ Form::label('IMO_IDESTADO', 'Estado') }}
-									{{ Form::select('IMO_IDESTADO', [9 => 'Brasília', 7 => 'Goías'], null, ['class' => 'form-control', 'placeholder' => 'Escolha um estado', 'id' => 'IMO_IDESTADO' ]) }}
+									{{ Form::select('IMO_IDESTADO', [9 => 'Distrito Federal', 7 => 'Goías'], null, ['class' => 'form-control', 'placeholder' => 'Escolha um estado', 'id' => 'IMO_IDESTADO' ]) }}
 								</div><!-- /.form group -->
 							</div>
 
