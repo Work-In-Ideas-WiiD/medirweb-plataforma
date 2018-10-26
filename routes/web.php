@@ -87,3 +87,8 @@ Route::post('novo-cliente', array('uses' => 'ClienteController@store'));
 Route::get('/equipamento/adicionar', 'EquipamentoController@create')->name('Adicionar Equipamento');
 Route::post('novo-equipamento', array('uses' => 'EquipamentoController@store'));
 Route::get('/equipamento/timeline', 'EquipamentoController@timeline')->name('Timeline');
+
+/* Relatorios */
+
+Route::get('/relatorio/consumo', 'Hello@relatorioConsumo')->name('Relatorio Consumo');
+Route::get('/relatorio/faturas', 'Hello@relatorioFatura')->name('Relatorio Fatura');

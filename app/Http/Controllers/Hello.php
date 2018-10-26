@@ -245,4 +245,14 @@ class Hello extends Controller
         return redirect('teste');
 
     }
+
+    public function relatorioConsumo()
+    {
+        return view('relatorio.consumo');
+    }
+
+    public function relatorioFatura()
+    {
+        return view('relatorio.fatura');
+    }
 }
