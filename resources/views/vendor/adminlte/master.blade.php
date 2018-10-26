@@ -65,6 +65,22 @@
 @endif
 
 <script type="text/javascript">
+    $('#IMO_IDESTADO').on('change', function(){
+
+        if($(this).val() == 9){
+            $('#IMO_IDCIDADE').html('<option>Escolha uma cidade</option>');
+            $('#IMO_IDCIDADE').append("<option value='1'>Brasília</option>");
+        }
+        else{
+            $('#IMO_IDCIDADE').html('<option>Escolha uma cidade</option>');
+            $('#IMO_IDCIDADE').append("<option value='2'>Goiânia</option>");
+        }
+
+    });
+
+</script>
+
+<script type="text/javascript">
 jQuery(document).ready(function(){
   jQuery('#submitFiltro').click(function(e){
     //alert(jQuery('#imo_idestado').val());
