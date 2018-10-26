@@ -7,6 +7,7 @@ use App\Models\Unidade;
 use App\Models\Leitura;
 use App\Teste;
 use Session;
+use App\Models\Imovel;
 
 class Hello extends Controller
 {
@@ -91,8 +92,9 @@ class Hello extends Controller
     {
 
         $unidades = Teste::all();
+        $imovel = Imovel::find(4);
 
-        return view('teste.index', compact('unidades'));
+        return view('teste.index', compact('unidades', 'imovel'));
     }
 
     public function leituraTeste()

@@ -8,13 +8,67 @@
 @section('content')
 
     <div class="col-md-12">
+        <div class="panel box box-primary">
+            <div class="box-header with-border collaptitlr">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed" >
+                    <h4 class="box-title pull-left">
+                        <i class="fa fa-building"></i>
+                        {{ $imovel->IMO_NOME }}
+                    </h4>
+                    <i class="fa fa-chevron-down pull-right"></i>
+                </a>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                <div class="box-body">
+                    <div class="row">
+
+                        <!-- Infomação -->
+                        <div class="col-md-4">
+                            <div class="bloco-imovel-info">
+                                <p class="titulo"><i class="fa fa-map"></i> <b>Localização</b></p>
+                                <p>{{ $imovel->IMO_LOGRADOURO }}</p>
+                                <p>{{ $imovel->IMO_COMPLEMENTO }}</p>
+                                <p>{{ $imovel->IMO_IDCIDADE }} - {{ $imovel->IMO_IDESTADO }}</p>
+                                <p>{{ $imovel->IMO_CEP }}</p>
+                            </div>
+                        </div>
+                        <!-- FIM Informação -->
+
+                        <!-- Infomação -->
+                        <div class="col-md-4">
+                            <div class="bloco-imovel-info">
+                                <p class="titulo"><b><i class="fa fa-user"></i> Responsáveis</b></p>
+                                <p>{!! $imovel->IMO_RESPONSAVEIS !!}</p>
+                            </div>
+                        </div>
+                        <!-- FIM Informação -->
+
+                        <!-- Infomação -->
+                        <div class="col-md-4">
+                            <div class="bloco-imovel-info">
+                                <p class="titulo"><b><i class="fa fa-phone"></i> Contato</b></p>
+                                <p>{!! $imovel->IMO_TELEFONES !!}</p>
+                            </div>
+                        </div>
+                        <!-- FIM Informação -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
         <div class="nav-tabs-custom">
 
             <ul class="nav nav-tabs pull-right">
+                <li class="active"><a href="#tab1" data-toggle="tab" aria-expanded="false">Torre 1</a></li>
+
                 <li class="pull-left header"><h4><i class="fa fa-th-large"></i> Unidades</h4></li>
             </ul>
 
             <div class="tab-content">
+                <div class="tab-pane active" id="tab1">
                         <div class="row">
                             <!-- Unidade -->
                             @if ($unidades !== null)
@@ -94,6 +148,7 @@
                         <!-- FIM Unidade -->
 
                         </div> <!-- FIM .row -->
+                </div> <!-- FIM .tab-pane -->
             </div> <!-- FIM .tab-content -->
 
 
