@@ -181,12 +181,12 @@ return [
         [
             'text'    => 'Consulta consumo',
             'icon'    => 'tachometer',
-            'url'     => '#',
+            'url'     => 'relatorio/consumo',
         ],
         [
             'text'    => 'Relatórios',
             'icon'    => 'file-o ',
-            'url'     => '#',
+            'url'     => 'relatorio/faturas',
         ],
         [
             'text'    => 'Liquidação de Faturas',
