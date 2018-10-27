@@ -86,7 +86,7 @@
         <div class="col-md-3">
             <div class="box box-warning" style="margin-top: -15px;">
                 <div class="box-header with-border gray" style="background-color: #f39c12; color: white; text-align: center;">
-                    <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Consumo de Litros - Valor</h3>
+                    <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Cota consumo Área Comum</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
@@ -102,7 +102,7 @@
         <div class="col-md-3">
             <div class="box box-primary" style="margin-top: -15px;">
                 <div class="box-header with-border gray" style="background-color: #3c8dbc; color: white; text-align: center;">
-                    <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Consumo de Litros - Valor</h3>
+                    <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Valor da Água R$</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
@@ -117,15 +117,15 @@
         <div class="col-md-3">
             <div class="box box-danger" style="margin-top: -15px;">
                 <div class="box-header with-border gray" style="background-color: #dd4b39; color: white; text-align: center;">
-                    <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Consumo de Litros - Valor</h3>
+                    <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Exportar</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
 
-                <div class='box-body'>
-                    <p style="text-align: center; font-weight: 600; font-size: 16px;">13m³ - R$ 245,66</p>
+                <div class='box-body' style="text-align: center;">
+                    <button class="btn-default btn" style="margin-top: 5px; font-size: 10px;"><i class="fa fa-save"></i> CSV</button>
                 </div>
             </div><!-- /.box .box-primary -->
         </div>
