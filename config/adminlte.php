@@ -186,12 +186,12 @@ return [
         [
             'text'    => 'Relatórios',
             'icon'    => 'file-o ',
-            'url'     => 'relatorio/faturas',
+            'url'     => '#',
         ],
         [
             'text'    => 'Liquidação de Faturas',
             'icon'    => 'money',
-            'url'     => '#',
+            'url'     => 'relatorio/faturas',
         ],
         [
             'text'    => 'Agenda Financeira',
