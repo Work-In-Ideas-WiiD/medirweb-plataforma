@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cidade;
+use App\Models\Cliente;
+use App\Models\Estado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\Imovel\ImovelSaveRequest;
 use App\Models\Imovel;
 use App\Models\Unidade;
 use App\Models\Leitura;
 use Session;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 
 class ImovelController extends Controller
@@ -26,8 +31,13 @@ class ImovelController extends Controller
      */
     public function index()
     {
+        $estados = ['' => 'Selecionar Estado'];
+        $_estados = Estado::all();
+        foreach($_estados as $estado)
+            $estados[$estado->EST_ID] = $estado->EST_NOME;
+
         //
-        return view('imovel.listar');
+        return view('imovel.listar', compact( 'estados'));
     }
 
     /**
@@ -37,9 +47,31 @@ class ImovelController extends Controller
      */
     public function create()
     {
-        //
-        return view('imovel.cadastrar');
+        $clientes = ['' => 'Selecionar Cliente'];
+        $_clientes = Cliente::where('CLI_STATUS', 1)->get();
+        foreach($_clientes as $cliente)
+            $clientes[$cliente->CLI_ID] = $cliente->CLI_NOMEJUR;
+
+        $estados = ['' => 'Selecionar Estado'];
+        $_estados = Estado::all();
+        foreach($_estados as $estado)
+            $estados[$estado->EST_ID] = $estado->EST_NOME;
+
+        return view('imovel.cadastrar', compact('clientes', 'estados'));
     }
+
+    public function showCidades($id)
+    {
+        $cidades =  Cidade::where('CID_IDESTADO', $id)->get();
+
+        if(is_null($cidades)){
+            return redirect( URL::previous() );
+        }
+
+
+        return json_encode($cidades);
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -47,26 +79,27 @@ class ImovelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ImovelSaveRequest $request)
     {
-       $this->validate($request, [
-            'imo_nome' => 'required',
-        ]);
+        $dataForm = $request->all();
 
-       $imovel = new Imovel;
-       $imovel->IMO_NOME = $request->input('imo_nome');
-       $imovel->IMO_ENDERECO = $request->input('imo_endereco');
-       $imovel->IMO_COMPLEMENTO = $request->input('imo_complemento');
-       $imovel->IMO_NUMERO = $request->input('imo_numero');
-       $imovel->IMO_BAIRRO = $request->input('imo_bairro');
-       $imovel->IMO_IDCIDADE = $request->input('imo_idcidade');
-       $imovel->IMO_IDESTADO = $request->input('imo_idestado');
-       $imovel->IMO_CEP = $request->input('imo_cep');
-       $imovel->IMO_RESPONSAVEIS = $request->input('imo_responsaveis');
-       $imovel->IMO_TELEFONES = $request->input('imo_telefones');
-       $imovel->save();
+        if($request->hasFile('foto')){
+            $fileName = md5(uniqid().str_random()).'.'.$request->file('foto')->extension();
+            $dataForm['IMO_FOTO'] = $request->file('foto')->move('upload/fotos', $fileName)->getFilename();
 
-       return redirect('/imovel/cadastrar')->with('success', 'Imóvel cadastrado com sucesso.');
+            ImageOptimizer::optimize('upload/fotos/'.$dataForm['IMO_FOTO']);
+        }
+
+        if($request->hasFile('capa')){
+            $fileName = md5(uniqid().str_random()).'.'.$request->file('capa')->extension();
+            $dataForm['IMO_CAPA'] = $request->file('capa')->move('upload/capas', $fileName)->getFilename();
+
+            ImageOptimizer::optimize('upload/capas/'.$dataForm['IMO_CAPA']);
+        }
+
+       $imovel = Imovel::create($dataForm);
+
+       return redirect('/imovel/ver/'.$imovel->IMO_ID)->with('success', 'Imóvel cadastrado com sucesso.');
 
     }
 
@@ -193,6 +226,8 @@ class ImovelController extends Controller
         {
             $retorno[] = [
                 'IMO_ID'        => $imo->IMO_ID,
+                'IMO_FOTO'      => $imo->IMO_FOTO,
+                'IMO_CAPA'      => $imo->IMO_CAPA,
                 'IMO_NOME'      => $imo->IMO_NOME,
                 'IMO_BAIRRO'    => $imo->IMO_BAIRRO,
                 'AGR'           => $imo->getAgrupamentos->count(),

@@ -267,3 +267,17 @@ p.bloco-imovel-cad
 {
 	width: 100%;
 }
+
+.btn-foto
+{
+	opacity: 0;
+	position: absolute;
+	z-index: 99;
+	top: 5px;
+	left: 120px;
+	bottom: 10px;
+}
+.div-foto
+{
+	position: relative;
+}

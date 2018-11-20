@@ -14,9 +14,10 @@
 @stop
 
 @section('content')
+
 	<div class="row">
 		<div class="col-md-8">
-			{!! Form::open(['action' => 'ImovelController@store', 'method' => 'POST']) !!}
+			{!! Form::open(['action' => 'ImovelController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
 			<!-- Dados de Identificação -->
 
@@ -34,51 +35,124 @@
 
 						<div class='col-md-6'>
 							<div class='form-group'>
+								{{ Form::label('IMO_IDCLIENTE', 'Cliente:', []) }}
+								{{ Form::select('IMO_IDCLIENTE', $clientes, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+
+								@if ($errors->has('IMO_IDCLIENTE'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_IDCLIENTE') }}</strong>
+									</span>
+								@endif
+							</div>
+							<div class='form-group'>
 								{{ Form::label('IMO_CNPJ', 'CNPJ') }}
-								{{ Form::text('IMO_CNPJ', '', ['class' => 'form-control', 'placeholder' => '']) }}
+								{{ Form::text('IMO_CNPJ', '', ['class' => 'form-control mask-cnpj']) }}
+
+								@if ($errors->has('IMO_CNPJ'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_CNPJ') }}</strong>
+									</span>
+								@endif
 							</div>
 							<div class='form-group'>
 								{{ Form::label('IMO_NOME', 'Nome') }}
-								{{ Form::text('IMO_NOME', '', ['class' => 'form-control', 'placeholder' => '']) }}
+								{{ Form::text('IMO_NOME', '', ['class' => 'form-control nome', 'placeholder' => '']) }}
+
+								@if ($errors->has('IMO_NOME'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_NOME') }}</strong>
+									</span>
+								@endif
 							</div>
 							<div class='form-group'>
 								{{ Form::label('IMO_LOGRADOURO', 'Logradouro') }}
 								{{ Form::text('IMO_LOGRADOURO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+
+								@if ($errors->has('IMO_LOGRADOURO'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_LOGRADOURO') }}</strong>
+									</span>
+								@endif
 							</div>
 							<div class='form-group'>
 								{{ Form::label('IMO_COMPLEMENTO', 'Complemento') }}
 								{{ Form::text('IMO_COMPLEMENTO', '', ['class' => 'form-control', 'placeholder' => '']) }}
-							</div>
-							<div class='form-group'>
-								{{ Form::label('IMO_NUMERO', 'Número') }}
-								{{ Form::text('IMO_NUMERO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+
+								@if ($errors->has('IMO_COMPLEMENTO'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_COMPLEMENTO') }}</strong>
+									</span>
+								@endif
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class='form-group'>
 								{{ Form::label('IMO_BAIRRO', 'Bairro') }}
-								{{ Form::text('IMO_BAIRRO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+								{{ Form::text('IMO_BAIRRO', '', ['class' => 'form-control bairro', 'placeholder' => '']) }}
+
+								@if ($errors->has('IMO_BAIRRO'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_BAIRRO') }}</strong>
+									</span>
+								@endif
 							</div>
 							<div class='form-group'>
-								{{ Form::label('IMO_CIDADE', 'Cidade') }}
-								{{ Form::text('IMO_CIDADE', '', ['class' => 'form-control', 'placeholder' => '']) }}
+								{{ Form::label('IMO_IDESTADO', 'Estado') }}
+								{{--{{ Form::text('IMO_IDESTADO', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
+								{{ Form::select('IMO_IDESTADO', $estados, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+
+								@if ($errors->has('IMO_IDESTADO'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_IDESTADO') }}</strong>
+									</span>
+								@endif
 							</div>
 							<div class='form-group'>
-								{{ Form::label('IMO_ESTADO', 'Estado') }}
-								{{ Form::text('IMO_ESTADO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+								{{ Form::label('IMO_IDCIDADE', 'Cidade') }}
+								{{--{{ Form::text('IMO_IDCIDADE', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
+								{{ Form::select('IMO_IDCIDADE', ['' => 'Selecionar Cidade'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+
+								@if ($errors->has('IMO_IDCIDADE'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_IDCIDADE') }}</strong>
+									</span>
+								@endif
 							</div>
 							<div class='form-group'>
-								{{ Form::label('IMO_CEP', 'CEP') }}
-								{{ Form::text('IMO_CEP', '', ['class' => 'form-control', 'placeholder' => '']) }}
+								<div class="row">
+									<div class="col-md-6">
+										{{ Form::label('IMO_NUMERO', 'Número') }}
+										{{ Form::text('IMO_NUMERO', '', ['class' => 'form-control mask-num', 'placeholder' => '']) }}
+
+										@if ($errors->has('IMO_NUMERO'))
+											<span class="help-block">
+												<strong style="color: red;">{{ $errors->first('IMO_NUMERO') }}</strong>
+											</span>
+										@endif
+									</div>
+									<div class="col-md-6">
+										{{ Form::label('IMO_CEP', 'CEP') }}
+										{{ Form::text('IMO_CEP', '', ['class' => 'form-control mask-cep', 'placeholder' => '']) }}
+
+										@if ($errors->has('IMO_CEP'))
+											<span class="help-block">
+												<strong style="color: red;">{{ $errors->first('IMO_CEP') }}</strong>
+											</span>
+										@endif
+									</div>
+								</div>
+
 							</div>
 							<div class='form-group'>
 								{{ Form::label('IMO_STATUS', 'STATUS') }}
-								<select name='IMO_STATUS' class='form-control' >
-									<option value='' selected>Selecione</option>
-									<option value='1'>Ativo</option>
-									<option value='0'>Inativo</option>
-								</select>
+								{{ Form::select('IMO_STATUS', ['' => 'Selecione', '1' => 'Ativo', '0' => 'Inativo'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+
+								@if ($errors->has('IMO_STATUS'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_STATUS') }}</strong>
+									</span>
+								@endif
 							</div>
 						</div>
 
@@ -105,6 +179,12 @@
 							<div class='form-group'>
 								{{ Form::label('IMO_RESPONSAVEIS', 'Responsáveis') }}
 								{{ Form::textarea('IMO_RESPONSAVEIS', '', ['class' => 'form-control', 'rows' => 4]) }}
+
+								@if ($errors->has('IMO_RESPONSAVEIS'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_RESPONSAVEIS') }}</strong>
+									</span>
+								@endif
 							</div>
 						</div>
 
@@ -112,6 +192,12 @@
 							<div class='form-group'>
 								{{ Form::label('IMO_TELEFONES', 'Telefones') }}
 								{{ Form::textarea('IMO_TELEFONES', '', ['class' => 'form-control', 'rows' => 4]) }}
+
+								@if ($errors->has('IMO_TELEFONES'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_TELEFONES') }}</strong>
+									</span>
+								@endif
 							</div>
 						</div>
 
@@ -138,14 +224,26 @@
 						<div class='col-md-6'>
 							<div class='form-group'>
 								{{ Form::label('IMO_TAXAFIXA', 'Taxa Fixa (R$)') }}
-								{{ Form::text('IMO_TAXAFIXA', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 3,99']) }}
+								{{ Form::text('IMO_TAXAFIXA', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 3,99', 'data-error' => $errors->first('IMO_TAXAFIXA')]) }}
+
+								@if ($errors->has('IMO_TAXAFIXA'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_TAXAFIXA') }}</strong>
+									</span>
+								@endif
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class='form-group'>
-								{{ Form::label('IMO_TAXAVARIAVEL', 'Taxa Variável (R$/m³)') }}
-								{{ Form::text('IMO_TAXAVARIAVEL', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89']) }}
+								{{ Form::label('IMO_TAXAFIXA', 'Taxa Variável (R$/m³)') }}
+								{{ Form::text('IMO_TAXAVARIAVEL', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89', 'data-error' => $errors->first('IMO_TAXAVARIAVEL')]) }}
+
+								@if ($errors->has('IMO_TAXAFIXA'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('IMO_TAXAFIXA') }}</strong>
+									</span>
+								@endif
 							</div>
 						</div>
 
@@ -155,19 +253,18 @@
 
 			<!-- [FIM] Taxas de cobrança -->
 
-			{!! Form::close() !!}
 		</div>
 
 		<div class="col-md-4">
 
 			<div class="box box-widget widget-user">
 				<!-- Add the bg color to the header using any of the bg-* classes -->
-				<div class="widget-user-header bg-teal" >
-					<h3 class="widget-user-username">Novo imóvel</h3>
-					<h5 class="widget-user-desc">[Bairro]</h5>
+				<div class="widget-user-header bg-teal imagem" id="preview-image-capa" style="background: url('http://www.condominiosc.com.br/media/k2/items/cache/2a7c5a55d24475c5674a6cabf9d5e3d4_XL.jpg') center center;">
+					<h3 class="widget-user-username labelNome">Novo imóvel</h3>
+					<h5 class="widget-user-desc labelBairro">[Bairro]</h5>
 				</div>
 				<div class="widget-user-image">
-					<img class="img-circle" src="http://i63.tinypic.com/nex65y.png" alt="User Avatar">
+					<img class="img-circle" src="http://i63.tinypic.com/nex65y.png" id="preview-image-foto" alt="User Avatar">
 				</div>
 				<div class="box-footer">
 					<div class="row">
@@ -200,18 +297,23 @@
 				</div>
 			</div>
 
-			<button type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
+			<button type="submit" type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
 
-			<button type="button" class="btn btn-block btn-primary"><i class="fa fa-file-image-o"></i> Fazer upload da foto de perfil</button>
+			<div type="button" class="btn btn-block btn-primary div-foto"><i class="fa fa-file-image-o"></i> Fazer upload da foto de perfil
+				<input onchange="previewUploadFoto(this, '#preview-image-foto')" class="btn-foto" type="file" name="foto">
+			</div>
 
-			<button type="button" class="btn btn-block btn-default"><i class="fa fa-file-image-o"></i> Fazer upload da foto de capa</button>
+			<div type="button" class="btn btn-block btn-default div-foto"><i class="fa fa-file-image-o"></i> Fazer upload da foto de capa
+				<input onchange="previewUploadCapa(this, '#preview-image-capa')" class="btn-foto" type="file" name="capa">
+			</div>
 
 			<button type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
 
 		</div>
 
-
+	{!! Form::close() !!}
 
 	<!-- /.box .box-primary -->
 	</div>
+
 @stop

@@ -49,6 +49,8 @@
 <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
 <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
+<script src="{{ asset('js/jquery-inputmask/dist/jquery.inputmask.bundle.js') }}"></script>
+
 @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -65,17 +67,161 @@
 @endif
 
 <script type="text/javascript">
-    $('#IMO_IDESTADO').on('change', function(){
 
-        if($(this).val() == 9){
-            $('#IMO_IDCIDADE').html('<option>Escolha uma cidade</option>');
-            $('#IMO_IDCIDADE').append("<option value='1'>Brasília</option>");
+    $(document).ready(function() {
+        $('select[name="IMO_IDESTADO"]').on('change', function() {
+            var stateID = $(this).val();
+            if(stateID) {
+                $.ajax({
+                    url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+
+                        $('select[name="IMO_IDCIDADE"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="IMO_IDCIDADE"]').append('<option value="'+ value.CID_ID +'">'+ value.CID_NOME +'</option>');
+                        });
+
+                    }
+                });
+            }else{
+                $('select[name="city"]').empty();
+            }
+        });
+    });
+
+    $(document).ready(function() {
+        $('select[name="CLI_ESTADO"]').on('change', function() {
+            var stateID = $(this).val();
+            if(stateID) {
+                $.ajax({
+                    url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+
+                        $('select[name="CLI_CIDADE"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="CLI_CIDADE"]').append('<option value="'+ value.CID_ID +'">'+ value.CID_NOME +'</option>');
+                        });
+
+                    }
+                });
+            }else{
+                $('select[name="city"]').empty();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    function previewUploadFoto(input, img) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $(img).attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
         }
-        else{
-            $('#IMO_IDCIDADE').html('<option>Escolha uma cidade</option>');
-            $('#IMO_IDCIDADE').append("<option value='2'>Goiânia</option>");
+    }
+
+    function previewUploadCapa(input, img) {
+
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.imagem').css('background','url("'+e.target.result+'")');
+                //$('.imagem').attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $( ".nome" )
+        .change(function () {
+            var str = $( this ).val();
+            $( ".labelNome" ).text( str );
+        })
+        .change();
+
+    $( ".bairro" )
+        .change(function () {
+            var str = $( this ).val();
+            $( ".labelBairro" ).text( str );
+        })
+        .change();
+
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
+
+        if($.fn.datepicker) {
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                language: 'pt-BR',
+                autoclose: true,
+            });
         }
 
+        if($.fn.inputmask) {
+            $('.mask-date').inputmask('99/99/9999');
+            $('.mask-hour').inputmask('99:99');
+            $('.mask-cpf').inputmask('999.999.999-99');
+            $('.mask-cnpj').inputmask('99.999.999/9999-99');
+            $('.mask-ano').inputmask('9999');
+            $('.mask-cep').inputmask('99999999');
+            $('.mask-num').inputmask('9[99999]');
+            $('.mask-phone').inputmask('(99) 9999-9999[9]');
+            $('.mask-co').inputmask('Regex', {regex: "[a-zA-Z- ]*"});
+        }
+
+        if($.fn.maskMoney) {
+            $('.mask-money').maskMoney()
+        }
+
+        $('#participou').on('change', function () {
+            if($(this).val() == '1')
+            {
+                $('.selectblock').show();
+            }
+            else{
+                $('.selectblock').fadeOut('fast');
+            }
+        })
+
+    });
+
+</script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('select[name="CLI_TIPO"]').on('change', function() {
+            var stateID = $(this).val();
+            if(stateID == 1) {
+                $('.cnpj').fadeOut();
+                $('.cpf').fadeIn();
+                $('.classcpf').attr('required', 'required');
+                $('.classcnpj').removeAttr('required');
+            }
+            if(stateID == 2) {
+                $('.cpf').fadeOut();
+                $('.cnpj').fadeIn();
+                $('.classcnpj').attr('required', 'required');
+                $('.classcpf').removeAttr('required');
+            }
+        });
     });
 
 </script>
@@ -129,12 +275,28 @@ jQuery(document).ready(function(){
                 var $html  = '<div class="col-md-4">';
                     $html += '<a href="{!! url('imovel/ver/') !!}/' + this.IMO_ID + '" alt="' + this.IMO_NOME + '" style="text-decoration: none; color: #111;" >';
                     $html +=    '<div class="box box-widget widget-user">';
-                    $html +=        '<div class="widget-user-header bg-black" style="background: url(\'http://www.condominiosc.com.br/media/k2/items/cache/2a7c5a55d24475c5674a6cabf9d5e3d4_XL.jpg\') center center;">';
+                    if(this.IMO_CAPA == null)
+                    {
+                        $html +=        '<div class="widget-user-header bg-black" style="background: url(\'http://www.condominiosc.com.br/media/k2/items/cache/2a7c5a55d24475c5674a6cabf9d5e3d4_XL.jpg\') center center;">';
+
+                    }
+                    else
+                    {
+                        $html +=        '<div class="widget-user-header bg-black" style="background: url(\'http://localhost/medirweb/public/upload/capas/' + this.IMO_CAPA +'\') center center;">';
+                    }
                     $html +=            '<h3 class="widget-user-username">' + this.IMO_NOME + '</h3>';
                     $html +=            '<h5 class="widget-user-desc">' + this.IMO_BAIRRO + '</h5>';
                     $html +=        '</div>';
                     $html +=        '<div class="widget-user-image">';
-                    $html +=            '<img class="img-circle" src="http://i63.tinypic.com/nex65y.png" alt="User Avatar">';
+                if(this.IMO_FOTO == null)
+                {
+                    $html +=   '<img class="img-circle" src="http://i63.tinypic.com/nex65y.png" alt="User Avatar">';
+                }
+                else
+                {
+                    $html +=    '<img class="img-circle" src="http://localhost/medirweb/public/upload/fotos/'+this.IMO_FOTO+'" alt="User Avatar">';
+                }
+                    // $html +=        '<img class="img-circle" src="http://i63.tinypic.com/nex65y.png" alt="User Avatar">';
                     $html +=        '</div>';
                     $html +=        '<div class="box-footer">';
                     $html +=            '<div class="row">';

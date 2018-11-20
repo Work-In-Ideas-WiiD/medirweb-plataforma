@@ -25,6 +25,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+
 /* Imóveis */
 
 Route::get('/imovel', 'ImovelController@index')->name('Listar Imóveis');
@@ -32,6 +33,7 @@ Route::get('/imovel/adicionar', 'ImovelController@create')->name('Adicionar Imó
 Route::post('novo-imovel', array('uses' => 'ImovelController@store'));
 Route::get('/imovel/ver/{id}', array('uses' => 'ImovelController@show'));
 Route::post('/imovel/getImoveisLista', array('uses' => 'ImovelController@getImoveisLista'));
+Route::get('/imovel/getCidadesLista/{id}', array('uses' => 'ImovelController@showCidades'));
 Route::get('/imovel/editar/{id}', array('as'=>'imovel.edit', 'uses' => 'ImovelController@edit'));
 Route::put('imovel/update/{imovel}', array('as'=>'imovel.update', 'uses'=>'ImovelController@update'));
 

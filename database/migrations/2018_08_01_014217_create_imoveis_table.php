@@ -19,6 +19,9 @@ class CreateImoveisTable extends Migration
             $table->integer('IMO_IDCLIENTE')->unsigned();
             $table->foreign('IMO_IDCLIENTE')->references('CLI_ID')->on('clientes');
 
+            $table->string('IMO_FOTO', 200)->nullable();
+            $table->string('IMO_CAPA', 200)->nullable();
+
             $table->string('IMO_CNPJ', 200);
             $table->string('IMO_NOME', 200);
             $table->string('IMO_LOGRADOURO', 300);

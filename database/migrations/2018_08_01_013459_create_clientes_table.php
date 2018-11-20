@@ -18,6 +18,8 @@ class CreateClientesTable extends Migration
 
             $table->integer('CLI_TIPO')->unsigned();
 
+            $table->string('CLI_FOTO', 200)->nullable();
+
             $table->string('CLI_DOCUMENTO', 200);
             $table->string('CLI_NOMEJUR', 200);
             $table->string('CLI_NOMEFAN', 200);
