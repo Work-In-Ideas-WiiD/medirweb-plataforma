@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\Imovel;
 
-class ImovelSaveRequest extends ImovelRequest
+class ImovelEditRequest extends ImovelRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -14,7 +14,7 @@ class ImovelSaveRequest extends ImovelRequest
         return [
             'IMO_IDCLIENTE' => 'required|not_in:0',
             'IMO_NOME' => 'required|max:255',
-            'IMO_CNPJ' => 'required|cnpj|formato_cnpj|unique:imoveis,IMO_ID' .$this->get('IMO_ID'),
+            'IMO_CNPJ' => 'required|cnpj|formato_cnpj|unique:imoveis',
             'IMO_LOGRADOURO' => 'required',
             'IMO_COMPLEMENTO' => 'required',
             'IMO_NUMERO' => 'required',

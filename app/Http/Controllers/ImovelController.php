@@ -13,6 +13,7 @@ use App\Models\Unidade;
 use App\Models\Leitura;
 use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
+use Illuminate\Support\Facades\File;
 
 
 class ImovelController extends Controller
@@ -178,7 +179,22 @@ class ImovelController extends Controller
             return redirect( URL::previous() );
         }
 
-        return view('imovel.editar', compact('imovel'));
+        $clientes = ['' => 'Selecionar Cliente'];
+        $_clientes = Cliente::where('CLI_STATUS', 1)->get();
+        foreach($_clientes as $cliente)
+            $clientes[$cliente->CLI_ID] = $cliente->CLI_NOMEJUR;
+
+        $estados = ['' => 'Selecionar Estado'];
+        $_estados = Estado::all();
+        foreach($_estados as $estado)
+            $estados[$estado->EST_ID] = $estado->EST_NOME;
+
+        $cidades = ['' => 'Selecionar Estado'];
+        $_cidades = Cidade::where('CID_IDESTADO', $imovel->IMO_IDESTADO)->get();
+        foreach($_cidades as $cidade)
+            $cidades[$cidade->CID_ID] = $cidade->CID_NOME;
+
+        return view('imovel.editar', compact('imovel', 'clientes', 'estados', 'cidades'));
     }
 
     /**
@@ -195,6 +211,34 @@ class ImovelController extends Controller
         if(is_null($imovel)){
             return redirect( URL::previous() );
         }
+
+        if($request->hasFile('foto')){
+            $foto_path = public_path("upload/fotos/".$imovel->IMO_FOTO);
+
+            if (File::exists($foto_path)) {
+                File::delete($foto_path);
+            }
+
+            $fileName = md5(uniqid().str_random()).'.'.$request->file('foto')->extension();
+            $dataForm['IMO_FOTO'] = $request->file('foto')->move('upload/fotos', $fileName)->getFilename();
+
+            ImageOptimizer::optimize('upload/fotos/'.$dataForm['IMO_FOTO']);
+        } else
+            $request->offsetUnset('foto');
+
+        if($request->hasFile('capa')){
+            $capa_path = public_path("upload/capas/".$imovel->IMO_FOTO);
+
+            if (File::exists($capa_path)) {
+                File::delete($capa_path);
+            }
+
+            $fileName = md5(uniqid().str_random()).'.'.$request->file('capa')->extension();
+            $dataForm['IMO_CAPA'] = $request->file('capa')->move('upload/capas', $fileName)->getFilename();
+
+            ImageOptimizer::optimize('upload/capas/'.$dataForm['IMO_CAPA']);
+        } else
+            $request->offsetUnset('capa');
 
         $dataForm = $request->all();
 

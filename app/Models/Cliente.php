@@ -33,4 +33,8 @@ class Cliente extends Model
         return $this->hasOne('App\Models\Cidade', 'CID_ID', 'CLI_CIDADE');
     }
 
+    public function getImoveis(){
+        return $this->hasMany('App\Models\Imovel', 'IMO_IDCLIENTE', 'CLI_ID');
+    }
+
 }

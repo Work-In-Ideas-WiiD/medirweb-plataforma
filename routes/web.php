@@ -84,6 +84,9 @@ Route::get('/teste/desligar', 'Hello@desligarTeste');
 Route::get('/cliente', 'ClienteController@index')->name('Listar Clientes');
 Route::get('/cliente/adicionar', 'ClienteController@create')->name('Adicionar Cliente');
 Route::post('novo-cliente', array('uses' => 'ClienteController@store'));
+Route::get('/cliente/editar/{id}', 'ClienteController@edit')->name('clinete.edit');
+Route::put('/cliente/update/{id}', 'ClienteController@update')->name('clinete.update');
+
 
 /* Equipamento */
 Route::get('/equipamento/adicionar', 'EquipamentoController@create')->name('Adicionar Equipamento');

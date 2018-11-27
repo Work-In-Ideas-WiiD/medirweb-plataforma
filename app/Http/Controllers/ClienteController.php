@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\Estado;
+use App\Models\Cidade;
 use App\Http\Requests\Cliente\ClienteSaveRequest;
 use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
@@ -108,7 +109,26 @@ class ClienteController extends Controller
      */
     public function edit($id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+
+        if(is_null($cliente)){
+            return redirect( URL::previous() );
+        }
+
+        $estados = ['' => 'Selecionar Estado'];
+        $_estados = Estado::all();
+        foreach($_estados as $estado)
+            $estados[$estado->EST_ID] = $estado->EST_NOME;
+
+
+        $cidades = ['' => 'Selecionar Estado'];
+        $_cidades = Cidade::where('CID_IDESTADO', $cliente->CLI_ESTADO)->get();
+        foreach($_cidades as $cidade)
+            $cidades[$cidade->CID_ID] = $cidade->CID_NOME;
+
+        $imoveis = $cliente->getImoveis()->count();
+
+        return view('cliente.editar', compact('cliente', 'estados', 'imoveis', 'cidades'));
     }
 
     /**
@@ -120,7 +140,31 @@ class ClienteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cliente = Cliente::findOrFail($id);
+
+        if(is_null($cliente)){
+            return redirect( URL::previous() );
+        }
+
+        if($request->hasFile('foto')){
+            $foto_path = public_path("upload/clientes/".$cliente->CLI_FOTO);
+
+            if (File::exists($foto_path)) {
+                File::delete($foto_path);
+            }
+
+            $fileName = md5(uniqid().str_random()).'.'.$request->file('foto')->extension();
+            $dataForm['CLI_FOTO'] = $request->file('foto')->move('upload/clientes', $fileName)->getFilename();
+
+            ImageOptimizer::optimize('upload/clientes/'.$dataForm['CLI_FOTO']);
+        } else
+            $request->offsetUnset('foto');
+
+        $dataForm = $request->all();
+
+        $cliente->update($dataForm);
+
+        return redirect('cliente')->with('success', 'Administrador atualizado com sucesso.');
     }
 
     /**

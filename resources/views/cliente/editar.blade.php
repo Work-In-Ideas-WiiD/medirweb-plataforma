@@ -5,18 +5,18 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-    <h1>Clientes <small>Adicionar Cliente</small></h1>
+    <h1>Clientes <small>Editar Cliente</small></h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Clientes</a></li>
-        <li class="active">Adicionar</li>
+            <li class="active">Adicionar</li>
     </ol>
 @stop
 
 @section('content')
     <div class="row">
         <div class="col-md-8">
-            {!! Form::open(['action' => 'ClienteController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::model($cliente, ['route' => ['clinete.update', $cliente->CLI_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 
             <! -- Informações Pessoais -->
             <div class="box box-warning">
@@ -34,11 +34,7 @@
                         <div class='col-md-6'>
                             <div class='form-group'>
                                 {{ Form::label('CLI_TIPO', 'Tipo') }}
-                                <select id='CLI_TIPO' name='CLI_TIPO' class='form-control' >
-                                    <option value='' selected>Selecione uma opção</option>
-                                    <option value='1'>CPF</option>
-                                    <option value='2'>CNPJ</option>
-                                </select>
+                                {{ Form::select('CLI_TIPO', ['' => 'Selecione uma opção', '1' => 'CPF', '2' => 'CNPJ'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
 
                                 @if ($errors->has('CLI_TIPO'))
                                     <span class="help-block">
@@ -46,29 +42,56 @@
 									</span>
                                 @endif
                             </div>
-                            <div class='form-group cpf'>
-                                {{ Form::label('cpf', 'Documento') }}
-                                {{ Form::text('cpf', '', ['class' => 'form-control mask-cpf classcpf', 'placeholder' => '']) }}
+                            @if($cliente->CLI_TIPO == 1)
+                                <div class='form-group cpf'>
+                                    {{ Form::label('cpf', 'Documento') }}
+                                    {{ Form::text('cpf', $cliente->CLI_DOCUMENTO, ['class' => 'form-control mask-cpf classcpf', 'placeholder' => '']) }}
 
-                                @if ($errors->has('cpf'))
-                                    <span class="help-block">
+                                    @if ($errors->has('cpf'))
+                                        <span class="help-block">
 										<strong style="color: red;">{{ $errors->first('cpf') }}</strong>
 									</span>
-                                @endif
-                            </div>
-                            <div class='form-group cnpj' style="display: none;">
-                                {{ Form::label('cnpj', 'Documento') }}
-                                {{ Form::text('cnpj', '', ['class' => 'form-control mask-cnpj classcnpj', 'placeholder' => '']) }}
+                                    @endif
+                                </div>
 
-                                @if ($errors->has('cnpj'))
-                                    <span class="help-block">
+                                <div class='form-group cnpj' style="display: none;">
+                                    {{ Form::label('cnpj', 'Documento') }}
+                                    {{ Form::text('cnpj', '', ['class' => 'form-control mask-cnpj classcnpj', 'placeholder' => '']) }}
+
+                                    @if ($errors->has('cnpj'))
+                                        <span class="help-block">
 										<strong style="color: red;">{{ $errors->first('cnpj') }}</strong>
 									</span>
-                                @endif
-                            </div>
+                                    @endif
+                                </div>
+                            @else
+                                <div class='form-group cpf' style="display: none;">
+                                    {{ Form::label('cpf', 'Documento') }}
+                                    {{ Form::text('cpf', '', ['class' => 'form-control mask-cpf classcpf', 'placeholder' => '']) }}
+
+                                    @if ($errors->has('cpf'))
+                                        <span class="help-block">
+										<strong style="color: red;">{{ $errors->first('cpf') }}</strong>
+									</span>
+                                    @endif
+                                </div>
+
+                                <div class='form-group cnpj' >
+                                    {{ Form::label('cnpj', 'Documento') }}
+                                    {{ Form::text('cnpj', $cliente->CLI_DOCUMENTO, ['class' => 'form-control mask-cnpj classcnpj', 'placeholder' => '']) }}
+
+                                    @if ($errors->has('cnpj'))
+                                        <span class="help-block">
+										<strong style="color: red;">{{ $errors->first('cnpj') }}</strong>
+									</span>
+                                    @endif
+                                </div>
+                            @endif
+
+
                             <div class='form-group'>
                                 {{ Form::label('CLI_NOMEJUR', 'Nome completo / Razão Social') }}
-                                {{ Form::text('CLI_NOMEJUR', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                                {{ Form::text('CLI_NOMEJUR', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
                                 @if ($errors->has('CLI_NOMEJUR'))
                                     <span class="help-block">
@@ -78,7 +101,7 @@
                             </div>
                             <div class='form-group'>
                                 {{ Form::label('CLI_NOMEFAN', 'Nome no comprovante / Nome Fantasia') }}
-                                {{ Form::text('CLI_NOMEFAN', '', ['class' => 'form-control nome', 'placeholder' => '']) }}
+                                {{ Form::text('CLI_NOMEFAN', null, ['class' => 'form-control nome', 'placeholder' => '']) }}
 
                                 @if ($errors->has('CLI_NOMEFAN'))
                                     <span class="help-block">
@@ -88,7 +111,7 @@
                             </div>
                             <div class='form-group'>
                                 {{ Form::label('CLI_DATANASC', 'Data de nascimento') }}
-                                {{ Form::date('CLI_DATANASC', '', ['class'=>'form-control']) }}
+                                {{ Form::date('CLI_DATANASC', null, ['class'=>'form-control']) }}
 
                                 @if ($errors->has('CLI_DATANASC'))
                                     <span class="help-block">
@@ -114,7 +137,7 @@
                         <div class='col-md-6'>
                             <div class='form-group'>
                                 {{ Form::label('CLI_LOGRADOURO', 'Logradouro') }}
-                                {{ Form::text('CLI_LOGRADOURO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                                {{ Form::text('CLI_LOGRADOURO', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
                                 @if ($errors->has('CLI_LOGRADOURO'))
                                     <span class="help-block">
@@ -124,7 +147,7 @@
                             </div>
                             <div class='form-group'>
                                 {{ Form::label('CLI_COMPLEMENTO', 'Complemento') }}
-                                {{ Form::text('CLI_COMPLEMENTO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                                {{ Form::text('CLI_COMPLEMENTO', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
                                 @if ($errors->has('CLI_COMPLEMENTO'))
                                     <span class="help-block">
@@ -136,7 +159,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         {{ Form::label('CLI_NUMERO', 'Número') }}
-                                        {{ Form::text('CLI_NUMERO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                                        {{ Form::text('CLI_NUMERO', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
                                         @if ($errors->has('CLI_NUMERO'))
                                             <span class="help-block">
@@ -146,7 +169,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         {{ Form::label('CLI_CEP', 'CEP') }}
-                                        {{ Form::text('CLI_CEP', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                                        {{ Form::text('CLI_CEP', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
                                         @if ($errors->has('CLI_CEP'))
                                             <span class="help-block">
@@ -159,7 +182,7 @@
                             </div>
                             <div class='form-group'>
                                 {{ Form::label('CLI_BAIRRO', 'Bairro') }}
-                                {{ Form::text('CLI_BAIRRO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                                {{ Form::text('CLI_BAIRRO', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
                                 @if ($errors->has('CLI_BAIRRO'))
                                     <span class="help-block">
@@ -181,7 +204,7 @@
                             <div class='form-group'>
                                 {{ Form::label('CLI_CIDADE', 'Cidade') }}
                                 {{--{{ Form::text('CLI_CIDADE', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                                {{ Form::select('CLI_CIDADE', ['' => 'Selecionar Cidade'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                                {{ Form::select('CLI_CIDADE', $cidades, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
 
                                 @if ($errors->has('CLI_CIDADE'))
                                     <span class="help-block">
@@ -194,10 +217,10 @@
                     </div>
                 </div>
 
-                <!--<div class='box-footer'>
+            <!--<div class='box-footer'>
                     <a href='{{ url()->previous() }}'' class='btn btn-default pull-left'>Cancelar</a>
                     {{ Form::submit('Adicionar Cliente', ['class' => 'btn btn-primary pull-right']) }}
-                </div>-->
+                    </div>-->
 
             </div><!-- /.box .box-primary -->
 
@@ -219,7 +242,7 @@
                         <div class='col-md-12'>
                             <div class='form-group'>
                                 {{ Form::label('CLI_DADOSBANCARIOS', 'Dados Bancários') }}
-                                {{ Form::textarea('CLI_DADOSBANCARIOS', '', ['class' => 'form-control', 'rows' => 4]) }}
+                                {{ Form::textarea('CLI_DADOSBANCARIOS', null, ['class' => 'form-control', 'rows' => 4]) }}
 
                                 @if ($errors->has('CLI_DADOSBANCARIOS'))
                                     <span class="help-block">
@@ -229,7 +252,7 @@
                             </div>
                             <div class='form-group'>
                                 {{ Form::label('CLI_DADOSCONTATO', 'Dados de contato') }}
-                                {{ Form::textarea('CLI_DADOSCONTATO', '', ['class' => 'form-control', 'rows' => 4]) }}
+                                {{ Form::textarea('CLI_DADOSCONTATO', null, ['class' => 'form-control', 'rows' => 4]) }}
 
                                 @if ($errors->has('CLI_DADOSCONTATO'))
                                     <span class="help-block">
@@ -280,7 +303,7 @@
                     <h5 class="widget-user-desc"></h5>
                 </div>
                 <div class="widget-user-image">
-                    <img class="img-circle" src="http://i64.tinypic.com/6gxxyo.png" id="preview-image-foto" alt="Avatar">
+                    <img class="img-circle" @if(isset($cliente->CLI_FOTO)) src="{{ url('/upload/clientes/'.$cliente->CLI_FOTO) }}" @else src="http://i64.tinypic.com/6gxxyo.png" @endif  id="preview-image-foto" alt="Avatar">
                 </div>
                 <div class="box-footer">
                     <div class="row">

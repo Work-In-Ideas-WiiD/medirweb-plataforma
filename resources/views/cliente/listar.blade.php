@@ -50,7 +50,7 @@
                                             @endif
                                             <td>
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i></button>
+                                                    <a href="{{ route('clinete.edit', ['cliente' => $cliente->CLI_ID]) }}" type="button" class="btn btn-info btn-flat"><i class="fa fa-pencil"></i></a>
                                                 </div>
                                             </td>
                                         </form>

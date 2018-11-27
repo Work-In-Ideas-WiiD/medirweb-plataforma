@@ -307,7 +307,7 @@
 				<input onchange="previewUploadCapa(this, '#preview-image-capa')" class="btn-foto" type="file" name="capa">
 			</div>
 
-			<button type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
+			<button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
 
 		</div>
 
