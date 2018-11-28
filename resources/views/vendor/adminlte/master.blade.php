@@ -73,7 +73,8 @@
             var stateID = $(this).val();
             if(stateID) {
                 $.ajax({
-                    url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    url: '/public/imovel/getCidadesLista/'+stateID,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {
@@ -96,7 +97,8 @@
             var stateID = $(this).val();
             if(stateID) {
                 $.ajax({
-                    url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    url: '/public/imovel/getCidadesLista/'+stateID,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {
