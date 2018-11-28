@@ -105,7 +105,7 @@ class Hello extends Controller
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'https://de0d1c32.ngrok.io/api/leitura/03',
+            CURLOPT_URL => 'http://192.168.130.1/api/leitura/01',
             //CURLOPT_URL => 'http://192.168.255.18/api/leitura/03',
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
         ));
@@ -159,7 +159,7 @@ class Hello extends Controller
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'https://de0d1c32.ngrok.io/api/ativacao/03',
+            CURLOPT_URL => 'http://192.168.130.1/api/ativacao/01',
             //CURLOPT_URL => 'http://192.168.255.18/api/ativacao/03',
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
         ));
@@ -206,7 +206,7 @@ class Hello extends Controller
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'https://de0d1c32.ngrok.io/api/corte/03',
+            CURLOPT_URL => 'http://192.168.130.1/api/corte/01',
             //CURLOPT_URL => 'http://192.168.255.18/api/corte/03',
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
         ));
