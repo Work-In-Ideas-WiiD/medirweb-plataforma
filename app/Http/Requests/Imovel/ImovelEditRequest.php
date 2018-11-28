@@ -14,7 +14,7 @@ class ImovelEditRequest extends ImovelRequest
         return [
             'IMO_IDCLIENTE' => 'required|not_in:0',
             'IMO_NOME' => 'required|max:255',
-            'IMO_CNPJ' => 'required|cnpj|formato_cnpj|unique:imoveis',
+            'IMO_CNPJ' => 'required|cnpj|formato_cnpj|unique:imoveis,IMO_ID,' .$this->get('id'). ',IMO_ID',
             'IMO_LOGRADOURO' => 'required',
             'IMO_COMPLEMENTO' => 'required',
             'IMO_NUMERO' => 'required',

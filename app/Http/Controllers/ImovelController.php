@@ -14,6 +14,7 @@ use App\Models\Leitura;
 use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\File;
+use App\Http\Requests\Imovel\ImovelEditRequest;
 
 
 class ImovelController extends Controller
@@ -204,7 +205,7 @@ class ImovelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ImovelEditRequest $request, $id)
     {
         $imovel = Imovel::findOrFail($id);
 

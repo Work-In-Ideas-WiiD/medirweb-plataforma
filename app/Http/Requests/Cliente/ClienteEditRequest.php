@@ -13,8 +13,8 @@ class ClienteEditRequest extends ClienteRequest
     {
         return [
             'CLI_TIPO' => 'required|not_in:0',
-            'cnpj' => 'nullable|cnpj|formato_cnpj|unique:clientes,CLI_ID' .$this->get('CLI_ID'),
-            'cpf' => 'nullable|cpf|formato_cpf|unique:clientes,CLI_ID' .$this->get('CLI_ID'),
+            'cnpj' => 'nullable|cnpj|formato_cnpj|unique:clientes,CLI_ID,' .$this->get('id'). ',CLI_ID',
+            'cpf' => 'nullable|cpf|formato_cpf|unique:clientes,CLI_ID,' .$this->get('id'). ',CLI_ID',
             'CLI_NOMEJUR' => 'required|max:255',
             'CLI_NOMEFAN' => 'required|max:255',
             'CLI_DATANASC' => 'required',

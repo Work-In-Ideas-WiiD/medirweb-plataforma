@@ -10,6 +10,7 @@ use App\Models\Cidade;
 use App\Http\Requests\Cliente\ClienteSaveRequest;
 use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
+use App\Http\Requests\Cliente\ClienteEditRequest;
 
 class ClienteController extends Controller
 {
@@ -138,7 +139,7 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ClienteEditRequest $request, $id)
     {
         $cliente = Cliente::findOrFail($id);
 
