@@ -35,34 +35,67 @@
 						<div class='col-md-6'>
 							<div class='form-group'>
 								{{ Form::label('UNI_IDIMOVEL', 'Imóvel') }}
-								<select name='UNI_IDIMOVEL' class='form-control' >
-									<option value='' selected>Selecione um imóvel</option>
-								</select>
+								{{ Form::select('UNI_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+
+								@if ($errors->has('UNI_IDIMOVEL'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('UNI_IDIMOVEL') }}</strong>
+									</span>
+								@endif
 							</div>
 							<div class='form-group'>
 								{{ Form::label('UNI_NOME', 'Nome') }}
 								{{ Form::text('UNI_NOME', '', ['class' => 'form-control', 'placeholder' => '']) }}
+
+								@if ($errors->has('UNI_NOME'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('UNI_NOME') }}</strong>
+									</span>
+								@endif
 							</div>
 							<div class='form-group'>
 								{{ Form::label('UNI_CPFRESPONSAVEL', 'CPF do Responsável') }}
-								{{ Form::text('UNI_CPFRESPONSAVEL', '', ['class' => 'form-control', 'placeholder' => '']) }}
+								{{ Form::text('UNI_CPFRESPONSAVEL', '', ['class' => 'form-control mask-cpf', 'placeholder' => '']) }}
+
+								@if ($errors->has('UNI_CPFRESPONSAVEL'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('UNI_CPFRESPONSAVEL') }}</strong>
+									</span>
+								@endif
 							</div>
 						</div>
 
 						<div class="col-md-6">
 							<div class='form-group'>
 								{{ Form::label('UNI_IDAGRUPAMENTO', 'Agrupamento') }}
-								<select name='UNI_IDAGRUPAMENTO' class='form-control' >
-									<option value='' selected>Selecione um agrupamento</option>
-								</select>
+								{{ Form::select('UNI_IDAGRUPAMENTO', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+
+								@if ($errors->has('UNI_IDAGRUPAMENTO'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('UNI_IDAGRUPAMENTO') }}</strong>
+									</span>
+								@endif
+
 							</div>
 							<div class='form-group'>
 								{{ Form::label('UNI_RESPONSAVEL', 'Responsável') }}
 								{{ Form::text('UNI_RESPONSAVEL', '', ['class' => 'form-control', 'placeholder' => '']) }}
+
+								@if ($errors->has('UNI_RESPONSAVEL'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('UNI_RESPONSAVEL') }}</strong>
+									</span>
+								@endif
 							</div>
 							<div class='form-group'>
 								{{ Form::label('UNI_TELRESPONSAVEL', 'Telefone do Responsável') }}
-								{{ Form::text('UNI_TELRESPONSAVEL', '', ['class' => 'form-control', 'placeholder' => '']) }}
+								{{ Form::text('UNI_TELRESPONSAVEL', '', ['class' => 'form-control mask-phone', 'placeholder' => '']) }}
+
+								@if ($errors->has('UNI_TELRESPONSAVEL'))
+									<span class="help-block">
+										<strong style="color: red;">{{ $errors->first('UNI_TELRESPONSAVEL') }}</strong>
+									</span>
+								@endif
 							</div>
 						</div>
 
@@ -76,11 +109,13 @@
 
 		<div class="col-md-4">
 
-			<button type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
+			<button type="submit" type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
 
-			<button type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
+			<button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
 
 		</div>
+
+		{!! Form::close() !!}
 
 	</div>
 @stop

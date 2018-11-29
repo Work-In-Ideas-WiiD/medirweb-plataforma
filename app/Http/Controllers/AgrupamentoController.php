@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Agrupamento;
 use App\Models\Imovel;
+use App\Http\Requests\Agrupamento\AgrupamentoSaveRequest;
 
 class AgrupamentoController extends Controller
 {
@@ -33,7 +34,7 @@ class AgrupamentoController extends Controller
      */
     public function create()
     {
-        $imoveis         = Imovel::pluck('IMO_NOME', 'IMO_ID');
+        $imoveis  = Imovel::pluck('IMO_NOME', 'IMO_ID');
 
         return view('agrupamento.cadastrar', ['imoveis' => $imoveis]);
     }
@@ -44,12 +45,11 @@ class AgrupamentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AgrupamentoSaveRequest $request)
     {
-        $agrupamento = new Agrupamento;
-        $agrupamento->AGR_IDIMOVEL = $request->input('AGR_IDIMOVEL');
-        $agrupamento->AGR_NOME = $request->input('AGR_NOME');
-        $agrupamento->save();
+        $dataForm = $request->all();
+
+        $agrupamento = Agrupamento::create($dataForm);
 
         return redirect('/imovel')->with('success', 'Agrupamento cadastrado com sucesso.');
     }

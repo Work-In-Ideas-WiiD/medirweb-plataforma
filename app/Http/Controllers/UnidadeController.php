@@ -7,6 +7,7 @@ use App\Models\Unidade;
 use App\Models\Leitura;
 use App\Models\Agrupamento;
 use App\Models\Imovel;
+use App\Http\Requests\Unidade\UnidadeSaveRequest;
 
 class UnidadeController extends Controller
 {
@@ -33,9 +34,28 @@ class UnidadeController extends Controller
      */
     public function create()
     {
-        $agrupamentos = Agrupamento::where('AGR_IDIMOVEL',1)->pluck('AGR_NOME','AGR_ID')->toArray();
+        //$imoveis  = Imovel::pluck('IMO_NOME', 'IMO_ID');
 
-        return view('unidade.cadastrar', ['agrupamentos' => $agrupamentos]);
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel)
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+
+        return view('unidade.cadastrar', ['imoveis' => $imoveis]);
+    }
+
+    public function showAgrupamento($id)
+    {
+        //$agrupamentos = Agrupamento::where('AGR_IDIMOVEL', $id)->pluck('AGR_NOME','AGR_ID')->toArray();
+
+        $agrupamentos = Agrupamento::where('AGR_IDIMOVEL', $id)->get();
+
+        if(is_null($agrupamentos)){
+            return redirect( URL::previous() );
+        }
+
+
+        return json_encode($agrupamentos);
     }
 
     /**
@@ -44,17 +64,12 @@ class UnidadeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UnidadeSaveRequest $request)
     {
 
-        $unidade = new Unidade;
-        $unidade->UNI_IDAGRUPAMENTO     = $request->input('UNI_IDAGRUPAMENTO');
-        $unidade->UNI_IDIMOVEL          = $request->input('UNI_IDIMOVEL');
-        $unidade->UNI_NOME              = $request->input('UNI_NOME');
-        $unidade->UNI_RESPONSAVEL       = $request->input('UNI_RESPONSAVEL');
-        $unidade->UNI_CPFRESPONSAVEL    = $request->input('UNI_CPFRESPONSAVEL');
-        $unidade->UNI_TELRESPONSAVEL    = $request->input('UNI_TELRESPONSAVEL');
-        $unidade->save();
+        $dataForm = $request->all();
+
+        $undiade = Unidade::create($dataForm);
 
         return redirect('/imovel')->with('success', 'Unidade cadastrada com sucesso.');
     }

@@ -35,13 +35,23 @@
 						<div class='col-md-6'>
 							<div class='form-group'>
 								{{ Form::label('AGR_IDIMOVEL', 'Imóvel') }}
-								<select name='AGR_IDIMOVEL' class='form-control' >
-									<option value='' selected>Selecione um imóvel</option>
-								</select>
+								{{ Form::select('AGR_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+
+								@if ($errors->has('AGR_IDIMOVEL'))
+									<span class="help-block">
+										    <strong style="color: red;">{{ $errors->first('AGR_IDIMOVEL') }}</strong>
+									    </span>
+								@endif
 							</div>
 							<div class='form-group'>
 								{{ Form::label('AGR_NOME', 'Nome') }}
 								{{ Form::text('AGR_NOME', '', ['class' => 'form-control', 'placeholder' => '']) }}
+
+								@if ($errors->has('AGR_NOME'))
+									<span class="help-block">
+										    <strong style="color: red;">{{ $errors->first('AGR_NOME') }}</strong>
+									    </span>
+								@endif
 							</div>
 						</div>
 
@@ -49,10 +59,22 @@
 							<div class='form-group'>
 								{{ Form::label('AGR_TAXAFIXA', 'Taxa fixa (R$)') }}
 								{{ Form::text('AGR_TAXAFIXA', '', ['class' => 'form-control', 'placeholder' => '']) }}
+
+								@if ($errors->has('AGR_TAXAFIXA'))
+									<span class="help-block">
+										    <strong style="color: red;">{{ $errors->first('AGR_TAXAFIXA') }}</strong>
+									    </span>
+								@endif
 							</div>
 							<div class='form-group'>
 								{{ Form::label('AGR_TAXAVARIAVEL', 'Taxa variável (R$/m³)') }}
 								{{ Form::text('AGR_TAXAVARIAVEL', '', ['class' => 'form-control', 'placeholder' => '']) }}
+
+								@if ($errors->has('AGR_TAXAVARIAVEL'))
+									<span class="help-block">
+										    <strong style="color: red;">{{ $errors->first('AGR_TAXAVARIAVEL') }}</strong>
+									    </span>
+								@endif
 							</div>
 						</div>
 
@@ -61,17 +83,17 @@
 			</div>
 			<!-- [FIM] Dados de Identificação -->
 
-			{!! Form::close() !!}
-
 		</div><!-- /.col-md-8 -->
 
 		<div class="col-md-4">
 
-			<button type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
+			<button type="submit" type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
 
-			<button type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
+			<button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
 
 		</div>
+
+		{!! Form::close() !!}
 
 	</div>
 @stop

@@ -69,6 +69,33 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
+        $('select[name="UNI_IDIMOVEL"]').on('change', function() {
+            var stateID = $(this).val();
+            if(stateID) {
+                $.ajax({
+                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    url: '/medirweb/public/unidade/getAgrupamentoLista/'+stateID,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+
+                        $('select[name="UNI_IDAGRUPAMENTO"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="UNI_IDAGRUPAMENTO"]').append('<option value="'+ value.AGR_ID +'">'+ value.AGR_NOME +'</option>');
+                        });
+
+                    }
+                });
+            }else{
+                $('select[name="city"]').empty();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
         $('select[name="IMO_IDESTADO"]').on('change', function() {
             var stateID = $(this).val();
             if(stateID) {

@@ -25,7 +25,7 @@
 
                             <div class="small-box bg-teal">
                                 <div class="inner">
-                                    <h3>5</h3>
+                                    <h3>{{ number_format($total_clientes, 0, '', '.') }}</h3>
 
                                     <p>Clientes</p>
                                 </div>
@@ -43,7 +43,7 @@
 
                             <div class="small-box bg-orange">
                                 <div class="inner">
-                                    <h3>18</h3>
+                                    <h3>{{ number_format($total_imovel, 0, '', '.') }}</h3>
 
                                     <p>Imóveis</p>
                                 </div>
@@ -61,7 +61,7 @@
 
                             <div class="small-box bg-green">
                                 <div class="inner">
-                                    <h3>22</h3>
+                                    <h3>{{ number_format($ativos_hidrometros, 0, '', '.') }}</h3>
 
                                     <p>Hidrometros ativos</p>
                                 </div>

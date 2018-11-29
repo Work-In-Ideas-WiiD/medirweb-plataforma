@@ -59,6 +59,7 @@ Route::post('novo-agrupamento', array('uses' => 'AgrupamentoController@store'));
 
 Route::get('/unidade/ver/{id}', array('uses' => 'UnidadeController@show'));
 Route::get('/unidade/adicionar', 'UnidadeController@create')->name('Adicionar Unidade');
+Route::get('/unidade/getAgrupamentoLista/{id}', array('uses' => 'UnidadeController@showAgrupamento'));
 Route::post('nova-unidade', array('uses' => 'UnidadeController@store'));
 
 /* Unidades */

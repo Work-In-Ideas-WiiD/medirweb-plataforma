@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\Cliente;
+use App\Models\Imovel;
+use App\Models\Prumada;
 
 class HomeController extends Controller
 {
@@ -26,6 +29,8 @@ class HomeController extends Controller
     {
         /* Dashboard */
         $datadehoje = Carbon::today();
-        return view('dashboard.ver', ['datacalendario' => $datadehoje]);
+
+        return view('dashboard.ver', ['datacalendario' => $datadehoje, 'total_clientes' => Cliente::count(), 'total_imovel' => Imovel::count(), 'ativos_hidrometros' => Prumada::where('PRU_STATUS', 1)->count()]);
     }
+
 }

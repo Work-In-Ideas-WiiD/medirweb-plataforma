@@ -35,7 +35,7 @@
                         <div class='col-md-6'>
                             <div class='form-group'>
                                 {{ Form::label('EQP_IDUNIDADE', 'ID da Unidade') }}
-                                {{ Form::text('EQP_IDUNIDADE', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                                {{ Form::select('EQP_IDUNIDADE', $unidades, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
                             </div>
                             <div class='form-group'>
                                 {{ Form::label('EQP_IDFUNCIONAL', 'ID Funcional') }}

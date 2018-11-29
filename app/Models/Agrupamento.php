@@ -11,12 +11,12 @@ class Agrupamento extends Model
     const created_at = 'tempo_criacao';
     const updated_at = 'tempo_alteracao';
 
-    protected $dateFormat = 'Y-m-d H:i';
+    //protected $dateFormat = 'Y-m-d H:i';
 
     protected $primaryKey = 'AGR_ID';
 
     protected $fillable = [
-        'AGR_NOME', 'AGR_TAXAFIXA', 'AGR_TAXAVARIAVEL'
+        'AGR_IDIMOVEL', 'AGR_NOME', 'AGR_TAXAFIXA', 'AGR_TAXAVARIAVEL'
     ];
 
     public function imovel()
