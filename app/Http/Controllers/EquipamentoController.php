@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Equipamento;
+use App\Models\Unidade;
 
 class EquipamentoController extends Controller
 {
@@ -24,7 +26,12 @@ class EquipamentoController extends Controller
      */
     public function create()
     {
-        return view('equipamento.cadastrar');
+        $unidades = ['' => 'Selecionar Unidade'];
+        $_unidades = Unidade::all();
+        foreach($_unidades as $unidade)
+            $unidades[$unidade->UNI_ID] = $unidade->UNI_NOME;
+
+        return view('equipamento.cadastrar', ['unidades' => $unidades]);
     }
 
     /**

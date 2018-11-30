@@ -54,5 +54,6 @@ return array(
     'Complex\\' => array($vendorDir . '/markbaker/complex/classes/src'),
     'Collective\\Html\\' => array($vendorDir . '/laravelcollective/html/src'),
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
+    'Artesaos\\Defender\\' => array($vendorDir . '/artesaos/defender/src/Defender'),
     'App\\' => array($baseDir . '/app'),
 );
