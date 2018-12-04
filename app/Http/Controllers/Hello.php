@@ -36,6 +36,23 @@ class Hello extends Controller
 
     public function testeLeitura()
     {
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://192.168.130.4/api/leitura/03',
+            //CURLOPT_URL => 'http://192.168.255.18/api/leitura/03',
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        ));
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
+
+        $jsons = json_decode($resp);
+
+        var_dump($jsons); die();
+
         $unidade = Unidade::find(3);
 
         //var_dump($unidade->getPrumadas); die();
