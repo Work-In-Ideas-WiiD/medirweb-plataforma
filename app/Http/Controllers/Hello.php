@@ -165,7 +165,7 @@ class Hello extends Controller
             Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.' );
         }
 
-        return redirect('teste');
+        return redirect('teste/'.$teste->id);
     }
 
     public function ligarTeste($id)
@@ -212,7 +212,7 @@ class Hello extends Controller
             Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
         }
 
-        return redirect('teste');
+        return redirect('teste/'.$teste->id);
     }
 
     public function desligarTeste($id)
@@ -259,7 +259,7 @@ class Hello extends Controller
             Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
         }
 
-        return redirect('teste');
+        return redirect('teste/'.$teste->id);
 
     }
 
