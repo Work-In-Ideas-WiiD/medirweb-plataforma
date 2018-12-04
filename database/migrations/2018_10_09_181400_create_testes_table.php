@@ -21,6 +21,9 @@ class CreateTestesTable extends Migration
             $table->string('diferenca');
             $table->string('status');
             $table->integer('valor');
+            $table->string('id_imovel');
+            $table->string('ip_equipamento');
+            $table->string('id_hidrometro');
             $table->timestamps();
         });
     }

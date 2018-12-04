@@ -83,16 +83,16 @@
 	            						<i class="fa fa-retweet"></i> Leitura
 	            					</a> -->
 
-                                                    <a href="{{ url('/teste/ler') }}" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+                                                    <a href="{{ url('/teste/ler/'.$unidade->id) }}" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
                                                         <i class="fa fa-retweet"></i> Leitura
                                                     </a>
 
                                                     @if($unidade->status == 1)
-                                                        <a href="{{ url('/teste/desligar') }}" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
+                                                        <a href="{{ url('/teste/desligar/'.$unidade->id) }}" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
                                                             <i class="fa fa-close"></i> Corte
                                                         </a>
                                                     @else
-                                                        <a href="{{ url('/teste/ligar') }}" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
+                                                        <a href="{{ url('/teste/ligar/'.$unidade->id) }}" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
                                                             <i class="fa fa-power-off"></i> Ativação
                                                         </a>
                                                     @endif

@@ -12,7 +12,7 @@ class Teste extends Model
      * @var array
      */
     protected $fillable = [
-        'metro', 'litro', 'mililitro', 'diferenca', 'valor', 'status'
+        'metro', 'litro', 'mililitro', 'diferenca', 'valor', 'status', 'id_imovel', 'ip_equipamento', 'id_hidrometro'
     ];
 
     /**

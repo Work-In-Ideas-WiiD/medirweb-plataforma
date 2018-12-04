@@ -113,9 +113,9 @@ class ImovelController extends Controller
      */
     public function show($id)
     {
-        if($id == 4)
+        if($id == 4 ||  $id == 8)
         {
-            return redirect('teste');
+            return redirect('teste/'.$id);
         }
 
         $imovel =  Imovel::findorFail($id);

@@ -105,24 +105,24 @@ class Hello extends Controller
         }
     }
 
-    public function hidrometroTeste()
+    public function hidrometroTeste($id)
     {
 
-        $unidades = Teste::all();
-        $imovel = Imovel::find(4);
+        $unidades = Teste::where('id_imovel', $id)->get();
+        $imovel = Imovel::find($id);
 
         return view('teste.index', compact('unidades', 'imovel'));
     }
 
-    public function leituraTeste()
+    public function leituraTeste($id)
     {
-        $teste = Teste::find(3);
+        $teste = Teste::find($id);
 
         $curl = curl_init();
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://192.168.130.1/api/leitura/01',
+            CURLOPT_URL => 'http://'.$teste->ip_equipamento.'/api/leitura/'.$teste->id_hidrometro,
             //CURLOPT_URL => 'http://192.168.255.18/api/leitura/03',
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
         ));
@@ -168,15 +168,15 @@ class Hello extends Controller
         return redirect('teste');
     }
 
-    public function ligarTeste()
+    public function ligarTeste($id)
     {
-        $teste = Teste::find(3);
+        $teste = Teste::find($id);
 
         $curl = curl_init();
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://192.168.130.1/api/ativacao/01',
+            CURLOPT_URL => 'http://'.$teste->ip_equipamento.'/api/ativacao/'.$teste->id_hidrometro,
             //CURLOPT_URL => 'http://192.168.255.18/api/ativacao/03',
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
         ));
@@ -215,15 +215,15 @@ class Hello extends Controller
         return redirect('teste');
     }
 
-    public function desligarTeste()
+    public function desligarTeste($id)
     {
-        $teste = Teste::find(3);
+        $teste = Teste::find($id);
 
         $curl = curl_init();
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://192.168.130.1/api/corte/01',
+            CURLOPT_URL => 'http://'.$teste->ip_equipamento.'/api/corte/'.$teste->id_hidrometro,
             //CURLOPT_URL => 'http://192.168.255.18/api/corte/03',
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
         ));

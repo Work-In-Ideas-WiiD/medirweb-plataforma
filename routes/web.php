@@ -75,11 +75,11 @@ Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@des
 
 Route::get('/teste/leitura', 'Hello@testeLeitura');
 
-Route::get('/teste', 'Hello@hidrometroTeste');
+Route::get('/teste/{id}', 'Hello@hidrometroTeste');
 
-Route::get('/teste/ler', 'Hello@leituraTeste');
-Route::get('/teste/ligar', 'Hello@ligarTeste');
-Route::get('/teste/desligar', 'Hello@desligarTeste');
+Route::get('/teste/ler/{id}', 'Hello@leituraTeste');
+Route::get('/teste/ligar/{id}', 'Hello@ligarTeste');
+Route::get('/teste/desligar/{id}', 'Hello@desligarTeste');
 
 /* Clientes */
 Route::get('/cliente', 'ClienteController@index')->name('Listar Clientes');
