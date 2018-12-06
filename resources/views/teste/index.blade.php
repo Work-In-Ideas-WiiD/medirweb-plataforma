@@ -104,7 +104,7 @@
 
                                             </div>
                                             <div class="col col-md-6 leitura">
-                                                <p class="small">Consumo</p>
+                                                <p class="small"><i class="fa fa-bath" aria-hidden="true"></i> Consumo - Água</p>
                                                 <div class="row">
                                                     <div class="col-md-9" style="margin: 0; padding-right: 0;">
                                                         <div class="big">
@@ -133,6 +133,140 @@
                                                         <p style="line-height: 1.4em; text-decoration: none; cursor: default; color: #fff;">m³</p>
                                                         <p style="line-height: 2.0em; text-decoration: none; cursor: default; color: #fff;">L</p>
                                                         <p style="line-height: 1.0em; text-decoration: none; cursor: default; color: #fff;">dL</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div> <!-- FIM .leituracontainer -->
+                                    </div><!-- FIM .col-md-3 -->
+
+                                    <div class="col-md-3">
+                                        <div class="leituracontainer" style=" background: #35764d !important; border: 2px solid #274e34 !important;">
+                                            <div class="col col-md-6 marcacao" >
+                                                <p>{!! $unidade->status == 1 ? "<i class='fa fa-circle' style='color: green;''></i>" : "<i class='fa fa-circle' style='color: red;'></i>" !!}
+                                                    {{ $unidade->id + 1 }}</p>
+
+                                                <!-- <a href="#" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+                                            <i class="fa fa-retweet"></i> Leitura
+                                        </a> -->
+
+                                                <a href="#" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+                                                    <i class="fa fa-retweet"></i> Leitura
+                                                </a>
+
+                                                @if($unidade->status == 1)
+                                                    <a href="#" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
+                                                        <i class="fa fa-close"></i> Corte
+                                                    </a>
+                                                @else
+                                                    <a href="#" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
+                                                        <i class="fa fa-power-off"></i> Ativação
+                                                    </a>
+                                            @endif
+                                            <!-- <a type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
+											<i class="fa fa-close"></i> Corte
+										</a> -->
+
+                                                <p>ID: #4</p>
+
+                                            </div>
+                                            <div class="col col-md-6 leitura">
+                                                <p class="small"><i class="fa fa-fire" aria-hidden="true"></i> Consumo - Gás</p>
+                                                <div class="row">
+                                                    <div class="col-md-9" style="margin: 0; padding-right: 0;">
+                                                        <div class="big">
+
+                                                            <a href="#">
+
+                                                                <p class="valor">{{ $unidade->metro }}</p>
+
+                                                            </a>
+
+                                                            <a href="#">
+
+                                                                <p class="valor">{{ $unidade->litro }}</p>
+
+                                                            </a>
+
+                                                            <a href="#">
+
+                                                                <p class="valor">{{ $unidade->mililitro }}</p>
+
+                                                            </a>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1" style="margin: 0; padding-left: 3px;">
+                                                        <p style="line-height: 1.4em; text-decoration: none; cursor: default; color: #fff;">m³</p>
+                                                        <p style="line-height: 2.0em; text-decoration: none; cursor: default; color: #fff;">L</p>
+                                                        <p style="line-height: 1.0em; text-decoration: none; cursor: default; color: #fff;">dL</p>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div> <!-- FIM .leituracontainer -->
+                                    </div><!-- FIM .col-md-3 -->
+
+                                    <div class="col-md-3">
+                                        <div class="leituracontainer" style=" background: #8b0000 !important; border: 2px solid #79291b !important;">
+                                            <div class="col col-md-6 marcacao" >
+                                                <p>{!! $unidade->status == 1 ? "<i class='fa fa-circle' style='color: green;''></i>" : "<i class='fa fa-circle' style='color: red;'></i>" !!}
+                                                    {{ $unidade->id + 2 }}</p>
+
+                                                <!-- <a href="#" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+                                            <i class="fa fa-retweet"></i> Leitura
+                                        </a> -->
+
+                                                <a href="#" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+                                                    <i class="fa fa-retweet"></i> Leitura
+                                                </a>
+
+                                                @if($unidade->status == 1)
+                                                    <a href="#" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
+                                                        <i class="fa fa-close"></i> Corte
+                                                    </a>
+                                                @else
+                                                    <a href="#" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
+                                                        <i class="fa fa-power-off"></i> Ativação
+                                                    </a>
+                                            @endif
+                                            <!-- <a type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
+											<i class="fa fa-close"></i> Corte
+										</a> -->
+
+                                                <p>ID: #5</p>
+
+                                            </div>
+                                            <div class="col col-md-6 leitura">
+                                                <p class="small"><i class="fa fa-bolt" aria-hidden="true"></i> Consumo - Energia</p>
+                                                <div class="row">
+                                                    <div class="col-md-9" style="margin: 0; padding-right: 0;">
+                                                        <div class="big">
+
+                                                            <a href="#">
+
+                                                                <p class="valor">{{ $unidade->metro }}</p>
+
+                                                            </a>
+
+                                                            <a href="#">
+
+                                                                <p class="valor">{{ $unidade->litro }}</p>
+
+                                                            </a>
+
+                                                            {{--<a href="#">--}}
+
+                                                                {{--<p class="valor">{{ $unidade->mililitro }}</p>--}}
+
+                                                            {{--</a>--}}
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1" style="margin: 0; padding-left: 3px;">
+                                                        <p style="line-height: 1.4em; text-decoration: none; cursor: default; color: #fff;">MWh</p>
+                                                        <p style="line-height: 2.0em; text-decoration: none; cursor: default; color: #fff;">Kwh</p>
+                                                        {{--<p style="line-height: 1.0em; text-decoration: none; cursor: default; color: #fff;">dL</p>--}}
                                                     </div>
                                                 </div>
 
