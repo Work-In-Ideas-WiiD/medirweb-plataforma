@@ -51,7 +51,7 @@ class Hello extends Controller
 
         $jsons = json_decode($resp);
 
-        var_dump($jsons); die();
+        var_dump($resp); die();
 
         $unidade = Unidade::find(3);
 
