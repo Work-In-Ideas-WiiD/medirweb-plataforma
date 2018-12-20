@@ -21,9 +21,7 @@ class ImovelController extends Controller
 {
     public function __construct()
     {
-
         $this->middleware('auth');
-
     }
 
     /**
@@ -400,11 +398,11 @@ class ImovelController extends Controller
 
                         Leitura::create($leitura);
                     }
-                    else
-                    {
-                        Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
-                        return redirect('imovel/ver/'.$id);
-                    }
+//                    else
+//                    {
+//                        Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
+//                        return redirect('imovel/ver/'.$id);
+//                    }
                 }
             }
         /*}*/
