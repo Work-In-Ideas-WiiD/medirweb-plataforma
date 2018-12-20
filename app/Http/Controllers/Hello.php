@@ -8,6 +8,8 @@ use App\Models\Leitura;
 use App\Teste;
 use Session;
 use App\Models\Imovel;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\LeituraExport;
 
 class Hello extends Controller
 {
@@ -34,8 +36,14 @@ class Hello extends Controller
     	var_dump(request('conteudo'));
     }
 
+    public function export()
+    {
+        return Excel::download(new LeituraExport(), 'leituras.xlsx');
+    }
+
     public function testeLeitura()
     {
+
         $curl = curl_init();
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(

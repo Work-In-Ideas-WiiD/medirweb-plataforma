@@ -25,6 +25,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+/* Imóveis */
+
+Route::resource('usuario', 'UserController');
+
 
 /* Imóveis */
 
@@ -72,6 +76,7 @@ Route::get('/unidade/leitura/{unidade}', array('uses' => 'UnidadeController@leit
 Route::get('/unidade/ligar/{unidade}', array('uses' => 'UnidadeController@ligarUnidade'));
 Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
 
+Route::get('/leitura/export', 'Hello@export');
 
 Route::get('/teste/leitura', 'Hello@testeLeitura');
 
@@ -98,3 +103,4 @@ Route::get('/equipamento/timeline', 'EquipamentoController@timeline')->name('Tim
 
 Route::get('/relatorio/consumo', 'Hello@relatorioConsumo')->name('Relatorio Consumo');
 Route::get('/relatorio/faturas', 'Hello@relatorioFatura')->name('Relatorio Fatura');
+

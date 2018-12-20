@@ -9,7 +9,7 @@ class Unidade extends Model
 	const created_at = 'tempo_criacao';
     const updated_at = 'tempo_alteracao';
 
-    protected $dateFormat = 'Y-m-d H:i';
+    //protected $dateFormat = 'Y-m-d H:i';
 
     protected $primaryKey = 'UNI_ID';
 
