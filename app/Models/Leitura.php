@@ -38,6 +38,7 @@ class Leitura extends Model
             ->join('imoveis', 'imoveis.IMO_ID', '=', 'unidades.UNI_IDIMOVEL')
             ->where('imoveis.IMO_ID', '=', $value)
             ->where('leituras.created_at', '>=', date('2018-12-19').' 00:00:00')
+            ->orderBy('unidades.UNI_NOME', 'desc')
             ->get();
     }
 
