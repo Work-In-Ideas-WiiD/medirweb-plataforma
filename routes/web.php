@@ -25,10 +25,10 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-/* Imóveis */
+/* Usuários */
 
 Route::resource('usuario', 'UserController');
-
+Route::get('/user/{id}', 'UserController@index');
 
 /* Imóveis */
 
@@ -103,4 +103,3 @@ Route::get('/equipamento/timeline', 'EquipamentoController@timeline')->name('Tim
 
 Route::get('/relatorio/consumo', 'Hello@relatorioConsumo')->name('Relatorio Consumo');
 Route::get('/relatorio/faturas', 'Hello@relatorioFatura')->name('Relatorio Fatura');
-

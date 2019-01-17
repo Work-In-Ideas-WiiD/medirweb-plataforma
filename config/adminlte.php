@@ -184,6 +184,37 @@ return [
             'url'     => 'relatorio/consumo',
         ],
         [
+            'text'    => 'Usuários',
+            'icon'    => 'users',
+            'submenu' => [
+                [
+                    'text' => 'Novo usuário',
+                    'icon' => 'plus',
+                    'url'  => 'usuario/create',
+                ],
+                [
+                    'text' => 'Administrador',
+                    'icon' => 'user',
+                    'url'  => 'user/administrador',
+                ],
+                [
+                    'text' => 'Sindico',
+                    'icon' => 'user',
+                    'url'  => 'user/sindico/',
+                ],
+                [
+                    'text' => 'Secretário',
+                    'icon' => 'user',
+                    'url'  => 'user/secretario/',
+                ],
+                [
+                    'text' => 'Usuário Comum',
+                    'icon' => 'user',
+                    'url'  => 'user/comum/',
+                ],
+            ],
+        ],
+        [
             'text'    => 'Relatórios',
             'icon'    => 'file-o ',
             'url'     => '#',

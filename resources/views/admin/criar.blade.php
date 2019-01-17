@@ -5,7 +5,7 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-    <h1>Imóveis <small>Adicionar Usuário</small></h1>
+    <h1>Usuários <small>Adicionar Usuário</small></h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a href="#">Usuários</a></li>
