@@ -62,7 +62,7 @@
                             </div>
                             <div class="modal-body">
 
-                              <p class="alert alert-danger">Tem certeza que deseja excluir cliente "{{ $usuario->name }}" ?</p>
+                              <p class="alert alert-danger">Tem certeza que deseja excluir usuário "{{ $usuario->name }}" ?</p>
                               <div class="form-actions">
                                 <a href="{{ route('usuario.destroy', ['usuario' => $usuario->id]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteForm}}').submit();" class="btn btn-danger btn-flat">SIM</a>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
