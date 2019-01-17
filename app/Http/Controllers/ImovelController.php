@@ -31,13 +31,20 @@ class ImovelController extends Controller
      */
     public function index()
     {
+        $imoveis = Imovel::get();
+
+        return view('imovel.listar', compact('imoveis'));
+    }
+
+    public function buscar()
+    {
         $estados = ['' => 'Selecionar Estado'];
         $_estados = Estado::all();
         foreach($_estados as $estado)
             $estados[$estado->EST_ID] = $estado->EST_NOME;
 
         //
-        return view('imovel.listar', compact( 'estados'));
+        return view('imovel.listar_buscar', compact( 'estados'));
     }
 
     /**
@@ -363,7 +370,7 @@ class ImovelController extends Controller
                         CURLOPT_URL => 'http://192.168.130.4/api/leitura/'.dechex($prumada->PRU_ID),
                         CURLOPT_USERAGENT => 'Codular Sample cURL Request'
                     ));
-                    
+
                     // Send the request & save response to $resp
                     $resp = curl_exec($curl);
                     // Close request to clear up some resources
@@ -380,7 +387,7 @@ class ImovelController extends Controller
                         $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
 
                         $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-                        
+
                         // var_dump($metro_cubico);
                         // var_dump($litros);
                         // var_dump($mililitro);
@@ -517,4 +524,3 @@ class ImovelController extends Controller
         return redirect('imovel/ver/'.$imovel->IMO_ID);
     }
 }
-

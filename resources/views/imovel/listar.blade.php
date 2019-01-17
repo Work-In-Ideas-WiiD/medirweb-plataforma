@@ -2,64 +2,98 @@
 
 @section('title', 'MedirWeb')
 
-{!! Html::style( asset('css/total.css')) !!}
-
 @section('content_header')
-	<h1>Imóveis <small>Seus imóveis</small></h1>
-	<ol class="breadcrumb">
-		<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-		<li><a href="#">Imóveis</a></li>
-		<li class="active">Seus imóveis</li>
-	</ol>
+<h1>Imóveis<small>Lista de Imoveís</small></h1>
+
+<ol class="breadcrumb">
+  <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+  <li><a href="#">Imóveis</a></li>
+  <li class="active">Listar</li>
+</ol>
 @stop
 
 @section('content')
-	<div class="row">
-		<div class="col-md-12">
-			<div class="box box-warning">
+<div class="row">
+  <div class="col-md-12">
 
-					<div class="box-header with-border">
-						<h3 class="box-title"><i class="fa fa-filter"></i> Filtro:</h3>
-					</div>
+    <div class="box box-primary">
+      <div class="box-header with-border">
+        <h3 class="box-title">Listagem</h3>
+        <a style="float: right" href="{{ route('usuario.create') }}" class="btn btn-primary">Adicionar</a>
+      </div>
 
-					<div class="box-body">
-					{!! Form::open(['id' => 'filtroImoveis']) !!}
-						<div class="row">
-							<div class="col-md-4">
-								<!-- Estado Imóvel -->
-								<div class="form-group">
-									{{ Form::label('IMO_IDESTADO', 'Estado') }}
-									{{ Form::select('IMO_IDESTADO', $estados, null, ['class' => 'form-control', 'placeholder' => 'Escolha um estado', 'id' => 'IMO_IDESTADO' ]) }}
-								</div><!-- /.form group -->
-							</div>
+      <div class='box-body'>
+        <div class='row'>
+          <div class='col-md-12'>
+            <table id="lista-clientes" class="table table-bordered table-hover powertabela">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Nome</th>
+                  <th>CNPJ</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($imoveis as $imovel)
+                <tr>
+                  <td>{{ $imovel->IMO_ID  }}</td>
+                  <td>{{ $imovel->IMO_NOME }}</td>
+                  <td>{{ $imovel->IMO_CNPJ }}</td>
+                  <td>
 
-							<div class="col-md-4">
-								<!-- Cidade Imóvel -->
-								<div class="form-group">
-									{{ Form::label('IMO_IDCIDADE', 'Cidade') }}
-									{{ Form::select('IMO_IDCIDADE', ['' => 'Selecionar Cidade'], null, ['class' => 'form-control', 'placeholder' => 'Escolha uma cidade', 'id' => 'IMO_IDCIDADE']) }}
-								</div><!-- /.form group -->
-							</div>
+                    <?php // Botão visualizar ?>
+                    <div class="btn-group">
+                      <a href="{{ route('Ver Imovel', ['imovel' => $imovel->IMO_ID]) }}" type="button" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></a>
+                    </div>
 
-							<div class="col-md-4">
-								<!-- Botão Imóvel -->
-								<div class="form-group">
-									{{ Form::label('', '&nbsp;') }}
-									{{ Form::button('<i class="fa fa-filter"></i> Filtrar', ['class' => 'btn btn-default', 'style' => 'width: 100%;', 'id' => 'submitFiltro']) }}
-								</div>
-							</div>
-						</div>
-					{!! Form::close() !!}
-					</div>
+                    <?php // Botão editar ?>
+                    <div class="btn-group">
+                      <a href="" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
+                    </div>
 
-			</div>
-		</div>
-		<div class="col-md-12">
+                    <?php // Botão deletar ?>
+                    <div class="btn-group">
+                      <?php $deleteForm = "delete-form-{$loop->index}"; ?>
+                      <a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_user_ID{{$imovel->IMO_ID}}"><i class="fa fa-trash-o"></i></a>
 
-			<div class="row" id="resultadoPesquisa">
-				<p style="text-align: center;">Sem resultados para mostrar</p>
-			</div>
+                      <?php // modal deletar ?>
+                      <div class="modal fade" id="delete_user_ID{{$imovel->IMO_ID }}" tabindex="-1" role="dialog" aria-labelledby="delete_user_ID{{$imovel->IMO_ID}}Label" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <h4 class="modal-title text-primary" id="delete_user_ID{{$imovel->IMO_ID}}Label"><i class="fa fa-trash-o"></i> Deletar Cliente</h4>
+                            </div>
+                            <div class="modal-body">
 
-		</div><!-- /.col-md-12 -->
-	</div>
+                              <p class="alert alert-danger">Tem certeza que deseja excluir imóvel "{{ $imovel->IMO_NOME }}" ?</p>
+                              <div class="form-actions">
+                                <a href="{{ route('usuario.destroy', ['usuario' => $imovel->IMO_ID]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteForm}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {!! Form::open(['route' => ['usuario.destroy', 'usuario' => $imovel->IMO_ID], 'method' => 'DELETE', 'id' => $deleteForm, 'style' => 'display:none']) !!}
+                      {!! Form::close() !!}
+
+                    </div>
+
+                  </td>
+                </form>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 @stop

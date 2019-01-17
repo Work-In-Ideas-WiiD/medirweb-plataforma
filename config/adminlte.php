@@ -140,6 +140,11 @@ return [
                     'url'  => 'imovel/adicionar',
                 ],
                 [
+                    'text' => 'Buscar',
+                    'icon' => 'search',
+                    'url'  => 'imovel/buscar',
+                ],
+                [
                     'text' => 'Ver todos',
                     'icon' => 'list',
                     'url'  => 'imovel',

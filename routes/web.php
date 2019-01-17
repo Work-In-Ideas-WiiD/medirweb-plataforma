@@ -15,9 +15,10 @@
     return view('welcome');
 });*/
 
-Route::get('/', 'ImovelController@index')->name('Listar Imóveis');
+//Route::get('/hello', 'Hello@index');
 
-Route::get('/hello', 'Hello@index');
+Route::get('/', 'HomeController@index')->name('home');
+
 Route::get('/hello/adicionar', 'Hello@cadastro');
 Route::post('/hello/postadicionar', 'Hello@postAdicionar');
 
@@ -33,12 +34,14 @@ Route::get('/user/{id}', 'UserController@index');
 /* Imóveis */
 
 Route::get('/imovel', 'ImovelController@index')->name('Listar Imóveis');
+Route::get('/imovel/buscar', 'ImovelController@buscar')->name('Buscar Imóveis');
+
 Route::get('/imovel/adicionar', 'ImovelController@create')->name('Adicionar Imóvel');
 Route::post('novo-imovel', array('uses' => 'ImovelController@store'));
-Route::get('/imovel/ver/{id}', array('uses' => 'ImovelController@show'));
+Route::get('/imovel/ver/{id}', array('uses' => 'ImovelController@show'))->name('Ver Imovel');
 Route::post('/imovel/getImoveisLista', array('uses' => 'ImovelController@getImoveisLista'));
 Route::get('/imovel/getCidadesLista/{id}', array('uses' => 'ImovelController@showCidades'));
-Route::get('/imovel/editar/{id}', array('as'=>'imovel.edit', 'uses' => 'ImovelController@edit'));
+Route::get('/imovel/editar/{id}', array('as'=>'imovel.edit', 'uses' => 'ImovelController@edit'))->name('Editar Imovel');
 Route::put('imovel/update/{imovel}', array('as'=>'imovel.update', 'uses'=>'ImovelController@update'));
 
 /* imóveis */

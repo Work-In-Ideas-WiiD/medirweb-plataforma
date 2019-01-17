@@ -101,7 +101,7 @@
             if(stateID) {
                 $.ajax({
                     //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: '/public/imovel/getCidadesLista/'+stateID,
+                    url: 'imovel/buscar/getCidadesLista/'+stateID,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {
@@ -125,7 +125,7 @@
             if(stateID) {
                 $.ajax({
                     //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: '/public/imovel/getCidadesLista/'+stateID,
+                    url: 'imovel/buscar/getCidadesLista/'+stateID,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {
@@ -268,7 +268,7 @@ jQuery(document).ready(function(){
         }
     });
      jQuery.ajax({
-        url: "{!! url('/imovel/getImoveisLista') !!}",
+        url: "{!! url('/imovel/buscar/getImoveisLista') !!}",
         method: 'post',
         data: {
            IMO_IDESTADO: jQuery('#IMO_IDESTADO').val(),
