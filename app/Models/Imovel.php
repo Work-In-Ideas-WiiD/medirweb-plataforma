@@ -9,7 +9,7 @@ use App\Models\Agrupamento;
 use App\Models\Unidade;
 
 class Imovel extends Model
-{    
+{
     protected $table = 'imoveis';
 
     const created_at = 'tempo_criacao';

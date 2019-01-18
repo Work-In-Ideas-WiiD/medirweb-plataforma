@@ -105,22 +105,48 @@ class UnidadeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
+     public function edit($id)
+     {
+       $unidade  = Unidade::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+       if(is_null($unidade)){
+         return redirect( URL::previous() );
+       }
+
+       $_imoveis = Imovel::all();
+       foreach($_imoveis as $imovel){
+         $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+       }
+
+       $_agrupamentos = Agrupamento::all();
+       foreach($_agrupamentos as $agrupamento){
+         $agrupamentos[$agrupamento->AGR_ID] = $agrupamento->AGR_NOME;
+       }
+
+       return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos'));
+     }
+
+     /**
+      * Update the specified resource in storage.
+      *
+      * @param  \Illuminate\Http\Request  $request
+      * @param  int  $id
+      * @return \Illuminate\Http\Response
+      */
+     public function update(Request $request, $id)
+     {
+       $unidade = Unidade::findOrFail($id);
+
+       if(is_null($unidade)){
+         return redirect( URL::previous() );
+       }
+
+       $dataForm = $request->all();
+
+       $unidade->update($dataForm);
+
+       return redirect('/imovel')->with('success', 'Unidade atualizado com sucesso.');
+     }
 
     /**
      * Remove the specified resource from storage.
@@ -128,10 +154,13 @@ class UnidadeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+     public function destroy(Request $request, $id)
+ 		{
+
+ 	    Unidade:: agrupamento()->destroy($id);
+
+			return redirect('/imovel')->with('success', 'Unidade deletado com sucesso.');
+ 		}
 
     public function leituraUnidade($undd)
     {
@@ -162,7 +191,7 @@ class UnidadeController extends Controller
                 $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
 
                 $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-    
+
                 // var_dump($metro_cubico);
                 // var_dump($litros);
                 // var_dump($mililitro);
@@ -187,7 +216,7 @@ class UnidadeController extends Controller
                 $prumada->save();
                 Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.');
             }
-            
+
 
         }
 
@@ -291,7 +320,7 @@ class UnidadeController extends Controller
                 $prumada->PRU_STATUS = 0;
                 $prumada->save();
                 Session::flash('error', 'Unidade não pode ser desligada. Por favor, verifique a conexão.');
-            }   
+            }
 
         }
 

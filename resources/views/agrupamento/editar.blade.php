@@ -5,18 +5,18 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-<h1>Agrupamentos <small>Adicionar Agrupamento</small></h1>
+<h1>Agrupamentos <small>Atualizar Agrupamento</small></h1>
 <ol class="breadcrumb">
   <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
   <li><a href="#">Agrupamentos</a></li>
-  <li class="active">Adicionar</li>
+  <li class="active">Atualizar</li>
 </ol>
 @stop
 
 @section('content')
 <div class="row">
   <div class="col-md-8">
-    {!! Form::open(['action' => 'AgrupamentoController@store', 'method' => 'POST']) !!}
+    {!! Form::model($agrupamento, ['route' => ['agrupamento.update', $agrupamento->AGR_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 
     <!-- Dados de Identificação -->
 
@@ -35,7 +35,8 @@
           <div class='col-md-6'>
             <div class='form-group'>
               {{ Form::label('AGR_IDIMOVEL', 'Imóvel') }}
-              {{ Form::select('AGR_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+              {{ Form::select('AGR_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'disabled' => 'disabled', 'autocomplete' => 'off']) }}
+
 
               @if ($errors->has('AGR_IDIMOVEL'))
               <span class="help-block">
@@ -45,7 +46,7 @@
             </div>
             <div class='form-group'>
               {{ Form::label('AGR_NOME', 'Nome') }}
-              {{ Form::text('AGR_NOME', '', ['class' => 'form-control', 'placeholder' => '']) }}
+              {{ Form::text('AGR_NOME', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
               @if ($errors->has('AGR_NOME'))
               <span class="help-block">
@@ -58,7 +59,7 @@
           <div class="col-md-6">
             <div class='form-group'>
               {{ Form::label('AGR_TAXAFIXA', 'Taxa fixa (R$)') }}
-              {{ Form::text('AGR_TAXAFIXA', '', ['class' => 'form-control', 'placeholder' => '']) }}
+              {{ Form::text('AGR_TAXAFIXA', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
               @if ($errors->has('AGR_TAXAFIXA'))
               <span class="help-block">
@@ -68,7 +69,7 @@
             </div>
             <div class='form-group'>
               {{ Form::label('AGR_TAXAVARIAVEL', 'Taxa variável (R$/m³)') }}
-              {{ Form::text('AGR_TAXAVARIAVEL', '', ['class' => 'form-control', 'placeholder' => '']) }}
+              {{ Form::text('AGR_TAXAVARIAVEL', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
               @if ($errors->has('AGR_TAXAVARIAVEL'))
               <span class="help-block">
@@ -87,7 +88,7 @@
 
   <div class="col-md-4">
 
-    <button type="submit" type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
+    <button type="submit" type="button" class="btn btn-block btn-warning"><i class="fa fa-pencil"></i> Atualizar cadastro</button>
 
     <button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
 

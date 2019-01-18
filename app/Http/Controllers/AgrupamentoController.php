@@ -78,7 +78,16 @@ class AgrupamentoController extends Controller
      */
     public function edit($id)
     {
-        //
+			$agrupamento  = Agrupamento::findOrFail($id);
+
+			if(is_null($agrupamento)){
+	      return redirect( URL::previous() );
+	    }
+
+			$imoveis  = Imovel::pluck('IMO_NOME', 'IMO_ID');
+
+
+			return view('agrupamento.editar', compact('agrupamento', 'imoveis'));
     }
 
     /**
@@ -90,7 +99,17 @@ class AgrupamentoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+			$agrupamento = Agrupamento::findOrFail($id);
+
+			if(is_null($agrupamento)){
+				return redirect( URL::previous() );
+			}
+
+			$dataForm = $request->all();
+
+			$agrupamento->update($dataForm);
+
+			return redirect('/imovel')->with('success', 'Agrupamento atualizado com sucesso.');
     }
 
     /**
@@ -99,8 +118,10 @@ class AgrupamentoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+		 public function destroy(Request $request, $id)
+ 		{
+ 			Agrupamento::destroy($id);
+
+			return redirect('/imovel')->with('success', 'Agrupamento deletado com sucesso.');
+ 		}
 }

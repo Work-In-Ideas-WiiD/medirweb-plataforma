@@ -74,7 +74,7 @@
             if(stateID) {
                 $.ajax({
                     //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: '/medirweb/public/unidade/getAgrupamentoLista/'+stateID,
+                    url: '/unidade/getAgrupamentoLista/'+stateID,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {
@@ -101,7 +101,7 @@
             if(stateID) {
                 $.ajax({
                     //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: 'imovel/buscar/getCidadesLista/'+stateID,
+                    url: '/imovel/getCidadesLista/'+stateID,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {
@@ -125,7 +125,7 @@
             if(stateID) {
                 $.ajax({
                     //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: 'imovel/buscar/getCidadesLista/'+stateID,
+                    url: '/imovel/getCidadesLista/'+stateID,
                     type: "GET",
                     dataType: "json",
                     success:function(data) {
@@ -268,7 +268,7 @@ jQuery(document).ready(function(){
         }
     });
      jQuery.ajax({
-        url: "{!! url('/imovel/buscar/getImoveisLista') !!}",
+        url: "{!! url('/imovel/getImoveisLista') !!}",
         method: 'post',
         data: {
            IMO_IDESTADO: jQuery('#IMO_IDESTADO').val(),
@@ -302,7 +302,7 @@ jQuery(document).ready(function(){
 
 
                 var $html  = '<div class="col-md-4">';
-                    $html += '<a href="{!! url('imovel/ver/') !!}/' + this.IMO_ID + '" alt="' + this.IMO_NOME + '" style="text-decoration: none; color: #111;" >';
+                    $html += '<a href="{!! url('imovel/buscar/ver/') !!}/' + this.IMO_ID + '" alt="' + this.IMO_NOME + '" style="text-decoration: none; color: #111;" >';
                     $html +=    '<div class="box box-widget widget-user">';
                     if(this.IMO_CAPA == null)
                     {
@@ -392,7 +392,7 @@ jQuery(document).ready(function(){
         });
 
         $('.powertabela').DataTable({
-            "order": [[ 0, "desc" ]],
+            "order": [[ 0, "asc" ]],
             "language": {
                 "sEmptyTable": "Nenhum registro encontrado",
                 "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",

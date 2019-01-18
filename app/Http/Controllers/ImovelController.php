@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Imovel\ImovelSaveRequest;
 use App\Models\Imovel;
-use App\Models\Unidade;
 use App\Models\Leitura;
 use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
@@ -44,7 +43,7 @@ class ImovelController extends Controller
             $estados[$estado->EST_ID] = $estado->EST_NOME;
 
         //
-        return view('imovel.listar_buscar', compact( 'estados'));
+        return view('imovel.buscar_listar', compact( 'estados'));
     }
 
     /**
@@ -118,11 +117,21 @@ class ImovelController extends Controller
      */
     public function show($id)
     {
-        if($id == 4 ||  $id == 8)
-        {
-            return redirect('teste/'.$id);
-        }
+        $imovel =  Imovel::findorFail($id);
 
+        $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
+        $imovel['IMO_IDESTADO'] = Imovel::find($id)->estado->EST_ABREVIACAO;
+
+        $agrupamentos = $imovel->getAgrupamentos;
+
+        $unidades =  $imovel->getUnidades;
+
+        return view('imovel.visualizar', compact('agrupamentos', 'imovel', 'unidades'));
+    }
+
+
+    public function show_buscar($id)
+    {
         $imovel =  Imovel::findorFail($id);
 
         $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
@@ -159,16 +168,11 @@ class ImovelController extends Controller
         /* Adicionar UNIDADES de cada um dos agrupamentos e chamar a variavel de $unidades  */
         /* Adicionar  de cada uma das unidades, a variável $unidade->ULT_LEITURA com        */
         /* o último valor de leitura daquela unidade.                                       */
-        /* -------------------------------------------------------------------------------- */
+        /* -----------------------------------------visualizar-v1--------------------------------------- */
 
-        return view('imovel.visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades]);
-    }
+        //return view('imovel.visualizar-v1', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades]);
 
-    public function showdown()
-    {
-        $imoveis = Imovel::all();
-
-        return view('imovel.lista2', ['imoveis' => $imoveis]);
+        return view('imovel.buscar_visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades]);
     }
 
     /**
@@ -259,10 +263,13 @@ class ImovelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
-    }
+     public function destroy(Request $request, $id)
+     {
+       Imovel::destroy($id);
+
+       $request->session()->flash('message-success', 'Administrador deletado com sucesso!');
+       return redirect()->route('Listar Imóveis');
+     }
 
     public function getImoveisLista(Request $request)
     {

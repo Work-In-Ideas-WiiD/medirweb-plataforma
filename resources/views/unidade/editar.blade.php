@@ -5,18 +5,18 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-<h1>Unidades <small>Adicionar unidade</small></h1>
+<h1>Unidades <small>Atualizar unidade</small></h1>
 <ol class="breadcrumb">
 	<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 	<li><a href="#">Unidades</a></li>
-	<li class="active">Adicionar</li>
+	<li class="active">Atulizar</li>
 </ol>
 @stop
 
 @section('content')
 <div class="row">
 	<div class="col-md-8">
-		{!! Form::open(['action' => 'UnidadeController@store', 'method' => 'POST']) !!}
+		{!! Form::model($unidade, ['route' => ['unidade.update', $unidade->UNI_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 
 		<!-- Dados de Identificação -->
 
@@ -45,7 +45,7 @@
 						</div>
 						<div class='form-group'>
 							{{ Form::label('UNI_NOME', 'Nome') }}
-							{{ Form::text('UNI_NOME', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							{{ Form::text('UNI_NOME', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
 							@if ($errors->has('UNI_NOME'))
 							<span class="help-block">
@@ -55,7 +55,7 @@
 						</div>
 						<div class='form-group'>
 							{{ Form::label('UNI_CPFRESPONSAVEL', 'CPF do Responsável') }}
-							{{ Form::text('UNI_CPFRESPONSAVEL', '', ['class' => 'form-control mask-cpf', 'placeholder' => '']) }}
+							{{ Form::text('UNI_CPFRESPONSAVEL', null, ['class' => 'form-control mask-cpf', 'placeholder' => '']) }}
 
 							@if ($errors->has('UNI_CPFRESPONSAVEL'))
 							<span class="help-block">
@@ -79,7 +79,7 @@
 						</div>
 						<div class='form-group'>
 							{{ Form::label('UNI_RESPONSAVEL', 'Responsável') }}
-							{{ Form::text('UNI_RESPONSAVEL', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							{{ Form::text('UNI_RESPONSAVEL', null , ['class' => 'form-control', 'placeholder' => '']) }}
 
 							@if ($errors->has('UNI_RESPONSAVEL'))
 							<span class="help-block">
@@ -89,7 +89,7 @@
 						</div>
 						<div class='form-group'>
 							{{ Form::label('UNI_TELRESPONSAVEL', 'Telefone do Responsável') }}
-							{{ Form::text('UNI_TELRESPONSAVEL', '', ['class' => 'form-control mask-phone', 'placeholder' => '']) }}
+							{{ Form::text('UNI_TELRESPONSAVEL', null, ['class' => 'form-control mask-phone', 'placeholder' => '']) }}
 
 							@if ($errors->has('UNI_TELRESPONSAVEL'))
 							<span class="help-block">
@@ -109,7 +109,7 @@
 
 	<div class="col-md-4">
 
-		<button type="submit" type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
+		<button type="submit" type="button" class="btn btn-block btn-warning"><i class="fa fa-pencil"></i> Atualizar cadastro</button>
 
 		<button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
 

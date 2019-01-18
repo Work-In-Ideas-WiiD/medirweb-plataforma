@@ -17,7 +17,7 @@
 
 //Route::get('/hello', 'Hello@index');
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'ImovelController@buscar')->name('inicio');
 
 Route::get('/hello/adicionar', 'Hello@cadastro');
 Route::post('/hello/postadicionar', 'Hello@postAdicionar');
@@ -33,16 +33,19 @@ Route::get('/user/{id}', 'UserController@index');
 
 /* Imóveis */
 
-Route::get('/imovel', 'ImovelController@index')->name('Listar Imóveis');
 Route::get('/imovel/buscar', 'ImovelController@buscar')->name('Buscar Imóveis');
+Route::get('/imovel/buscar/ver/{id}', array('uses' => 'ImovelController@show_buscar'))->name('Buscar Ver Imovel');
 
+
+Route::get('/imovel', 'ImovelController@index')->name('Listar Imóveis');
 Route::get('/imovel/adicionar', 'ImovelController@create')->name('Adicionar Imóvel');
 Route::post('novo-imovel', array('uses' => 'ImovelController@store'));
 Route::get('/imovel/ver/{id}', array('uses' => 'ImovelController@show'))->name('Ver Imovel');
 Route::post('/imovel/getImoveisLista', array('uses' => 'ImovelController@getImoveisLista'));
 Route::get('/imovel/getCidadesLista/{id}', array('uses' => 'ImovelController@showCidades'));
-Route::get('/imovel/editar/{id}', array('as'=>'imovel.edit', 'uses' => 'ImovelController@edit'))->name('Editar Imovel');
+Route::get('/imovel/editar/{id}', array('as'=>'imovel.edit', 'uses' => 'ImovelController@edit'));
 Route::put('imovel/update/{imovel}', array('as'=>'imovel.update', 'uses'=>'ImovelController@update'));
+Route::delete('imovel/{imovel}', array('as'=>'imovel.destroy', 'uses'=>'ImovelController@destroy'));
 
 /* imóveis */
 Route::get('/imovel/{imovel}/leitura/{unidade}', array('uses' => 'ImovelController@leituraUnidade'));
@@ -52,22 +55,24 @@ Route::get('/imovel/{imovel}/desligar/{unidade}', array('uses' => 'ImovelControl
 
 Route::get('/imovel/{imovel}/atualizar', array('uses' => 'ImovelController@atualizarTodasLeituraUnidade'));
 
-Route::get('/imovel/todos', 'ImovelController@showdown')->name('Todos os Imóveis');
-
 
 
 /* Agrupamentos */
 
-Route::get('/agrupamento/ver/{id}', array('uses' => 'AgrupamentoController@show'));
 Route::get('/agrupamento/adicionar', 'AgrupamentoController@create')->name('Adicionar Agrupamento');
 Route::post('novo-agrupamento', array('uses' => 'AgrupamentoController@store'));
+Route::get('/agrupamento/editar/{id}', array('as'=>'agrupamento.edit', 'uses' => 'AgrupamentoController@edit'));
+Route::put('/agrupamento/update/{agrupamento}', array('as'=>'agrupamento.update', 'uses'=>'AgrupamentoController@update'));
+Route::delete('/agrupamento/{agrupamento}', array('as'=>'agrupamento.destroy', 'uses'=>'AgrupamentoController@destroy'));
 
 /* Unidades */
 
-Route::get('/unidade/ver/{id}', array('uses' => 'UnidadeController@show'));
 Route::get('/unidade/adicionar', 'UnidadeController@create')->name('Adicionar Unidade');
 Route::get('/unidade/getAgrupamentoLista/{id}', array('uses' => 'UnidadeController@showAgrupamento'));
 Route::post('nova-unidade', array('uses' => 'UnidadeController@store'));
+Route::get('/unidade/editar/{id}', array('as'=>'unidade.edit', 'uses' => 'UnidadeController@edit'));
+Route::put('/unidade/update/{unidade}', array('as'=>'unidade.update', 'uses'=>'UnidadeController@update'));
+Route::delete('/unidade/{unidade}', array('as'=>'unidade.destroy', 'uses'=>'UnidadeController@destroy'));
 
 /* Unidades */
 
