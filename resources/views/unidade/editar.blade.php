@@ -5,7 +5,7 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-<h1>Unidades <small>Atualizar unidade</small></h1>
+<h1>Unidades <small>Atualizar Unidade</small></h1>
 <ol class="breadcrumb">
 	<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 	<li><a href="#">Unidades</a></li>
@@ -22,7 +22,7 @@
 
 		<div class="box box-warning">
 			<div class="box-header with-border">
-				<h3 class="box-title"><i class="fa fa-home"></i> Dados de identificação</h3>
+				<h3 class="box-title"><i class="fa fa fa-th-large"></i> Dados de identificação</h3>
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 					</button>
@@ -35,7 +35,7 @@
 					<div class='col-md-6'>
 						<div class='form-group'>
 							{{ Form::label('UNI_IDIMOVEL', 'Imóvel') }}
-							{{ Form::select('UNI_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+							{{ Form::select('UNI_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'disabled' => 'disabled', 'autocomplete' => 'off']) }}
 
 							@if ($errors->has('UNI_IDIMOVEL'))
 							<span class="help-block">
@@ -68,7 +68,7 @@
 					<div class="col-md-6">
 						<div class='form-group'>
 							{{ Form::label('UNI_IDAGRUPAMENTO', 'Agrupamento') }}
-							{{ Form::select('UNI_IDAGRUPAMENTO', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+							{{ Form::select('UNI_IDAGRUPAMENTO', $agrupamentos, null, ['class' => 'avalidate form-control', 'disabled' => 'disabled', 'autocomplete' => 'off']) }}
 
 							@if ($errors->has('UNI_IDAGRUPAMENTO'))
 							<span class="help-block">

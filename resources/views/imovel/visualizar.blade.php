@@ -106,7 +106,7 @@
 
 										<?php // Botão deletar ?>
 										<div class="btn-group">
-											<?php $deleteForm = "delete-form-{$loop->index}"; ?>
+											<?php $deleteFormAGR = "delete-formAGR-{$loop->index}"; ?>
 											<a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_agrup_ID{{$agrup->AGR_ID}}"><i class="fa fa-trash-o"></i></a>
 
 											<?php // modal deletar ?>
@@ -121,7 +121,7 @@
 
 															<p class="alert alert-danger">Tem certeza que deseja excluir agrupamento "{{ $agrup->AGR_NOME }}" ?</p>
 															<div class="form-actions">
-																<a href="{{ route('agrupamento.destroy', ['agrupamento' => $agrup->AGR_ID]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteForm}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+																<a href="{{ route('agrupamento.destroy', ['agrupamento' => $agrup->AGR_ID]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormAGR}}').submit();" class="btn btn-danger btn-flat">SIM</a>
 																<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
 															</div>
 
@@ -130,7 +130,7 @@
 												</div>
 											</div>
 
-											{!! Form::open(['route' => ['agrupamento.destroy', 'agrupamento' => $agrup->AGR_ID], 'method' => 'DELETE', 'id' => $deleteForm, 'style' => 'display:none']) !!}
+											{!! Form::open(['route' => ['agrupamento.destroy', 'agrupamento' => $agrup->AGR_ID], 'method' => 'DELETE', 'id' => $deleteFormAGR, 'style' => 'display:none']) !!}
 											{!! Form::close() !!}
 
 										</div>
@@ -192,7 +192,7 @@
 
 									<?php // Botão deletar ?>
 									<div class="btn-group">
-										<?php $deleteForm = "delete-form-{$loop->index}"; ?>
+										<?php $deleteFormUNI = "delete-formUNI-{$loop->index}"; ?>
 										<a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_uni_ID{{$uni->UNI_ID}}"><i class="fa fa-trash-o"></i></a>
 
 										<?php // modal deletar ?>
@@ -207,7 +207,7 @@
 
 														<p class="alert alert-danger">Tem certeza que deseja excluir unidade "{{ $uni->UNI_NOME }}" ?</p>
 														<div class="form-actions">
-															<a href="{{ route('unidade.destroy', ['unidade' => $uni->UNI_ID]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteForm}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+															<a href="{{ route('unidade.destroy', ['unidade' => $uni->UNI_ID]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormUNI}}').submit();" class="btn btn-danger btn-flat">SIM</a>
 															<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
 														</div>
 
@@ -216,7 +216,7 @@
 											</div>
 										</div>
 
-										{!! Form::open(['route' => ['unidade.destroy', 'unidade' => $uni->UNI_ID], 'method' => 'DELETE', 'id' => $deleteForm, 'style' => 'display:none']) !!}
+										{!! Form::open(['route' => ['unidade.destroy', 'unidade' => $uni->UNI_ID], 'method' => 'DELETE', 'id' => $deleteFormUNI, 'style' => 'display:none']) !!}
 										{!! Form::close() !!}
 
 									</div>

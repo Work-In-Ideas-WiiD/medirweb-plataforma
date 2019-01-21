@@ -157,7 +157,7 @@ class UnidadeController extends Controller
      public function destroy(Request $request, $id)
  		{
 
- 	    Unidade:: agrupamento()->destroy($id);
+ 	    Unidade::destroy($id);
 
 			return redirect('/imovel')->with('success', 'Unidade deletado com sucesso.');
  		}
