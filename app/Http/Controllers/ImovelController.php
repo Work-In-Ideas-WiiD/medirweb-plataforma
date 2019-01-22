@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Imovel\ImovelSaveRequest;
 use App\Models\Imovel;
 use App\Models\Unidade;
+use App\Models\Leitura;
 use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\File;
