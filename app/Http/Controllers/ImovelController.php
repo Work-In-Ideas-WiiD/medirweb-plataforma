@@ -356,8 +356,8 @@ class ImovelController extends Controller
 
         }
 
-        //return redirect('imovel/ver/'.$imovel->IMO_ID);
-        return redirect::back();
+        return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+        //return redirect::back();
     }
 
     public function atualizarTodasLeituraUnidade($id)
@@ -422,7 +422,7 @@ class ImovelController extends Controller
             }
         /*}*/
 
-        return redirect('imovel/ver/'.$id);
+        return redirect('imovel/buscar/ver/'.$id);
     }
 
     public function ligarUnidade($imovel, $unidade)
@@ -476,7 +476,7 @@ class ImovelController extends Controller
 
         }
 
-        return redirect('imovel/ver/'.$imovel->IMO_ID);
+        return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
     }
 
     public function desligarUnidade($imovel, $unidade)
@@ -529,6 +529,6 @@ class ImovelController extends Controller
 
         }
 
-        return redirect('imovel/ver/'.$imovel->IMO_ID);
+        return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
     }
 }
