@@ -3,6 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Prumada;
+use App\Models\Agrupamento;
+use App\Models\Equipamento;
+use App\Models\Imovel;
 
 class Unidade extends Model
 {

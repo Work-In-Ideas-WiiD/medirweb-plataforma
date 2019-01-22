@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Models;
+use App\Models\Unidade;
+use App\Models\Leitura;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Prumada extends Model
 {
     protected $fillable = [
-        'PRU_ID', 'PRU_IDUNIDADE', 'PRU_IDFUNCIONAL', 'PRU_STATUS'
+        'PRU_ID', 'PRU_IDUNIDADE', 'PRU_IDFUNCIONAL', 'PRU_SERIAL', 'PRU_FABRICANTE', 'PRU_MODELO', 'PRU_OPERADORA', 'PRU_STATUS'
     ];
 
     protected  $dates = [
@@ -30,5 +32,5 @@ class Prumada extends Model
     {
     	return $this->hasMany('App\Models\Leitura','LEI_IDPRUMADA', 'PRU_ID');
     }
-    
+
 }

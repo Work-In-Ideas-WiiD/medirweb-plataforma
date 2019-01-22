@@ -96,6 +96,60 @@
 <script type="text/javascript">
 
     $(document).ready(function() {
+        $('select[name="PRU_IDIMOVEL"]').on('change', function() {
+            var stateID = $(this).val();
+            if(stateID) {
+                $.ajax({
+                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    url: '/equipamento/getAgrupamentoLista/'+stateID,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+
+                        $('select[name="PRU_IDAGRUPAMENTO"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="PRU_IDAGRUPAMENTO"]').append('<option value="'+ value.AGR_ID +'">'+ value.AGR_NOME +'</option>');
+                        });
+
+                    }
+                });
+            }else{
+                $('select[name="city"]').empty();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        $('select[name="PRU_IDAGRUPAMENTO"]').on('change', function() {
+            var stateID = $(this).val();
+            if(stateID) {
+                $.ajax({
+                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    url: '/equipamento/getUnidadeLista/'+stateID,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+
+                        $('select[name="PRU_IDUNIDADE"]').empty();
+                        $.each(data, function(key, value) {
+                            $('select[name="PRU_IDUNIDADE"]').append('<option value="'+ value.UNI_ID +'">'+ value.UNI_NOME +'</option>');
+                        });
+
+                    }
+                });
+            }else{
+                $('select[name="city"]').empty();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
         $('select[name="IMO_IDESTADO"]').on('change', function() {
             var stateID = $(this).val();
             if(stateID) {

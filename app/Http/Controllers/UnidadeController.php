@@ -7,6 +7,7 @@ use App\Models\Unidade;
 use App\Models\Leitura;
 use App\Models\Agrupamento;
 use App\Models\Imovel;
+use App\Models\Prumada;
 use App\Http\Requests\Unidade\UnidadeSaveRequest;
 
 class UnidadeController extends Controller
@@ -34,8 +35,6 @@ class UnidadeController extends Controller
      */
     public function create()
     {
-        //$imoveis  = Imovel::pluck('IMO_NOME', 'IMO_ID');
-
         $imoveis = ['' => 'Selecionar Imovel'];
         $_imoveis = Imovel::all();
         foreach($_imoveis as $imovel)
@@ -123,7 +122,11 @@ class UnidadeController extends Controller
          $agrupamentos[$agrupamento->AGR_ID] = $agrupamento->AGR_NOME;
        }
 
-       return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos'));
+       $prumadas = Prumada::where('PRU_IDUNIDADE', $unidade->UNI_ID)->get();
+
+       //$prumadas = $unidade->getPrumadas();
+
+       return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas'));
      }
 
      /**

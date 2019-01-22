@@ -5,24 +5,24 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-<h1>Equipamentos <small>Adicionar Equipamento</small></h1>
+<h1>Equipamentos <small>Atualizar Equipamento</small></h1>
 <ol class="breadcrumb">
   <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
   <li><a href="#">Equipamentos</a></li>
-  <li class="active">Adicionar</li>
+  <li class="active">Atualizar</li>
 </ol>
 @stop
 
 @section('content')
 <div class="row">
   <div class="col-md-8">
-    {!! Form::open(['action' => 'PrumadaController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::model($prumadas, ['route' => ['prumada.update', $prumadas->PRU_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 
     <!-- Dados de Identificação -->
 
     <div class="box box-warning">
       <div class="box-header with-border">
-        <h3 class="box-title"><i class="fa fa-home"></i> Dados de identificação</h3>
+        <h3 class="box-title"><i class="fa fa-cog"></i> Dados de identificação</h3>
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
           </button>
@@ -37,7 +37,7 @@
             <?php //Imovel ?>
             <div class='form-group'>
               {{ Form::label('PRU_IDIMOVEL', 'Imóvel') }}
-              {{ Form::select('PRU_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+              {{ Form::select('PRU_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'disabled' => 'disabled', 'autocomplete' => 'off']) }}
 
               @if ($errors->has('PRU_IDIMOVEL'))
               <span class="help-block">
@@ -49,7 +49,7 @@
             <?php // Unidade?>
             <div class='form-group'>
               {{ Form::label('PRU_IDUNIDADE', 'Unidade') }}
-              {{ Form::select('PRU_IDUNIDADE', ['' => 'Selecionar Unidade'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+              {{ Form::select('PRU_IDUNIDADE', $unidades, null, ['class' => 'avalidate form-control', 'disabled' => 'disabled', 'autocomplete' => 'off']) }}
 
               @if ($errors->has('PRU_IDUNIDADE'))
               <span class="help-block">
@@ -102,7 +102,7 @@
             <?php //Agrupamento ?>
             <div class='form-group'>
               {{ Form::label('PRU_IDAGRUPAMENTO', 'Agrupamento') }}
-              {{ Form::select('PRU_IDAGRUPAMENTO', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+              {{ Form::select('PRU_IDAGRUPAMENTO', $agrupamentos, null, ['class' => 'avalidate form-control', 'disabled' => 'disabled', 'autocomplete' => 'off']) }}
 
               @if ($errors->has('PRU_IDAGRUPAMENTO'))
               <span class="help-block">
@@ -157,9 +157,9 @@
 
   <div class="col-md-4">
 
-    <button type="submit" type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
+    <button type="submit" type="button" class="btn btn-block btn-warning"><i class="fa fa-pencil"></i> Atualizar cadastro</button>
 
-    <button type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
+    <button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
 
   </div>
 
