@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Imovel\ImovelSaveRequest;
 use App\Models\Imovel;
+use App\Models\Unidade;
 use App\Models\Leitura;
 use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
@@ -355,8 +356,8 @@ class ImovelController extends Controller
 
         }
 
-        //return redirect('imovel/ver/'.$imovel->IMO_ID);
-        return redirect::back();
+        return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+        //return redirect::back();
     }
 
     public function atualizarTodasLeituraUnidade($id)
@@ -421,7 +422,7 @@ class ImovelController extends Controller
             }
         /*}*/
 
-        return redirect('imovel/ver/'.$id);
+        return redirect('imovel/buscar/ver/'.$id);
     }
 
     public function ligarUnidade($imovel, $unidade)
@@ -475,7 +476,7 @@ class ImovelController extends Controller
 
         }
 
-        return redirect('imovel/ver/'.$imovel->IMO_ID);
+        return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
     }
 
     public function desligarUnidade($imovel, $unidade)
@@ -528,6 +529,6 @@ class ImovelController extends Controller
 
         }
 
-        return redirect('imovel/ver/'.$imovel->IMO_ID);
+        return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
     }
 }
