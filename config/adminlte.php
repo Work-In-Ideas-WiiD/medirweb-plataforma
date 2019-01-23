@@ -179,7 +179,7 @@ return [
                 [
                     'text' => 'Equipamentos',
                     'icon' => 'cog',
-                    'url'  => 'equipamento/timeline',
+                    'url'  => 'timeline/equipamento/buscar',
                 ]
             ],
         ],

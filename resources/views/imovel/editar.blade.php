@@ -17,7 +17,7 @@
 
 <div class="row">
   <div class="col-md-8">
-    {!! Form::model($imoveis, ['route' => ['unidade.update', $unidade->UNI_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::model($imovel, ['route' => ['imovel.update', $imovel->IMO_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 
     <!-- Dados de Identificação -->
 

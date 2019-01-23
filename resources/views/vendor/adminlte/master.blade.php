@@ -67,7 +67,7 @@
 @endif
 
 <script type="text/javascript">
-
+//UNIDADES - CAMPO AGRUPAMENTO
     $(document).ready(function() {
         $('select[name="UNI_IDIMOVEL"]').on('change', function() {
             var stateID = $(this).val();
@@ -94,6 +94,7 @@
 </script>
 
 <script type="text/javascript">
+// Equipamento - CAMPO AGRUPAMENTO
 
     $(document).ready(function() {
         $('select[name="PRU_IDIMOVEL"]').on('change', function() {
@@ -107,6 +108,7 @@
                     success:function(data) {
 
                         $('select[name="PRU_IDAGRUPAMENTO"]').empty();
+                        $('select[name="PRU_IDAGRUPAMENTO"]').append('<option>Selecione Agrupamento</option>');
                         $.each(data, function(key, value) {
                             $('select[name="PRU_IDAGRUPAMENTO"]').append('<option value="'+ value.AGR_ID +'">'+ value.AGR_NOME +'</option>');
                         });
@@ -121,6 +123,7 @@
 </script>
 
 <script type="text/javascript">
+// Equipamento - CAMPO UNIDADE
 
     $(document).ready(function() {
         $('select[name="PRU_IDAGRUPAMENTO"]').on('change', function() {
@@ -134,8 +137,38 @@
                     success:function(data) {
 
                         $('select[name="PRU_IDUNIDADE"]').empty();
+                        $('select[name="PRU_IDUNIDADE"]').append('<option>Selecione Unidade</option>');
                         $.each(data, function(key, value) {
                             $('select[name="PRU_IDUNIDADE"]').append('<option value="'+ value.UNI_ID +'">'+ value.UNI_NOME +'</option>');
+                        });
+
+                    }
+                });
+            }else{
+                $('select[name="city"]').empty();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+// Equipamento - CAMPO EQUIPAMENTO
+
+    $(document).ready(function() {
+        $('select[name="PRU_IDUNIDADE"]').on('change', function() {
+            var stateID = $(this).val();
+            if(stateID) {
+                $.ajax({
+                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    url: '/timeline/equipamento/getEquipamentoLista/'+stateID,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+
+                        $('select[name="TIMELINE_IDPRUMADA"]').empty();
+                        $('select[name="TIMELINE_IDPRUMADA"]').append('<option>Selecione Equipamento</option>');
+                        $.each(data, function(key, value) {
+                            $('select[name="TIMELINE_IDPRUMADA"]').append('<option value="'+ value.PRU_ID +'">'+ '#' + value.PRU_ID + ' - ' + value.PRU_FABRICANTE + ' ' + value.PRU_MODELO +'</option>');
                         });
 
                     }
@@ -310,6 +343,8 @@
 </script>
 
 <script type="text/javascript">
+//BUSCAR IMOVEL
+
 jQuery(document).ready(function(){
   jQuery('#submitFiltro').click(function(e){
     //alert(jQuery('#imo_idestado').val());
@@ -409,6 +444,64 @@ jQuery(document).ready(function(){
 
 
                     $('#resultadoPesquisa').append($html);
+            });
+        },
+     });
+  });
+});
+</script>
+
+<script type="text/javascript">
+//BUSCAR TIMELINE Equipamento
+
+jQuery(document).ready(function(){
+  jQuery('#submitFiltroTimeline').click(function(e){
+
+     e.preventDefault();
+     $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        }
+    });
+     jQuery.ajax({
+        url: "{!! url('/timeline/equipamento/getTimelineLista') !!}",
+        method: 'post',
+        data: {
+           TIMELINE_IDPRUMADA: jQuery('#TIMELINE_IDPRUMADA').val()
+        },
+        success: function(result){
+
+            if(result.timelines.length < 1)
+            {
+                $('#resultadoPesquisaTIMELINE').html('');
+                $('#resultadoPesquisaTIMELINE').append('<p style="text-align: center;">Sem resultados para mostrar</p>');
+                return;
+            }
+
+           var $html = '';
+           $('#resultadoPesquisaTIMELINE').html($html);
+
+            $.each(result.timelines, function () {
+
+              var $html  = '<ul class="timeline">';
+
+                  $html +=     '<li class="time-label">';
+                  $html +=         '<span class="bg-yellow">';
+                  $html +=             this.data;
+                  $html +=          '</span>';
+                  $html +=      '</li>';
+
+                  $html +=       '<li>';
+                  $html +=           '<i class="'+ this.TIMELINE_ICON +'"></i>';
+                  $html +=            '<div class="timeline-item">';
+                  $html +=                '<span class="time"><i class="fa fa-clock-o"></i>' + this.hora + '</span>';
+                  $html +=                '<h3 class="timeline-header"><a href="#">' + this.TIMELINE_USER + '</a> ' + this.TIMELINE_DESCRICAO + '</h3>';
+                  $html +=            '</div>';
+                  $html +=        '</li>';
+
+                  $html += '</ul>';
+
+                  $('#resultadoPesquisaTIMELINE').append($html);
             });
         },
      });

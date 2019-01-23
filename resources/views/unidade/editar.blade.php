@@ -175,7 +175,7 @@
 														</div>
 														<div class="modal-body">
 
-															<p class="alert alert-danger">Tem certeza que deseja excluir equipamento ID={{ $pru->PRU_ID }} ?</p>
+															<p class="alert alert-danger">Tem certeza que deseja excluir equipamento #{{ $pru->PRU_ID }} ?</p>
 															<div class="form-actions">
 																<a href="{{ route('prumada.destroy', ['prumadas' => $pru->PRU_ID]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormPRU}}').submit();" class="btn btn-danger btn-flat">SIM</a>
 																<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
