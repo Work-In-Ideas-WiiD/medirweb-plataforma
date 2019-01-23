@@ -51,7 +51,8 @@ class LeituraExport implements FromArray
                         'LEITURA DEZ.2018 - ANTERIOR' => $leituraAnterior->LEI_METRO,
                         'LEITURA JAN.2019 - ATUAL' => $leituraAtual->LEI_METRO,
                         'Cosumo M³' => $comsumo,
-                        'Data última leitura' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
+                        'Data leitura DEZ.2018' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
+                        'Data leitura JAN.2019' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
                     );
 
                     array_push($sheets, $relatorio);
