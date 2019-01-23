@@ -37,19 +37,26 @@ class LeituraExport implements FromArray
             $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
             foreach ($prumadas as $prumada)
             {
-                $leitura = $prumada->getLeituras()->orderBy('created_at', 'desc')->first();
+                $leituraAnterior = $prumada->getLeituras() ->where('created_at', '<=', date('2018-12-21').' 23:59:00')->orderBy('created_at', 'desc')->first();
 
-                $relatorio = array(
-                    'Imovel' => 'Condomínio Residencial Maranata',
-                    'Unidade' => $unid->UNI_NOME,
-                    'Metro' => $leitura->LEI_METRO,
-                    'Litro' => $leitura->LEI_LITRO,
-                    'DL' =>$leitura->LEI_MILILITRO,
-                    'Data' => date('d/m/Y - H:i', strtotime($leitura->created_at)),
-                );
+                $leituraAtual = $prumada->getLeituras() ->where('created_at', '>=', date('2019-01-21').' 00:00:00')->orderBy('created_at', 'desc')->first();
 
-                array_push($sheets, $relatorio);
+                if(isset($leituraAnterior) && isset($leituraAtual))
+                {
+                    $comsumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
 
+                    $relatorio = array(
+                        'Imovel' => $unid->IMO_NOME,
+                        'Unidade' => $unid->UNI_NOME,
+                        'LEITURA DEZ.2018 - ANTERIOR' => $leituraAnterior->LEI_METRO,
+                        'LEITURA JAN.2019 - ATUAL' => $leituraAtual->LEI_METRO,
+                        'Cosumo M³' => $comsumo,
+                        'Data leitura DEZ.2018' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
+                        'Data leitura JAN.2019' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
+                    );
+
+                    array_push($sheets, $relatorio);
+                }
             }
         }
 
