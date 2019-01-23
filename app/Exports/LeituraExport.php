@@ -43,6 +43,9 @@ class LeituraExport implements FromArray
 
                 $comsumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
 
+                var_dump($comsumo); die();
+
+
                 $relatorio = array(
                     'Imovel' => $unid->IMO_NOME,
                     'Unidade' => $unid->UNI_NOME,
