@@ -38,7 +38,7 @@ class Hello extends Controller
 
     public function export()
     {
-        return Excel::download(new LeituraExport(), 'leituras.xlsx');
+        return Excel::download(new LeituraExport(1), 'leituras_teste.xlsx');
     }
 
     public function testeLeitura()
