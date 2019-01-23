@@ -36,7 +36,7 @@ class LeituraExport implements WithMultipleSheets
             $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
             foreach ($prumadas as $prumada)
             {
-                $leitura = $prumada->getLeituras()->where('created_at', '>=', date('2019-01-22').' 17:13:18')->where('created_at', '<=', date('2019-01-22').' 17:21:50')->orderBy('created_at', 'asc')->first();
+                $leitura = $prumada->getLeituras()->orderBy('created_at', 'desc')->first();
 
                 $relatorio = array(
                     'Imovel' => 'Condomínio Residencial Maranata',
