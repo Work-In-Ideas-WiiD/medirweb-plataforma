@@ -7,10 +7,10 @@ use App\Models\Unidade;
 use App\Models\Leitura;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
-class LeituraExport implements WithMultipleSheets
+class LeituraExport implements FromQuery
 {
 
     use Exportable;
@@ -25,7 +25,7 @@ class LeituraExport implements WithMultipleSheets
     /**
      * @return array
      */
-    public function sheets(): array
+    public function query(): array
     {
         //$sheets = [];
 
