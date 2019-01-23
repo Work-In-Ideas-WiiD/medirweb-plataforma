@@ -37,15 +37,19 @@ class LeituraExport implements FromArray
             $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
             foreach ($prumadas as $prumada)
             {
-                $leitura = $prumada->getLeituras()->orderBy('created_at', 'desc')->first();
+                $leituraAnterior = $prumada->getLeituras() ->where('created_at', '<=', date('2018-12-21').' 23:59:00')->orderBy('created_at', 'desc')->first();
+
+                $leituraAtual = $prumada->getLeituras() ->where('created_at', '>=', date('2019-01-21').' 00:00:00')->orderBy('created_at', 'desc')->first();
+
+                $comsumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
 
                 $relatorio = array(
-                    'Imovel' => 'Condomínio Residencial Maranata',
+                    'Imovel' => $unid->IMO_NOME,
                     'Unidade' => $unid->UNI_NOME,
-                    'Metro' => $leitura->LEI_METRO,
-                    'Litro' => $leitura->LEI_LITRO,
-                    'DL' =>$leitura->LEI_MILILITRO,
-                    'Data' => date('d/m/Y - H:i', strtotime($leitura->created_at)),
+                    'LEITURA DEZ.2018 - ANTERIOR' => $leituraAnterior->LEI_METRO,
+                    'LEITURA JAN.2019 - ATUAL' => $leituraAtual->LEI_METRO,
+                    'Cosumo M³' => $comsumo,
+                    'Data última leitura' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
                 );
 
                 array_push($sheets, $relatorio);
