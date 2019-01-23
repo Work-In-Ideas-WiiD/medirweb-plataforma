@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Timeline extends Model
 {
-    protected $table = 'timeline';
+    protected $table = 'timelines';
 
     const created_at = 'tempo_criacao';
     const updated_at = 'tempo_alteracao';

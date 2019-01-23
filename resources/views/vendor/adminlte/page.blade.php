@@ -83,17 +83,21 @@
                         <!-- Profile -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="http://i66.tinypic.com/jt5bpk.png" class="user-image hoverZoomLink" alt="User Image">
-                                <span class="hidden-xs">Rildo Ferreira</span>
+                                <img src="https://i.imgur.com/6H82qqD.png" class="user-image hoverZoomLink" alt="User Image">
+                                <span class="hidden-xs">{{auth()->user()->name}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
-                                <li class="user-header bg-teal">
-                                    <img src="http://i66.tinypic.com/jt5bpk.png" class="img-circle" alt="User Image">
+                                <li class="user-header">
+                                    <img src="https://i.imgur.com/6H82qqD.png" class="img-circle" alt="User Image">
 
                                     <p>
-                                        Rildo Ferreira
-                                        <small>Administrador</small>
+                                        {{auth()->user()->name}}
+                                        <br>_______
+
+                                        @foreach(auth()->user()->roles as $perfil)
+                                          <small>{{$perfil->name}}</small>
+                                        @endforeach
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -161,10 +165,10 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="http://i66.tinypic.com/jt5bpk.png" class="img-circle hoverZoomLink" alt="User Image">
+                        <img src="https://i.imgur.com/6H82qqD.png" class="img-circle hoverZoomLink" alt="User Image">
                     </div>
                     <div class="pull-left info">
-                        <p>Rildo Ferreira</p>
+                        <p>{{auth()->user()->name}}</p>
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>

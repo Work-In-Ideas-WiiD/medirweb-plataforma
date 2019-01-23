@@ -15,11 +15,17 @@ class CreatePrumadasTable extends Migration
     {
         Schema::create('prumadas', function (Blueprint $table) {
             $table->increments('PRU_ID');
-            
+
             $table->integer('PRU_IDUNIDADE')->unsigned();
             $table->foreign('PRU_IDUNIDADE')->references('UNI_ID')->on('unidades');
 
             $table->string('PRU_IDFUNCIONAL',255);
+
+            $table->string('PRU_SERIAL', 300);
+            $table->string('PRU_FABRICANTE', 300);
+            $table->string('PRU_MODELO', 300);
+            $table->string('PRU_OPERADORA', 300);
+
             $table->boolean('PRU_STATUS');
 
             $table->timestamps();

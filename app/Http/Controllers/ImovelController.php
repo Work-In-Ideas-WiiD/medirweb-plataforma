@@ -255,7 +255,7 @@ class ImovelController extends Controller
 
         $imovel->update($dataForm);
 
-        return redirect('imovel/ver/'. $imovel->IMO_ID);
+        return redirect('imovel');
     }
 
     /**

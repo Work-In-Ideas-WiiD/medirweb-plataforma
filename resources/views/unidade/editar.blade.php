@@ -110,6 +110,9 @@
 
 			</div>
 		</div>
+
+
+		{!! Form::close() !!}
 		<!-- [FIM] Dados de Identificação -->
 
 		<!-- Equipamentos -->
@@ -207,7 +210,7 @@
 
 </div>
 
-{!! Form::close() !!}
+
 
 </div>
 @stop

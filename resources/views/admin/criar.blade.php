@@ -98,52 +98,9 @@
             </div>
             <!-- [FIM] Dados de Identificação -->
 
-
-
-
         </div>
 
         <div class="col-md-4">
-
-            <div class="box box-widget widget-user">
-                <!-- Add the bg color to the header using any of the bg-* classes -->
-                <div class="widget-user-header bg-teal imagem" id="preview-image-capa" style="background: url('http://www.condominiosc.com.br/media/k2/items/cache/2a7c5a55d24475c5674a6cabf9d5e3d4_XL.jpg') center center;">
-                    <h3 class="widget-user-username labelNome">Novo Usuário</h3>
-                    {{--<h5 class="widget-user-desc labelBairro">[Bairro]</h5>--}}
-                </div>
-                <div class="widget-user-image">
-                    <img class="img-circle" src="https://i.imgur.com/6H82qqD.png" id="preview-image-foto" alt="User Avatar">
-                </div>
-                <div class="box-footer">
-                    <div class="row">
-                        <div class="col-sm-4 border-right">
-                            <div class="description-block">
-                                <h5 class="description-header">0</h5>
-                                <span class="description-text">AGRUPAMENTOS</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 border-right">
-                            <div class="description-block">
-                                <h5 class="description-header">0</h5>
-                                <span class="description-text">UNIDADES</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4">
-                            <div class="description-block">
-                                <h5 class="description-header">0</h5>
-                                <span class="description-text">EQUIPAMENTOS</span>
-                            </div>
-                            <!-- /.description-block -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-            </div>
 
             <button type="submit" type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
 

@@ -138,6 +138,7 @@ class UnidadeController extends Controller
       */
      public function update(Request $request, $id)
      {
+
        $unidade = Unidade::findOrFail($id);
 
        if(is_null($unidade)){
@@ -148,7 +149,7 @@ class UnidadeController extends Controller
 
        $unidade->update($dataForm);
 
-       return redirect('/imovel')->with('success', 'Unidade atualizado com sucesso.');
+       return redirect('/unidade/editar/'.$id)->with('success', 'Unidade atualizado com sucesso.');
      }
 
     /**
