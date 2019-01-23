@@ -9,8 +9,9 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromArray;
 
-class LeituraExport implements FromQuery
+class LeituraExport implements FromArray
 {
 
     use Exportable;
@@ -25,7 +26,7 @@ class LeituraExport implements FromQuery
     /**
      * @return array
      */
-    public function query()
+    public function array(): array
     {
         //$sheets = [];
 
