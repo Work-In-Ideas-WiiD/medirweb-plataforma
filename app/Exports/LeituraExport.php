@@ -25,7 +25,7 @@ class LeituraExport implements FromQuery
     /**
      * @return array
      */
-    public function query(): array
+    public function query()
     {
         //$sheets = [];
 
