@@ -77,7 +77,6 @@ Route::delete('/unidade/{unidade}', array('as'=>'unidade.destroy', 'uses'=>'Unid
 /* Unidades */
 
 Route::get('/prumada/adicionar', 'PrumadaController@create')->name('Adicionar Prumada');
-Route::post('nova-prumada', array('uses' => 'PrumadaController@store'));
 
 Route::get('/unidade/leitura/{unidade}', array('uses' => 'UnidadeController@leituraUnidade'));
 

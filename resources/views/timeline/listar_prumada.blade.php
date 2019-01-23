@@ -43,6 +43,12 @@
         <i class="fa fa-clock-o bg-gray"></i>
       </li>
     </ul>
+
+    {!! $timelines->links() !!}
+    <p>
+      Exibindo {{ $timelines->count() }}  de {{ $timelines->total() }}.
+    </p>
+
   </div>
 
   <div class="col-md-3">

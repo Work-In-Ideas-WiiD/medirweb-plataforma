@@ -16,7 +16,8 @@ class TimelineController extends Controller
      */
     public function index()
     {
-        $timelines = Timeline::orderBy('created_at', 'desc')->get();
+        $timelines = Timeline::orderBy('created_at', 'desc')
+                            ->paginate(5);
 
         return view('timeline.listar_prumada', compact('timelines'));
     }
