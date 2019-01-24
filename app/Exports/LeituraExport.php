@@ -47,11 +47,11 @@ class LeituraExport implements FromArray
 
                     if($comsumo > 10 && $comsumo <= 15)
                     {
-                        $valor = ($comsumo - 10) * 11.37;
+                        $valor = (($comsumo - 10) * 11.37) + 59;
                     }
                     elseif ($comsumo > 15)
                     {
-                        $valor = ($comsumo - 10) * 13.98;
+                        $valor = (($comsumo - 10) * 13.98) + 59;
                     }
                     else
                     {
