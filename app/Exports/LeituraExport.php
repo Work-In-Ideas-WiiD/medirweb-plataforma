@@ -45,12 +45,29 @@ class LeituraExport implements FromArray
                 {
                     $comsumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
 
+                    if($comsumo > 10 && $comsumo <= 15)
+                    {
+                        $valor = ($comsumo - 10) * 11.37;
+                    }
+                    elseif ($comsumo > 15)
+                    {
+                        $valor = ($comsumo - 10) * 13.98;
+                    }
+                    else
+                    {
+                        $valor = 59;
+                    }
+
+
                     $relatorio = array(
-                        'Imovel' => $unid->IMO_NOME,
-                        'Unidade' => $unid->UNI_NOME,
+                        'Imovel' => $unid->imovel->IMO_NOME,
+                        'Indice Geral' => $prumada->PRU_ID,
+                        'NOMES' => $unid->UNI_RESPONSAVEL,
+                        'Apartamentos' => $unid->UNI_NOME,
                         'LEITURA DEZ.2018 - ANTERIOR' => $leituraAnterior->LEI_METRO,
                         'LEITURA JAN.2019 - ATUAL' => $leituraAtual->LEI_METRO,
                         'Cosumo M³' => $comsumo,
+                        'Valor' => number_format($valor, 2, ',', '.'),
                         'Data leitura DEZ.2018' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
                         'Data leitura JAN.2019' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
                     );
