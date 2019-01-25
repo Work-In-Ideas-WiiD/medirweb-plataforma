@@ -123,5 +123,9 @@ Route::post('/timeline/equipamento/getTimelineLista', array('uses' => 'TimelineC
 
 /* Relatorios */
 
-Route::get('/relatorio/consumo', 'Hello@relatorioConsumo')->name('Relatorio Consumo');
+Route::get('/relatorio/consumo', 'RelatorioController@relatorioConsumo')->name('Relatorio Consumo');
+Route::post('relatorio/consumo', array('uses' => 'RelatorioController@getConsumoLista'));
+
+Route::get('relatorio/consumo/getEquipamentoLista/{id}', array('uses' => 'RelatorioController@showPrumada'));
+
 Route::get('/relatorio/faturas', 'Hello@relatorioFatura')->name('Relatorio Fatura');

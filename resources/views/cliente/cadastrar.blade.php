@@ -18,7 +18,7 @@
         <div class="col-md-8">
             {!! Form::open(['action' => 'ClienteController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
-            <! -- Informações Pessoais -->
+            <!-- Informações Pessoais -->
             <div class="box box-warning">
                 <div class="box-header with-border">
                     <h3 class="box-title"><i class="fa fa-user"></i> Dados de Identificação</h3>
