@@ -180,19 +180,6 @@
     });
 </script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script type="text/javascript">
 // RELATORIO CONSUMO - CAMPO Hidrômetro
 
@@ -210,7 +197,7 @@
                         $('select[name="PRU_ID"]').empty();
                         $('select[name="PRU_ID"]').append('<option>Selecione Hidrômetro</option>');
                         $.each(data, function(key, value) {
-                            $('select[name="PRU_ID"]').append('<option value="'+ value +'">'+ '#' + value +'</option>');
+                            $('select[name="PRU_ID"]').append('<option value="'+ value.PRU_ID +'">'+ '#' + value.PRU_ID + ' - Apartamento: ' + value.UNI_NOME +'</option>');
                         });
 
                     }
@@ -221,18 +208,6 @@
         });
     });
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
 
 <script type="text/javascript">
 

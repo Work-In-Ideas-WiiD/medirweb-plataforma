@@ -17,11 +17,11 @@
 
 <div class="row">
 
+    <?php // Filtro de Pesquisa ?>
     <div class="col-md-12">
         <div class="row">
             {!! Form::open(['action' => 'RelatorioController@getConsumoLista', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
-            <?php // Filtro de Pesquisa ?>
             <div class="col-md-9">
                 <div class="box box-gray">
                     <div class="box-header with-border gray">
@@ -73,30 +73,12 @@
                         <div class='box-body'>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="row">
 
-                                        <div class="col-md-4">
-                                            <div class='form-group'>
-                                                {{ Form::label('PRU_ID', '#ID Hidrômetro') }}
-                                                {{ Form::select('PRU_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class='form-group'>
-                                                {{ Form::label('CONSUMO_SERIAL', 'Serial Hidrômetro') }}
-                                                {{ Form::text('CONSUMO_SERIAL', '', ['class' => 'form-control', 'placeholder' => '']) }}
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-4">
-                                            <div class='form-group'>
-                                                {{ Form::label('CONSUMO_STATUS', 'Status') }}
-                                                {{ Form::select('CONSUMO_STATUS', [1 => 'Ativo', 0 => 'Inativo'], null, ['class' => 'form-control']) }}
-                                            </div>
-                                        </div>
-
+                                    <div class='form-group'>
+                                        {{ Form::label('PRU_ID', '#ID Hidrômetro') }}
+                                        {{ Form::select('PRU_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -104,7 +86,7 @@
                     <?php // FIM - Pesquisa avançada ?>
 
                 </div>
-                <?php // FIM - Filtro de Pesquisa ?>
+
 
             </div>
 
@@ -114,12 +96,12 @@
                 <?php // Botão Filtrar ?>
                 <div class="form-group">
                     {{ Form::label('', '&nbsp;') }}
-                    <button type="submit" type="button" style="width: 100% "class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
+                    <button type="submit" type="button" name="filtrar" value="filtrar" style="width: 100% "class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
                 </div>
 
                 <?php // Botão exportar ?>
                 <div class="form-group">
-                    <div class="box box-danger" style="margin-top: -15px;">
+                    <div class="box box-danger">
                         <div class="box-header with-border gray" style="background-color: #dd4b39; color: white; text-align: center;">
                             <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Exportar</h3>
                             <div class="box-tools pull-right">
@@ -127,9 +109,8 @@
                                 </button>
                             </div>
                         </div>
-
                         <div class='box-body' style="text-align: center;">
-                            <button class="btn-default btn" style="margin-top: 5px; font-size: 10px;"><i class="fa fa-save"></i> CSV</button>
+                            <button type="submit" type="button" name="export" value="excel" class="btn-default btn" style="margin-top: 5px; font-size: 10px;"><i class="fa fa-save"></i> CSV</button>
                         </div>
                     </div>
                 </div>
@@ -139,9 +120,7 @@
             {!! Form::close() !!}
         </div>
     </div>
-
-
-
+    <?php // FIM - Filtro de Pesquisa ?>
 
     <?php // Resultados ?>
     <div class="col-md-12">
@@ -193,77 +172,58 @@
         <?php // Resultados CONSUMO AVAÇADO ?>
         @if(!empty($consumoAvancados))
 
-
-        @foreach($consumoAvancados as $consumoAvancado)
-
-        <p>IndiceGeral {{ $consumoAvancado['IndiceGeral'] }}</p>
-        <p>LeituraAnterior {{ $consumoAvancado['LeituraAnterior'] }}</p>
-        <p>LeituraAtual {{ $consumoAvancado['LeituraAtual'] }}</p>
-        <p>Consumo {{ $consumoAvancado['Consumo'] }}</p>
-        <p>Valor {{ $consumoAvancado['Valor'] }}</p>
-
-        @endforeach
-
         <div class="row" style="margin-top: 40px; margin-bottom: 40px;">
+            @foreach($consumoAvancados as $consumoAvancado)
+
             <div class="col-md-3">
                 <div class="box box-success" style="margin-top: -15px;">
                     <div class="box-header with-border gray" style="background-color: #00a65a; color: white; text-align: center;">
-                        <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Consumo de Litros - Valor</h3>
+                        <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;">Leitura Anterior</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
                         </div>
                     </div>
-
                     <div class='box-body'>
-                        <p style="text-align: center; font-weight: 600; font-size: 16px;">13m³ - R$ 245,66</p>
+                        <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['LeituraAnterior'] }}m³</p>
                     </div>
-                </div><!-- /.box .box-primary -->
+                </div>
             </div>
 
             <div class="col-md-3">
                 <div class="box box-warning" style="margin-top: -15px;">
                     <div class="box-header with-border gray" style="background-color: #f39c12; color: white; text-align: center;">
-                        <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Cota consumo Área Comum</h3>
+                        <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;">Leitura Atual</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
                         </div>
                     </div>
-
                     <div class='box-body'>
-                        <p style="text-align: center; font-weight: 600; font-size: 16px;">13m³ - R$ 245,66</p>
+                        <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['LeituraAtual'] }}m³</p>
                     </div>
-                </div><!-- /.box .box-primary -->
+                </div>
             </div>
 
             <div class="col-md-3">
                 <div class="box box-primary" style="margin-top: -15px;">
                     <div class="box-header with-border gray" style="background-color: #3c8dbc; color: white; text-align: center;">
-                        <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Valor da Água R$</h3>
+                        <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Valor Total R$</h3>
                         <div class="box-tools pull-right">
                             <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                             </button>
                         </div>
                     </div>
-
                     <div class='box-body'>
-                        <p style="text-align: center; font-weight: 600; font-size: 16px;">13m³ - R$ 245,66</p>
+                        <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['Consumo'] }}m³ - R$ {{ $consumoAvancado['Valor'] }}</p>
                     </div>
-                </div><!-- /.box .box-primary -->
+                </div>
             </div>
 
-
-
-
+            @endforeach
         </div>
-
-
-
-
         @endif
         <?php // FIM - Resultados CONSUMO AVANÇADO?>
-
 
     </div>
     <?php // FIM - Resultados ?>
