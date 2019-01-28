@@ -39,7 +39,7 @@ class RelatorioController extends Controller
 
         // VALIDAÇÃO CAMPO IMOVEL
         if(empty($request->input('CONSUMO_IMOVEL'))){
-            return redirect('/relatorio/consumo')->with('success', 'Por Favor Selecione o Imóvel.');
+            return redirect('/relatorio/consumo')->with('error', 'Por Favor Selecione o Imóvel.');
         }
         // FIM - VALIDAÇÃO CAMPO IMOVEL
 

@@ -86,8 +86,6 @@
                     <?php // FIM - Pesquisa avançada ?>
 
                 </div>
-
-
             </div>
 
             <?php // Botão opções ?>

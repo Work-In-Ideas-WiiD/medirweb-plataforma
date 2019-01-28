@@ -69,6 +69,7 @@ Route::delete('/agrupamento/{agrupamento}', array('as'=>'agrupamento.destroy', '
 
 Route::get('/unidade/adicionar', 'UnidadeController@create')->name('Adicionar Unidade');
 Route::get('/unidade/getAgrupamentoLista/{id}', array('uses' => 'UnidadeController@showAgrupamento'));
+Route::get('/unidade/ver/{id}', array('uses' => 'UnidadeController@show'));
 Route::post('nova-unidade', array('uses' => 'UnidadeController@store'));
 Route::get('/unidade/editar/{id}', array('as'=>'unidade.edit', 'uses' => 'UnidadeController@edit'));
 Route::put('/unidade/update/{unidade}', array('as'=>'unidade.update', 'uses'=>'UnidadeController@update'));
