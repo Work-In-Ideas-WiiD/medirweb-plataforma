@@ -8,6 +8,8 @@ use App\Models\Unidade;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LeituraExport;
 
+use App\Charts\ConsumoCharts;
+
 class RelatorioController extends Controller
 {
     public function index()
@@ -54,10 +56,14 @@ class RelatorioController extends Controller
             //Validação se esta vazio campo hidrometro
             if(empty($request->PRU_ID) || ($request->PRU_ID == "Selecione Hidrômetro")){
 
-                // RESULTADO DA PESQUISA CONSUMO COMPLETO
+                // INICIALIZAÇÃO de arrays
+                $apartamentoGrafico = array();
+                $consumoGrafico = array();
                 $consumos = array();
                 $consumoAvancados = null;
+                // FIM - INICIALIZAÇÃO de arrays
 
+                // RESULTADO DA PESQUISA CONSUMO COMPLETO
                 $unidades = Imovel::find($request->input('CONSUMO_IMOVEL'))->getUnidades;
                 foreach ($unidades as $unid) {
                     $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
@@ -84,7 +90,6 @@ class RelatorioController extends Controller
                                 $valor = 59;
                             }
 
-
                             $relatorio_consumos = array(
                                 'Imovel' => $unid->imovel->IMO_NOME,
                                 'IndiceGeral' => $prumada->PRU_ID,
@@ -99,16 +104,67 @@ class RelatorioController extends Controller
                             );
 
                             array_push($consumos, $relatorio_consumos);
+
+                            //ARRAY GRAFICO
+                            $arrayApartamentoGrafico = [$unid->UNI_NOME];
+                            array_push($apartamentoGrafico, $arrayApartamentoGrafico);
+                            $arrayConsumoGrafico = [$consumo];
+                            array_push($consumoGrafico, $arrayConsumoGrafico);
+                            // FIM - ARRAY GRAFICO
                         }
                     }
                 }
-            }else{
-                // RESULTADO DA PESQUISA CONSUMO AVANÇADO
 
+                // GRAFICO CONSUMO POR APARTAMENTO (TYPE: PIZZA)
+                $chartConsumoPizza = new ConsumoCharts;
+                $chartConsumoPizza->displayAxes(false)
+                ->title("Consumo por Apartamentos")
+                ->labels($apartamentoGrafico)
+                ->displayLegend(false)
+                ->dataset('Consumo', 'pie', $consumoGrafico)
+                ->backgroundcolor(['#00ff00','#ff0000','#0000ff','#ffcc00','#330000','#336633','#336666','#336699','#3366CC','#3366FF','#00FFFF','#336600',
+                '#CC6600','#CC6633','#CC6666','#CC6699','#CC66CC','#CC66FF','#CC9900','#CC9933','#CC9966','#CC9999','#CC99CC','#CC99FF','#333300','#333333',
+                '#CCCC00','#CCCC33','#CCCC66','#CCCC99','#CCCCCC','#CCCCFF','#CCFF00','#CCFF33','#CCFF66','#CCFF99','#CCFFCC','#CCFFFF','#333366','#333399',
+                '#FF0000','#FF0033','#FF0066','#FF0099','#FF00CC','#FF00FF','#FF3300','#FF3333','#FF3366','#FF3399','#FF33CC','#FF33FF','#3333CC','#3333FF',
+                '#FF6600','#FF6633','#FF6666','#FF6699','#FF66CC','#FF66FF','#66FF00','#66FF33','#66FF66','#66FF99','#66FFCC','#66FFFF','#3366CC','#3366FF',
+                '#FF9900','#FF9933','#FF9966','#FF9999','#FF99CC','#FF99FF','#66CC00','#66CC33','#66CC66','#66CC99','#66CCCC','#66CCFF','#336666','#336699',
+                '#FFCC00','#FFCC33','#FFCC66','#FFCC99','#FFCCCC','#FFCCFF','#669900','#669933','#669966','#669999','#6699CC','#6699FF','#336600','#336633',
+                '#FFFF00','#FFFF33','#FFFF66','#FFFF99','#FFFFCC','#FFFFFF','#666600','#666633','#666666','#666699','#6666CC','#6666FF','#3300CC','#3300FF',
+                '#000000','#000033','#000066','#000099','#0000CC','#0000FF','#663300','#663333','#663366','#663399','#6633CC','#6633FF','#330066','#330099',
+                '#003300','#003333','#003366','#003399','#0033CC','#0033FF','#660000','#660033','#660066','#660099','#6600CC','#6600FF','#330033','#330033',
+                '#006600','#006633','#006666','#006699','#0066CC','#0066FF','#33FF00','#33FF33','#33FF66','#33FF99','#33FFCC','#33FFFF','#00FF99','#00FFCC',
+                '#009900','#009933','#009966','#009999','#0099CC','#0099FF','#33CC00','#33CC33','#33CC66','#33CC99','#33CCCC','#33CCFF','#00FF00','#000000',
+                '#00CC00','#00CC33','#00CC66','#00CC99','#00CCCC','#00CCFF','#339900','#339933','#339966','#339999','#3399CC','#3399FF','#00FF33','#00FF66']);
+                // FIM - GRAFICO CONSUMO POR APARTAMENTO (TYPE: PIZZA)
+
+
+
+
+
+
+
+                // GRAFICO CONSUMO POR APARTAMENTO (TYPE: LINE)
+                $chartConsumoLine = new ConsumoCharts;
+                $chartConsumoLine->title("Consumo por Apartamentos")
+                ->labels($apartamentoGrafico)
+                ->dataset('Consumo', 'line', $consumoGrafico)
+                ->backgroundcolor('#3c8dbc');
+
+
+                // FIM - GRAFICO CONSUMO POR APARTAMENTO (TYPE: LINE)
+
+
+
+            }else{
+                // INICIALIZAÇÃO de arrays
                 $consumos = null;
                 $consumoAvancados = array();
 
+                $chartConsumoPizza = null;
+                $chartConsumoLine = null;
+                // FIM - INICIALIZAÇÃO de arrays
 
+                // RESULTADO DA PESQUISA CONSUMO AVANÇADO
                 $hidromentros = Unidade::find($request->input('PRU_ID'))->getPrumadas;
 
                 foreach ($hidromentros as $hidromentro)
@@ -152,8 +208,7 @@ class RelatorioController extends Controller
             }
         }
 
-
-        return view('relatorio.consumo', ['consumos'=>$consumos, 'imoveis' =>$imoveis, 'consumoAvancados' => $consumoAvancados]);
+        return view('relatorio.consumo', compact('imoveis', 'consumos', 'consumoAvancados', 'chartConsumoPizza', 'chartConsumoLine'));
     }
 
     public function showPrumada($id)

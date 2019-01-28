@@ -125,6 +125,54 @@
 
         <?php // Resultados CONSUMO COMPLETO ?>
         @if(!empty($consumos))
+
+
+
+        <?php // GRAFICO ?>
+        <div class="form-group">
+            <div class="box box-primary collapse-box">
+                <div class="box-header with-border gray" style="background-color: #3c8dbc; color: white; text-align: center;">
+                    <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> GRAFICOS</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class='box-body' style="text-align: center;">
+
+
+                    <?php // GRAFICO CONSUMO POR APARTAMENTO (TYPE: PIZZA) ?>
+                    <div class="col-md-3 text-center">
+                        {!! $chartConsumoPizza->container() !!}
+                        {!! $chartConsumoPizza->script() !!}
+                    </div>
+                    <?php // FIM - GRAFICO CONSUMO POR APARTAMENTO (TYPE: PIZZA) ?>
+
+                    <?php // GRAFICO CONSUMO POR APARTAMENTO (TYPE: LINE) ?>
+                    <div class="col-md-9">
+                        {!! $chartConsumoLine->container() !!}
+                        {!! $chartConsumoLine->script() !!}
+                    </div>
+                    <?php // FIM - GRAFICO CONSUMO POR APARTAMENTO (TYPE: LINE) ?>
+
+
+
+                </div>
+            </div>
+        </div>
+        <?php // FIM - GRAFICO ?>
+
+
+
+
+
+
+
+
+
+
+
+
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Resultados da Pesquisa </h3>
