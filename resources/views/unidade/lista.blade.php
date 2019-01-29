@@ -14,7 +14,7 @@
               		<i class="fa fa-text-width"></i>
               		<h3 class="box-title">Geral</h3>
             	</div> <!-- /.box-header -->
-            	
+
             	<div class="box-body">
               		<dl>
                 		<dt>Proprietário</dt>
@@ -32,7 +32,7 @@
               		<i class="fa fa-external-link"></i>
               		<h3 class="box-title">Ações</h3>
             	</div> <!-- /.box-header -->
-            	
+
             	<div class="box-body row">
               		<div class="col-md-3 text-center">
               			<div class="form-group">
@@ -84,9 +84,9 @@
 			<div class="box-body">
 				<div class="bloco-medicao row">
 					<div class="col-md-5">
-						
+
 						<div class="medicao-num">
-						
+
 							@if(isset($ultimaleitura->LEI_METRO))
 								<p class="registronum" >{{ sprintf("%04d", $ultimaleitura->LEI_METRO) }} <span class="unidade" >m³</span></p>
 							@else
@@ -98,7 +98,7 @@
 					</div>
 
 					<div class="col-md-7">
-					
+
 						<div class="medicao-num">
 							<table class="table" >
 							<tbody>
@@ -143,7 +143,7 @@
 							<th>Data da Leitura</th>
 						</thead>
 						<tbody>
-						
+
 							@foreach ($leituras as $lei)
 							<tr>
 								<td>{{ $lei->LEI_ID }}</td>
@@ -154,7 +154,7 @@
 								<td>{{ $lei->created_at->format('d/m/Y H:i') }}</td>
 							</tr>
 							@endforeach
-						
+
 						</tbody>
 					</table>
 				</div>

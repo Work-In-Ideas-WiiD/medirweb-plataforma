@@ -181,6 +181,35 @@
 </script>
 
 <script type="text/javascript">
+// RELATORIO CONSUMO - CAMPO Hidrômetro
+
+    $(document).ready(function() {
+        $('select[name="CONSUMO_IMOVEL"]').on('change', function() {
+            var stateID = $(this).val();
+            if(stateID) {
+                $.ajax({
+                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
+                    url: '/relatorio/consumo/getEquipamentoLista/'+stateID,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+
+                        $('select[name="PRU_ID"]').empty();
+                        $('select[name="PRU_ID"]').append('<option>Selecione Hidrômetro</option>');
+                        $.each(data, function(key, value) {
+                            $('select[name="PRU_ID"]').append('<option value="'+ value.PRU_ID +'">'+ '#' + value.PRU_ID + ' - Apartamento: ' + value.UNI_NOME +'</option>');
+                        });
+
+                    }
+                });
+            }else{
+                $('select[name="city"]').empty();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
 
     $(document).ready(function() {
         $('select[name="IMO_IDESTADO"]').on('change', function() {
