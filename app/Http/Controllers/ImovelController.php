@@ -133,6 +133,11 @@ class ImovelController extends Controller
 
     public function show_buscar($id)
     {
+        if($id == 4 ||  $id == 8)
+        {
+            return redirect('teste/'.$id);
+        }
+
         $imovel =  Imovel::findorFail($id);
 
         $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
