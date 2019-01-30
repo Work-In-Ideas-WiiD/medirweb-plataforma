@@ -27,7 +27,7 @@ class Hello extends Controller
 
     public function cadastro()
     {
-    	return view('cadastro/adicionar');	
+    	return view('cadastro/adicionar');
     }
 
     public function postAdicionar(Request $request)
@@ -278,6 +278,6 @@ class Hello extends Controller
 
     public function relatorioFatura()
     {
-        return view('relatorio.fatura');
+        return view('relatorio.fatura_bak');
     }
 }

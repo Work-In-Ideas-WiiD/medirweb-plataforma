@@ -126,8 +126,6 @@
         <?php // Resultados CONSUMO COMPLETO ?>
         @if(!empty($consumos))
 
-
-
         <?php // GRAFICO ?>
         <div class="form-group">
             <div class="box box-primary collapse-box">
@@ -139,7 +137,6 @@
                     </div>
                 </div>
                 <div class='box-body' style="text-align: center;">
-
 
                     <?php // GRAFICO CONSUMO POR APARTAMENTO (TYPE: PIZZA) ?>
                     <div class="col-md-3 text-center">
@@ -155,23 +152,10 @@
                     </div>
                     <?php // FIM - GRAFICO CONSUMO POR APARTAMENTO (TYPE: LINE) ?>
 
-
-
                 </div>
             </div>
         </div>
         <?php // FIM - GRAFICO ?>
-
-
-
-
-
-
-
-
-
-
-
 
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -221,50 +205,80 @@
         <div class="row" style="margin-top: 40px; margin-bottom: 40px;">
             @foreach($consumoAvancados as $consumoAvancado)
 
-            <div class="col-md-3">
-                <div class="box box-success" style="margin-top: -15px;">
-                    <div class="box-header with-border gray" style="background-color: #00a65a; color: white; text-align: center;">
-                        <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;">Leitura Anterior</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
+            <div class="col-md-12">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="box box-success" style="margin-top: -15px;">
+                            <div class="box-header with-border gray" style="background-color: #00a65a; color: white; text-align: center;">
+                                <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;">Leitura Anterior</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class='box-body'>
+                                <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['LeituraAnterior'] }}m³</p>
+                            </div>
                         </div>
                     </div>
-                    <div class='box-body'>
-                        <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['LeituraAnterior'] }}m³</p>
+
+                    <div class="col-md-3">
+                        <div class="box box-warning" style="margin-top: -15px;">
+                            <div class="box-header with-border gray" style="background-color: #f39c12; color: white; text-align: center;">
+                                <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;">Leitura Atual</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class='box-body'>
+                                <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['LeituraAtual'] }}m³</p>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="col-md-3">
+                        <div class="box box-primary" style="margin-top: -15px;">
+                            <div class="box-header with-border gray" style="background-color: #3c8dbc; color: white; text-align: center;">
+                                <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Valor Total R$</h3>
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class='box-body'>
+                                <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['Consumo'] }}m³ - R$ {{ $consumoAvancado['Valor'] }}</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="box box-warning" style="margin-top: -15px;">
-                    <div class="box-header with-border gray" style="background-color: #f39c12; color: white; text-align: center;">
-                        <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;">Leitura Atual</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class='box-body'>
-                        <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['LeituraAtual'] }}m³</p>
-                    </div>
-                </div>
-            </div>
+            <?php // GRAFICO ?>
+            <div class="col-md-12">
 
-            <div class="col-md-3">
-                <div class="box box-primary" style="margin-top: -15px;">
-                    <div class="box-header with-border gray" style="background-color: #3c8dbc; color: white; text-align: center;">
-                        <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Valor Total R$</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
+                <div class="form-group">
+                    <div class="box box-primary collapse-box">
+                        <div class="box-header with-border gray" style="background-color: #3c8dbc; color: white; text-align: center;">
+                            <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> GRAFICO</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class='box-body' style="text-align: center;">
+                            <div class="col-md-12">
+                                {!! $chartConsumoLine->container() !!}
+                                {!! $chartConsumoLine->script() !!}
+                            </div>
                         </div>
                     </div>
-                    <div class='box-body'>
-                        <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['Consumo'] }}m³ - R$ {{ $consumoAvancado['Valor'] }}</p>
-                    </div>
                 </div>
+
             </div>
+            <?php // FIM - GRAFICO ?>
 
             @endforeach
         </div>

@@ -128,4 +128,6 @@ Route::get('/relatorio/consumo', 'RelatorioController@relatorioConsumo')->name('
 Route::post('relatorio/consumo', array('uses' => 'RelatorioController@getConsumoLista'));
 Route::get('relatorio/consumo/getEquipamentoLista/{id}', array('uses' => 'RelatorioController@showPrumada'));
 
-Route::get('/relatorio/faturas', 'Hello@relatorioFatura')->name('Relatorio Fatura');
+Route::get('/relatorio/faturas', 'RelatorioController@relatorioFatura')->name('Relatorio Fatura');
+
+Route::get('/relatorio/fatura', 'Hello@relatorioFatura')->name('Relatorio Fatura BAK');

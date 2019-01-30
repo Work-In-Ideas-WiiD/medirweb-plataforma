@@ -7,7 +7,6 @@ use App\Models\Imovel;
 use App\Models\Unidade;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LeituraExport;
-
 use App\Charts\ConsumoCharts;
 
 class RelatorioController extends Controller
@@ -26,6 +25,17 @@ class RelatorioController extends Controller
         }
 
         return view('relatorio.consumo', compact('imoveis'));
+    }
+
+    public function relatorioFatura()
+    {
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
+
+        return view('relatorio.fatura', compact('imoveis'));
     }
 
     public function getConsumoLista(Request $request)
@@ -137,31 +147,22 @@ class RelatorioController extends Controller
                 '#00CC00','#00CC33','#00CC66','#00CC99','#00CCCC','#00CCFF','#339900','#339933','#339966','#339999','#3399CC','#3399FF','#00FF33','#00FF66']);
                 // FIM - GRAFICO CONSUMO POR APARTAMENTO (TYPE: PIZZA)
 
-
-
-
-
-
-
                 // GRAFICO CONSUMO POR APARTAMENTO (TYPE: LINE)
                 $chartConsumoLine = new ConsumoCharts;
                 $chartConsumoLine->title("Consumo por Apartamentos")
                 ->labels($apartamentoGrafico)
                 ->dataset('Consumo', 'line', $consumoGrafico)
                 ->backgroundcolor('#3c8dbc');
-
-
                 // FIM - GRAFICO CONSUMO POR APARTAMENTO (TYPE: LINE)
-
-
 
             }else{
                 // INICIALIZAÇÃO de arrays
                 $consumos = null;
-                $consumoAvancados = array();
-
                 $chartConsumoPizza = null;
-                $chartConsumoLine = null;
+
+                $consumoAvancados = array();
+                $consumoAnoAnterior = array();
+                $consumoAnoAtual = array();
                 // FIM - INICIALIZAÇÃO de arrays
 
                 // RESULTADO DA PESQUISA CONSUMO AVANÇADO
@@ -202,8 +203,35 @@ class RelatorioController extends Controller
                         );
 
                         array_push($consumoAvancados, $relatorio_consumoAvancados);
+
+                        // ARRAY GRAFICO CONSUMO MENSAL
+                        $anoAnterior = date("Y", strtotime('-1 year'));
+                        $anoAtual = date("Y");
+
+                        for ($mes=1; $mes <= 12; $mes++) {
+                            $leituraAnoAnterior = $hidromentro->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAnterior."-".$mes."-31")).' 23:59:59')
+                            ->orderBy('created_at', 'desc')->first();
+
+                            $leituraAnoAtual = $hidromentro->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
+                            ->orderBy('created_at', 'desc')->first();
+
+                            $arrayConsumoAnoAnterior = array($leituraAnoAnterior['LEI_METRO']);
+                            $arrayConsumoAnoAtual = array($leituraAnoAtual['LEI_METRO']);
+
+                            array_push($consumoAnoAnterior, $arrayConsumoAnoAnterior);
+                            array_push($consumoAnoAtual, $arrayConsumoAnoAtual);
+                        }
+                        // FIM - ARRAY GRAFICO CONSUMO MENSAL
                     }
                 }
+
+                // GRAFICO CONSUMO MENSAL (TYPE: LINE)
+                $chartConsumoLine = new ConsumoCharts;
+                $chartConsumoLine->title("Media Consumo Mensal");
+                $chartConsumoLine->labels(['31/JAN', '31/FEV', '31/MAR', '31/ABR', '31/MAI', '31/JUN', '31/JUL', '31/AGO', '31/SET', '31/OUT', '31/NOV', '31/DEZ']);
+                $chartConsumoLine->dataset($anoAnterior, 'line', $consumoAnoAnterior)->backgroundcolor('#3c8dbc');
+                $chartConsumoLine->dataset($anoAtual, 'line', $consumoAnoAtual)->backgroundcolor('#ffcc00');
+                // GRAFICO CONSUMO MENSA (TYPE: LINE)
 
             }
         }

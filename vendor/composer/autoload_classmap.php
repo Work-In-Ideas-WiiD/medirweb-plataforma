@@ -9,7 +9,7 @@ return array(
     'AgrupamentosTableSeeder' => $baseDir . '/database/seeds/AgrupamentosTableSeeder.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
-    'App\\Exports\\LeituraExport' => $baseDir . '/app/Exports/LeituraExport.bak.php',
+    'App\\Exports\\LeituraExport' => $baseDir . '/app/Exports/LeituraExport.php',
     'App\\Http\\Controllers\\AgrupamentoController' => $baseDir . '/app/Http/Controllers/AgrupamentoController.php',
     'App\\Http\\Controllers\\Auth\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/Auth/ForgotPasswordController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
