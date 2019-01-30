@@ -11,9 +11,42 @@ use App\Charts\ConsumoCharts;
 
 class RelatorioController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         //
+    }
+
+    public function tarifa($consumo){
+
+        if($consumo > 10 && $consumo <= 15)
+        {
+            $valor = (($consumo - 10) * 11.37) + 59;
+        }
+        elseif ($consumo > 15)
+        {
+            $valor = (($consumo - 10) * 13.98) + 59;
+        }
+        else
+        {
+            $valor = 59;
+        }
+
+        return $valor;
+    }
+
+    public function array_value_recursive($key, array $arr){
+        $val = array();
+        array_walk_recursive($arr, function($v, $k) use($key, &$val){
+            if($k == $key) array_push($val, $v);
+        });
+        $valu = array_map(function($value){return (int)$value;},$val);
+        return count($valu) > 1 ? $valu : array_pop($valu);
     }
 
     public function relatorioConsumo()
@@ -25,17 +58,6 @@ class RelatorioController extends Controller
         }
 
         return view('relatorio.consumo', compact('imoveis'));
-    }
-
-    public function relatorioFatura()
-    {
-        $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel){
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
-
-        return view('relatorio.fatura', compact('imoveis'));
     }
 
     public function getConsumoLista(Request $request)
@@ -87,18 +109,7 @@ class RelatorioController extends Controller
                         {
                             $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
 
-                            if($consumo > 10 && $consumo <= 15)
-                            {
-                                $valor = (($consumo - 10) * 11.37) + 59;
-                            }
-                            elseif ($consumo > 15)
-                            {
-                                $valor = (($consumo - 10) * 13.98) + 59;
-                            }
-                            else
-                            {
-                                $valor = 59;
-                            }
+                            $valor = RelatorioController::tarifa($consumo);
 
                             $relatorio_consumos = array(
                                 'Imovel' => $unid->imovel->IMO_NOME,
@@ -178,19 +189,7 @@ class RelatorioController extends Controller
                     {
                         $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
 
-                        if($consumo > 10 && $consumo <= 15)
-                        {
-                            $valor = (($consumo - 10) * 11.37) + 59;
-                        }
-                        elseif ($consumo > 15)
-                        {
-                            $valor = (($consumo - 10) * 13.98) + 59;
-                        }
-                        else
-                        {
-                            $valor = 59;
-                        }
-
+                        $valor = RelatorioController::tarifa($consumo);
 
                         $relatorio_consumoAvancados = array(
                             'IndiceGeral' => $hidromentro->PRU_ID,
@@ -239,6 +238,127 @@ class RelatorioController extends Controller
         return view('relatorio.consumo', compact('imoveis', 'consumos', 'consumoAvancados', 'chartConsumoPizza', 'chartConsumoLine'));
     }
 
+    public function relatorioFatura()
+    {
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
+
+        return view('relatorio.fatura', compact('imoveis'));
+    }
+
+    public function getFaturaLista(Request $request)
+    {
+        // FORMULARIO IMOVEL (GET)
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
+        // FIM - FORMULARIO IMOVEL (GET)
+
+        // SUBMIT "EXPORTAR PDF por Apartamento"
+        if(!empty($request->pdf)){
+            return redirect('/relatorio/faturas')->with('error', 'EM CONSTRUÇÃO! GERAR PDF para ID da UNIDADE = '.$request->input('pdf'));
+        }
+
+        // VALIDAÇÃO CAMPO IMOVEL
+        if(empty($request->input('FATURA_IMOVEL'))){
+            return redirect('/relatorio/faturas')->with('error', 'Por Favor Selecione o Imóvel.');
+        }
+        // FIM - VALIDAÇÃO CAMPO IMOVEL
+
+        // SUBMIT "EXPORTAR PDF TODAS AS FATURAS"
+        if($request->export == "pdf"){
+            //return Excel::download(new LeituraExport($request->input('CONSUMO_IMOVEL'), $request->input('CONSUMO_DATA_ANTERIOR'), $request->input('CONSUMO_DATA_ATUAL')), 'relatorio_consumo.xlsx');
+            return redirect('/relatorio/faturas')->with('error', 'EM CONSTRUÇÃO! GERAR PDF TODOS');
+        }
+
+        // SUBMIT "FILTRAR"
+        if($request->filtrar == "filtrar"){
+
+            //Validação se esta vazio campo hidrometro
+            if(empty($request->UNI_ID) || ($request->UNI_ID == "Selecione Apartamento")){
+
+                // INICIALIZAÇÃO de arrays
+                $faturas = array();
+                $faturaAvancados = null;
+                // FIM - INICIALIZAÇÃO de arrays
+
+                // RESULTADO DA PESQUISA FATURA COMPLETO
+                $unidades = Imovel::find($request->input('FATURA_IMOVEL'))->getUnidades;
+                foreach ($unidades as $unid) {
+                    $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
+                    foreach ($prumadas as $prumada)
+                    {
+                        $leituraAnterior = $prumada->getLeituras() ->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                        $leituraAtual = $prumada->getLeituras() ->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+
+                        if(isset($leituraAnterior) && isset($leituraAtual))
+                        {
+                            $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
+
+                            $valor = RelatorioController::tarifa($consumo);
+
+                            $relatorio_faturas = array(
+                                'UNI_ID' => $unid->UNI_ID, //new
+
+                                'Imovel' => $unid->imovel->IMO_NOME,
+                                'IndiceGeral' => $prumada->PRU_ID,
+                                'Nomes' => $unid->UNI_RESPONSAVEL,
+                                'Apartamentos' => $unid->UNI_NOME,
+                                'LeituraAnterior' => $leituraAnterior->LEI_METRO,
+                                'LeituraAtual' => $leituraAtual->LEI_METRO,
+                                'Consumo' => $consumo,
+                                'Valor' => number_format($valor, 2, ',', '.'),
+                                'DataLeituraAnterior' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
+                                'DataLeituraAtual' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
+                            );
+
+                            array_push($faturas, $relatorio_faturas);
+                        }
+                    }
+                }
+
+            }else{
+                // INICIALIZAÇÃO de arrays
+                $faturas = null;
+                $faturaAvancados = array();
+                // FIM - INICIALIZAÇÃO de arrays
+
+                // RESULTADO DA PESQUISA FATURA AVANÇADO
+                $equipamentos = Unidade::find($request->input('UNI_ID'))->getPrumadas;
+                foreach ($equipamentos as $equipamento)
+                {
+                    $leituraAnterior = $equipamento->getLeituras() ->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                    $leituraAtual = $equipamento->getLeituras() ->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+
+                    if(isset($leituraAnterior) && isset($leituraAtual))
+                    {
+                        $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
+
+                        $valor = RelatorioController::tarifa($consumo);
+
+                        $relatorio_faturaAvancados = array(
+                            'UNI_ID' => $equipamento->PRU_IDUNIDADE,
+                            'PRU_ID' => $equipamento->PRU_ID,
+                            'LeituraAnterior' => $leituraAnterior->LEI_METRO,
+                            'LeituraAtual' => $leituraAtual->LEI_METRO,
+                            'Consumo' => $consumo,
+                            'Valor' => number_format($valor, 2, ',', '.'),
+                        );
+
+                        array_push($faturaAvancados, $relatorio_faturaAvancados);
+                    }
+                }
+            }
+        }
+
+        return view('relatorio.fatura', compact('imoveis', 'faturas', 'faturaAvancados'));
+    }
+
     public function showPrumada($id)
     {
         $retorno = array();
@@ -259,6 +379,25 @@ class RelatorioController extends Controller
         }
 
         return json_encode($retorno);
+    }
+
+
+    public function showUnidade($id)
+    {
+        $retornoUnid = array();
+
+        $unidades = Imovel::find($id)->getUnidades;
+        foreach ($unidades as $unid) {
+            $unid = ['UNI_ID' => $unid->UNI_ID,
+            'UNI_NOME' => $unid->UNI_NOME];
+            array_push($retornoUnid, $unid);
+
+            if(is_null($unid)){
+                return redirect( URL::previous() );
+            }
+        }
+
+        return json_encode($retornoUnid);
     }
 
 }

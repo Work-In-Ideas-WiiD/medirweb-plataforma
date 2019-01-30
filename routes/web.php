@@ -129,5 +129,7 @@ Route::post('relatorio/consumo', array('uses' => 'RelatorioController@getConsumo
 Route::get('relatorio/consumo/getEquipamentoLista/{id}', array('uses' => 'RelatorioController@showPrumada'));
 
 Route::get('/relatorio/faturas', 'RelatorioController@relatorioFatura')->name('Relatorio Fatura');
+Route::post('relatorio/faturas', array('uses' => 'RelatorioController@getFaturaLista'));
+Route::get('relatorio/faturas/getApartamentoLista/{id}', array('uses' => 'RelatorioController@showUnidade'));
 
 Route::get('/relatorio/fatura', 'Hello@relatorioFatura')->name('Relatorio Fatura BAK');

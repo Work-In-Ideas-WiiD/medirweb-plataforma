@@ -16,11 +16,11 @@
 @section('content')
 
 <div class="row">
+    {!! Form::open(['action' => 'RelatorioController@getFaturaLista', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
     <?php // Filtro de Pesquisa ?>
     <div class="col-md-12">
         <div class="row">
-            <?php // {!! Form::open(['action' => 'RelatorioController@getConsumoLista', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!} ?>
 
             <div class="col-md-9">
                 <div class="box box-gray">
@@ -41,21 +41,21 @@
                                     <div class='col-md-4'>
                                         <div class='form-group'>
                                             {{ Form::label('', 'Data Inicio (Anterior)') }}
-                                            {{ Form::date('CONSUMO_DATA_ANTERIOR', date("Y-m-d", strtotime('-1 month')), ['class'=>'form-control', 'placeholder' => '']) }}
+                                            {{ Form::date('FATURA_DATA_ANTERIOR', date("Y-m-d", strtotime('-1 month')), ['class'=>'form-control', 'placeholder' => '']) }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class='form-group'>
                                             {{ Form::label('', 'Data Final (Atual)') }}
-                                            {{ Form::date('CONSUMO_DATA_ATUAL', date("Y-m-d"), ['class'=>'form-control', 'placeholder' => '']) }}
+                                            {{ Form::date('FATURA_DATA_ATUAL', date("Y-m-d"), ['class'=>'form-control', 'placeholder' => '']) }}
                                         </div>
                                     </div>
 
                                     <div class='col-md-4'>
                                         <div class='form-group'>
                                             {{ Form::label('', 'Imóvel') }}
-                                            {{ Form::select('CONSUMO_IMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                                            {{ Form::select('FATURA_IMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
                                         </div>
                                     </div>
 
@@ -75,8 +75,8 @@
                                 <div class="col-md-12">
 
                                     <div class='form-group'>
-                                        {{ Form::label('PRU_ID', '#ID Hidrômetro') }}
-                                        {{ Form::select('PRU_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                                        {{ Form::label('UNI_ID', '# Apartamento') }}
+                                        {{ Form::select('UNI_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
                                     </div>
 
                                 </div>
@@ -108,14 +108,13 @@
                             </div>
                         </div>
                         <div class='box-body' style="text-align: center;">
-                            <button type="submit" type="button" name="export" value="excel" class="btn-default btn" style="margin-top: 5px; font-size: 10px;"><i class="fa fa-save"></i> PDF</button>
+                            <button type="submit" type="button" name="export" value="pdf" class="btn-default btn" style="margin-top: 5px; font-size: 10px;"><i class="fa fa-file-pdf-o"></i> PDF</button>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <?php // {!! Form::close() !!} ?>
         </div>
     </div>
     <?php // FIM - Filtro de Pesquisa ?>
@@ -123,8 +122,8 @@
     <?php // Resultados ?>
     <div class="col-md-12">
 
-        <?php // Resultados CONSUMO COMPLETO ?>
-        @if(!empty($consumos))
+        <?php // Resultados FATURA COMPLETO ?>
+        @if(!empty($faturas))
 
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -136,27 +135,30 @@
                         <table id="lista-clientes" class="table table-bordered table-hover powertabela">
                             <thead>
                                 <tr>
-                                    <th>Imovel</th>
-                                    <th># Equipamento</th>
                                     <th>Nome</th>
                                     <th>Apartamento</th>
                                     <th>Leitura Anterior</th>
                                     <th>Leitura Atual</th>
                                     <th>Consumo m³</th>
                                     <th>Valor</th>
+                                    <th>Fatura</th>
                                 </tr>
                             </thead>
                             <tbody >
-                                @foreach ($consumos as $consumo)
+                                @foreach ($faturas as $fatura)
                                 <tr>
-                                    <td>{{ $consumo['Imovel'] }}</td>
-                                    <td>{{ $consumo['IndiceGeral'] }}</td>
-                                    <td>{{ $consumo['Nomes'] }}</td>
-                                    <td>{{ $consumo['Apartamentos'] }}</td>
-                                    <td>{{ $consumo['LeituraAnterior'] }}</td>
-                                    <td>{{ $consumo['LeituraAtual'] }}</td>
-                                    <td>{{ $consumo['Consumo'] }}</td>
-                                    <td>{{ $consumo['Valor'] }}</td>
+                                    <td>{{ $fatura['Nomes'] }}</td>
+                                    <td>{{ $fatura['Apartamentos'] }}</td>
+                                    <td>{{ $fatura['LeituraAnterior'] }}</td>
+                                    <td>{{ $fatura['LeituraAtual'] }}</td>
+                                    <td>{{ $fatura['Consumo'] }}</td>
+                                    <td>{{ $fatura['Valor'] }}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="submit" type="button" name="pdf" value="{{ $fatura['UNI_ID'] }}" class="btn btn-danger btn-flat"><i class="fa fa-file-pdf-o"></i> PDF</button>
+                                        </div>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -166,13 +168,12 @@
             </div>
         </div>
         @endif
-        <?php // FIM Resultados CONSUMO COMPLETO ?>
+        <?php // FIM Resultados FATURA COMPLETO ?>
 
-        <?php // Resultados CONSUMO AVAÇADO ?>
-        @if(!empty($consumoAvancados))
+        <?php // Resultados FATURA AVAÇADO ?>
+        @if(!empty($faturaAvancados))
 
         <div class="row" style="margin-top: 40px; margin-bottom: 40px;">
-            @foreach($consumoAvancados as $consumoAvancado)
 
             <div class="col-md-12">
                 <div class="row">
@@ -187,7 +188,10 @@
                                 </div>
                             </div>
                             <div class='box-body'>
-                                <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['LeituraAnterior'] }}m³</p>
+                                @foreach($faturaAvancados as $faturaAvancado)
+                                <small><i class="fa fa-tachometer"></i> #{{ $faturaAvancado['PRU_ID'] }}</small>
+                                <p style="text-align: center; font-weight: 600; font-size: 16px;" > {{ $faturaAvancado['LeituraAnterior'] }}m³</p>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -202,7 +206,10 @@
                                 </div>
                             </div>
                             <div class='box-body'>
-                                <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['LeituraAtual'] }}m³</p>
+                                @foreach($faturaAvancados as $faturaAvancado)
+                                <small><i class="fa fa-tachometer"></i> #{{ $faturaAvancado['PRU_ID'] }}</small>
+                                <p style="text-align: center; font-weight: 600; font-size: 16px;" > {{ $faturaAvancado['LeituraAtual'] }}m³</p>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -217,21 +224,32 @@
                                 </div>
                             </div>
                             <div class='box-body'>
-                                <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['Consumo'] }}m³ - R$ {{ $consumoAvancado['Valor'] }}</p>
+                                @foreach($faturaAvancados as $faturaAvancado)
+                                <small><i class="fa fa-tachometer"></i> #{{ $faturaAvancado['PRU_ID'] }}</small>
+                                <p style="text-align: center; font-weight: 600; font-size: 16px;" > {{ $faturaAvancado['Consumo'] }}m³ - R$ {{ $faturaAvancado['Valor'] }}</p>
+                                <?php $ID_AP =  $faturaAvancado['UNI_ID'];?>
+                                @endforeach
+
+                                <div style="text-align: center;">
+                                    <hr>
+                                    <button type="submit" type="button" name="pdf" value="{{ $ID_AP }}" class="btn-danger btn" style="text-align: center; font-weight: 600; font-size: 16px;"><i class="fa fa-file-pdf-o"></i> Gerar Fatura</button>
+                                </div>
+
                             </div>
                         </div>
                     </div>
 
                 </div>
             </div>
-            @endforeach
+
         </div>
         @endif
-        <?php // FIM - Resultados CONSUMO AVANÇADO?>
+        <?php // FIM - Resultados FATURA AVANÇADO?>
 
     </div>
     <?php // FIM - Resultados ?>
 
+    {!! Form::close() !!}
 </div>
 
 @stop

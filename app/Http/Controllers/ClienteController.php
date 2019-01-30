@@ -14,6 +14,12 @@ use App\Http\Requests\Cliente\ClienteEditRequest;
 
 class ClienteController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *

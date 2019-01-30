@@ -13,6 +13,12 @@ use App\Exports\LeituraExport;
 
 class Hello extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     //
     public function index()
     {

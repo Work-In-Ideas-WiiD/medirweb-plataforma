@@ -9,15 +9,21 @@ use App\Models\Prumada;
 
 class TimelineController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Display a listing of the resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function index()
     {
         $timelines = Timeline::orderBy('created_at', 'desc')
-                            ->paginate(5);
+        ->paginate(5);
 
         return view('timeline.listar_prumada', compact('timelines'));
     }
@@ -25,21 +31,21 @@ class TimelineController extends Controller
 
     public function buscar()
     {
-      $imoveis = ['' => 'Selecionar Imovel'];
-			$_imoveis = Imovel::all();
-			foreach($_imoveis as $imovel){
-				$imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-			}
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
 
-			return view('timeline.buscar_listar_prumada', compact('imoveis'));
+        return view('timeline.buscar_listar_prumada', compact('imoveis'));
     }
 
 
     public function getTimelineLista(Request $request)
     {
         $timelines = Timeline::where('TIMELINE_IDPRUMADA', $request->TIMELINE_IDPRUMADA)
-                              ->orderBy('created_at', 'desc')
-                              ->get();
+        ->orderBy('created_at', 'desc')
+        ->get();
 
         $retorno = array();
         foreach($timelines as $timeline)
@@ -49,11 +55,11 @@ class TimelineController extends Controller
             $hora = date("H:i", $datecomplet);
 
             $retorno[] = [
-              'data'               => $data,
-              'hora'               => $hora,
-              'TIMELINE_USER'      => $timeline->TIMELINE_USER,
-              'TIMELINE_DESCRICAO' => $timeline->TIMELINE_DESCRICAO,
-              'TIMELINE_ICON'      => $timeline->TIMELINE_ICON,
+                'data'               => $data,
+                'hora'               => $hora,
+                'TIMELINE_USER'      => $timeline->TIMELINE_USER,
+                'TIMELINE_DESCRICAO' => $timeline->TIMELINE_DESCRICAO,
+                'TIMELINE_ICON'      => $timeline->TIMELINE_ICON,
             ];
         }
 
@@ -61,27 +67,27 @@ class TimelineController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for creating a new resource.
+    *
+    * @return \Illuminate\Http\Response
+    */
     public function create()
     {
-      $imoveis = ['' => 'Selecionar Imovel'];
-			$_imoveis = Imovel::all();
-			foreach($_imoveis as $imovel){
-				$imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-			}
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
 
-			return view('timeline.cadastrar_prumada', compact('imoveis'));
+        return view('timeline.cadastrar_prumada', compact('imoveis'));
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Store a newly created resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Request $request)
     {
         $dataForm = $request->all();
@@ -92,11 +98,11 @@ class TimelineController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Display the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function show($id)
     {
         //
@@ -104,45 +110,45 @@ class TimelineController extends Controller
 
 
     public function showPrumada($id)
-		{
-				$prumadas = Prumada::where('PRU_IDUNIDADE', $id)->get();
+    {
+        $prumadas = Prumada::where('PRU_IDUNIDADE', $id)->get();
 
-				if(is_null($prumadas)){
-						return redirect( URL::previous() );
-				}
+        if(is_null($prumadas)){
+            return redirect( URL::previous() );
+        }
 
-				return json_encode($prumadas);
-		}
+        return json_encode($prumadas);
+    }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Show the form for editing the specified resource.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function edit($id)
     {
         //
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function update(Request $request, $id)
     {
         //
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Remove the specified resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function destroy($id)
     {
         //

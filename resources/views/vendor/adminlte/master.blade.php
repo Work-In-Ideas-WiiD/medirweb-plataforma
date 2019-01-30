@@ -210,6 +210,34 @@
 </script>
 
 <script type="text/javascript">
+// RELATORIO FATURA - CAMPO Apartamento
+
+    $(document).ready(function() {
+        $('select[name="FATURA_IMOVEL"]').on('change', function() {
+            var stateID = $(this).val();
+            if(stateID) {
+                $.ajax({
+                    url: '/relatorio/faturas/getApartamentoLista/'+stateID,
+                    type: "GET",
+                    dataType: "json",
+                    success:function(data) {
+
+                        $('select[name="UNI_ID"]').empty();
+                        $('select[name="UNI_ID"]').append('<option>Selecione Apartamento</option>');
+                        $.each(data, function(key, value) {
+                            $('select[name="UNI_ID"]').append('<option value="'+ value.UNI_ID +'">'+ '#' + value.UNI_ID + ' - Apartamento: ' + value.UNI_NOME +'</option>');
+                        });
+
+                    }
+                });
+            }else{
+                $('select[name="city"]').empty();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
 
     $(document).ready(function() {
         $('select[name="IMO_IDESTADO"]').on('change', function() {
