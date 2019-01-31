@@ -129,7 +129,7 @@ class ImovelController extends Controller
 
     public function show_buscar($id)
     {
-        if($id == 4 ||  $id == 8)
+        if($id == 4 ||  $id == 8 || $id == 9)
         {
             return redirect('teste/'.$id);
         }
