@@ -150,6 +150,7 @@ return [
         geekcom\ValidatorDocs\ValidatorProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -218,6 +219,7 @@ return [
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
         'Defender' => \Artesaos\Defender\Facades\Defender::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ],
 

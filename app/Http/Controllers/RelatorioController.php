@@ -72,21 +72,21 @@ class RelatorioController extends Controller
         // FIM - FORMULARIO IMOVEL (GET)
 
         // VALIDAÇÃO CAMPO IMOVEL
-        if(empty($request->input('CONSUMO_IMOVEL'))){
+        if(empty($request->input('RELATORIO_IMOVEL'))){
             return redirect('/relatorio/consumo')->with('error', 'Por Favor Selecione o Imóvel.');
         }
         // FIM - VALIDAÇÃO CAMPO IMOVEL
 
         // SUBMIT "EXPORTAR EXCEL"
         if($request->export == "excel"){
-            return Excel::download(new LeituraExport($request->input('CONSUMO_IMOVEL'), $request->input('CONSUMO_DATA_ANTERIOR'), $request->input('CONSUMO_DATA_ATUAL')), 'relatorio_consumo.xlsx');
+            return Excel::download(new LeituraExport($request->input('RELATORIO_IMOVEL'), $request->input('CONSUMO_DATA_ANTERIOR'), $request->input('CONSUMO_DATA_ATUAL')), 'relatorio_consumo.xlsx');
         }
 
         // SUBMIT "FILTRAR"
         if($request->filtrar == "filtrar"){
 
             //Validação se esta vazio campo hidrometro
-            if(empty($request->PRU_ID) || ($request->PRU_ID == "Selecione Hidrômetro")){
+            if(empty($request->UNI_ID) || ($request->UNI_ID == "Selecione Apartamento")){
 
                 // INICIALIZAÇÃO de arrays
                 $apartamentoGrafico = array();
@@ -96,7 +96,7 @@ class RelatorioController extends Controller
                 // FIM - INICIALIZAÇÃO de arrays
 
                 // RESULTADO DA PESQUISA CONSUMO COMPLETO
-                $unidades = Imovel::find($request->input('CONSUMO_IMOVEL'))->getUnidades;
+                $unidades = Imovel::find($request->input('RELATORIO_IMOVEL'))->getUnidades;
                 foreach ($unidades as $unid) {
                     $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
                     foreach ($prumadas as $prumada)
@@ -113,7 +113,7 @@ class RelatorioController extends Controller
 
                             $relatorio_consumos = array(
                                 'Imovel' => $unid->imovel->IMO_NOME,
-                                'IndiceGeral' => $prumada->PRU_ID,
+                                'PRU_ID' => $prumada->PRU_ID,
                                 'Nomes' => $unid->UNI_RESPONSAVEL,
                                 'Apartamentos' => $unid->UNI_NOME,
                                 'LeituraAnterior' => $leituraAnterior->LEI_METRO,
@@ -177,7 +177,7 @@ class RelatorioController extends Controller
                 // FIM - INICIALIZAÇÃO de arrays
 
                 // RESULTADO DA PESQUISA CONSUMO AVANÇADO
-                $hidromentros = Unidade::find($request->input('PRU_ID'))->getPrumadas;
+                $hidromentros = Unidade::find($request->input('UNI_ID'))->getPrumadas;
 
                 foreach ($hidromentros as $hidromentro)
                 {
@@ -192,13 +192,13 @@ class RelatorioController extends Controller
                         $valor = RelatorioController::tarifa($consumo);
 
                         $relatorio_consumoAvancados = array(
-                            'IndiceGeral' => $hidromentro->PRU_ID,
+                            'PRU_ID' => $hidromentro->PRU_ID,
                             'LeituraAnterior' => $leituraAnterior->LEI_METRO,
                             'LeituraAtual' => $leituraAtual->LEI_METRO,
                             'Consumo' => $consumo,
                             'Valor' => number_format($valor, 2, ',', '.'),
-                            'DataLeituraAnterior' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
-                            'DataLeituraAtual' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
+                            'DataLeituraAnterior' => date('d/m/Y', strtotime($leituraAnterior->created_at)),
+                            'DataLeituraAtual' => date('d/m/Y', strtotime($leituraAtual->created_at)),
                         );
 
                         array_push($consumoAvancados, $relatorio_consumoAvancados);
@@ -259,20 +259,75 @@ class RelatorioController extends Controller
         }
         // FIM - FORMULARIO IMOVEL (GET)
 
-        // SUBMIT "EXPORTAR PDF por Apartamento"
+        // SUBMIT "EXPORTAR PDF por Apartamento (individual)"
         if(!empty($request->pdf)){
-            return redirect('/relatorio/faturas')->with('error', 'EM CONSTRUÇÃO! GERAR PDF para ID da UNIDADE = '.$request->input('pdf'));
+
+            $dadosFaturaIndividual = array(
+                'ID_AP' => $request->pdf,
+                'nomeImovel' => $request->nomeImovel,
+                'cnpjImovel' => $request->cnpjImovel,
+                'enderecoImovel' => $request->enderecoImovel,
+                'bairroImovel' => $request->bairroImovel,
+                'cityUfImovel' => $request->cityUfImovel,
+                'cepImovel' => $request->cepImovel,
+                'responsaveisImovel' => $request->responsaveisImovel,
+                'responsaveisTelImovel' => $request->responsaveisTelImovel,
+
+                'nomeAp' => $request->nomeAp,
+                'responsavelAp' => $request->responsavelAp,
+                'responsavelCpfAp' => $request->responsavelCpfAp,
+                'responsavelTelAp' => $request->responsavelTelAp,
+
+                'hidrometroTable' => $request->hidrometroTable,
+                'leituraAnteriorTable' => $request->leituraAnteriorTable,
+                'leituraAtualTable' => $request->leituraAtualTable,
+                'consumoTable' => $request->consumoTable,
+                'valorTable' => $request->valorTable,
+                'dtLeituraAnteriorTable' => $request->dtLeituraAnteriorTable,
+                'dtLeituraAtualTable' => $request->dtLeituraAtualTable,
+            );
+
+            $hidrometroTable = $request->hidrometroTable;
+            $leituraAnteriorTable = $request->leituraAnteriorTable;
+            $leituraAtualTable = $request->leituraAtualTable;
+            $consumoTable = $request->consumoTable;
+            $valorTable = $request->valorTable;
+            $dtLeituraAnteriorTable = $request->dtLeituraAnteriorTable;
+            $dtLeituraAtualTable = $request->dtLeituraAtualTable;
+
+            $valorTotal = array_sum(array_map(function($value){return (float)$value;},$valorTable));
+            $valorTotalTable = number_format($valorTotal, 2, ',', '.');
+
+
+            return \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual',
+            'hidrometroTable', 'leituraAnteriorTable', 'leituraAtualTable', 'consumoTable', 'valorTable', 'dtLeituraAnteriorTable', 'dtLeituraAtualTable', 'valorTotalTable'))
+            ->download('fatura_individual.pdf');
         }
 
+
+
+
+
+
+        // VALIDAÇÃO DATAS NÃO PASSAR DE 31 DIAS
+        $date1=date_create($request->input('FATURA_DATA_ANTERIOR'));
+        $date2=date_create($request->input('FATURA_DATA_ATUAL'));
+        $diff=date_diff($date1,$date2);
+        $dias = $diff->format("%a");
+
+        if($dias >= 365 ){ // if($dias >= 32 ){
+            return redirect('/relatorio/faturas')->with('error', 'Não é permitido datas maiores que 31 dias!');
+        }
+        // FIM - VALIDAÇÃO DATAS NÃO PASSAR DE 31 DIAS
+
         // VALIDAÇÃO CAMPO IMOVEL
-        if(empty($request->input('FATURA_IMOVEL'))){
+        if(empty($request->input('RELATORIO_IMOVEL'))){
             return redirect('/relatorio/faturas')->with('error', 'Por Favor Selecione o Imóvel.');
         }
         // FIM - VALIDAÇÃO CAMPO IMOVEL
 
-        // SUBMIT "EXPORTAR PDF TODAS AS FATURAS"
+        // SUBMIT "EXPORTAR PDF TODAS AS FATURAS (todos do imovel)"
         if($request->export == "pdf"){
-            //return Excel::download(new LeituraExport($request->input('CONSUMO_IMOVEL'), $request->input('CONSUMO_DATA_ANTERIOR'), $request->input('CONSUMO_DATA_ATUAL')), 'relatorio_consumo.xlsx');
             return redirect('/relatorio/faturas')->with('error', 'EM CONSTRUÇÃO! GERAR PDF TODOS');
         }
 
@@ -288,7 +343,7 @@ class RelatorioController extends Controller
                 // FIM - INICIALIZAÇÃO de arrays
 
                 // RESULTADO DA PESQUISA FATURA COMPLETO
-                $unidades = Imovel::find($request->input('FATURA_IMOVEL'))->getUnidades;
+                $unidades = Imovel::find($request->input('RELATORIO_IMOVEL'))->getUnidades;
                 foreach ($unidades as $unid) {
                     $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
                     foreach ($prumadas as $prumada)
@@ -306,7 +361,7 @@ class RelatorioController extends Controller
                                 'UNI_ID' => $unid->UNI_ID, //new
 
                                 'Imovel' => $unid->imovel->IMO_NOME,
-                                'IndiceGeral' => $prumada->PRU_ID,
+                                'PRU_ID' => $prumada->PRU_ID,
                                 'Nomes' => $unid->UNI_RESPONSAVEL,
                                 'Apartamentos' => $unid->UNI_NOME,
                                 'LeituraAnterior' => $leituraAnterior->LEI_METRO,
@@ -343,11 +398,29 @@ class RelatorioController extends Controller
 
                         $relatorio_faturaAvancados = array(
                             'UNI_ID' => $equipamento->PRU_IDUNIDADE,
+
+                            'Imovel' => $equipamento->unidade->imovel->IMO_NOME,
+                            'cnpjImovel' => $equipamento->unidade->imovel->IMO_CNPJ,
+                            'Endereco' => $equipamento->unidade->imovel->IMO_LOGRADOURO." ".$equipamento->unidade->imovel->IMO_COMPLEMENTO.", Nº".$equipamento->unidade->imovel->IMO_NUMERO,
+                            'Bairro' => $equipamento->unidade->imovel->IMO_BAIRRO,
+                            'CityUF' => $equipamento->unidade->imovel->cidade->CID_NOME." - ".$equipamento->unidade->imovel->estado->EST_ABREVIACAO,
+                            'CEP' => $equipamento->unidade->imovel->IMO_CEP,
+                            'responsaveisImovel' => $equipamento->unidade->imovel->IMO_RESPONSAVEIS,
+                            'responsaveisTelImovel' => $equipamento->unidade->imovel->IMO_TELEFONES,
+
+                            'nomeAp' => $equipamento->unidade->UNI_NOME,
+                            'responsavelAp' => $equipamento->unidade->UNI_RESPONSAVEL,
+                            'responsavelCpfAp' => $equipamento->unidade->UNI_CPFRESPONSAVEL,
+                            'responsavelTelAp' => $equipamento->unidade->UNI_TELRESPONSAVEL,
+
+
                             'PRU_ID' => $equipamento->PRU_ID,
                             'LeituraAnterior' => $leituraAnterior->LEI_METRO,
                             'LeituraAtual' => $leituraAtual->LEI_METRO,
                             'Consumo' => $consumo,
                             'Valor' => number_format($valor, 2, ',', '.'),
+                            'DataLeituraAnterior' => date('d/m/Y', strtotime($leituraAnterior->created_at)),
+                            'DataLeituraAtual' => date('d/m/Y', strtotime($leituraAtual->created_at)),
                         );
 
                         array_push($faturaAvancados, $relatorio_faturaAvancados);
@@ -359,29 +432,6 @@ class RelatorioController extends Controller
         return view('relatorio.fatura', compact('imoveis', 'faturas', 'faturaAvancados'));
     }
 
-    public function showPrumada($id)
-    {
-        $retorno = array();
-
-        $unidades = Imovel::find($id)->getUnidades;
-        foreach ($unidades as $unid) {
-            $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
-            foreach ($prumadas as $prumada)
-            {
-                $pru = ['PRU_ID' => $prumada->PRU_ID,
-                'UNI_NOME' => $prumada->unidade->UNI_NOME];
-                array_push($retorno, $pru);
-            }
-
-            if(is_null($pru)){
-                return redirect( URL::previous() );
-            }
-        }
-
-        return json_encode($retorno);
-    }
-
-
     public function showUnidade($id)
     {
         $retornoUnid = array();
@@ -389,7 +439,8 @@ class RelatorioController extends Controller
         $unidades = Imovel::find($id)->getUnidades;
         foreach ($unidades as $unid) {
             $unid = ['UNI_ID' => $unid->UNI_ID,
-            'UNI_NOME' => $unid->UNI_NOME];
+            'UNI_NOME' => $unid->UNI_NOME,
+            'UNI_RESPONSAVEL' => $unid->UNI_RESPONSAVEL];
             array_push($retornoUnid, $unid);
 
             if(is_null($unid)){

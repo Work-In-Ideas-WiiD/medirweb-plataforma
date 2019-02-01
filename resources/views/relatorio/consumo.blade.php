@@ -55,7 +55,7 @@
                                     <div class='col-md-4'>
                                         <div class='form-group'>
                                             {{ Form::label('', 'Imóvel') }}
-                                            {{ Form::select('CONSUMO_IMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                                            {{ Form::select('RELATORIO_IMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
                                         </div>
                                     </div>
 
@@ -75,8 +75,8 @@
                                 <div class="col-md-12">
 
                                     <div class='form-group'>
-                                        {{ Form::label('PRU_ID', '#ID Hidrômetro') }}
-                                        {{ Form::select('PRU_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                                        {{ Form::label('UNI_ID', '# Apartamento') }}
+                                        {{ Form::select('UNI_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
                                     </div>
 
                                 </div>
@@ -181,7 +181,7 @@
                                 @foreach ($consumos as $consumo)
                                 <tr>
                                     <td>{{ $consumo['Imovel'] }}</td>
-                                    <td>{{ $consumo['IndiceGeral'] }}</td>
+                                    <td>{{ $consumo['PRU_ID'] }}</td>
                                     <td>{{ $consumo['Nomes'] }}</td>
                                     <td>{{ $consumo['Apartamentos'] }}</td>
                                     <td>{{ $consumo['LeituraAnterior'] }}</td>
@@ -203,8 +203,6 @@
         @if(!empty($consumoAvancados))
 
         <div class="row" style="margin-top: 40px; margin-bottom: 40px;">
-            @foreach($consumoAvancados as $consumoAvancado)
-
             <div class="col-md-12">
                 <div class="row">
 
@@ -218,7 +216,15 @@
                                 </div>
                             </div>
                             <div class='box-body'>
-                                <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['LeituraAnterior'] }}m³</p>
+                                @foreach($consumoAvancados as $consumoAvancado)
+                                <hr style="margin-bottom: -1px; margin-top: -10px;">
+                                <small><i class="fa fa-tachometer"></i> #{{ $consumoAvancado['PRU_ID'] }}</small>
+                                <div style="text-align:right; bottom:15px; position: relative;">
+                                    <small>{{ $consumoAvancado['DataLeituraAnterior'] }} <i class="fa fa-calendar"></i></small>
+                                </div>
+                                <hr style="margin-top: -10px;">
+                                <p style="text-align: center; font-weight: 600; font-size: 18px; margin-bottom: 20px;" > {{ $consumoAvancado['LeituraAnterior'] }}m³</p>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -233,7 +239,15 @@
                                 </div>
                             </div>
                             <div class='box-body'>
-                                <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['LeituraAtual'] }}m³</p>
+                                @foreach($consumoAvancados as $consumoAvancado)
+                                <hr style="margin-bottom: -1px; margin-top: -10px;">
+                                <small><i class="fa fa-tachometer"></i> #{{ $consumoAvancado['PRU_ID'] }}</small>
+                                <div style="text-align:right; bottom:15px; position: relative;">
+                                    <small>{{ $consumoAvancado['DataLeituraAtual'] }} <i class="fa fa-calendar"></i></small>
+                                </div>
+                                <hr style="margin-top: -10px;">
+                                <p style="text-align: center; font-weight: 600; font-size: 18px; margin-bottom: 20px;" > {{ $consumoAvancado['LeituraAtual'] }}m³</p>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -248,7 +262,12 @@
                                 </div>
                             </div>
                             <div class='box-body'>
-                                <p style="text-align: center; font-weight: 600; font-size: 16px;">{{ $consumoAvancado['Consumo'] }}m³ - R$ {{ $consumoAvancado['Valor'] }}</p>
+                                @foreach($consumoAvancados as $consumoAvancado)
+                                <hr style="margin-bottom: -1px; margin-top: -10px;">
+                                <small><i class="fa fa-tachometer"></i> #{{ $consumoAvancado['PRU_ID'] }}</small>
+                                <hr style="margin-top: 5px;">
+                                <p style="text-align: center; font-weight: 600; font-size: 18px; margin-bottom: 20px;" > {{ $consumoAvancado['Consumo'] }}m³ - R$ {{ $consumoAvancado['Valor'] }}</p>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -280,7 +299,6 @@
             </div>
             <?php // FIM - GRAFICO ?>
 
-            @endforeach
         </div>
         @endif
         <?php // FIM - Resultados CONSUMO AVANÇADO?>

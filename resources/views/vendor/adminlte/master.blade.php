@@ -181,39 +181,10 @@
 </script>
 
 <script type="text/javascript">
-// RELATORIO CONSUMO - CAMPO Hidrômetro
-
-    $(document).ready(function() {
-        $('select[name="CONSUMO_IMOVEL"]').on('change', function() {
-            var stateID = $(this).val();
-            if(stateID) {
-                $.ajax({
-                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: '/relatorio/consumo/getEquipamentoLista/'+stateID,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
-
-                        $('select[name="PRU_ID"]').empty();
-                        $('select[name="PRU_ID"]').append('<option>Selecione Hidrômetro</option>');
-                        $.each(data, function(key, value) {
-                            $('select[name="PRU_ID"]').append('<option value="'+ value.PRU_ID +'">'+ '#' + value.PRU_ID + ' - Apartamento: ' + value.UNI_NOME +'</option>');
-                        });
-
-                    }
-                });
-            }else{
-                $('select[name="city"]').empty();
-            }
-        });
-    });
-</script>
-
-<script type="text/javascript">
 // RELATORIO FATURA - CAMPO Apartamento
 
     $(document).ready(function() {
-        $('select[name="FATURA_IMOVEL"]').on('change', function() {
+        $('select[name="RELATORIO_IMOVEL"]').on('change', function() {
             var stateID = $(this).val();
             if(stateID) {
                 $.ajax({
@@ -225,7 +196,7 @@
                         $('select[name="UNI_ID"]').empty();
                         $('select[name="UNI_ID"]').append('<option>Selecione Apartamento</option>');
                         $.each(data, function(key, value) {
-                            $('select[name="UNI_ID"]').append('<option value="'+ value.UNI_ID +'">'+ '#' + value.UNI_ID + ' - Apartamento: ' + value.UNI_NOME +'</option>');
+                            $('select[name="UNI_ID"]').append('<option value="'+ value.UNI_ID +'">'+ '#' + value.UNI_ID + ' - Apartamento: ' + value.UNI_NOME + ' | ' + value.UNI_RESPONSAVEL +'</option>');
                         });
 
                     }
