@@ -277,14 +277,6 @@ class RelatorioController extends Controller
                 'responsavelAp' => $request->responsavelAp,
                 'responsavelCpfAp' => $request->responsavelCpfAp,
                 'responsavelTelAp' => $request->responsavelTelAp,
-
-                'hidrometroTable' => $request->hidrometroTable,
-                'leituraAnteriorTable' => $request->leituraAnteriorTable,
-                'leituraAtualTable' => $request->leituraAtualTable,
-                'consumoTable' => $request->consumoTable,
-                'valorTable' => $request->valorTable,
-                'dtLeituraAnteriorTable' => $request->dtLeituraAnteriorTable,
-                'dtLeituraAtualTable' => $request->dtLeituraAtualTable,
             );
 
             $hidrometroTable = $request->hidrometroTable;
@@ -298,16 +290,10 @@ class RelatorioController extends Controller
             $valorTotal = array_sum(array_map(function($value){return (float)$value;},$valorTable));
             $valorTotalTable = number_format($valorTotal, 2, ',', '.');
 
-
             return \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual',
             'hidrometroTable', 'leituraAnteriorTable', 'leituraAtualTable', 'consumoTable', 'valorTable', 'dtLeituraAnteriorTable', 'dtLeituraAtualTable', 'valorTotalTable'))
             ->download('fatura_individual.pdf');
         }
-
-
-
-
-
 
         // VALIDAÇÃO DATAS NÃO PASSAR DE 31 DIAS
         $date1=date_create($request->input('FATURA_DATA_ANTERIOR'));
@@ -315,7 +301,7 @@ class RelatorioController extends Controller
         $diff=date_diff($date1,$date2);
         $dias = $diff->format("%a");
 
-        if($dias >= 365 ){ // if($dias >= 32 ){
+        if($dias >= 32 ){
             return redirect('/relatorio/faturas')->with('error', 'Não é permitido datas maiores que 31 dias!');
         }
         // FIM - VALIDAÇÃO DATAS NÃO PASSAR DE 31 DIAS
@@ -325,11 +311,6 @@ class RelatorioController extends Controller
             return redirect('/relatorio/faturas')->with('error', 'Por Favor Selecione o Imóvel.');
         }
         // FIM - VALIDAÇÃO CAMPO IMOVEL
-
-        // SUBMIT "EXPORTAR PDF TODAS AS FATURAS (todos do imovel)"
-        if($request->export == "pdf"){
-            return redirect('/relatorio/faturas')->with('error', 'EM CONSTRUÇÃO! GERAR PDF TODOS');
-        }
 
         // SUBMIT "FILTRAR"
         if($request->filtrar == "filtrar"){
@@ -358,18 +339,33 @@ class RelatorioController extends Controller
                             $valor = RelatorioController::tarifa($consumo);
 
                             $relatorio_faturas = array(
-                                'UNI_ID' => $unid->UNI_ID, //new
+                                'UNI_ID' => $unid->UNI_ID,
 
                                 'Imovel' => $unid->imovel->IMO_NOME,
+                                'cnpjImovel' => $unid->imovel->IMO_CNPJ,
+                                'Endereco' => $unid->imovel->IMO_LOGRADOURO." ".$unid->imovel->IMO_COMPLEMENTO.", Nº".$unid->imovel->IMO_NUMERO,
+                                'Bairro' => $unid->imovel->IMO_BAIRRO,
+                                'CityUF' => $unid->imovel->cidade->CID_NOME." - ".$unid->imovel->estado->EST_ABREVIACAO,
+                                'CEP' => $unid->imovel->IMO_CEP,
+                                'responsaveisImovel' => $unid->imovel->IMO_RESPONSAVEIS,
+                                'responsaveisTelImovel' => $unid->imovel->IMO_TELEFONES,
+
+                                'nomeAp' => $unid->UNI_NOME,
+                                'responsavelAp' => $unid->UNI_RESPONSAVEL,
+                                'responsavelCpfAp' => $unid->UNI_CPFRESPONSAVEL,
+                                'responsavelTelAp' => $unid->UNI_TELRESPONSAVEL,
+
                                 'PRU_ID' => $prumada->PRU_ID,
-                                'Nomes' => $unid->UNI_RESPONSAVEL,
-                                'Apartamentos' => $unid->UNI_NOME,
                                 'LeituraAnterior' => $leituraAnterior->LEI_METRO,
                                 'LeituraAtual' => $leituraAtual->LEI_METRO,
                                 'Consumo' => $consumo,
                                 'Valor' => number_format($valor, 2, ',', '.'),
-                                'DataLeituraAnterior' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
-                                'DataLeituraAtual' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
+                                'ValorSemFormato' => $valor,
+                                'DataLeituraAnterior' => date('d/m/Y', strtotime($leituraAnterior->created_at)),
+                                'DataLeituraAtual' => date('d/m/Y', strtotime($leituraAtual->created_at)),
+
+                                'DataAnteriorForm' => $request->input('FATURA_DATA_ANTERIOR'),
+                                'DataAtualForm' => $request->input('FATURA_DATA_ATUAL'),
                             );
 
                             array_push($faturas, $relatorio_faturas);
@@ -413,12 +409,12 @@ class RelatorioController extends Controller
                             'responsavelCpfAp' => $equipamento->unidade->UNI_CPFRESPONSAVEL,
                             'responsavelTelAp' => $equipamento->unidade->UNI_TELRESPONSAVEL,
 
-
                             'PRU_ID' => $equipamento->PRU_ID,
                             'LeituraAnterior' => $leituraAnterior->LEI_METRO,
                             'LeituraAtual' => $leituraAtual->LEI_METRO,
                             'Consumo' => $consumo,
                             'Valor' => number_format($valor, 2, ',', '.'),
+                            'ValorSemFormato' => $valor,
                             'DataLeituraAnterior' => date('d/m/Y', strtotime($leituraAnterior->created_at)),
                             'DataLeituraAtual' => date('d/m/Y', strtotime($leituraAtual->created_at)),
                         );

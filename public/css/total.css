@@ -76,7 +76,7 @@ p.bloco-imovel-cad
 
 .bloco-agrupamento-vis i.uni
 {
-	padding: 0.38em 0.44em;	
+	padding: 0.38em 0.44em;
 }
 
 .bloco-imovel-info
@@ -280,4 +280,29 @@ p.bloco-imovel-cad
 .div-foto
 {
 	position: relative;
+}
+
+
+/* LOADING*/
+@-webkit-keyframes spinning {
+    from {transform: rotate(0deg);}
+    to   {transform: rotate(180deg);}
+}
+@keyframes spinning {
+    from {transform: rotate(0deg);}
+    to   {transform: rotate(180deg);}
+}
+.square {
+    width: 100px;
+    height: 100px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: #999 #ccc;
+    border-radius: 50px;
+    -webkit-animation: spinning 0.75s infinite linear;
+    animation: spinning 0.75s infinite linear;
+}
+
+.oculto {
+    display:none;
 }

@@ -76,7 +76,7 @@
 
                                     <div class='form-group'>
                                         {{ Form::label('UNI_ID', '# Apartamento') }}
-                                        {{ Form::select('UNI_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                                        {{ Form::select('UNI_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control chosen-select-apartamento', 'autocomplete' => 'off']) }}
                                     </div>
 
                                 </div>
@@ -95,22 +95,6 @@
                 <div class="form-group">
                     {{ Form::label('', '&nbsp;') }}
                     <button type="submit" type="button" name="filtrar" value="filtrar" style="width: 100% "class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
-                </div>
-
-                <?php // Botão exportar ?>
-                <div class="form-group">
-                    <div class="box box-danger">
-                        <div class="box-header with-border gray" style="background-color: #dd4b39; color: white; text-align: center;">
-                            <h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> Gerar Faturas</h3>
-                            <div class="box-tools pull-right">
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class='box-body' style="text-align: center;">
-                            <button type="submit" type="button" name="export" value="pdf" class="btn-default btn" style="margin-top: 5px; font-size: 10px;"><i class="fa fa-file-pdf-o"></i> PDF</button>
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -147,16 +131,18 @@
                             <tbody >
                                 @foreach ($faturas as $fatura)
                                 <tr>
-                                    <td>{{ $fatura['Nomes'] }}</td>
-                                    <td>{{ $fatura['Apartamentos'] }}</td>
+                                    <td>{{ $fatura['responsavelAp'] }}</td>
+                                    <td>{{ $fatura['nomeAp'] }}</td>
                                     <td>{{ $fatura['LeituraAnterior'] }}</td>
                                     <td>{{ $fatura['LeituraAtual'] }}</td>
                                     <td>{{ $fatura['Consumo'] }}</td>
-                                    <td>{{ $fatura['Valor'] }}
-                                    </td>
+                                    <td>{{ $fatura['Valor'] }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button type="submit" type="button" name="pdf" value="{{ $fatura['UNI_ID'] }}" class="btn btn-danger btn-flat"><i class="fa fa-file-pdf-o"></i> PDF</button>
+                                            <button type="submit" type="button" name="UNI_ID" value="{{ $fatura['UNI_ID'] }}" class="btn btn-danger btn-flat"><i class="fa fa-file-pdf-o"></i> PDF</button>
+                                            {{ Form::text('FATURA_DATA_ANTERIOR', $fatura['DataAnteriorForm'], ['style' => 'display:none']) }}
+                                            {{ Form::text('FATURA_DATA_ATUAL', $fatura['DataAtualForm'], ['style' => 'display:none']) }}
+                                            {{ Form::text('RELATORIO_IMOVEL',  $fatura['PRU_ID'], ['style' => 'display:none']) }}
                                         </div>
                                     </td>
                                 </tr>
@@ -178,6 +164,7 @@
             <div class="col-md-12">
                 <div class="row">
 
+                    <?php // Leitura Anterior?>
                     <div class="col-md-3">
                         <div class="box box-success" style="margin-top: -15px;">
                             <div class="box-header with-border gray" style="background-color: #00a65a; color: white; text-align: center;">
@@ -200,7 +187,9 @@
                             </div>
                         </div>
                     </div>
+                    <?php // FIM - Leitura Anterior?>
 
+                    <?php // Leitura Atual?>
                     <div class="col-md-3">
                         <div class="box box-warning" style="margin-top: -15px;">
                             <div class="box-header with-border gray" style="background-color: #f39c12; color: white; text-align: center;">
@@ -223,7 +212,9 @@
                             </div>
                         </div>
                     </div>
+                    <?php // FIM - Leitura Atual?>
 
+                    <?php // Valor Total e exportar PDF individual ?>
                     <div class="col-md-3">
                         <div class="box box-primary" style="margin-top: -15px;">
                             <div class="box-header with-border gray" style="background-color: #3c8dbc; color: white; text-align: center;">
@@ -233,23 +224,14 @@
                                     </button>
                                 </div>
                             </div>
-
-
-
-
-
                             <div class='box-body'>
-
-                                <?php $valorTable = array (); ?>
-
-
                                 @foreach($faturaAvancados as $faturaAvancado)
                                 <hr style="margin-bottom: -1px; margin-top: -10px;">
                                 <small><i class="fa fa-tachometer"></i> #{{ $faturaAvancado['PRU_ID'] }}</small>
                                 <hr style="margin-top: 5px;">
                                 <p style="text-align: center; font-weight: 600; font-size: 18px; margin-bottom: 20px;" > {{ $faturaAvancado['Consumo'] }}m³ - R$ {{ $faturaAvancado['Valor'] }}</p>
-                                <?php $ID_AP =  $faturaAvancado['UNI_ID'];?>
 
+                                <?php // INPUT PDF ?>
                                 {{ Form::text('nomeImovel',  $faturaAvancado['Imovel'], ['style' => 'display:none']) }}
                                 {{ Form::text('cnpjImovel', $faturaAvancado['cnpjImovel'], ['style' => 'display:none']) }}
                                 {{ Form::text('enderecoImovel', $faturaAvancado['Endereco'], ['style' => 'display:none']) }}
@@ -264,56 +246,25 @@
                                 {{ Form::text('responsavelCpfAp', $faturaAvancado['responsavelCpfAp'], ['style' => 'display:none']) }}
                                 {{ Form::text('responsavelTelAp', $faturaAvancado['responsavelTelAp'], ['style' => 'display:none']) }}
 
-                                @endforeach
-
-
+                                <?php // TABELA ?>
                                 <select style="display:none" multiple="" name="hidrometroTable[]">
-                                    @foreach($faturaAvancados as $faturaAvancado)
                                     <option value="{{$faturaAvancado['PRU_ID']}}" selected="selected"></option>
-                                    @endforeach
                                 </select>
-
                                 <select style="display:none" multiple="" name="leituraAnteriorTable[]">
-                                    @foreach($faturaAvancados as $faturaAvancado)
-                                    <option value="{{$faturaAvancado['LeituraAnterior']}}" selected="selected"></option>
-                                    @endforeach
+                                    <option value="<p class='p-data'>{{$faturaAvancado['DataLeituraAnterior']}}</p> <p class='text-center'>{{$faturaAvancado['LeituraAnterior']}}m³</p>" selected="selected"></option>
                                 </select>
-
                                 <select style="display:none" multiple="" name="leituraAtualTable[]">
-                                    @foreach($faturaAvancados as $faturaAvancado)
-                                    <option value="{{$faturaAvancado['LeituraAtual']}}" selected="selected"></option>
-                                    @endforeach
+                                    <option value="<p class='p-data'>{{$faturaAvancado['DataLeituraAtual']}}</p> <p class='text-center'>{{$faturaAvancado['LeituraAtual']}}m³</p>" selected="selected"></option>
                                 </select>
-
                                 <select style="display:none" multiple="" name="consumoTable[]">
-                                    @foreach($faturaAvancados as $faturaAvancado)
                                     <option value="{{$faturaAvancado['Consumo']}}" selected="selected"></option>
-                                    @endforeach
                                 </select>
-
                                 <select style="display:none" multiple="" name="valorTable[]">
-                                    @foreach($faturaAvancados as $faturaAvancado)
-                                    <option value="{{$faturaAvancado['Valor']}}" selected="selected"></option>
-                                    @endforeach
-                                </select>
-
-                                <select style="display:none" multiple="" name="dtLeituraAnteriorTable[]">
-                                    @foreach($faturaAvancados as $faturaAvancado)
-                                    <option value="{{$faturaAvancado['DataLeituraAnterior']}}" selected="selected"></option>
-                                    @endforeach
-                                </select>
-
-                                <select style="display:none" multiple="" name="dtLeituraAtualTable[]">
-                                    @foreach($faturaAvancados as $faturaAvancado)
-                                    <option value="{{$faturaAvancado['DataLeituraAtual']}}" selected="selected"></option>
-                                    @endforeach
-                                </select>
-
-
-
-
-
-
+                                    <option value="{{$faturaAvancado['ValorSemFormato']}}" selected="selected"></option>
+                                </select><?php // FIM - TABELA
+                                // FIM - INPUT PDF
+                                $ID_AP =  $faturaAvancado['UNI_ID'];?>
+                                @endforeach
 
                                 <div style="text-align: center;">
                                     <hr>
@@ -322,13 +273,9 @@
 
                             </div>
 
-
-
-
-
-
                         </div>
                     </div>
+                    <?php // FIM - Valor Total e exportar PDF individual ?>
 
                 </div>
             </div>

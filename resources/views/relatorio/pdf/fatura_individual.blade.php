@@ -5,9 +5,8 @@
     <title>Fatura Individual</title>
 
     <style>
-
     /*! Bootstrap CSS*/
-    .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-4-5, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+    .col-md-1, .col-md-2, .col-md-2-4, .col-md-3, .col-md-4, .col-md-4-5, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
         float: left;
     }
 
@@ -15,6 +14,11 @@
         float: right;
         width: 20%;
     }
+
+    .col-md-2-4 {
+        width: 20%;
+    }
+
     .col-md-12 {
         width: 100%;
     }
@@ -342,15 +346,20 @@
 
     .p-data {
         font-size: 12px;
-        text-align:left;
-        margin-bottom: 1px;
-        margin-top: -10px;
+        text-align:center;
+        margin-bottom: -12px;
+        margin-top: 0px;
     }
 
     .p-leitura {
-        font-size: 18px;
+        font-size: 12px;
+        text-align:center;
         margin-bottom: 0px;
-        margin-top: 0px;
+        margin-top: -18px;
+    }
+
+    .text-center {
+        text-align:center;
     }
 
     table, th, td {
@@ -371,8 +380,7 @@
 </head>
 <body>
 
-
-
+    <?php // Imovel ?>
     <div class="box box-success">
         <div class="box-header with-border">
             <h3 class="box-title">{{ $dadosFaturaIndividual['nomeImovel'] }}</h3>
@@ -403,7 +411,7 @@
         </div>
     </div>
 
-
+    <?php // Condomínio ?>
     <div class="box box-primary">
         <div class="box-header with-border">
             <h3 class="box-title">Condomínio</h3>
@@ -425,67 +433,12 @@
                 <small>{{ $dadosFaturaIndividual['responsavelTelAp'] }}</small><br>
             </div>
         </div>
-
-        <?php /*<div class="box-body">
-            <table style="width:100%">
-                <tr bgcolor="#3c8dbc">
-                    <th># Hidrômetro</th>
-                    <th>Leitura Anterior</th>
-                    <th>Leitura Atual</th>
-                    <th>Consumo m³</th>
-                    <th>Valor</th>
-                </tr>
-
-                @foreach($hidrometroTable as $hidro)
-                <tr>
-                    <td>#{{ $hidro }}</td>
-                    @endforeach
-
-                    @foreach($dtLeituraAnteriorTable as $dtLeituraAnterior)
-                    <td>
-                        <p class="p-data"> {{ $dtLeituraAnterior }} </p>
-                        @endforeach
-                        @foreach( $leituraAnteriorTable as $leituraAnterior)
-                        <p class="p-leitura">{{ $leituraAnterior }}m³</p>
-                    </td>
-                    @endforeach
-
-                    @foreach($dtLeituraAtualTable as $dtLeituraAtual)
-                    <td>
-                        <p class="p-data"> {{ $dtLeituraAtual }} </p>
-                        @endforeach
-                        @foreach( $leituraAtualTable as $leituraAtual)
-                        <p class="p-leitura">{{ $leituraAtual }}m³</p>
-                    </td>
-                    @endforeach
-
-                    @foreach($consumoTable as $consumo)
-                    <td>{{ $consumo}}m³</td>
-                    @endforeach
-
-                    @foreach($valorTable as $valor)
-                    <td>R$ {{ $valor }}</td>
-                </tr>
-                @endforeach
-
-            </table>*/ ?>
-        </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
+    <?php // Consumo ?>
     <div class="box box-danger">
         <div class="box-header with-border">
-            <h3 class="box-title">Condomínio</h3>
+            <h3 class="box-title">Consumo</h3>
             <div style="text-align:right; margin-top: -20px; position: relative;">
                 <small>{{ $dadosFaturaIndividual['nomeAp'] }}</small>
             </div>
@@ -499,48 +452,38 @@
                 <hr>
                 @endforeach
             </div>
-            <div class="col-md-2">
-                <p><b>Leitura Anterior</b></p>
-                @foreach($dtLeituraAnteriorTable as $dtLeituraAnterior)
-                <p class="p-data1"> {{ $dtLeituraAnterior }} </p>
-                <hr>
-                @endforeach
+            <div class="col-md-2-4">
+                <p class="text-center"><b>Leitura Anterior</b></p>
                 @foreach( $leituraAnteriorTable as $leituraAnterior)
-                <p class="p-leitura1">{{ $leituraAnterior }}m³</p>
+                <p class="p-leitura">{!! $leituraAnterior !!}</p>
                 <hr>
                 @endforeach
             </div>
-            <div class="col-md-2">
-                <p><b>Leitura Atual</b></p>
-                @foreach($dtLeituraAtualTable as $dtLeituraAtual)
-                <p class="p-data1"> {{ $dtLeituraAtual }} </p>
-                <hr>
-                @endforeach
+            <div class="col-md-2-4">
+                <p class="text-center"><b>Leitura Atual</b></p>
                 @foreach( $leituraAtualTable as $leituraAtual)
-                <p class="p-leitura1">{{ $leituraAtual }}m³</p>
+                <p class="p-leitura">{!! $leituraAtual !!}</p>
                 <hr>
                 @endforeach
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2-4 text-center">
                 <p><b>Consumo m³</b></p>
                 @foreach($consumoTable as $consumo)
                 <p>{{ $consumo}}m³</p>
                 <hr>
                 @endforeach
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2-4">
                 <p><b>Valor</b></p>
                 @foreach($valorTable as $valor)
-                <p>R$ {{ $valor }}</p>
+                <p>R$ {{ number_format($valor, 2, ',', '.') }}</p>
                 <hr>
                 @endforeach
             </div>
         </div>
-
-
     </div>
 
-
+    <?php // Valor Total ?>
     <div class="col-md-2-5">
         <div class="box box-primary">
             <div class="box-header with-border">

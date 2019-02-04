@@ -76,7 +76,7 @@
 
                                     <div class='form-group'>
                                         {{ Form::label('UNI_ID', '# Apartamento') }}
-                                        {{ Form::select('UNI_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                                        {{ Form::select('UNI_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control chosen-select-apartamento', 'autocomplete' => 'off']) }}
                                     </div>
 
                                 </div>
