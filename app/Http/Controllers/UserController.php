@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\User\UserSaveRequest;
 use App\Http\Requests\User\UserEditRequest;
+use App\Models\Imovel;
 
 class UserController extends Controller
 {
@@ -47,7 +48,13 @@ class UserController extends Controller
     foreach($_roles as $role)
     $roles[$role->id] = $role->name;
 
-    return view('admin.criar', compact('roles'));
+    $imoveis = ['' => 'Selecionar Imovel'];
+    $_imoveis = Imovel::all();
+    foreach($_imoveis as $imovel){
+        $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+    }
+
+    return view('admin.criar', compact('roles', 'imoveis'));
   }
 
   /**
@@ -104,7 +111,13 @@ class UserController extends Controller
     foreach($_roles as $role)
     $roles[$role->id] = $role->name;
 
-    return view('admin.editar', compact('user', 'roles'));
+    $imoveis = ['' => 'Selecionar Imovel'];
+    $_imoveis = Imovel::all();
+    foreach($_imoveis as $imovel){
+        $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+    }
+
+    return view('admin.editar', compact('user', 'roles', 'imoveis'));
   }
 
   /**

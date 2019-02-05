@@ -356,7 +356,7 @@
             $('.mask-hour').inputmask('99:99');
             $('.mask-cpf').inputmask('999.999.999-99');
             $('.mask-cnpj').inputmask('99.999.999/9999-99');
-            $('.mask-ip').inputmask({mask:"255.255.255.255",definitions:{'2': {validator: "[0-2]"},'5': {validator: "[0-5]"}}});
+            $('.mask-ip').inputmask({mask:"299.299.299.299",definitions:{'2': {validator: "[0-2]"}}});
             $('.mask-ano').inputmask('9999');
             $('.mask-cep').inputmask('99999999');
             $('.mask-num').inputmask('9[99999]');
@@ -454,7 +454,7 @@
 
 
                         var $html  = '<div class="col-md-4">';
-                        $html += '<a href="{!! url('imovel/buscar/ver/') !!}/' + this.IMO_ID + '" alt="' + this.IMO_NOME + '" style="text-decoration: none; color: #111;" >';
+                        $html += '<a onclick="loading()" href="{!! url('imovel/buscar/ver/') !!}/' + this.IMO_ID + '" alt="' + this.IMO_NOME + '" style="text-decoration: none; color: #111;" >';
                         $html +=    '<div class="box box-widget widget-user">';
                         if(this.IMO_CAPA == null)
                         {

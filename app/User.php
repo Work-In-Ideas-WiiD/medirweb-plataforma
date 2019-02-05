@@ -6,6 +6,7 @@ use Artesaos\Defender\Role;
 use Artesaos\Defender\Traits\HasDefender;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Models\Imovel;
 
 class User extends Authenticatable
 {
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'USER_IMOID','name', 'email', 'password',
     ];
 
     /**
@@ -32,5 +33,10 @@ class User extends Authenticatable
 
     public function roles(){
         return $this->belongsToMany(Role::class);
+    }
+
+    public function imovel()
+    {
+        return $this->hasOne('App\Models\Imovel', 'IMO_ID', 'USER_IMOID');
     }
 }

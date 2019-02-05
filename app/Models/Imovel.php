@@ -7,6 +7,7 @@ use App\Models\Estado;
 use App\Models\Cidade;
 use App\Models\Agrupamento;
 use App\Models\Unidade;
+use App\User;
 
 class Imovel extends Model
 {
@@ -49,6 +50,11 @@ class Imovel extends Model
     public function administrador()
     {
         return $this->hasOne('App\Models\Cliente', 'CLI_ID', 'IMO_IDCLIENTE');
+    }
+
+    public function users()
+    {
+    	return $this->hasMany('App\User', 'USER_IMOID', 'IMO_ID');
     }
 
 }
