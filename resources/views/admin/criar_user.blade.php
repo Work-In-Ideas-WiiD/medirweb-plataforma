@@ -100,7 +100,14 @@
 
                         <?php // Imovel ?>
                         <div class='form-group'>
-                            {{ Form::select('USER_IMOID', [0], null, ['style' => 'display:none']) }}
+                            {{ Form::label('USER_IMOID', 'Imóvel') }}
+                            {{ Form::select('USER_IMOID', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+
+                            @if ($errors->has('USER_IMOID'))
+                            <span class="help-block">
+                                <strong style="color: red;">{{ $errors->first('USER_IMOID') }}</strong>
+                            </span>
+                            @endif
                         </div>
 
                     </div>

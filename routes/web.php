@@ -30,6 +30,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('usuario', 'UserController');
 Route::get('/user/{id}', 'UserController@index');
+Route::get('/user/{id}/create', array('uses' => 'UserController@create_user'))->name('Create User');
 
 /* Imóveis */
 

@@ -299,15 +299,41 @@ class ImovelController extends Controller
 
             if(!empty($leiMensalAnoAnterior) || !empty($leiMensalAnoAtual)){
 
-                $somaLeiMensalAnoAnterior = array_sum(array_value_recursive('mes'.$mes, $leiMensalAnoAnterior));
-                $somaLeiMensalAnoAtual = array_sum(array_value_recursive('mes'.$mes, $leiMensalAnoAtual));
+                $leiMensalAnoAnteriorNew = array_value_recursive('mes'.$mes, $leiMensalAnoAnterior);
+                if($leiMensalAnoAnteriorNew == null){
+                    $leiMensalAnoAnteriorNew = array(0);
+                }
+
+                $leiMensalAnoAtualNew = array_value_recursive('mes'.$mes, $leiMensalAnoAtual);
+                if($leiMensalAnoAtualNew == null){
+                    $leiMensalAnoAtualNew = array(0);
+                }
+
+                $somaLeiMensalAnoAnterior = array_sum($leiMensalAnoAnteriorNew);
+                $somaLeiMensalAnoAtual = array_sum($leiMensalAnoAtualNew);
 
                 if($mes == 1){
-                    $somaLeiMensalAnoAnterior_1 = array_sum(array_value_recursive('mes'.$mes, $leiMensalAnoAnterior)); // OBS CONSERTAR
-                    $somaLeiMensalAnoAtual_1 = array_sum(array_value_recursive('mes12', $leiMensalAnoAnterior));
+
+                    $somaLeiMensalAnoAtual_1New = array_value_recursive('mes12', $leiMensalAnoAnterior);
+                    if($somaLeiMensalAnoAtual_1New == null){
+                        $somaLeiMensalAnoAtual_1New = array(0);
+                    }
+
+                    $somaLeiMensalAnoAnterior_1 = array_sum($leiMensalAnoAnteriorNew); // OBS CONSERTAR
+                    $somaLeiMensalAnoAtual_1 = array_sum($somaLeiMensalAnoAtual_1New);
                 }else{
-                    $somaLeiMensalAnoAnterior_1 = array_sum(array_value_recursive('mes'.($mes - 1), $leiMensalAnoAnterior));
-                    $somaLeiMensalAnoAtual_1 = array_sum(array_value_recursive('mes'.($mes - 1), $leiMensalAnoAtual));
+                    $somaLeiMensalAnoAnterior_1New = array_value_recursive('mes'.($mes - 1), $leiMensalAnoAnterior);
+                    if($somaLeiMensalAnoAnterior_1New == null){
+                        $somaLeiMensalAnoAnterior_1New = array(0);
+                    }
+
+                    $somaLeiMensalAnoAtual_1New = array_value_recursive('mes'.($mes - 1), $leiMensalAnoAtual);
+                    if($somaLeiMensalAnoAtual_1New == null){
+                        $somaLeiMensalAnoAtual_1New = array(0);
+                    }
+
+                    $somaLeiMensalAnoAnterior_1 = array_sum($somaLeiMensalAnoAnterior_1New);
+                    $somaLeiMensalAnoAtual_1 = array_sum($somaLeiMensalAnoAtual_1New);
                 }
 
                 $consumoCalAnt = $somaLeiMensalAnoAnterior - $somaLeiMensalAnoAnterior_1;

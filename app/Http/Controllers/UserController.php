@@ -57,6 +57,22 @@ class UserController extends Controller
     return view('admin.criar', compact('roles', 'imoveis'));
   }
 
+  public function create_user()
+  {
+    $roles =[];
+    $_roles = \Artesaos\Defender\Role::all();
+    foreach($_roles as $role)
+    $roles[$role->id] = $role->name;
+
+    $imoveis = ['' => 'Selecionar Imovel'];
+    $_imoveis = Imovel::all();
+    foreach($_imoveis as $imovel){
+        $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+    }
+
+    return view('admin.criar_user', compact('roles', 'imoveis'));
+  }
+
   /**
   * Store a newly created resource in storage.
   *
@@ -119,6 +135,30 @@ class UserController extends Controller
 
     return view('admin.editar', compact('user', 'roles', 'imoveis'));
   }
+
+  public function edit_User($id)
+  {
+
+    $user = User::findOrFail($id);
+
+    if(is_null($user)){
+      return redirect( URL::previous() );
+    }
+
+    $roles =[];
+    $_roles = \Artesaos\Defender\Role::all();
+    foreach($_roles as $role)
+    $roles[$role->id] = $role->name;
+
+    $imoveis = ['' => 'Selecionar Imovel'];
+    $_imoveis = Imovel::all();
+    foreach($_imoveis as $imovel){
+        $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+    }
+
+    return view('admin.editar', compact('user', 'roles', 'imoveis'));
+  }
+
 
   /**
   * Update the specified resource in storage.
