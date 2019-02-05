@@ -356,7 +356,7 @@
             $('.mask-hour').inputmask('99:99');
             $('.mask-cpf').inputmask('999.999.999-99');
             $('.mask-cnpj').inputmask('99.999.999/9999-99');
-            $('.mask-ip').inputmask({mask:"299.299.299.299",definitions:{'2': {validator: "[0-2]"}}});
+            $('.mask-ip').inputmask('999.999.999.999');
             $('.mask-ano').inputmask('9999');
             $('.mask-cep').inputmask('99999999');
             $('.mask-num').inputmask('9[99999]');
