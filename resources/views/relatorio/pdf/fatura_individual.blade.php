@@ -380,32 +380,57 @@
 </head>
 <body>
 
+    <?php // DADOS UNICOS (SEM REPETIR)
+    $valorSemFormato = array();
+    foreach ($dadosFaturaIndividual as $dados) {
+        $nomeImovel = $dados['Imovel'];
+        $cnpjImovel = $dados['cnpjImovel'];
+        $enderecoImovel = $dados['Endereco'];
+        $bairroImovel = $dados['Bairro'];
+        $cityUfImovel = $dados['CityUF'];
+        $cepImovel = $dados['CEP'];
+        $responsaveisImovel = $dados['responsaveisImovel'];
+        $responsaveisTelImovel = $dados['responsaveisTelImovel'];
+
+        $nomeAp = $dados['nomeAp'];
+        $responsavelAp = $dados['responsavelAp'];
+        $responsavelCpfAp = $dados['responsavelCpfAp'];
+        $responsavelTelAp = $dados['responsavelTelAp'];
+
+        $arrayValorSemFormato = $dados['ValorSemFormato'];
+        array_push($valorSemFormato, $arrayValorSemFormato);
+    }
+    //SOMA VALOR TOTAL
+    $valorTotalSoma = array_sum(array_map(function($value){return (float)$value;},$valorSemFormato));
+    $valorTotal = number_format($valorTotalSoma, 2, ',', '.');
+    ?>
+
     <?php // Imovel ?>
     <div class="box box-success">
         <div class="box-header with-border">
-            <h3 class="box-title">{{ $dadosFaturaIndividual['nomeImovel'] }}</h3>
+            <h3 class="box-title">{{ $nomeImovel }}</h3>
             <div style="text-align:right; margin-top: -20px; position: relative;">
-                <small>CNPJ: {{ $dadosFaturaIndividual['cnpjImovel'] }}</small>
+                <small>CNPJ: {{ $cnpjImovel }}</small>
             </div>
         </div>
 
         <div class='box-body'>
             <div class="col-md-4-5">
                 <b>Localização</b><br><br>
-                <small>{{ $dadosFaturaIndividual['enderecoImovel'] }}</small><br>
-                <small>{{ $dadosFaturaIndividual['bairroImovel'] }}</small><br>
-                <small>{{ $dadosFaturaIndividual['cityUfImovel'] }}</small><br>
-                <small>{{ $dadosFaturaIndividual['cepImovel'] }}</small><br>
+                <small>{{ $enderecoImovel }}</small><br>
+                <small>{{ $bairroImovel }}</small><br>
+                <small>{{ $cityUfImovel }}</small><br>
+                <small>{{ $cepImovel }}</small><br>
             </div>
 
             <div class="col-md-4-5">
                 <b> Responsáveis</b><br><br>
-                <small>{!! $dadosFaturaIndividual['responsaveisImovel'] !!}</small>
+                <small>{!! $responsaveisImovel !!}</small>
             </div>
 
             <div class="col-md-4-5">
                 <b>Contato</b><br><br>
-                <small>{!! $dadosFaturaIndividual['responsaveisTelImovel']!!}</small>
+                <small>{!! $responsaveisTelImovel !!}</small>
             </div>
 
         </div>
@@ -416,7 +441,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Condomínio</h3>
             <div style="text-align:right; margin-top: -20px; position: relative;">
-                <small>{{ $dadosFaturaIndividual['nomeAp'] }}</small>
+                <small>{{ $nomeAp }}</small>
             </div>
         </div>
         <div class='box-body'>
@@ -427,10 +452,10 @@
                 TELEFONE:<br>
             </div>
             <div class="col-md-4-5">
-                <small>{{ $dadosFaturaIndividual['nomeAp'] }}</small><br>
-                <small>{{ $dadosFaturaIndividual['responsavelAp'] }}</small><br>
-                <small>{{ $dadosFaturaIndividual['responsavelCpfAp'] }}</small><br>
-                <small>{{ $dadosFaturaIndividual['responsavelTelAp'] }}</small><br>
+                <small>{{ $nomeAp }}</small><br>
+                <small>{{ $responsavelAp }}</small><br>
+                <small>{{ $responsavelCpfAp }}</small><br>
+                <small>{{ $responsavelTelAp }}</small><br>
             </div>
         </div>
     </div>
@@ -440,43 +465,49 @@
         <div class="box-header with-border">
             <h3 class="box-title">Consumo</h3>
             <div style="text-align:right; margin-top: -20px; position: relative;">
-                <small>{{ $dadosFaturaIndividual['nomeAp'] }}</small>
+                <small>{{ $nomeAp }}</small>
             </div>
         </div>
         <div class='box-body'>
 
             <div class="col-md-2">
                 <p><b># Hidrômetro</b></p>
-                @foreach($hidrometroTable as $hidro)
-                <p>#{{ $hidro }}</p>
+                @foreach($dadosFaturaIndividual as $hidro)
+                <p>#{{ $hidro['PRU_ID'] }}</p>
                 <hr>
                 @endforeach
             </div>
             <div class="col-md-2-4">
                 <p class="text-center"><b>Leitura Anterior</b></p>
-                @foreach( $leituraAnteriorTable as $leituraAnterior)
-                <p class="p-leitura">{!! $leituraAnterior !!}</p>
+                @foreach( $dadosFaturaIndividual as $leituraAnterior)
+                <p class="p-leitura">
+                    <p class='p-data'>{{ $leituraAnterior['DataLeituraAnterior'] }}</p>
+                    <p class='text-center'>{{ $leituraAnterior['LeituraAnterior'] }}m³</p>
+                </p>
                 <hr>
                 @endforeach
             </div>
             <div class="col-md-2-4">
-                <p class="text-center"><b>Leitura Atual</b></p>
-                @foreach( $leituraAtualTable as $leituraAtual)
-                <p class="p-leitura">{!! $leituraAtual !!}</p>
+                <p class="text-center"><b>Leitura Anterior</b></p>
+                @foreach( $dadosFaturaIndividual as $leituraAtual)
+                <p class="p-leitura">
+                    <p class='p-data'>{{ $leituraAtual['DataLeituraAtual'] }}</p>
+                    <p class='text-center'>{{ $leituraAtual['LeituraAtual'] }}m³</p>
+                </p>
                 <hr>
                 @endforeach
             </div>
             <div class="col-md-2-4 text-center">
                 <p><b>Consumo m³</b></p>
-                @foreach($consumoTable as $consumo)
-                <p>{{ $consumo}}m³</p>
+                @foreach($dadosFaturaIndividual as $consumo)
+                <p>{{ $consumo['Consumo'] }}m³</p>
                 <hr>
                 @endforeach
             </div>
             <div class="col-md-2-4">
                 <p><b>Valor</b></p>
-                @foreach($valorTable as $valor)
-                <p>R$ {{ number_format($valor, 2, ',', '.') }}</p>
+                @foreach($dadosFaturaIndividual as $valor)
+                <p>R$ {{ $valor['Valor'] }}</p>
                 <hr>
                 @endforeach
             </div>
@@ -490,7 +521,7 @@
                 <h3 class="box-title">Valor Total</h3>
             </div>
             <div class='box-body'>
-                <b style="font-size: 18px;">R$ {{$valorTotalTable}}</b>
+                <b style="font-size: 18px;">R$ {{ $valorTotal }}</b>
             </div>
         </div>
     </div>

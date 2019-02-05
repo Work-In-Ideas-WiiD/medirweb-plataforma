@@ -262,36 +262,51 @@ class RelatorioController extends Controller
         // SUBMIT "EXPORTAR PDF por Apartamento (individual)"
         if(!empty($request->pdf)){
 
-            $dadosFaturaIndividual = array(
-                'ID_AP' => $request->pdf,
-                'nomeImovel' => $request->nomeImovel,
-                'cnpjImovel' => $request->cnpjImovel,
-                'enderecoImovel' => $request->enderecoImovel,
-                'bairroImovel' => $request->bairroImovel,
-                'cityUfImovel' => $request->cityUfImovel,
-                'cepImovel' => $request->cepImovel,
-                'responsaveisImovel' => $request->responsaveisImovel,
-                'responsaveisTelImovel' => $request->responsaveisTelImovel,
+            $dadosFaturaIndividual = array();
 
-                'nomeAp' => $request->nomeAp,
-                'responsavelAp' => $request->responsavelAp,
-                'responsavelCpfAp' => $request->responsavelCpfAp,
-                'responsavelTelAp' => $request->responsavelTelAp,
-            );
+            $equipamentos = Unidade::find($request->pdf)->getPrumadas;
+            foreach ($equipamentos as $equipamento)
+            {
+                $leituraAnterior = $equipamento->getLeituras() ->where('created_at', '>=', date($request->DataAnteriorForm).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                $leituraAtual = $equipamento->getLeituras() ->where('created_at', '<=', date($request->DataAtualForm).' 23:59:59')->orderBy('created_at', 'desc')->first();
 
-            $hidrometroTable = $request->hidrometroTable;
-            $leituraAnteriorTable = $request->leituraAnteriorTable;
-            $leituraAtualTable = $request->leituraAtualTable;
-            $consumoTable = $request->consumoTable;
-            $valorTable = $request->valorTable;
-            $dtLeituraAnteriorTable = $request->dtLeituraAnteriorTable;
-            $dtLeituraAtualTable = $request->dtLeituraAtualTable;
+                if(isset($leituraAnterior) && isset($leituraAtual))
+                {
+                    $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
+                    $valor = RelatorioController::tarifa($consumo);
 
-            $valorTotal = array_sum(array_map(function($value){return (float)$value;},$valorTable));
-            $valorTotalTable = number_format($valorTotal, 2, ',', '.');
+                    $arrayDadosFaturaIndividual = array(
+                        'UNI_ID' => $equipamento->PRU_IDUNIDADE,
 
-            return \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual',
-            'hidrometroTable', 'leituraAnteriorTable', 'leituraAtualTable', 'consumoTable', 'valorTable', 'dtLeituraAnteriorTable', 'dtLeituraAtualTable', 'valorTotalTable'))
+                        'Imovel' => $equipamento->unidade->imovel->IMO_NOME,
+                        'cnpjImovel' => $equipamento->unidade->imovel->IMO_CNPJ,
+                        'Endereco' => $equipamento->unidade->imovel->IMO_LOGRADOURO." ".$equipamento->unidade->imovel->IMO_COMPLEMENTO.", Nº".$equipamento->unidade->imovel->IMO_NUMERO,
+                        'Bairro' => $equipamento->unidade->imovel->IMO_BAIRRO,
+                        'CityUF' => $equipamento->unidade->imovel->cidade->CID_NOME." - ".$equipamento->unidade->imovel->estado->EST_ABREVIACAO,
+                        'CEP' => $equipamento->unidade->imovel->IMO_CEP,
+                        'responsaveisImovel' => $equipamento->unidade->imovel->IMO_RESPONSAVEIS,
+                        'responsaveisTelImovel' => $equipamento->unidade->imovel->IMO_TELEFONES,
+
+                        'nomeAp' => $equipamento->unidade->UNI_NOME,
+                        'responsavelAp' => $equipamento->unidade->UNI_RESPONSAVEL,
+                        'responsavelCpfAp' => $equipamento->unidade->UNI_CPFRESPONSAVEL,
+                        'responsavelTelAp' => $equipamento->unidade->UNI_TELRESPONSAVEL,
+
+                        'PRU_ID' => $equipamento->PRU_ID,
+                        'LeituraAnterior' => $leituraAnterior->LEI_METRO,
+                        'LeituraAtual' => $leituraAtual->LEI_METRO,
+                        'Consumo' => $consumo,
+                        'Valor' => number_format($valor, 2, ',', '.'),
+                        'ValorSemFormato' => $valor,
+                        'DataLeituraAnterior' => date('d/m/Y', strtotime($leituraAnterior->created_at)),
+                        'DataLeituraAtual' => date('d/m/Y', strtotime($leituraAtual->created_at)),
+                    );
+
+                    array_push($dadosFaturaIndividual, $arrayDadosFaturaIndividual);
+                }
+            }
+
+            return \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual'))
             ->download('fatura_individual.pdf');
         }
 
@@ -335,44 +350,23 @@ class RelatorioController extends Controller
                         if(isset($leituraAnterior) && isset($leituraAtual))
                         {
                             $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
-
                             $valor = RelatorioController::tarifa($consumo);
 
                             $relatorio_faturas = array(
                                 'UNI_ID' => $unid->UNI_ID,
-
-                                'Imovel' => $unid->imovel->IMO_NOME,
-                                'cnpjImovel' => $unid->imovel->IMO_CNPJ,
-                                'Endereco' => $unid->imovel->IMO_LOGRADOURO." ".$unid->imovel->IMO_COMPLEMENTO.", Nº".$unid->imovel->IMO_NUMERO,
-                                'Bairro' => $unid->imovel->IMO_BAIRRO,
-                                'CityUF' => $unid->imovel->cidade->CID_NOME." - ".$unid->imovel->estado->EST_ABREVIACAO,
-                                'CEP' => $unid->imovel->IMO_CEP,
-                                'responsaveisImovel' => $unid->imovel->IMO_RESPONSAVEIS,
-                                'responsaveisTelImovel' => $unid->imovel->IMO_TELEFONES,
-
                                 'nomeAp' => $unid->UNI_NOME,
                                 'responsavelAp' => $unid->UNI_RESPONSAVEL,
-                                'responsavelCpfAp' => $unid->UNI_CPFRESPONSAVEL,
-                                'responsavelTelAp' => $unid->UNI_TELRESPONSAVEL,
-
-                                'PRU_ID' => $prumada->PRU_ID,
                                 'LeituraAnterior' => $leituraAnterior->LEI_METRO,
                                 'LeituraAtual' => $leituraAtual->LEI_METRO,
                                 'Consumo' => $consumo,
                                 'Valor' => number_format($valor, 2, ',', '.'),
-                                'ValorSemFormato' => $valor,
-                                'DataLeituraAnterior' => date('d/m/Y', strtotime($leituraAnterior->created_at)),
-                                'DataLeituraAtual' => date('d/m/Y', strtotime($leituraAtual->created_at)),
-
                                 'DataAnteriorForm' => $request->input('FATURA_DATA_ANTERIOR'),
                                 'DataAtualForm' => $request->input('FATURA_DATA_ATUAL'),
                             );
-
                             array_push($faturas, $relatorio_faturas);
                         }
                     }
                 }
-
             }else{
                 // INICIALIZAÇÃO de arrays
                 $faturas = null;
@@ -389,36 +383,20 @@ class RelatorioController extends Controller
                     if(isset($leituraAnterior) && isset($leituraAtual))
                     {
                         $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
-
                         $valor = RelatorioController::tarifa($consumo);
 
                         $relatorio_faturaAvancados = array(
                             'UNI_ID' => $equipamento->PRU_IDUNIDADE,
-
-                            'Imovel' => $equipamento->unidade->imovel->IMO_NOME,
-                            'cnpjImovel' => $equipamento->unidade->imovel->IMO_CNPJ,
-                            'Endereco' => $equipamento->unidade->imovel->IMO_LOGRADOURO." ".$equipamento->unidade->imovel->IMO_COMPLEMENTO.", Nº".$equipamento->unidade->imovel->IMO_NUMERO,
-                            'Bairro' => $equipamento->unidade->imovel->IMO_BAIRRO,
-                            'CityUF' => $equipamento->unidade->imovel->cidade->CID_NOME." - ".$equipamento->unidade->imovel->estado->EST_ABREVIACAO,
-                            'CEP' => $equipamento->unidade->imovel->IMO_CEP,
-                            'responsaveisImovel' => $equipamento->unidade->imovel->IMO_RESPONSAVEIS,
-                            'responsaveisTelImovel' => $equipamento->unidade->imovel->IMO_TELEFONES,
-
-                            'nomeAp' => $equipamento->unidade->UNI_NOME,
-                            'responsavelAp' => $equipamento->unidade->UNI_RESPONSAVEL,
-                            'responsavelCpfAp' => $equipamento->unidade->UNI_CPFRESPONSAVEL,
-                            'responsavelTelAp' => $equipamento->unidade->UNI_TELRESPONSAVEL,
-
                             'PRU_ID' => $equipamento->PRU_ID,
                             'LeituraAnterior' => $leituraAnterior->LEI_METRO,
                             'LeituraAtual' => $leituraAtual->LEI_METRO,
                             'Consumo' => $consumo,
                             'Valor' => number_format($valor, 2, ',', '.'),
-                            'ValorSemFormato' => $valor,
                             'DataLeituraAnterior' => date('d/m/Y', strtotime($leituraAnterior->created_at)),
                             'DataLeituraAtual' => date('d/m/Y', strtotime($leituraAtual->created_at)),
+                            'DataAnteriorForm' => $request->input('FATURA_DATA_ANTERIOR'),
+                            'DataAtualForm' => $request->input('FATURA_DATA_ATUAL'),
                         );
-
                         array_push($faturaAvancados, $relatorio_faturaAvancados);
                     }
                 }

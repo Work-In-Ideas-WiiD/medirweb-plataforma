@@ -139,10 +139,9 @@
                                     <td>{{ $fatura['Valor'] }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <button type="submit" type="button" name="UNI_ID" value="{{ $fatura['UNI_ID'] }}" class="btn btn-danger btn-flat"><i class="fa fa-file-pdf-o"></i> PDF</button>
-                                            {{ Form::text('FATURA_DATA_ANTERIOR', $fatura['DataAnteriorForm'], ['style' => 'display:none']) }}
-                                            {{ Form::text('FATURA_DATA_ATUAL', $fatura['DataAtualForm'], ['style' => 'display:none']) }}
-                                            {{ Form::text('RELATORIO_IMOVEL',  $fatura['PRU_ID'], ['style' => 'display:none']) }}
+                                            <button type="submit" type="button" name="pdf" value="{{ $fatura['UNI_ID'] }}" class="btn btn-danger btn-flat"><i class="fa fa-file-pdf-o"></i> PDF</button>
+                                            {{ Form::text('DataAnteriorForm', $fatura['DataAnteriorForm'], ['style' => 'display:none']) }}
+                                            {{ Form::text('DataAtualForm', $fatura['DataAtualForm'], ['style' => 'display:none']) }}
                                         </div>
                                     </td>
                                 </tr>
@@ -231,48 +230,16 @@
                                 <hr style="margin-top: 5px;">
                                 <p style="text-align: center; font-weight: 600; font-size: 18px; margin-bottom: 20px;" > {{ $faturaAvancado['Consumo'] }}m³ - R$ {{ $faturaAvancado['Valor'] }}</p>
 
-                                <?php // INPUT PDF ?>
-                                {{ Form::text('nomeImovel',  $faturaAvancado['Imovel'], ['style' => 'display:none']) }}
-                                {{ Form::text('cnpjImovel', $faturaAvancado['cnpjImovel'], ['style' => 'display:none']) }}
-                                {{ Form::text('enderecoImovel', $faturaAvancado['Endereco'], ['style' => 'display:none']) }}
-                                {{ Form::text('bairroImovel', $faturaAvancado['Bairro'], ['style' => 'display:none']) }}
-                                {{ Form::text('cityUfImovel', $faturaAvancado['CityUF'], ['style' => 'display:none']) }}
-                                {{ Form::text('cepImovel', $faturaAvancado['CEP'], ['style' => 'display:none']) }}
-                                {{ Form::text('responsaveisImovel', $faturaAvancado['responsaveisImovel'], ['style' => 'display:none']) }}
-                                {{ Form::text('responsaveisTelImovel', $faturaAvancado['responsaveisTelImovel'], ['style' => 'display:none']) }}
-
-                                {{ Form::text('nomeAp', $faturaAvancado['nomeAp'], ['style' => 'display:none']) }}
-                                {{ Form::text('responsavelAp', $faturaAvancado['responsavelAp'], ['style' => 'display:none']) }}
-                                {{ Form::text('responsavelCpfAp', $faturaAvancado['responsavelCpfAp'], ['style' => 'display:none']) }}
-                                {{ Form::text('responsavelTelAp', $faturaAvancado['responsavelTelAp'], ['style' => 'display:none']) }}
-
-                                <?php // TABELA ?>
-                                <select style="display:none" multiple="" name="hidrometroTable[]">
-                                    <option value="{{$faturaAvancado['PRU_ID']}}" selected="selected"></option>
-                                </select>
-                                <select style="display:none" multiple="" name="leituraAnteriorTable[]">
-                                    <option value="<p class='p-data'>{{$faturaAvancado['DataLeituraAnterior']}}</p> <p class='text-center'>{{$faturaAvancado['LeituraAnterior']}}m³</p>" selected="selected"></option>
-                                </select>
-                                <select style="display:none" multiple="" name="leituraAtualTable[]">
-                                    <option value="<p class='p-data'>{{$faturaAvancado['DataLeituraAtual']}}</p> <p class='text-center'>{{$faturaAvancado['LeituraAtual']}}m³</p>" selected="selected"></option>
-                                </select>
-                                <select style="display:none" multiple="" name="consumoTable[]">
-                                    <option value="{{$faturaAvancado['Consumo']}}" selected="selected"></option>
-                                </select>
-                                <select style="display:none" multiple="" name="valorTable[]">
-                                    <option value="{{$faturaAvancado['ValorSemFormato']}}" selected="selected"></option>
-                                </select><?php // FIM - TABELA
-                                // FIM - INPUT PDF
+                                <?php // Dados para exportar (ID, DATA ATUAL E ANTERIOR)
                                 $ID_AP =  $faturaAvancado['UNI_ID'];?>
+                                {{ Form::text('DataAnteriorForm', $faturaAvancado['DataAnteriorForm'], ['style' => 'display:none']) }}
+                                {{ Form::text('DataAtualForm', $faturaAvancado['DataAtualForm'], ['style' => 'display:none']) }}
                                 @endforeach
-
                                 <div style="text-align: center;">
                                     <hr>
                                     <button type="submit" type="button" name="pdf" value="{{ $ID_AP }}" class="btn-danger btn" style="text-align: center; font-weight: 600; font-size: 16px;"><i class="fa fa-file-pdf-o"></i> Gerar Fatura</button>
                                 </div>
-
                             </div>
-
                         </div>
                     </div>
                     <?php // FIM - Valor Total e exportar PDF individual ?>
