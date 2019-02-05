@@ -27,6 +27,7 @@ class ImovelSaveRequest extends ImovelRequest
             'IMO_TELEFONES' => 'required',
             //'imagem' => 'required|mimes:jpeg,jpg,png|max:10000',
             'IMO_TAXAFIXA' => 'nullable|numeric',
+            'IMO_IP' => 'required|ip',
             'IMO_TAXAVARIAVEL' => 'nullable|numeric',
             'foto' => 'mimes:jpeg,jpg,png,gif|max:10000',
             'capa' => 'mimes:jpeg,jpg,png,gif|max:10000',

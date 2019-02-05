@@ -45,6 +45,8 @@ class CreateImoveisTable extends Migration
             $table->float('IMO_TAXAFIXA')->nullable();
             $table->float('IMO_TAXAVARIAVEL')->nullable();
 
+            $table->string('IMO_IP', 15);
+
             $table->timestamps();
         });
     }

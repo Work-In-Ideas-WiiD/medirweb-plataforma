@@ -296,22 +296,26 @@ class ImovelController extends Controller
 
         // CALCULOS - SOMA LEITURAS MENSAL TOTAL e DEPOIS FAZ A MEDIA MENSAL (consumo)
         for ($mes=1; $mes <= 12; $mes++) {
-            $somaLeiMensalAnoAnterior = array_sum(array_value_recursive('mes'.$mes, $leiMensalAnoAnterior));
-            $somaLeiMensalAnoAtual = array_sum(array_value_recursive('mes'.$mes, $leiMensalAnoAtual));
 
-            if($mes == 1){
-                $somaLeiMensalAnoAnterior_1 = array_sum(array_value_recursive('mes'.$mes, $leiMensalAnoAnterior)); // OBS CONSERTAR
-                $somaLeiMensalAnoAtual_1 = array_sum(array_value_recursive('mes12', $leiMensalAnoAnterior));
-            }else{
-                $somaLeiMensalAnoAnterior_1 = array_sum(array_value_recursive('mes'.($mes - 1), $leiMensalAnoAnterior));
-                $somaLeiMensalAnoAtual_1 = array_sum(array_value_recursive('mes'.($mes - 1), $leiMensalAnoAtual));
+            if(!empty($leiMensalAnoAnterior) || !empty($leiMensalAnoAtual)){
+
+                $somaLeiMensalAnoAnterior = array_sum(array_value_recursive('mes'.$mes, $leiMensalAnoAnterior));
+                $somaLeiMensalAnoAtual = array_sum(array_value_recursive('mes'.$mes, $leiMensalAnoAtual));
+
+                if($mes == 1){
+                    $somaLeiMensalAnoAnterior_1 = array_sum(array_value_recursive('mes'.$mes, $leiMensalAnoAnterior)); // OBS CONSERTAR
+                    $somaLeiMensalAnoAtual_1 = array_sum(array_value_recursive('mes12', $leiMensalAnoAnterior));
+                }else{
+                    $somaLeiMensalAnoAnterior_1 = array_sum(array_value_recursive('mes'.($mes - 1), $leiMensalAnoAnterior));
+                    $somaLeiMensalAnoAtual_1 = array_sum(array_value_recursive('mes'.($mes - 1), $leiMensalAnoAtual));
+                }
+
+                $consumoCalAnt = $somaLeiMensalAnoAnterior - $somaLeiMensalAnoAnterior_1;
+                $consumoCalAtual = $somaLeiMensalAnoAtual - $somaLeiMensalAnoAtual_1;
+
+                array_push($somaConsumoAnoAnterior, $consumoCalAnt);
+                array_push($somaConsumoAnoAtual, $consumoCalAtual);
             }
-
-            $consumoCalAnt = $somaLeiMensalAnoAnterior - $somaLeiMensalAnoAnterior_1;
-            $consumoCalAtual = $somaLeiMensalAnoAtual - $somaLeiMensalAnoAtual_1;
-
-            array_push($somaConsumoAnoAnterior, $consumoCalAnt);
-            array_push($somaConsumoAnoAtual, $consumoCalAtual);
         }// fim - calculos..
 
         // GRAFICO CONSUMO MENSAL (TYPE: LINE)
@@ -364,7 +368,8 @@ class ImovelController extends Controller
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://192.168.130.4/api/leitura/'.dechex($prumada->PRU_ID),
+                //CURLOPT_URL => 'http://192.168.130.4/api/leitura/'.dechex($prumada->PRU_ID),
+                CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/leitura/'.dechex($prumada->PRU_ID),
                 CURLOPT_USERAGENT => 'Codular Sample cURL Request'
             ));
             // Send the request & save response to $resp
@@ -428,7 +433,7 @@ class ImovelController extends Controller
                 // Set some options - we are passing in a useragent too here
                 curl_setopt_array($curl, array(
                     CURLOPT_RETURNTRANSFER => 1,
-                    CURLOPT_URL => 'http://192.168.130.4/api/leitura/'.dechex($prumada->PRU_ID),
+                    CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/leitura/'.dechex($prumada->PRU_ID),
                     CURLOPT_USERAGENT => 'Codular Sample cURL Request'
                 ));
 
@@ -491,7 +496,7 @@ class ImovelController extends Controller
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://192.168.130.4/api/ativacao/'.dechex($prumada->PRU_ID),
+                CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/ativacao/'.dechex($prumada->PRU_ID),
                 CURLOPT_USERAGENT => 'Codular Sample cURL Request'
             ));
             // Send the request & save response to $resp
@@ -545,7 +550,7 @@ class ImovelController extends Controller
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://192.168.130.4/api/corte/'.dechex($prumada->PRU_ID),
+                CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/corte/'.dechex($prumada->PRU_ID),
                 CURLOPT_USERAGENT => 'Codular Sample cURL Request'
             ));
             // Send the request & save response to $resp
