@@ -160,6 +160,7 @@
         </div>
         <!-- [FIM] Dados de Identificação -->
 
+        @is('Administrador')
         <!-- Configuração Central -->
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -189,6 +190,9 @@
                 </div>
             </div>
         </div>
+        @else
+        {{ Form::text('IMO_IP', null, ['class' => 'form-control mask-ip', 'placeholder' => 'Ex.: 000.000.000.000', 'data-error' => $errors->first('IMO_IP'), 'style' => 'display:none']) }}
+        @endis
         <!-- [FIM] Configuração Central -->
 
         <!-- Informações de contato -->

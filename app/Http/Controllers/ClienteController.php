@@ -20,13 +20,12 @@ class ClienteController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $clientes = Cliente::all();
 
         foreach($clientes as $cli)
@@ -38,30 +37,27 @@ class ClienteController extends Controller
         return view('cliente.listar', ['clientes' => $clientes]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $estados = ['' => 'Selecionar Estado'];
         $_estados = Estado::all();
         foreach($_estados as $estado)
-            $estados[$estado->EST_ID] = $estado->EST_NOME;
+        $estados[$estado->EST_ID] = $estado->EST_NOME;
 
         //return view('cliente.cadastrar', ['' => ]);
         return view('cliente.cadastrar', compact('estados'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(ClienteSaveRequest $request)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $dataForm = $request->all();
 
         if($request->input('cnpj') != NULL)
@@ -97,25 +93,17 @@ class ClienteController extends Controller
         return redirect('cliente')->with('success', 'Cliente cadastrado com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $cliente = Cliente::findOrFail($id);
 
         if(is_null($cliente)){
@@ -125,28 +113,25 @@ class ClienteController extends Controller
         $estados = ['' => 'Selecionar Estado'];
         $_estados = Estado::all();
         foreach($_estados as $estado)
-            $estados[$estado->EST_ID] = $estado->EST_NOME;
+        $estados[$estado->EST_ID] = $estado->EST_NOME;
 
 
         $cidades = ['' => 'Selecionar Estado'];
         $_cidades = Cidade::where('CID_IDESTADO', $cliente->CLI_ESTADO)->get();
         foreach($_cidades as $cidade)
-            $cidades[$cidade->CID_ID] = $cidade->CID_NOME;
+        $cidades[$cidade->CID_ID] = $cidade->CID_NOME;
 
         $imoveis = $cliente->getImoveis()->count();
 
         return view('cliente.editar', compact('cliente', 'estados', 'imoveis', 'cidades'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(ClienteEditRequest $request, $id)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $cliente = Cliente::findOrFail($id);
 
         if(is_null($cliente)){
@@ -165,7 +150,7 @@ class ClienteController extends Controller
 
             ImageOptimizer::optimize('upload/clientes/'.$dataForm['CLI_FOTO']);
         } else
-            $request->offsetUnset('foto');
+        $request->offsetUnset('foto');
 
         $dataForm = $request->all();
 
@@ -174,12 +159,6 @@ class ClienteController extends Controller
         return redirect('cliente')->with('success', 'Administrador atualizado com sucesso.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //

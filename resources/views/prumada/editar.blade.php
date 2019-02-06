@@ -19,7 +19,6 @@
     {!! Form::model($prumadas, ['route' => ['prumada.update', $prumadas->PRU_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 
     <!-- Dados de Identificação -->
-
     <div class="box box-warning">
       <div class="box-header with-border">
         <h3 class="box-title"><i class="fa fa-cog"></i> Dados de identificação</h3>

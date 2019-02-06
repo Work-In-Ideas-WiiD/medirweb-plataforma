@@ -13,196 +13,194 @@ use App\Models\Imovel;
 
 class UserController extends Controller
 {
-  public function __construct()
-  {
+    public function __construct()
+    {
 
-    $this->middleware('auth');
+        $this->middleware('auth');
 
-  }
-
-  /**
-  * Display a listing of the resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function index(Request $request, $role = 'Administrador'){
-
-    $order = ($request->input('order')) ? $request->input('order') : 'asc';
-
-    $role = Defender::findRole(ucfirst($role));
-    $usuarios = $role->users()->orderBy('name', $order)
-    ->where('name', 'like', '%' . $request->input('like') . '%')
-    ->paginate($request->input('mostrar'));
-
-    return view('admin.lista', compact('usuarios', 'role'));
-  }
-  /**
-  * Show the form for creating a new resource.
-  *
-  * @return \Illuminate\Http\Response
-  */
-  public function create()
-  {
-    $roles =[];
-    $_roles = \Artesaos\Defender\Role::all();
-    foreach($_roles as $role)
-    $roles[$role->id] = $role->name;
-
-    $imoveis = ['' => 'Selecionar Imovel'];
-    $_imoveis = Imovel::all();
-    foreach($_imoveis as $imovel){
-        $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
     }
 
-    return view('admin.criar', compact('roles', 'imoveis'));
-  }
+    public function index(Request $request, $role = 'Administrador'){
 
-  public function create_user()
-  {
-    $roles =[];
-    $_roles = \Artesaos\Defender\Role::all();
-    foreach($_roles as $role)
-    $roles[$role->id] = $role->name;
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
 
-    $imoveis = ['' => 'Selecionar Imovel'];
-    $_imoveis = Imovel::all();
-    foreach($_imoveis as $imovel){
-        $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        $order = ($request->input('order')) ? $request->input('order') : 'asc';
+
+        $role = Defender::findRole(ucfirst($role));
+        $usuarios = $role->users()->orderBy('name', $order)
+        ->where('name', 'like', '%' . $request->input('like') . '%')
+        ->paginate($request->input('mostrar'));
+
+        return view('admin.lista', compact('usuarios', 'role'));
     }
 
-    return view('admin.criar_user', compact('roles', 'imoveis'));
-  }
+    public function create()
+    {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
 
-  /**
-  * Store a newly created resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @return \Illuminate\Http\Response
-  */
-  public function store(UserSaveRequest $request)
-  {
+        $roles =[];
+        $_roles = \Artesaos\Defender\Role::all();
+        foreach($_roles as $role)
+        $roles[$role->id] = $role->name;
 
-    $dataForm = $request->all();
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
 
-    $dataForm['password'] = bcrypt($dataForm['password']);
-
-    $user = User::create($dataForm);
-
-    $user->roles()->attach($dataForm['roles']);
-
-    $request->session()->flash('message-success', 'Administrador cadastrado com sucesso!');
-
-    return redirect()->route('usuario.index');
-  }
-
-  /**
-  * Display the specified resource.
-  *
-  * @param  \App\User  $user
-  * @return \Illuminate\Http\Response
-  */
-  public function show(User $user)
-  {
-    $this->middleware(['auth', 'needsRole:Administrador']);
-
-  }
-
-  /**
-  * Show the form for editing the specified resource.
-  *
-  * @param  \App\User  $user
-  * @return \Illuminate\Http\Response
-  */
-  public function edit($id)
-  {
-
-    $user = User::findOrFail($id);
-
-    if(is_null($user)){
-      return redirect( URL::previous() );
+        return view('admin.criar', compact('roles', 'imoveis'));
     }
 
-    $roles =[];
-    $_roles = \Artesaos\Defender\Role::all();
-    foreach($_roles as $role)
-    $roles[$role->id] = $role->name;
+    public function create_user()
+    {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
 
-    $imoveis = ['' => 'Selecionar Imovel'];
-    $_imoveis = Imovel::all();
-    foreach($_imoveis as $imovel){
-        $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        $roles =[];
+        $_roles = \Artesaos\Defender\Role::all();
+        foreach($_roles as $role)
+        $roles[$role->id] = $role->name;
+
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
+
+        return view('admin.criar_user', compact('roles', 'imoveis'));
     }
 
-    return view('admin.editar', compact('user', 'roles', 'imoveis'));
-  }
+    public function store(UserSaveRequest $request)
+    {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
 
-  public function edit_User($id)
-  {
+        $dataForm = $request->all();
 
-    $user = User::findOrFail($id);
+        $dataForm['password'] = bcrypt($dataForm['password']);
 
-    if(is_null($user)){
-      return redirect( URL::previous() );
+        $user = User::create($dataForm);
+
+        $user->roles()->attach($dataForm['roles']);
+
+        $request->session()->flash('message-success', 'Administrador cadastrado com sucesso!');
+
+        return redirect()->route('usuario.index');
     }
 
-    $roles =[];
-    $_roles = \Artesaos\Defender\Role::all();
-    foreach($_roles as $role)
-    $roles[$role->id] = $role->name;
+    public function show(User $user)
+    {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
 
-    $imoveis = ['' => 'Selecionar Imovel'];
-    $_imoveis = Imovel::all();
-    foreach($_imoveis as $imovel){
-        $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        $this->middleware(['auth', 'needsRole:Administrador']);
+
     }
 
-    return view('admin.editar', compact('user', 'roles', 'imoveis'));
-  }
+    public function edit($id)
+    {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
 
+        $user = User::findOrFail($id);
 
-  /**
-  * Update the specified resource in storage.
-  *
-  * @param  \Illuminate\Http\Request  $request
-  * @param  \App\User  $user
-  * @return \Illuminate\Http\Response
-  */
-  public function update(UserEditRequest $request,  $id)
-  {
-    $user = User::findOrFail($id);
+        if(is_null($user)){
+            return redirect( URL::previous() );
+        }
 
-    if(is_null($user)){
-      return redirect( URL::previous() );
+        $roles =[];
+        $_roles = \Artesaos\Defender\Role::all();
+        foreach($_roles as $role)
+        $roles[$role->id] = $role->name;
+
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
+
+        return view('admin.editar', compact('user', 'roles', 'imoveis'));
     }
 
-    $dataForm = $request->all();
+    public function edit_user($id)
+    {
+        $user = auth()->user()->id;
+        if(!app('defender')->hasRoles('Administrador') && !($user == $id)){
+            return view('error403');
+        }
 
-    if($dataForm['password'] == '')
-    unset($dataForm['password'] );
-    else
-    $dataForm['password'] = bcrypt($dataForm['password']);
+        $user = User::findOrFail($id);
 
-    $user->update($dataForm);
+        if(is_null($user)){
+            return redirect( URL::previous() );
+        }
 
-    if(key_exists('roles', $dataForm))
-            $user->roles()->sync($dataForm['roles']);
+        $roles =[];
+        $_roles = \Artesaos\Defender\Role::all();
+        foreach($_roles as $role)
+        $roles[$role->id] = $role->name;
 
-    $request->session()->flash('message-success', 'Administrador atualizado com sucesso!');
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
 
-    return redirect()->route('usuario.index');
-  }
+        return view('admin.editar_user', compact('user', 'roles', 'imoveis'));
+    }
 
-  /**
-  * Remove the specified resource from storage.
-  *
-  * @param  \App\User  $user
-  * @return \Illuminate\Http\Response
-  */
-  public function destroy(Request $request, $id)
-  {
-    User::destroy($id);
+    public function update(UserEditRequest $request,  $id)
+    {
+        $user = auth()->user()->id;
+        if(!app('defender')->hasRoles('Administrador') && !($user == $id)){
+            return view('error403');
+        }
 
-    $request->session()->flash('message-success', 'Administrador deletado com sucesso!');
-    return redirect()->route('usuario.index');
-  }
+        $user = User::findOrFail($id);
+
+        if(is_null($user)){
+            return redirect( URL::previous() );
+        }
+
+        $dataForm = $request->all();
+
+        if($dataForm['password'] == '')
+        unset($dataForm['password'] );
+        else
+        $dataForm['password'] = bcrypt($dataForm['password']);
+
+        $user->update($dataForm);
+
+        if(key_exists('roles', $dataForm))
+        $user->roles()->sync($dataForm['roles']);
+
+        $request->session()->flash('message-success', 'Administrador atualizado com sucesso!');
+
+        if(!app('defender')->hasRoles('Administrador')){
+            return redirect('/user/editar/'.$id)->with('success', 'Usuário atualizado com sucesso.');
+        }
+
+        return redirect()->route('usuario.index');
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
+        User::destroy($id);
+
+        $request->session()->flash('message-success', 'Administrador deletado com sucesso!');
+        return redirect()->route('usuario.index');
+    }
 }

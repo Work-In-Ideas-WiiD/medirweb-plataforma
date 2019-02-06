@@ -14,37 +14,34 @@ class UnidadeController extends Controller
 {
     public function __construct()
     {
-
         $this->middleware('auth');
-
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $imoveis = ['' => 'Selecionar Imovel'];
         $_imoveis = Imovel::all();
         foreach($_imoveis as $imovel)
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
 
         return view('unidade.cadastrar', ['imoveis' => $imoveis]);
     }
 
     public function showAgrupamento($id)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         //$agrupamentos = Agrupamento::where('AGR_IDIMOVEL', $id)->pluck('AGR_NOME','AGR_ID')->toArray();
 
         $agrupamentos = Agrupamento::where('AGR_IDIMOVEL', $id)->get();
@@ -57,14 +54,11 @@ class UnidadeController extends Controller
         return json_encode($agrupamentos);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(UnidadeSaveRequest $request)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
 
         $dataForm = $request->all();
 
@@ -73,101 +67,89 @@ class UnidadeController extends Controller
         return redirect('/imovel')->with('success', 'Unidade cadastrada com sucesso.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit($id)
     {
-        //
-        $unidade        = Unidade::findorFail($id);
-        $prumadas       = Unidade::find($id)->getPrumadas;
-        $agrupamento    = Unidade::find($id)->agrupamento;
-        $imovel         = Unidade::find($id)->imovel;
-        $leituras       = Leitura::where('LEI_IDPRUMADA',$id)
-                            ->orderBy('LEI_ID', 'desc')
-                            ->get();
-        $ultimaleitura =  Leitura::where('LEI_IDPRUMADA',$id)
-                            ->orderBy('LEI_ID', 'desc')
-                            ->first();
+        $user = auth()->user()->USER_IMOID;
+		$ID_IMO = Unidade::find($id)->agrupamento->imovel->IMO_ID;
+        if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
+            return view('error403');
+        }
+        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
+            return view('error403');
+        }
 
-        //$ultimaleitura  = Unidade::find($id)->getPrumadas()->lastest();
+        $unidade  = Unidade::findOrFail($id);
 
-        return view('unidade.lista', ['agrupamento' => $agrupamento, 'unidade' => $unidade, 'imovel' => $imovel, 'prumadas' => $prumadas, 'leituras' => $leituras, 'ultimaleitura' => $ultimaleitura]);
+        if(is_null($unidade)){
+            return redirect( URL::previous() );
+        }
+
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
+
+        $_agrupamentos = Agrupamento::all();
+        foreach($_agrupamentos as $agrupamento){
+            $agrupamentos[$agrupamento->AGR_ID] = $agrupamento->AGR_NOME;
+        }
+
+        $prumadas = Prumada::where('PRU_IDUNIDADE', $unidade->UNI_ID)->get();
+
+        //$prumadas = $unidade->getPrumadas();
+
+        return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-     public function edit($id)
-     {
-       $unidade  = Unidade::findOrFail($id);
-
-       if(is_null($unidade)){
-         return redirect( URL::previous() );
-       }
-
-       $_imoveis = Imovel::all();
-       foreach($_imoveis as $imovel){
-         $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-       }
-
-       $_agrupamentos = Agrupamento::all();
-       foreach($_agrupamentos as $agrupamento){
-         $agrupamentos[$agrupamento->AGR_ID] = $agrupamento->AGR_NOME;
-       }
-
-       $prumadas = Prumada::where('PRU_IDUNIDADE', $unidade->UNI_ID)->get();
-
-       //$prumadas = $unidade->getPrumadas();
-
-       return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas'));
-     }
-
-     /**
-      * Update the specified resource in storage.
-      *
-      * @param  \Illuminate\Http\Request  $request
-      * @param  int  $id
-      * @return \Illuminate\Http\Response
-      */
-     public function update(Request $request, $id)
-     {
-
-       $unidade = Unidade::findOrFail($id);
-
-       if(is_null($unidade)){
-         return redirect( URL::previous() );
-       }
-
-       $dataForm = $request->all();
-
-       $unidade->update($dataForm);
-
-       return redirect('/unidade/editar/'.$id)->with('success', 'Unidade atualizado com sucesso.');
-     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-     public function destroy(Request $request, $id)
- 		{
-
- 	    Unidade::destroy($id);
-
-			return redirect('/imovel')->with('success', 'Unidade deletado com sucesso.');
- 		}
-
-    public function leituraUnidade($undd)
+    public function update(Request $request, $id)
     {
+        $user = auth()->user()->USER_IMOID;
+		$ID_IMO = Unidade::find($id)->agrupamento->imovel->IMO_ID;
+        if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
+            return view('error403');
+        }
+        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
+            return view('error403');
+        }
+
+        $unidade = Unidade::findOrFail($id);
+
+        if(is_null($unidade)){
+            return redirect( URL::previous() );
+        }
+
+        $dataForm = $request->all();
+
+        $unidade->update($dataForm);
+
+        return redirect('/unidade/editar/'.$id)->with('success', 'Unidade atualizado com sucesso.');
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
+        Unidade::destroy($id);
+
+        return redirect('/imovel')->with('success', 'Unidade deletado com sucesso.');
+    }
+
+    /*public function leituraUnidade($undd)
+    {
+        $user = auth()->user()->USER_IMOID;
+		$ID_IMO = Unidade::find($undd)->imovel->IMO_ID;
+
+        var_dump($ID_IMO);
+        die;
+        if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
+            return view('error403');
+        }
+        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
+            return view('error403');
+        }
+
         $unidade = Unidade::find($undd);
 
         //var_dump($unidade->getPrumadas); die();
@@ -229,6 +211,9 @@ class UnidadeController extends Controller
 
     public function ligarUnidade($undd)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
 
         $unidade = Unidade::find($undd);
 
@@ -329,7 +314,6 @@ class UnidadeController extends Controller
         }
 
         return redirect('unidade/ver/'.$unidd);
-    }
-
+    }*/
 
 }

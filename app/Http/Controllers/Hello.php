@@ -22,33 +22,47 @@ class Hello extends Controller
     //
     public function index()
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
     	//
     	return "Hello world";
     }
 
     public function show($name)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
     	return view('hello',array('name' => $name));
     }
 
     public function cadastro()
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
     	return view('cadastro/adicionar');
     }
 
     public function postAdicionar(Request $request)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
     	var_dump(request('titulo'));
     	var_dump(request('conteudo'));
     }
 
-    public function export()
-    {
-        return Excel::download(new LeituraExport(1), 'leituras_teste.xlsx');
-    }
-
     public function testeLeitura()
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
 
         $curl = curl_init();
         // Set some options - we are passing in a useragent too here
@@ -121,6 +135,9 @@ class Hello extends Controller
 
     public function hidrometroTeste($id)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
 
         $unidades = Teste::where('id_imovel', $id)->get();
         $imovel = Imovel::find($id);
@@ -130,6 +147,10 @@ class Hello extends Controller
 
     public function leituraTeste($id)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $teste = Teste::find($id);
 
         $curl = curl_init();
@@ -184,6 +205,10 @@ class Hello extends Controller
 
     public function ligarTeste($id)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $teste = Teste::find($id);
 
         $curl = curl_init();
@@ -231,6 +256,10 @@ class Hello extends Controller
 
     public function desligarTeste($id)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $teste = Teste::find($id);
 
         $curl = curl_init();
@@ -275,15 +304,5 @@ class Hello extends Controller
 
         return redirect('teste/'.$teste->id_imovel);
 
-    }
-
-    public function relatorioConsumo()
-    {
-        return view('relatorio.consumo');
-    }
-
-    public function relatorioFatura()
-    {
-        return view('relatorio.fatura_bak');
     }
 }

@@ -114,7 +114,7 @@
 							<!-- Unidade -->
 							@if ($agrupamento->UNIDADES !== null)
 							@foreach($agrupamento->UNIDADES as $unidade)
-                                    @foreach($unidade->getPrumadas as $prumada)
+							@foreach($unidade->getPrumadas as $prumada)
 
 							<div class="col-md-3">
 								<div class="leituracontainer">
@@ -137,9 +137,11 @@
 											<i class="fa fa-close"></i> Corte
 										</a>
 										@else
+										@is('Administrador')
 										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
 											<i class="fa fa-power-off"></i> Ativação
 										</a>
+										@endis
 										@endif
 										@else
 										<!-- <a type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
@@ -186,7 +188,7 @@
 								</div>
 							</div> <!-- FIM .leituracontainer -->
 						</div><!-- FIM .col-md-3 -->
-                                    @endforeach
+						@endforeach
 						@endforeach
 						@else
 						<div class="col-md-12">

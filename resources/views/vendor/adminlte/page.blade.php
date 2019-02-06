@@ -98,6 +98,11 @@
                                         @foreach(auth()->user()->roles as $perfil)
                                           <small>{{$perfil->name}}</small>
                                         @endforeach
+
+                                        @is(['Sindico', 'Secretário'])
+                                        _______<br>
+                                        <a class="btn btn-default"href="/user/editar/{{auth()->user()->id}}">MINHA CONTA</a>
+                                        @endis
                                     </p>
                                 </li>
                                 <!-- Menu Body -->

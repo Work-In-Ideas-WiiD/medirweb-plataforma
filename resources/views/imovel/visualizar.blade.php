@@ -104,6 +104,7 @@
 											<a href="{{ route('agrupamento.edit', ['agrup' => $agrup->AGR_ID]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
 										</div>
 
+										@is('Administrador')
 										<?php // Botão deletar ?>
 										<div class="btn-group">
 											<?php $deleteFormAGR = "delete-formAGR-{$loop->index}"; ?>
@@ -134,7 +135,7 @@
 											{!! Form::close() !!}
 
 										</div>
-
+										@endis
 
 									</td>
 
@@ -190,6 +191,7 @@
 											<a href="{{ route('unidade.edit', ['unidade' => $uni->UNI_ID]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
 										</div>
 
+										@is('Administrador')
 										<?php // Botão deletar ?>
 										<div class="btn-group">
 											<?php $deleteFormUNI = "delete-formUNI-{$loop->index}"; ?>
@@ -220,6 +222,7 @@
 											{!! Form::close() !!}
 
 										</div>
+										@endis
 									</td>
 
 								</tr>

@@ -31,6 +31,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('usuario', 'UserController');
 Route::get('/user/{id}', 'UserController@index');
 Route::get('/user/{id}/create', array('uses' => 'UserController@create_user'))->name('Create User');
+Route::get('/user/editar/{id}', array('as'=>'user.edit', 'uses' => 'UserController@edit_user'));
 
 /* Imóveis */
 
@@ -70,7 +71,6 @@ Route::delete('/agrupamento/{agrupamento}', array('as'=>'agrupamento.destroy', '
 
 Route::get('/unidade/adicionar', 'UnidadeController@create')->name('Adicionar Unidade');
 Route::get('/unidade/getAgrupamentoLista/{id}', array('uses' => 'UnidadeController@showAgrupamento'));
-Route::get('/unidade/ver/{id}', array('uses' => 'UnidadeController@show'));
 Route::post('nova-unidade', array('uses' => 'UnidadeController@store'));
 Route::get('/unidade/editar/{id}', array('as'=>'unidade.edit', 'uses' => 'UnidadeController@edit'));
 Route::put('/unidade/update/{unidade}', array('as'=>'unidade.update', 'uses'=>'UnidadeController@update'));
@@ -80,12 +80,10 @@ Route::delete('/unidade/{unidade}', array('as'=>'unidade.destroy', 'uses'=>'Unid
 
 Route::get('/prumada/adicionar', 'PrumadaController@create')->name('Adicionar Prumada');
 
-Route::get('/unidade/leitura/{unidade}', array('uses' => 'UnidadeController@leituraUnidade'));
+//Route::get('/unidade/leitura/{unidade}', array('uses' => 'UnidadeController@leituraUnidade'));
 
 Route::get('/unidade/ligar/{unidade}', array('uses' => 'UnidadeController@ligarUnidade'));
 Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
-
-Route::get('/leitura/export', 'Hello@export');
 
 Route::get('/teste/leitura', 'Hello@testeLeitura');
 

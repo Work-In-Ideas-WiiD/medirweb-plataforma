@@ -51,8 +51,17 @@ class RelatorioController extends Controller
 
     public function relatorioConsumo()
     {
+        $user = auth()->user()->USER_IMOID;
         $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
+
+        if(app('defender')->hasRoles('Administrador')){
+            $_imoveis = Imovel::get();
+        }else if(app('defender')->hasRoles(['Sindico', 'Secretário'])){
+            $_imoveis = Imovel::get()->where('IMO_ID', $user);
+        }else{
+            return view('error403');
+        }
+
         foreach($_imoveis as $imovel){
             $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
         }
@@ -64,8 +73,17 @@ class RelatorioController extends Controller
     {
 
         // FORMULARIO IMOVEL (GET)
+        $user = auth()->user()->USER_IMOID;
         $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
+
+        if(app('defender')->hasRoles('Administrador')){
+            $_imoveis = Imovel::get();
+        }else if(app('defender')->hasRoles(['Sindico', 'Secretário'])){
+            $_imoveis = Imovel::get()->where('IMO_ID', $user);
+        }else{
+            return view('error403');
+        }
+
         foreach($_imoveis as $imovel){
             $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
         }
@@ -240,8 +258,17 @@ class RelatorioController extends Controller
 
     public function relatorioFatura()
     {
+        $user = auth()->user()->USER_IMOID;
         $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
+
+        if(app('defender')->hasRoles('Administrador')){
+            $_imoveis = Imovel::get();
+        }else if(app('defender')->hasRoles(['Sindico', 'Secretário'])){
+            $_imoveis = Imovel::get()->where('IMO_ID', $user);
+        }else{
+            return view('error403');
+        }
+
         foreach($_imoveis as $imovel){
             $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
         }
@@ -252,8 +279,17 @@ class RelatorioController extends Controller
     public function getFaturaLista(Request $request)
     {
         // FORMULARIO IMOVEL (GET)
+        $user = auth()->user()->USER_IMOID;
         $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
+
+        if(app('defender')->hasRoles('Administrador')){
+            $_imoveis = Imovel::get();
+        }else if(app('defender')->hasRoles(['Sindico', 'Secretário'])){
+            $_imoveis = Imovel::get()->where('IMO_ID', $user);
+        }else{
+            return view('error403');
+        }
+
         foreach($_imoveis as $imovel){
             $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
         }
@@ -408,6 +444,11 @@ class RelatorioController extends Controller
 
     public function showUnidade($id)
     {
+        $user = auth()->user()->USER_IMOID;
+        if(app('defender')->hasRoles(['Sindico', 'Secretário']) && !($user == $id)){
+            return view('error403');
+        }
+        
         $retornoUnid = array();
 
         $unidades = Imovel::find($id)->getUnidades;

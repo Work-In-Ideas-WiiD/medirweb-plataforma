@@ -163,6 +163,7 @@
 											<a href="{{ route('prumada.edit', ['pru' => $pru->PRU_ID]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
 										</div>
 
+										@is('Administrador')
 										<?php // Botão deletar ?>
 										<div class="btn-group">
 											<?php $deleteFormPRU = "delete-formPRU-{$loop->index}"; ?>
@@ -193,7 +194,7 @@
 											{!! Form::close() !!}
 
 										</div>
-
+										@endis
 
 									</td>
 								</form>

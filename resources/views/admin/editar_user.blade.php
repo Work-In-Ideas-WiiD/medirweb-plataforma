@@ -58,6 +58,7 @@
                             @endif
                         </div>
 
+                        @is('Administrador')
                         <?php // Perfil ?>
                         <div class='form-group'>
                             {!! Form::label('roles', 'Perfil *', ['class' => 'control-label']) !!}
@@ -69,6 +70,9 @@
                             </span>
                             @endif
                         </div>
+                        @else
+                        {!! Form::select('roles[]', $roles, null, ['class' => 'form-control', 'multiple' => true, 'style' => 'display:none']) !!}
+                        @endis
 
                     </div>
 
@@ -98,10 +102,21 @@
                             @endif
                         </div>
 
+                        @is('Administrador')
                         <?php // Imovel ?>
                         <div class='form-group'>
-                            {{ Form::select('USER_IMOID', [0], null, ['style' => 'display:none']) }}
+                            {{ Form::label('USER_IMOID', 'Imóvel') }}
+                            {{ Form::select('USER_IMOID', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+
+                            @if ($errors->has('USER_IMOID'))
+                            <span class="help-block">
+                                <strong style="color: red;">{{ $errors->first('USER_IMOID') }}</strong>
+                            </span>
+                            @endif
                         </div>
+                        @else
+                            {{ Form::select('USER_IMOID', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off', 'style' => 'display:none']) }}
+                        @endis
 
                     </div>
 

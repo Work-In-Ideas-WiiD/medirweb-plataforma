@@ -25,14 +25,17 @@ class ImovelController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
     public function index()
     {
-        $imoveis = Imovel::get();
+        $user = auth()->user()->USER_IMOID;
+
+        if(app('defender')->hasRoles('Administrador')){
+            $imoveis = Imovel::get();
+        }else if(app('defender')->hasRoles(['Sindico', 'Secretário'])){
+            $imoveis = Imovel::get()->where('IMO_ID', $user);
+        }else{
+            return view('error403');
+        }
 
         return view('imovel.listar', compact('imoveis'));
     }
@@ -44,17 +47,15 @@ class ImovelController extends Controller
         foreach($_estados as $estado)
         $estados[$estado->EST_ID] = $estado->EST_NOME;
 
-        //
         return view('imovel.buscar_listar', compact( 'estados'));
     }
 
-    /**
-    * Show the form for creating a new resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
     public function create()
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $clientes = ['' => 'Selecionar Cliente'];
         $_clientes = Cliente::where('CLI_STATUS', 1)->get();
         foreach($_clientes as $cliente)
@@ -76,19 +77,15 @@ class ImovelController extends Controller
             return redirect( URL::previous() );
         }
 
-
         return json_encode($cidades);
     }
 
-
-    /**
-    * Store a newly created resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
-    */
     public function store(ImovelSaveRequest $request)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $dataForm = $request->all();
 
         if($request->hasFile('foto')){
@@ -113,6 +110,11 @@ class ImovelController extends Controller
 
     public function show($id)
     {
+        $user = auth()->user()->USER_IMOID;
+        if(!app('defender')->hasRoles('Administrador') && !($user == $id)){
+            return view('error403');
+        }
+
         $imovel =  Imovel::findorFail($id);
 
         $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
@@ -129,6 +131,11 @@ class ImovelController extends Controller
 
     public function show_buscar($id)
     {
+        $user = auth()->user()->USER_IMOID;
+        if(!app('defender')->hasRoles('Administrador') && !($user == $id)){
+            return view('error403');
+        }
+
         if($id == 4 )
         {
             return redirect('teste/'.$id);
@@ -173,6 +180,14 @@ class ImovelController extends Controller
 
     public function edit($id)
     {
+        $user = auth()->user()->USER_IMOID;
+        if(app('defender')->hasRoles('Sindico') && !($user == $id)){
+            return view('error403');
+        }
+        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
+            return view('error403');
+        }
+
         $imovel = Imovel::findOrFail($id);
 
         if(is_null($imovel)){
@@ -200,6 +215,14 @@ class ImovelController extends Controller
 
     public function update(ImovelEditRequest $request, $id)
     {
+        $user = auth()->user()->USER_IMOID;
+        if(app('defender')->hasRoles('Sindico') && !($user == $id)){
+            return view('error403');
+        }
+        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
+            return view('error403');
+        }
+
         $imovel = Imovel::findOrFail($id);
 
         if(is_null($imovel)){
@@ -243,6 +266,10 @@ class ImovelController extends Controller
 
     public function destroy(Request $request, $id)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         Imovel::destroy($id);
 
         $request->session()->flash('message-success', 'Administrador deletado com sucesso!');
@@ -357,14 +384,25 @@ class ImovelController extends Controller
 
     public function getImoveisLista(Request $request)
     {
-        //return $request->IMO_IDESTADO;
-        $imoveis =  Imovel::where('IMO_IDESTADO', $request->IMO_IDESTADO)
-        ->where('IMO_IDCIDADE', $request->IMO_IDCIDADE)
-        ->get();
+
+        if(app('defender')->hasRoles('Administrador')){
+            $imoveis =  Imovel::where('IMO_IDESTADO', $request->IMO_IDESTADO)
+            ->where('IMO_IDCIDADE', $request->IMO_IDCIDADE)
+            ->get();
+        }else{
+            $user = auth()->user()->USER_IMOID;
+            $imoveis =  Imovel::where('IMO_IDESTADO', $request->IMO_IDESTADO)
+            ->where('IMO_IDCIDADE', $request->IMO_IDCIDADE)
+            ->find($user);
+        }
 
         $retorno = array();
         foreach($imoveis as $imo)
         {
+            if(!(app('defender')->hasRoles('Administrador'))){
+                $imo = $imoveis;
+            }
+
             $retorno[] = [
                 'IMO_ID'        => $imo->IMO_ID,
                 'IMO_FOTO'      => $imo->IMO_FOTO,
@@ -373,16 +411,24 @@ class ImovelController extends Controller
                 'IMO_BAIRRO'    => $imo->IMO_BAIRRO,
                 'AGR'           => $imo->getAgrupamentos->count(),
                 'UNI'           => $imo->getUnidades->count(),
-                //'EQP'           => $imo->getUnidades->getEquipamentos->count()
+                //'PRU'           => $imo->getUnidades->getPrumadas->count(),
             ];
+
+            if(!(app('defender')->hasRoles('Administrador'))){
+                break;
+            }
         }
 
-        //dd($imoveis);
         return response()->json(['imoveis'=>$retorno]);
     }
 
     public function leituraUnidade($imovel, $unidade)
     {
+        $user = auth()->user()->USER_IMOID;
+        if(app('defender')->hasRoles(['Sindico', 'Secretário']) && !($user == $imovel)){
+            return view('error403');
+        }
+
         $imovel = Imovel::find($imovel);
 
         $unidade = Unidade::find($unidade);
@@ -446,6 +492,11 @@ class ImovelController extends Controller
 
     public function atualizarTodasLeituraUnidade($id)
     {
+        $user = auth()->user()->USER_IMOID;
+        if(app('defender')->hasRoles(['Sindico', 'Secretário']) && !($user == $id)){
+            return view('error403');
+        }
+
         $imovel = Imovel::find($id);
 
         /*foreach ($imovel as $imo) {*/
@@ -511,6 +562,10 @@ class ImovelController extends Controller
 
     public function ligarUnidade($imovel, $unidade)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $imovel = Imovel::find($imovel);
 
         $unidade = Unidade::find($unidade);
@@ -565,6 +620,10 @@ class ImovelController extends Controller
 
     public function desligarUnidade($imovel, $unidade)
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
         $imovel = Imovel::find($imovel);
 
         $unidade = Unidade::find($unidade);

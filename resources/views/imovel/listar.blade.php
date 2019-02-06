@@ -56,11 +56,14 @@
                       <a href="{{ route('Ver Imovel', ['imo' => $imo->IMO_ID]) }}" type="button" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></a>
                     </div>
 
+                    @is(['Administrador', 'Sindico'])
                     <?php // Botão editar ?>
                     <div class="btn-group">
                       <a href="{{ route('imovel.edit', ['imo' => $imo->IMO_ID]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
                     </div>
+                    @endis
 
+                    @is('Administrador')
                     <?php // Botão deletar ?>
                     <div class="btn-group">
                       <?php $deleteForm = "delete-form-{$loop->index}"; ?>
@@ -91,6 +94,7 @@
                       {!! Form::close() !!}
 
                     </div>
+                    @endis
 
                   </td>
                 </form>
