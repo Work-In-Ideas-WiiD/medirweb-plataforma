@@ -114,10 +114,12 @@
 							<!-- Unidade -->
 							@if ($agrupamento->UNIDADES !== null)
 							@foreach($agrupamento->UNIDADES as $unidade)
+                                    @foreach($unidade->getPrumadas as $prumada)
+
 							<div class="col-md-3">
 								<div class="leituracontainer">
 									<div class="col col-md-6 marcacao" >
-										<p>@if($unidade->getPrumadas()->count() > 0) {!! $unidade->getPrumadas()->first()->PRU_STATUS == 1 ? "<i class='fa fa-circle' style='color: green;'></i>" : "<i class='fa fa-circle' style='color: red;'></i>" !!} @endif
+										<p>@if($unidade->getPrumadas()->count() > 0) {!! $prumada->PRU_STATUS == 1 ? "<i class='fa fa-circle' style='color: green;'></i>" : "<i class='fa fa-circle' style='color: red;'></i>" !!} @endif
 											{{ $unidade->UNI_NOME }}</p>
 
 											<!-- <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
@@ -145,7 +147,7 @@
 									</a> -->
 									@endif
 									@if($unidade->getPrumadas()->count() > 0 )
-									<p>ID: #{{ $unidade->getPrumadas()->first()->PRU_IDFUNCIONAL }}</p>
+									<p>ID: #{{ $prumada->PRU_IDFUNCIONAL }}</p>
 									@endif
 								</div>
 								<div class="col col-md-6 leitura">
@@ -156,19 +158,19 @@
 
 												<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
 
-													<p class="valor">@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 0 @endif</p>
+													<p class="valor">@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 0 @endif</p>
 
 												</a>
 
 												<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
 
-													<p class="valor">@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_LITRO }} @else 0 @endif</p>
+													<p class="valor">@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_LITRO }} @else 0 @endif</p>
 
 												</a>
 
 												<a href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
 
-													<p class="valor">@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $unidade->getPrumadas()->first()->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_MILILITRO }} @else 0 @endif</p>
+													<p class="valor">@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_MILILITRO }} @else 0 @endif</p>
 
 												</a>
 
@@ -184,6 +186,7 @@
 								</div>
 							</div> <!-- FIM .leituracontainer -->
 						</div><!-- FIM .col-md-3 -->
+                                    @endforeach
 						@endforeach
 						@else
 						<div class="col-md-12">
