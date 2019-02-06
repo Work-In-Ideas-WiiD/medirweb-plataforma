@@ -145,7 +145,7 @@
 									</a> -->
 									@endif
 									@if($unidade->getPrumadas()->count() > 0 )
-									<p>ID: #{{ $unidade->getPrumadas()->first()->PRU_ID }}</p>
+									<p>ID: #{{ $unidade->getPrumadas()->first()->PRU_IDFUNCIONAL }}</p>
 									@endif
 								</div>
 								<div class="col col-md-6 leitura">
