@@ -133,12 +133,12 @@
 										</a>
 
 										@if($unidade->getPrumadas()->first()->PRU_STATUS == 1)
-										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
+										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$prumada->PRU_ID.'') }}" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
 											<i class="fa fa-close"></i> Corte
 										</a>
 										@else
 										@is(['Administrador', 'Sindico'])
-										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
+										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$prumada->PRU_ID.'') }}" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
 											<i class="fa fa-power-off"></i> Ativação
 										</a>
 										@endis
