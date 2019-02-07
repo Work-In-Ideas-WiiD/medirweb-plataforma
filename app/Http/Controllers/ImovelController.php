@@ -440,9 +440,10 @@ class ImovelController extends Controller
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, array(
                 CURLOPT_RETURNTRANSFER => 1,
-                //CURLOPT_URL => 'http://192.168.130.4/api/leitura/'.dechex($prumada->PRU_ID),
                 CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/leitura/'.dechex($prumada->PRU_IDFUNCIONAL),
-                CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+                CURLOPT_CONNECTTIMEOUT => 15,
+                CURLOPT_TIMEOUT        => 15,
+                CURLOPT_USERAGENT => 'Codular Sample cURL Request',
             ));
             // Send the request & save response to $resp
             $resp = curl_exec($curl);
