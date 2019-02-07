@@ -107,7 +107,7 @@ return [
     |
     */
 
-    'menu' => [
+    'menu_admin' => [
         'GERENCIAL',
         [
             'text' => 'Dashboard',
@@ -239,6 +239,42 @@ return [
 //            'icon'    => 'microchip',
 //            'url'     => 'teste',
 //        ],
+    ],
+
+
+    'menu2' => [
+        'GERENCIAL',
+        [
+            'text' => 'Dashboard',
+            'url'  => 'home',
+            'icon' => 'tasks',
+        ],
+        [
+            'text'    => 'Imóveis',
+            'icon'    => 'building',
+            'submenu' => [
+                [
+                    'text' => 'Buscar',
+                    'icon' => 'search',
+                    'url'  => 'imovel/buscar',
+                ],
+                [
+                    'text' => 'Ver todos',
+                    'icon' => 'list',
+                    'url'  => 'imovel',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Consulta consumo',
+            'icon'    => 'tachometer',
+            'url'     => 'relatorio/consumo',
+        ],
+        [
+            'text'    => 'Liquidação de Faturas',
+            'icon'    => 'money',
+            'url'     => 'relatorio/faturas',
+        ],
     ],
 
     /*
