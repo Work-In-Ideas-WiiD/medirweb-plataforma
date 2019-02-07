@@ -128,21 +128,21 @@
 
 										@if($unidade->getPrumadas()->count() > 0)
 
-										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" onclick="loading()" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$prumada->PRU_ID.'') }}" onclick="loading()" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
 											<i class="fa fa-retweet"></i> Leitura
 										</a>
 
-										@if($unidade->getPrumadas()->first()->PRU_STATUS == 1)
+											@is(['Administrador', 'Sindico'])
+										@if($prumada->PRU_STATUS == 1)
 										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$prumada->PRU_ID.'') }}" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
 											<i class="fa fa-close"></i> Corte
 										</a>
 										@else
-										@is(['Administrador', 'Sindico'])
 										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$prumada->PRU_ID.'') }}" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
 											<i class="fa fa-power-off"></i> Ativação
 										</a>
-										@endis
 										@endif
+											@endis
 										@else
 										<!-- <a type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
 										<i class="fa fa-close"></i> Corte
