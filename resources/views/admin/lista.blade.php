@@ -22,7 +22,7 @@
                 @if($role->name == "Administrador")
                 <a style="float: right" href="{{ route('usuario.create') }}" class="btn btn-success">Adicionar</a>
                 @else
-                <a style="float: right" href="/user/{{$role->name}}/create" class="btn btn-primary">Adicionar</a>
+                <a style="float: right" href="{{ url('/user/'.$role->name.'/create') }}" class="btn btn-primary">Adicionar</a>
                 @endif
             </div>
 
