@@ -432,11 +432,12 @@ class ImovelController extends Controller
 
         $imovel = Imovel::find($imovel);
 
-        $unidade = Unidade::find($unidade);
+        //$unidade = Unidade::find($unidade);
+        $prumada = Prumada::find($unidade);
 
         //var_dump($unidade->getPrumadas); die();
-        foreach ($unidade->getPrumadas as $prumada)
-        {
+//        foreach ($unidade->getPrumadas as $prumada)
+//        {
             $curl = curl_init();
             // Set some options - we are passing in a useragent too here
             curl_setopt_array($curl, array(
@@ -478,17 +479,21 @@ class ImovelController extends Controller
                 ];
 
                 Leitura::create($leitura);
+
+                return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
             }
             else
             {
                 $prumada->PRU_STATUS = 0;
                 $prumada->save();
                 Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.' );
+
+                return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
             }
 
-        }
+//        }
 
-        return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+
         //return redirect::back();
     }
 

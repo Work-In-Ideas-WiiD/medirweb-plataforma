@@ -128,7 +128,7 @@
 
 										@if($unidade->getPrumadas()->count() > 0)
 
-										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$unidade->UNI_ID.'') }}" onclick="loading()" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$prumada->PRU_ID.'') }}" onclick="loading()" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
 											<i class="fa fa-retweet"></i> Leitura
 										</a>
 
