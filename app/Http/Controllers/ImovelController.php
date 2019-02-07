@@ -562,9 +562,14 @@ class ImovelController extends Controller
 
     public function ligarUnidade($imovel, $unidade)
     {
-        if(!app('defender')->hasRoles('Administrador')){
+        $user = auth()->user()->USER_IMOID;
+        if(app('defender')->hasRoles('Sindico') && !($user == $imovel)){
             return view('error403');
         }
+        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
+            return view('error403');
+        }
+
 
         $imovel = Imovel::find($imovel);
 

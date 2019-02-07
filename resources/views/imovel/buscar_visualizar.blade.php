@@ -137,7 +137,7 @@
 											<i class="fa fa-close"></i> Corte
 										</a>
 										@else
-										@is('Administrador')
+										@is(['Administrador', 'Sindico'])
 										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$unidade->UNI_ID.'') }}" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
 											<i class="fa fa-power-off"></i> Ativação
 										</a>
