@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Timeline;
 use App\Models\Imovel;
 use App\Models\Prumada;
+use Ping;
 
 class TimelineController extends Controller
 {
@@ -114,5 +115,54 @@ class TimelineController extends Controller
         }
 
         return json_encode($prumadas);
+    }
+
+    public function serverTest()
+    {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
+
+        return view('timeline.serverTest', compact('imoveis'));
+    }
+
+    public function getServerTest(Request $request)
+    {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
+        // FORMULARIO IMOVEL (GET)
+        $imoveis = ['' => 'Selecionar Imovel'];
+        $_imoveis = Imovel::all();
+        foreach($_imoveis as $imovel){
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
+        // FIM - FORMULARIO IMOVEL (GET)
+
+        // VALIDAÇÃO CAMPO IMOVEL
+        if(empty($request->IMO_ID)){
+            return redirect('/server/test')->with('error', 'Por Favor Selecione o Imóvel.');
+        }
+        // FIM - VALIDAÇÃO CAMPO IMOVEL
+
+        $imovel = Imovel::find($request->IMO_ID);
+        $url = $imovel->IMO_IP;
+
+        // VALIDAÇÃO IP DO IMOVEL FOR VAZIO
+        if(empty($url)){
+            return redirect('/server/test')->with('error', 'Este Imovel não possui endereço de IP configurado!');
+        }
+        // FIM - VALIDAÇÃO IP DO IMOVEL FOR VAZIO
+
+        $codigoHTTP = Ping::check($url);
+
+        return view('timeline.serverTest', compact('imoveis', 'url', 'codigoHTTP', ));
     }
 }

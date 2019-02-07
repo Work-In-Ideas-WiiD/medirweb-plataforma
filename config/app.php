@@ -151,6 +151,7 @@ return [
         Maatwebsite\Excel\ExcelServiceProvider::class,
         ConsoleTVs\Charts\ChartsServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
+        Karlmonson\Ping\PingServiceProvider::class,
 
         /*
          * Package Service Providers...
@@ -220,6 +221,7 @@ return [
         'Charts' => ConsoleTVs\Charts\Facades\Charts::class,
         'Defender' => \Artesaos\Defender\Facades\Defender::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
+        'Ping' => Karlmonson\Ping\Facades\Ping::class,
 
     ],
 

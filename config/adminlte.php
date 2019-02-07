@@ -180,7 +180,12 @@ return [
                     'text' => 'Equipamentos',
                     'icon' => 'cog',
                     'url'  => 'timeline/equipamento/buscar',
-                ]
+                ],
+                [
+                    'text' => 'Teste de Conexão Servidor',
+                    'icon' => 'cloud',
+                    'url'  => 'server/test',
+                ],
             ],
         ],
         [

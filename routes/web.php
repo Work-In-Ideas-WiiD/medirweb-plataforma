@@ -107,7 +107,6 @@ Route::post('novo-equipamento', array('uses' => 'PrumadaController@store'));
 Route::get('/equipamento/editar/{id}', array('as'=>'prumada.edit', 'uses' => 'PrumadaController@edit'));
 Route::put('/equipamento/update/{unidade}', array('as'=>'prumada.update', 'uses'=>'PrumadaController@update'));
 Route::delete('/equipamento/{unidade}', array('as'=>'prumada.destroy', 'uses'=>'PrumadaController@destroy'));
-
 Route::get('/equipamento/getAgrupamentoLista/{id}', array('uses' => 'PrumadaController@showAgrupamento'));
 Route::get('/equipamento/getUnidadeLista/{id}', array('uses' => 'PrumadaController@showUnidade'));
 
@@ -117,9 +116,11 @@ Route::get('/timeline/equipamento/buscar', 'TimelineController@buscar')->name('T
 Route::get('/timeline/equipamento', 'TimelineController@index')->name('Timeline Equipamento');
 Route::get('/timeline/equipamento/adicionar', 'TimelineController@create')->name('Adicionar TimeLine Equipamento');
 Route::post('novo-equipamento-timeline', array('uses' => 'TimelineController@store'));
-
 Route::get('/timeline/equipamento/getEquipamentoLista/{id}', array('uses' => 'TimelineController@showPrumada'));
 Route::post('/timeline/equipamento/getTimelineLista', array('uses' => 'TimelineController@getTimelineLista'));
+
+Route::get('/server/test', 'TimelineController@serverTest')->name('Teste de Conexão Servidor');
+Route::post('/server/test', array('uses' => 'TimelineController@getServerTest'));
 
 /* Relatorios */
 
@@ -128,5 +129,4 @@ Route::post('relatorio/consumo', array('uses' => 'RelatorioController@getConsumo
 
 Route::get('/relatorio/faturas', 'RelatorioController@relatorioFatura')->name('Relatorio Fatura');
 Route::post('relatorio/faturas', array('uses' => 'RelatorioController@getFaturaLista'));
-
 Route::get('relatorio/faturas/getApartamentoLista/{id}', array('uses' => 'RelatorioController@showUnidade'));
