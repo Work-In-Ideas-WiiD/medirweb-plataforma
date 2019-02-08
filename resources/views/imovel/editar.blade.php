@@ -327,7 +327,7 @@
             </div>
         </div>
 
-        <button type="submit" type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Salvar cadastro</button>
+        <button type="submit" type="button" class="btn btn-block btn-warning"><i class="fa fa-floppy-o"></i> Atualizar cadastro</button>
 
         <div type="button" class="btn btn-block btn-primary div-foto"><i class="fa fa-file-image-o"></i> Fazer upload da foto de perfil
             <input onchange="previewUploadFoto(this, '#preview-image-foto')" class="btn-foto" type="file" name="foto">

@@ -230,6 +230,8 @@ class ImovelController extends Controller
             return redirect( URL::previous() );
         }
 
+        $dataForm = $request->all();
+
         if($request->hasFile('foto')){
             $foto_path = public_path("upload/fotos/".$imovel->IMO_FOTO);
 
@@ -241,9 +243,7 @@ class ImovelController extends Controller
             $dataForm['IMO_FOTO'] = $request->file('foto')->move('upload/fotos', $fileName)->getFilename();
 
             ImageOptimizer::optimize('upload/fotos/'.$dataForm['IMO_FOTO']);
-        } else
-        $request->offsetUnset('foto');
-
+        }
         if($request->hasFile('capa')){
             $capa_path = public_path("upload/capas/".$imovel->IMO_FOTO);
 
@@ -255,14 +255,11 @@ class ImovelController extends Controller
             $dataForm['IMO_CAPA'] = $request->file('capa')->move('upload/capas', $fileName)->getFilename();
 
             ImageOptimizer::optimize('upload/capas/'.$dataForm['IMO_CAPA']);
-        } else
-        $request->offsetUnset('capa');
-
-        $dataForm = $request->all();
+        }
 
         $imovel->update($dataForm);
 
-        return redirect('imovel');
+        return redirect('/imovel/ver/'.$imovel->IMO_ID)->with('success', 'Imóvel atualizado com sucesso.');
     }
 
     public function destroy(Request $request, $id)
@@ -273,8 +270,7 @@ class ImovelController extends Controller
 
         Imovel::destroy($id);
 
-        $request->session()->flash('message-success', 'Administrador deletado com sucesso!');
-        return redirect()->route('Listar Imóveis');
+        return redirect('imovel')->with('success', 'Imovel deletado com sucesso!');
     }
 
     public function graficoConsumoGeral($id)
@@ -436,62 +432,62 @@ class ImovelController extends Controller
         $prumada = Prumada::find($unidade);
 
         //var_dump($unidade->getPrumadas); die();
-//        foreach ($unidade->getPrumadas as $prumada)
-//        {
-            $curl = curl_init();
-            // Set some options - we are passing in a useragent too here
-            curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/leitura/'.dechex($prumada->PRU_IDFUNCIONAL),
-                CURLOPT_CONNECTTIMEOUT => 15,
-                CURLOPT_TIMEOUT        => 15,
-                CURLOPT_USERAGENT => 'Codular Sample cURL Request',
-            ));
-            // Send the request & save response to $resp
-            $resp = curl_exec($curl);
-            // Close request to clear up some resources
-            curl_close($curl);
+        //        foreach ($unidade->getPrumadas as $prumada)
+        //        {
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/leitura/'.dechex($prumada->PRU_IDFUNCIONAL),
+            CURLOPT_CONNECTTIMEOUT => 15,
+            CURLOPT_TIMEOUT        => 15,
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request',
+        ));
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
 
-            $jsons = json_decode($resp);
+        $jsons = json_decode($resp);
 
-            if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
-            {
-                $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
+        if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
+        {
+            $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
 
-                $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
+            $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
 
-                $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-                //
-                //                var_dump($metro_cubico);
-                //                var_dump($litros);
-                //                var_dump($mililitro);
+            $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
+            //
+            //                var_dump($metro_cubico);
+            //                var_dump($litros);
+            //                var_dump($mililitro);
 
-                $subtotal = ($metro_cubico * 1000) + $litros;
-                $total = $subtotal.'.'.$mililitro.'';
+            $subtotal = ($metro_cubico * 1000) + $litros;
+            $total = $subtotal.'.'.$mililitro.'';
 
 
-                $leitura = [
-                    'LEI_IDPRUMADA' => $prumada->PRU_ID,
-                    'LEI_METRO' => $metro_cubico,
-                    'LEI_LITRO' => $litros,
-                    'LEI_MILILITRO' => $mililitro,
-                    'LEI_VALOR' => $total,
-                ];
+            $leitura = [
+                'LEI_IDPRUMADA' => $prumada->PRU_ID,
+                'LEI_METRO' => $metro_cubico,
+                'LEI_LITRO' => $litros,
+                'LEI_MILILITRO' => $mililitro,
+                'LEI_VALOR' => $total,
+            ];
 
-                Leitura::create($leitura);
+            Leitura::create($leitura);
 
-                return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
-            }
-            else
-            {
-                $prumada->PRU_STATUS = 0;
-                $prumada->save();
-                Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.' );
+            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+        }
+        else
+        {
+            $prumada->PRU_STATUS = 0;
+            $prumada->save();
+            Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.' );
 
-                return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
-            }
+            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+        }
 
-//        }
+        //        }
 
 
         //return redirect::back();
@@ -580,57 +576,57 @@ class ImovelController extends Controller
 
         $imovel = Imovel::find($imovel);
 
-//        $unidade = Unidade::find($unidade);
+        //        $unidade = Unidade::find($unidade);
 
         $prumada = Prumada::find($unidade);
         //var_dump($unidade->getPrumadas); die();
-//        foreach ($unidade->getPrumadas as $prumada)
-//        {
-            $curl = curl_init();
-            // Set some options - we are passing in a useragent too here
-            curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/ativacao/'.dechex($prumada->PRU_IDFUNCIONAL),
-                CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-            ));
-            // Send the request & save response to $resp
-            $resp = curl_exec($curl);
-            // Close request to clear up some resources
-            curl_close($curl);
+        //        foreach ($unidade->getPrumadas as $prumada)
+        //        {
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/ativacao/'.dechex($prumada->PRU_IDFUNCIONAL),
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        ));
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
 
-            $jsons = json_decode($resp);
+        $jsons = json_decode($resp);
 
-            if($jsons !== NULL)
+        if($jsons !== NULL)
+        {
+            if($jsons[4] == '00')
             {
-                if($jsons[4] == '00')
-                {
-                    $status = 1;
-                }
-                else
-                {
-                    $status = 0;
-                }
-
-
-                $atualizacao = [
-                    'PRU_STATUS' => $status,
-                ];
-
-                $prumada->update($atualizacao);
-
-                return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+                $status = 1;
             }
             else
             {
-                $prumada->PRU_STATUS = 0;
-                $prumada->save();
-                Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
-
-                return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+                $status = 0;
             }
 
 
-//        }
+            $atualizacao = [
+                'PRU_STATUS' => $status,
+            ];
+
+            $prumada->update($atualizacao);
+
+            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+        }
+        else
+        {
+            $prumada->PRU_STATUS = 0;
+            $prumada->save();
+            Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
+
+            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+        }
+
+
+        //        }
 
 
     }
@@ -648,52 +644,52 @@ class ImovelController extends Controller
         $prumada = Prumada::find($unidade);
 
         //var_dump($unidade->getPrumadas); die();
-//        foreach ($unidade->getPrumadas as $prumada)
-//        {
-            $curl = curl_init();
-            // Set some options - we are passing in a useragent too here
-            curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/corte/'.dechex($prumada->PRU_IDFUNCIONAL),
-                CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-            ));
-            // Send the request & save response to $resp
-            $resp = curl_exec($curl);
-            // Close request to clear up some resources
-            curl_close($curl);
+        //        foreach ($unidade->getPrumadas as $prumada)
+        //        {
+        $curl = curl_init();
+        // Set some options - we are passing in a useragent too here
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/corte/'.dechex($prumada->PRU_IDFUNCIONAL),
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        ));
+        // Send the request & save response to $resp
+        $resp = curl_exec($curl);
+        // Close request to clear up some resources
+        curl_close($curl);
 
-            $jsons = json_decode($resp);
+        $jsons = json_decode($resp);
 
-            if($jsons !== NULL)
+        if($jsons !== NULL)
+        {
+            if($jsons[4] == '00')
             {
-                if($jsons[4] == '00')
-                {
-                    $status = '1';
-                }
-                else
-                {
-                    $status = '0';
-                }
-
-
-                $atualizacao = [
-                    'PRU_STATUS' => $status,
-                ];
-
-                $prumada->update($atualizacao);
-
-                return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+                $status = '1';
             }
             else
             {
-                $prumada->PRU_STATUS = 1;
-                $prumada->save();
-                Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
-
-                return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+                $status = '0';
             }
 
-//        }
+
+            $atualizacao = [
+                'PRU_STATUS' => $status,
+            ];
+
+            $prumada->update($atualizacao);
+
+            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+        }
+        else
+        {
+            $prumada->PRU_STATUS = 1;
+            $prumada->save();
+            Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
+
+            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+        }
+
+        //        }
 
 
     }
