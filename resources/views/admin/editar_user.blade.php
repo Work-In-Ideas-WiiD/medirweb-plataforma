@@ -9,7 +9,7 @@
 <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="#">Usuários</a></li>
-    <li class="active">Atulizar</li>
+    <li class="active">Atualizar</li>
 </ol>
 @stop
 
@@ -129,7 +129,25 @@
 
     <div class="col-md-4">
 
+        <div class="box box-widget widget-user">
+            <div class="widget-user-header bg-aqua-active" >
+                <h3 class="widget-user-username labelNome">{{auth()->user()->name}}</h3>
+                <h5 class="widget-user-desc"></h5>
+            </div>
+            <div class="widget-user-image">
+                <img class="img-circle" @if(isset(auth()->user()->foto)) src="{{ url('/upload/usuarios/'.auth()->user()->foto) }}" @else src="/upload/usuarios/user_default.png" @endif  id="preview-image-foto_user" alt="Avatar">
+            </div>
+            <div class="box-footer">
+                <small>Obs.: recomendado imagem no tamanho quadrado! Ex.: 100x100</small>
+            </div>
+        </div>
+
         <button type="submit" type="button" class="btn btn-block btn-warning"><i class="fa fa-pencil"></i> Atualizar cadastro</button>
+
+        <div type="button" class="btn btn-block btn-primary div-foto"><i class="fa fa-file-image-o"></i> Fazer upload da foto
+            <input onchange="previewUploadFoto(this, '#preview-image-foto_user')" class="btn-foto" type="file" name="fotoUser">
+        </div>
+
         <button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
 
     </div>

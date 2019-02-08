@@ -85,7 +85,7 @@ return [
     |
     */
 
-    'dashboard_url' => 'painel',
+    'dashboard_url' => 'home',
 
     'logout_url' => 'logout',
 

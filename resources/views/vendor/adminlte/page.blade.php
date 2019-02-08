@@ -78,18 +78,18 @@
                                 <li class="footer"><a href="#">Ver todas</a></li>
                             </ul>
                         </li>
-                        <!-- [END] Notifications
+                        <!-- [END] Notifications -->
 
                         <!-- Profile -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="https://i.imgur.com/6H82qqD.png" class="user-image hoverZoomLink" alt="User Image">
+                                <img class="user-image hoverZoomLink" alt="User Image" @if(isset(auth()->user()->foto)) src="{{ url('/upload/usuarios/'.auth()->user()->foto) }}" @else src="/upload/usuarios/user_default.png" @endif>
                                 <span class="hidden-xs">{{auth()->user()->name}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img src="https://i.imgur.com/6H82qqD.png" class="img-circle" alt="User Image">
+                                    <img class="img-circle" alt="User Image" @if(isset(auth()->user()->foto)) src="{{ url('/upload/usuarios/'.auth()->user()->foto) }}" @else src="/upload/usuarios/user_default.png" @endif>
 
                                     <p>
                                         {{auth()->user()->name}}
@@ -103,6 +103,11 @@
                                         _______<br>
                                         <a class="btn btn-default"href="/user/editar/{{auth()->user()->id}}">MINHA CONTA</a>
                                         @endis
+
+                                        @is('Administrador')
+                                        <a class="btn btn-default"href="/usuario/{{auth()->user()->id}}/edit">MINHA CONTA</a>
+                                        @endis
+
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -170,7 +175,7 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="https://i.imgur.com/6H82qqD.png" class="img-circle hoverZoomLink" alt="User Image">
+                        <img class="img-circle hoverZoomLink" alt="User Image" @if(isset(auth()->user()->foto)) src="{{ url('/upload/usuarios/'.auth()->user()->foto) }}" @else src="/upload/usuarios/user_default.png" @endif>
                     </div>
                     <div class="pull-left info">
                         <p>{{auth()->user()->name}}</p>

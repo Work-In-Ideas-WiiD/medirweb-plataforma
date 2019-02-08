@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests\User\UserSaveRequest;
 use App\Http\Requests\User\UserEditRequest;
 use App\Models\Imovel;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
+use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
@@ -83,6 +85,13 @@ class UserController extends Controller
         }
 
         $dataForm = $request->all();
+
+        if($request->hasFile('fotoUser')){
+            $fileName = md5(uniqid().str_random()).'.'.$request->file('fotoUser')->extension();
+            $dataForm['foto'] = $request->file('fotoUser')->move('upload/usuarios', $fileName)->getFilename();
+
+            ImageOptimizer::optimize('upload/usuarios/'.$dataForm['foto']);
+        }
 
         $dataForm['password'] = bcrypt($dataForm['password']);
 
@@ -178,6 +187,19 @@ class UserController extends Controller
         else
         $dataForm['password'] = bcrypt($dataForm['password']);
 
+        if($request->hasFile('fotoUser')){
+            $foto_path = public_path("upload/usuarios/".$user->foto);
+
+            if (File::exists($foto_path)) {
+                File::delete($foto_path);
+            }
+
+            $fileName = md5(uniqid().str_random()).'.'.$request->file('fotoUser')->extension();
+            $dataForm['foto'] = $request->file('fotoUser')->move('upload/usuarios', $fileName)->getFilename();
+
+            ImageOptimizer::optimize('upload/usuarios/'.$dataForm['foto']);
+        }
+
         $user->update($dataForm);
 
         if(key_exists('roles', $dataForm))
@@ -196,6 +218,18 @@ class UserController extends Controller
     {
         if(!app('defender')->hasRoles('Administrador')){
             return view('error403');
+        }
+
+        if(auth()->user()->id == $id){
+            return redirect('/usuario')->with('error', 'Não é permitido excluir a si próprio!');
+        }
+
+        $user = User::findOrFail($id);
+
+        $foto_path = public_path("upload/usuarios/".$user->foto);
+
+        if (File::exists($foto_path)) {
+            File::delete($foto_path);
         }
 
         User::destroy($id);

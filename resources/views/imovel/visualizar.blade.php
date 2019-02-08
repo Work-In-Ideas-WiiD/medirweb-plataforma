@@ -47,7 +47,7 @@
 					<div class="col-md-4">
 						<div class="bloco-imovel-info">
 							<p class="titulo"><b><i class="fa fa-user"></i> Responsáveis</b></p>
-							<p>{!! $imovel->IMO_RESPONSAVEIS !!}</p>
+							<pre style="border: none; background-color: white;">{!! $imovel->IMO_RESPONSAVEIS !!}</pre>
 						</div>
 					</div>
 					<!-- FIM Informação -->
@@ -56,7 +56,7 @@
 					<div class="col-md-4">
 						<div class="bloco-imovel-info">
 							<p class="titulo"><b><i class="fa fa-phone"></i> Contato</b></p>
-							<p>{!! $imovel->IMO_TELEFONES !!}</p>
+							<pre style="border: none; background-color: white;">{!! $imovel->IMO_TELEFONES !!}</pre>
 						</div>
 					</div>
 					<!-- FIM Informação -->

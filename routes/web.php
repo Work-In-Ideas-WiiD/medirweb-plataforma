@@ -97,8 +97,10 @@ Route::get('/teste/desligar/{id}', 'Hello@desligarTeste');
 Route::get('/cliente', 'ClienteController@index')->name('Listar Clientes');
 Route::get('/cliente/adicionar', 'ClienteController@create')->name('Adicionar Cliente');
 Route::post('novo-cliente', array('uses' => 'ClienteController@store'));
+Route::get('/cliente/ver/{id}', array('uses' => 'ClienteController@show'))->name('Ver Cliente');
 Route::get('/cliente/editar/{id}', 'ClienteController@edit')->name('clinete.edit');
 Route::put('/cliente/update/{id}', 'ClienteController@update')->name('clinete.update');
+Route::delete('cliente/{cliente}', array('as'=>'cliente.destroy', 'uses'=>'ClienteController@destroy'));
 
 
 /* Equipamento */

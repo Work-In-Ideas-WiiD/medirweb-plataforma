@@ -11,6 +11,7 @@ use App\Http\Requests\Cliente\ClienteSaveRequest;
 use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use App\Http\Requests\Cliente\ClienteEditRequest;
+use Illuminate\Support\Facades\File;
 
 class ClienteController extends Controller
 {
@@ -95,7 +96,15 @@ class ClienteController extends Controller
 
     public function show($id)
     {
-        //
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
+        $cliente =  Cliente::findorFail($id);
+        $cliente['CLI_CIDADE'] = Cliente::find($id)->cidade->CID_NOME;
+        $cliente['CLI_ESTADO'] = Cliente::find($id)->estado->EST_ABREVIACAO;
+
+        return view('cliente.visualizar', compact('cliente'));
     }
 
     public function edit($id)
@@ -132,6 +141,8 @@ class ClienteController extends Controller
             return view('error403');
         }
 
+        $dataForm = $request->all();
+
         $cliente = Cliente::findOrFail($id);
 
         if(is_null($cliente)){
@@ -149,18 +160,29 @@ class ClienteController extends Controller
             $dataForm['CLI_FOTO'] = $request->file('foto')->move('upload/clientes', $fileName)->getFilename();
 
             ImageOptimizer::optimize('upload/clientes/'.$dataForm['CLI_FOTO']);
-        } else
-        $request->offsetUnset('foto');
-
-        $dataForm = $request->all();
+        }
 
         $cliente->update($dataForm);
 
-        return redirect('cliente')->with('success', 'Administrador atualizado com sucesso.');
+        return redirect('cliente')->with('success', 'Cliente atualizado com sucesso.');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
+        $cliente = Cliente::findOrFail($id);
+
+        $foto_path = public_path("upload/clientes/".$cliente->CLI_FOTO);
+
+        if (File::exists($foto_path)) {
+            File::delete($foto_path);
+        }
+
+        Cliente::destroy($id);
+
+        return redirect('cliente')->with('success', 'Cliente deletado com sucesso.');
     }
 }
