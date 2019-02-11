@@ -15,6 +15,7 @@ class PrumadaSaveRequest extends PrumadaRequest
             'PRU_IDIMOVEL' => 'required|integer',
             'PRU_IDAGRUPAMENTO' => 'required|integer',
             'PRU_IDUNIDADE' => 'required|integer',
+            'PRU_NOME' => 'required|max:255',
             'PRU_IDFUNCIONAL' => 'required|max:255',
             'PRU_SERIAL' => 'required|max:255',
             'PRU_OPERADORA' => 'required|max:255',

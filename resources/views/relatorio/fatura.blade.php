@@ -119,8 +119,9 @@
                         <table id="lista-clientes" class="table table-bordered table-hover powertabela">
                             <thead>
                                 <tr>
-                                    <th>Nome</th>
+                                    <th>Nome Responsável</th>
                                     <th>Apartamento</th>
+                                    <th>Nome EQP</th>
                                     <th>Leitura Anterior</th>
                                     <th>Leitura Atual</th>
                                     <th>Consumo m³</th>
@@ -133,6 +134,7 @@
                                 <tr>
                                     <td>{{ $fatura['responsavelAp'] }}</td>
                                     <td>{{ $fatura['nomeAp'] }}</td>
+                                    <td>{{ $fatura['PRU_NOME'] }}</td>
                                     <td>{{ $fatura['LeituraAnterior'] }}</td>
                                     <td>{{ $fatura['LeituraAtual'] }}</td>
                                     <td>{{ $fatura['Consumo'] }}</td>
@@ -176,7 +178,7 @@
                             <div class='box-body'>
                                 @foreach($faturaAvancados as $faturaAvancado)
                                 <hr style="margin-bottom: -1px; margin-top: -10px;">
-                                <small><i class="fa fa-tachometer"></i> #{{ $faturaAvancado['PRU_ID'] }}</small>
+                                <small><i class="fa fa-tachometer"></i> #{{ $faturaAvancado['PRU_ID'] }} - {{ $faturaAvancado['PRU_NOME'] }}</small>
                                 <div style="text-align:right; bottom:15px; position: relative;">
                                     <small>{{ $faturaAvancado['DataLeituraAnterior'] }} <i class="fa fa-calendar"></i></small>
                                 </div>
@@ -201,7 +203,7 @@
                             <div class='box-body'>
                                 @foreach($faturaAvancados as $faturaAvancado)
                                 <hr style="margin-bottom: -1px; margin-top: -10px;">
-                                <small><i class="fa fa-tachometer"></i> #{{ $faturaAvancado['PRU_ID'] }}</small>
+                                <small><i class="fa fa-tachometer"></i> #{{ $faturaAvancado['PRU_ID'] }} - {{ $faturaAvancado['PRU_NOME'] }}</small>
                                 <div style="text-align:right; bottom:15px; position: relative;">
                                     <small>{{ $faturaAvancado['DataLeituraAtual'] }} <i class="fa fa-calendar"></i></small>
                                 </div>
@@ -226,7 +228,7 @@
                             <div class='box-body'>
                                 @foreach($faturaAvancados as $faturaAvancado)
                                 <hr style="margin-bottom: -1px; margin-top: -10px;">
-                                <small><i class="fa fa-tachometer"></i> #{{ $faturaAvancado['PRU_ID'] }}</small>
+                                <small><i class="fa fa-tachometer"></i> #{{ $faturaAvancado['PRU_ID'] }} - {{ $faturaAvancado['PRU_NOME'] }}</small>
                                 <hr style="margin-top: 5px;">
                                 <p style="text-align: center; font-weight: 600; font-size: 18px; margin-bottom: 20px;" > {{ $faturaAvancado['Consumo'] }}m³ - R$ {{ $faturaAvancado['Valor'] }}</p>
 

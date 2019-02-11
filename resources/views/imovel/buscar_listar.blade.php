@@ -30,12 +30,10 @@
 @section('content')
 <div class="row">
 	<div class="col-md-12">
-		<div class="box box-warning">
-
+		<div class="box box-primary">
 			<div class="box-header with-border">
 				<h3 class="box-title"><i class="fa fa-filter"></i> Filtro:</h3>
 			</div>
-
 			<div class="box-body">
 				{!! Form::open(['id' => 'filtroImoveis']) !!}
 				<div class="row">
@@ -69,11 +67,9 @@
 		</div>
 	</div>
 	<div class="col-md-12">
-
 		<div class="row" id="resultadoPesquisa">
 			<p style="text-align: center;">Sem resultados para mostrar</p>
 		</div>
-
-	</div><!-- /.col-md-12 -->
+	</div>
 </div>
 @stop

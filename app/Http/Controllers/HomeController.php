@@ -22,7 +22,7 @@ class HomeController extends Controller
         if(!app('defender')->hasRoles('Administrador')){
             return view('error403');
         }
-        
+
         /* Dashboard */
         $datadehoje = Carbon::today();
 
@@ -40,6 +40,7 @@ class HomeController extends Controller
                 $arrayPruAtivas = array(
                     'TIMELINE_ID' => $timeline->TIMELINE_ID,
                     'PRU_ID' => $prumadaAtiva->PRU_ID,
+                    'PRU_NOME' => $prumadaAtiva->PRU_NOME,
                     'PRU_SERIAL' => $prumadaAtiva->PRU_SERIAL,
                     'localizacao' => $prumadaAtiva->unidade->imovel->cidade->CID_NOME." - ".$prumadaAtiva->unidade->imovel->estado->EST_ABREVIACAO,
                     'PRU_STATUS' => $prumadaAtiva->PRU_STATUS,

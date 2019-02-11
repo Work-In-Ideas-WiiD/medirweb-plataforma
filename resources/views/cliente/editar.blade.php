@@ -7,9 +7,9 @@
 @section('content_header')
 <h1>Clientes <small>Editar Cliente</small></h1>
 <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="#">Clientes</a></li>
-    <li class="active">Adicionar</li>
+    <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/cliente">Clientes</a></li>
+    <li class="active">Atualizar</li>
 </ol>
 @stop
 

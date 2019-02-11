@@ -7,9 +7,9 @@
 @section('content_header')
 <h1>Imóveis <small>Vizualizar Imóveis</small></h1>
 <ol class="breadcrumb">
-	<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-	<li><a href="#">Imóveis</a></li>
-	<li><a href="#">Buscar</a></li>
+	<li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+	<li><a href="imovel">Imóveis</a></li>
+	<li><a href="/imovel/buscar">Buscar</a></li>
 	<li class="active">Vizualizar</li>
 </ol>
 
@@ -132,7 +132,7 @@
 											<i class="fa fa-retweet"></i> Leitura
 										</a>
 
-											@is(['Administrador', 'Sindico'])
+										@is(['Administrador', 'Sindico'])
 										@if($prumada->PRU_STATUS == 1)
 										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$prumada->PRU_ID.'') }}" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
 											<i class="fa fa-close"></i> Corte
@@ -142,7 +142,7 @@
 											<i class="fa fa-power-off"></i> Ativação
 										</a>
 										@endif
-											@endis
+										@endis
 										@else
 										<!-- <a type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
 										<i class="fa fa-close"></i> Corte

@@ -167,9 +167,9 @@
                         <table id="lista-clientes" class="table table-bordered table-hover powertabela">
                             <thead>
                                 <tr>
-                                    <th>Imovel</th>
-                                    <th># Equipamento</th>
-                                    <th>Nome</th>
+                                    <th>#EQP</th>
+                                    <th>Nome EQP</th>
+                                    <th>Nome Responsável</th>
                                     <th>Apartamento</th>
                                     <th>Leitura Anterior</th>
                                     <th>Leitura Atual</th>
@@ -180,8 +180,8 @@
                             <tbody >
                                 @foreach ($consumos as $consumo)
                                 <tr>
-                                    <td>{{ $consumo['Imovel'] }}</td>
                                     <td>{{ $consumo['PRU_ID'] }}</td>
+                                    <td>{{ $consumo['PRU_NOME'] }}</td>
                                     <td>{{ $consumo['Nomes'] }}</td>
                                     <td>{{ $consumo['Apartamentos'] }}</td>
                                     <td>{{ $consumo['LeituraAnterior'] }}</td>
@@ -218,7 +218,7 @@
                             <div class='box-body'>
                                 @foreach($consumoAvancados as $consumoAvancado)
                                 <hr style="margin-bottom: -1px; margin-top: -10px;">
-                                <small><i class="fa fa-tachometer"></i> #{{ $consumoAvancado['PRU_ID'] }}</small>
+                                <small><i class="fa fa-tachometer"></i> #{{ $consumoAvancado['PRU_ID'] }} - {{ $consumoAvancado['PRU_NOME'] }}</small>
                                 <div style="text-align:right; bottom:15px; position: relative;">
                                     <small>{{ $consumoAvancado['DataLeituraAnterior'] }} <i class="fa fa-calendar"></i></small>
                                 </div>
@@ -241,7 +241,7 @@
                             <div class='box-body'>
                                 @foreach($consumoAvancados as $consumoAvancado)
                                 <hr style="margin-bottom: -1px; margin-top: -10px;">
-                                <small><i class="fa fa-tachometer"></i> #{{ $consumoAvancado['PRU_ID'] }}</small>
+                                <small><i class="fa fa-tachometer"></i> #{{ $consumoAvancado['PRU_ID'] }} - {{ $consumoAvancado['PRU_NOME'] }}</small>
                                 <div style="text-align:right; bottom:15px; position: relative;">
                                     <small>{{ $consumoAvancado['DataLeituraAtual'] }} <i class="fa fa-calendar"></i></small>
                                 </div>
@@ -264,7 +264,7 @@
                             <div class='box-body'>
                                 @foreach($consumoAvancados as $consumoAvancado)
                                 <hr style="margin-bottom: -1px; margin-top: -10px;">
-                                <small><i class="fa fa-tachometer"></i> #{{ $consumoAvancado['PRU_ID'] }}</small>
+                                <small><i class="fa fa-tachometer"></i> #{{ $consumoAvancado['PRU_ID'] }} - {{ $consumoAvancado['PRU_NOME'] }}</small>
                                 <hr style="margin-top: 5px;">
                                 <p style="text-align: center; font-weight: 600; font-size: 18px; margin-bottom: 20px;" > {{ $consumoAvancado['Consumo'] }}m³ - R$ {{ $consumoAvancado['Valor'] }}</p>
                                 @endforeach

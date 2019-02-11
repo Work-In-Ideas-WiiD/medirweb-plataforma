@@ -109,6 +109,7 @@
                                 <tr>
                                     <th># Ocorrência</th>
                                     <th># Hidrômetro</th>
+                                    <th>Nome</th>
                                     <th>Serial</th>
                                     <th>Localização</th>
                                     <th>Status</th>
@@ -121,6 +122,7 @@
                                 <tr>
                                     <td>{{ $pruAtiva['TIMELINE_ID'] }}</td>
                                     <td>{{ $pruAtiva['PRU_ID'] }}</td>
+                                    <td>{{ $pruAtiva['PRU_NOME'] }}</td>
                                     <td>{{ $pruAtiva['PRU_SERIAL'] }}</td>
                                     <td>{{ $pruAtiva['localizacao'] }}</td>
                                     <td>

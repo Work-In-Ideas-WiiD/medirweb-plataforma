@@ -5,7 +5,7 @@
 @section('content_header')
 <h1>Clientes <small>Lista de Clientes</small></h1>
 <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="#">Clientes</a></li>
     <li class="active">Listar</li>
 </ol>
@@ -53,7 +53,7 @@
 
                                         <?php // Botão visualizar ?>
                                         <div class="btn-group">
-                                          <a href="{{ route('Ver Cliente', ['cliente' => $cliente->CLI_ID]) }}" type="button" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('Ver Cliente', ['cliente' => $cliente->CLI_ID]) }}" type="button" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></a>
                                         </div>
 
                                         <?php // BOTÃO EDITAR ?>

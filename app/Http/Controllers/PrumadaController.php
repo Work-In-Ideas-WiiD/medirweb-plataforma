@@ -163,7 +163,7 @@ class PrumadaController extends Controller
 				$TIMELINE_ICON1 = "fa fa-check bg-green";
 			}
 
-			$TIMELINE_DESCRICAO1 = "atualizou o status do equipamento #".$id." de ".$statusAntigo." para ".$statusNovo;
+			$TIMELINE_DESCRICAO1 = "atualizou o status do equipamento #".$id." de '<a>".$statusAntigo."</a>' para '<a>".$statusNovo."</a>'";
 
 			$timelineData1 = ["TIMELINE_IDPRUMADA" => $id,
 			"TIMELINE_USER" => $logado,
@@ -177,7 +177,7 @@ class PrumadaController extends Controller
 
 			$timelineData2 = ["TIMELINE_IDPRUMADA" => $id,
 			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'NÚMERO DE SERIAL' do equipamento #".$id." de ".$prumada->PRU_SERIAL." para ".$dataForm["PRU_SERIAL"],
+			"TIMELINE_DESCRICAO" => "atualizou o 'NÚMERO DE SERIAL' do equipamento #".$id." de '<a>".$prumada->PRU_SERIAL."</a>' para '<a>".$dataForm["PRU_SERIAL"]."</a>'",
 			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
 			Timeline::create($timelineData2);
 		}
@@ -187,7 +187,7 @@ class PrumadaController extends Controller
 
 			$timelineData3 = ["TIMELINE_IDPRUMADA" => $id,
 			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'ID FUNCIONAL' do equipamento #".$id." de ".$prumada->PRU_IDFUNCIONAL." para ".$dataForm["PRU_IDFUNCIONAL"],
+			"TIMELINE_DESCRICAO" => "atualizou o 'ID FUNCIONAL' do equipamento #".$id." de '<a>".$prumada->PRU_IDFUNCIONAL."</a>' para '<a>".$dataForm["PRU_IDFUNCIONAL"]."</a>'",
 			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
 			Timeline::create($timelineData3);
 		}
@@ -197,7 +197,7 @@ class PrumadaController extends Controller
 
 			$timelineData4 = ["TIMELINE_IDPRUMADA" => $id,
 			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'FABRICANTE' do equipamento #".$id." de ".$prumada->PRU_FABRICANTE." para ".$dataForm["PRU_FABRICANTE"],
+			"TIMELINE_DESCRICAO" => "atualizou o 'FABRICANTE' do equipamento #".$id." de '<a>".$prumada->PRU_FABRICANTE."</a>' para '<a>".$dataForm["PRU_FABRICANTE"]."</a>'",
 			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
 			Timeline::create($timelineData4);
 		}
@@ -207,7 +207,7 @@ class PrumadaController extends Controller
 
 			$timelineData5 = ["TIMELINE_IDPRUMADA" => $id,
 			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'MODELO' do equipamento #".$id." de ".$prumada->PRU_MODELO." para ".$dataForm["PRU_MODELO"],
+			"TIMELINE_DESCRICAO" => "atualizou o 'MODELO' do equipamento #".$id." de '<a>".$prumada->PRU_MODELO."</a>' para '<a>".$dataForm["PRU_MODELO"]."</a>'",
 			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
 			Timeline::create($timelineData5);
 		}
@@ -217,9 +217,19 @@ class PrumadaController extends Controller
 
 			$timelineData6 = ["TIMELINE_IDPRUMADA" => $id,
 			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'OPERADORA' do equipamento #".$id." de ".$prumada->PRU_OPERADORA." para ".$dataForm["PRU_OPERADORA"],
+			"TIMELINE_DESCRICAO" => "atualizou o 'OPERADORA' do equipamento #".$id." de '<a>".$prumada->PRU_OPERADORA."</a>' para '<a>".$dataForm["PRU_OPERADORA"]."</a>'",
 			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
 			Timeline::create($timelineData6);
+		}
+
+		// TIMELINE - NOME
+		if (!($dataForm["PRU_NOME"] == $prumada->PRU_OPERADORA)){
+
+			$timelineData7 = ["TIMELINE_IDPRUMADA" => $id,
+			"TIMELINE_USER" => $logado,
+			"TIMELINE_DESCRICAO" => "atualizou o 'NOME' do equipamento #".$id." de '<a>".$prumada->PRU_NOME."</a>' para '<a>".$dataForm["PRU_NOME"]."</a>'",
+			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
+			Timeline::create($timelineData7);
 		}
 
 		// PRUMADA - ATUALZAR

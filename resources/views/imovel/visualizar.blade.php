@@ -7,8 +7,8 @@
 @section('content_header')
 <h1>Imóveis <small>Vizualizar Imóveis</small></h1>
 <ol class="breadcrumb">
-	<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-	<li><a href="#">Imóveis</a></li>
+	<li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+	<li><a href="/imovel">Imóveis</a></li>
 	<li class="active">Vizualizar</li>
 </ol>
 @stop

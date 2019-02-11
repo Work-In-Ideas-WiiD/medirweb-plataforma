@@ -470,10 +470,10 @@
         </div>
         <div class='box-body'>
 
-            <div class="col-md-2">
+            <div class="col-md-2-4">
                 <p><b># Hidrômetro</b></p>
                 @foreach($dadosFaturaIndividual as $hidro)
-                <p>#{{ $hidro['PRU_ID'] }}</p>
+                <p>#{{ $hidro['PRU_ID'] }} - {{ $hidro['PRU_NOME'] }}</p>
                 <hr>
                 @endforeach
             </div>

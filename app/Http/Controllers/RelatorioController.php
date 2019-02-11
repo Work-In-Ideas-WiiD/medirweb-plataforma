@@ -132,6 +132,7 @@ class RelatorioController extends Controller
                             $relatorio_consumos = array(
                                 'Imovel' => $unid->imovel->IMO_NOME,
                                 'PRU_ID' => $prumada->PRU_ID,
+                                'PRU_NOME' => $prumada->PRU_NOME,
                                 'Nomes' => $unid->UNI_RESPONSAVEL,
                                 'Apartamentos' => $unid->UNI_NOME,
                                 'LeituraAnterior' => $leituraAnterior->LEI_METRO,
@@ -211,6 +212,7 @@ class RelatorioController extends Controller
 
                         $relatorio_consumoAvancados = array(
                             'PRU_ID' => $hidromentro->PRU_ID,
+                            'PRU_NOME' => $hidromentro->PRU_NOME,
                             'LeituraAnterior' => $leituraAnterior->LEI_METRO,
                             'LeituraAtual' => $leituraAtual->LEI_METRO,
                             'Consumo' => $consumo,
@@ -329,6 +331,7 @@ class RelatorioController extends Controller
                         'responsavelTelAp' => $equipamento->unidade->UNI_TELRESPONSAVEL,
 
                         'PRU_ID' => $equipamento->PRU_ID,
+                        'PRU_NOME' => $equipamento->PRU_NOME,
                         'LeituraAnterior' => $leituraAnterior->LEI_METRO,
                         'LeituraAtual' => $leituraAtual->LEI_METRO,
                         'Consumo' => $consumo,
@@ -390,6 +393,7 @@ class RelatorioController extends Controller
 
                             $relatorio_faturas = array(
                                 'UNI_ID' => $unid->UNI_ID,
+                                'PRU_NOME' => $prumada->PRU_NOME,
                                 'nomeAp' => $unid->UNI_NOME,
                                 'responsavelAp' => $unid->UNI_RESPONSAVEL,
                                 'LeituraAnterior' => $leituraAnterior->LEI_METRO,
@@ -424,6 +428,7 @@ class RelatorioController extends Controller
                         $relatorio_faturaAvancados = array(
                             'UNI_ID' => $equipamento->PRU_IDUNIDADE,
                             'PRU_ID' => $equipamento->PRU_ID,
+                            'PRU_NOME' => $equipamento->PRU_NOME,
                             'LeituraAnterior' => $leituraAnterior->LEI_METRO,
                             'LeituraAtual' => $leituraAtual->LEI_METRO,
                             'Consumo' => $consumo,
@@ -448,7 +453,7 @@ class RelatorioController extends Controller
         if(app('defender')->hasRoles(['Sindico', 'Secretário']) && !($user == $id)){
             return view('error403');
         }
-        
+
         $retornoUnid = array();
 
         $unidades = Imovel::find($id)->getUnidades;

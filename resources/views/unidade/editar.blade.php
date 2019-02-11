@@ -19,9 +19,9 @@
 		{!! Form::model($unidade, ['route' => ['unidade.update', $unidade->UNI_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 
 		<!-- Dados de Identificação -->
-		<div class="box box-warning">
+		<div class="box box-primary">
 			<div class="box-header with-border">
-				<h3 class="box-title"><i class="fa fa fa-th-large"></i> Dados de identificação</h3>
+				<h3 class="box-title"><i class="fa fa fa-th-large"></i> Dados da Unidade</h3>
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 					</button>
@@ -131,6 +131,7 @@
 							<thead>
 								<tr>
 									<th>#</th>
+									<th>Nome</th>
 									<th>ID Funcional</th>
 									<th>Nº de Serial</th>
 									<th>Operadora</th>
@@ -144,6 +145,7 @@
 								@foreach ($prumadas as $pru)
 								<tr>
 									<td>{{ $pru->PRU_ID }}</td>
+									<td>{{ $pru->PRU_NOME }}</td>
 									<td>{{ $pru->PRU_IDFUNCIONAL }}</td>
 									<td>{{ $pru->PRU_SERIAL }}</td>
 									<td>{{ $pru->PRU_OPERADORA }}</td>

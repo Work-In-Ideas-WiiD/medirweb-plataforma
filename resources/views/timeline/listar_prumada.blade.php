@@ -34,7 +34,7 @@
         <i class="{{ $timeline->TIMELINE_ICON}}"></i>
         <div class="timeline-item">
           <span class="time"><i class="fa fa-clock-o"></i> {{$hora}}</span>
-          <h3 class="timeline-header">EQP #{{ $timeline->TIMELINE_IDPRUMADA}} | <a href="#">{{ $timeline->TIMELINE_USER}}</a> {{ $timeline->TIMELINE_DESCRICAO}}</h3>
+          <h3 class="timeline-header">EQP #{{ $timeline->TIMELINE_IDPRUMADA}} | <a>{!! $timeline->TIMELINE_USER !!}</a> {!! $timeline->TIMELINE_DESCRICAO !!}</h3>
         </div>
       </li>
       @endforeach

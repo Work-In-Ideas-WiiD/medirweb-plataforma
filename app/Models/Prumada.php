@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Prumada extends Model
 {
     protected $fillable = [
-        'PRU_ID', 'PRU_IDUNIDADE', 'PRU_IDFUNCIONAL', 'PRU_SERIAL', 'PRU_FABRICANTE', 'PRU_MODELO', 'PRU_OPERADORA', 'PRU_STATUS'
+        'PRU_ID', 'PRU_IDUNIDADE', 'PRU_NOME', 'PRU_IDFUNCIONAL', 'PRU_SERIAL', 'PRU_FABRICANTE', 'PRU_MODELO', 'PRU_OPERADORA', 'PRU_STATUS'
     ];
 
     protected  $dates = [
