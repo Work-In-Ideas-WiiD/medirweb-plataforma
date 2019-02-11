@@ -8,6 +8,8 @@ use App\Models\Agrupamento;
 use App\Models\Unidade;
 use App\Models\Prumada;
 use App\Models\Timeline;
+use App\Http\Requests\Prumada\PrumadaSaveRequest;
+use App\Http\Requests\Prumada\PrumadaEditRequest;
 
 class PrumadaController extends Controller
 {
@@ -39,7 +41,7 @@ class PrumadaController extends Controller
 		return view('prumada.cadastrar', compact('imoveis'));
 	}
 
-	public function store(Request $request)
+	public function store(PrumadaSaveRequest $request)
 	{
 		if(!app('defender')->hasRoles('Administrador')){
 			return view('error403');
@@ -132,7 +134,7 @@ class PrumadaController extends Controller
 		return view('prumada.editar', compact( 'imoveis', 'unidades', 'agrupamentos', 'prumadas'));
 	}
 
-	public function update(Request $request, $id)
+	public function update(PrumadaEditRequest $request, $id)
 	{
 		$prumada = Prumada::findOrFail($id);
 

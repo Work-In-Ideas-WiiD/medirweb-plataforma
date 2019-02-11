@@ -250,11 +250,6 @@ return [
     'menu2' => [
         'GERENCIAL',
         [
-            'text' => 'Dashboard',
-            'url'  => 'home',
-            'icon' => 'tasks',
-        ],
-        [
             'text'    => 'Imóveis',
             'icon'    => 'building',
             'submenu' => [

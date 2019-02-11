@@ -19,6 +19,10 @@ class HomeController extends Controller
 
     public function index()
     {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+        
         /* Dashboard */
         $datadehoje = Carbon::today();
 
