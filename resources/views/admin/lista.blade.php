@@ -34,6 +34,7 @@
                                     <th>#</th>
                                     <th>Nome</th>
                                     <th>e-mail</th>
+                                    <th>Imóvel Vinculado</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -43,6 +44,13 @@
                                     <td>{{ $usuario->id  }}</td>
                                     <td>{{ $usuario->name }}</td>
                                     <td>{{ $usuario->email }}</td>
+                                    <td>
+                                        @if($usuario->USER_IMOID == 0)
+                                        Nenhum Imóvel Vinculado!
+                                        @else
+                                        {{ $usuario->Imovel->IMO_NOME }}
+                                        @endif
+                                    </td>
                                     <td>
                                         <?php // Botão editar ?>
                                         <div class="btn-group">

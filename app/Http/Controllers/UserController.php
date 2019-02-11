@@ -99,9 +99,7 @@ class UserController extends Controller
 
         $user->roles()->attach($dataForm['roles']);
 
-        $request->session()->flash('message-success', 'Administrador cadastrado com sucesso!');
-
-        return redirect()->route('usuario.index');
+        return redirect('/usuario')->with('success', 'Usuário cadastrado com sucesso.');
     }
 
     public function show(User $user)
@@ -205,13 +203,11 @@ class UserController extends Controller
         if(key_exists('roles', $dataForm))
         $user->roles()->sync($dataForm['roles']);
 
-        $request->session()->flash('message-success', 'Administrador atualizado com sucesso!');
-
         if(!app('defender')->hasRoles('Administrador')){
             return redirect('/user/editar/'.$id)->with('success', 'Usuário atualizado com sucesso.');
         }
 
-        return redirect()->route('usuario.index');
+        return redirect('/usuario')->with('success', 'Usuário atualizado com sucesso.');
     }
 
     public function destroy(Request $request, $id)
@@ -234,7 +230,6 @@ class UserController extends Controller
 
         User::destroy($id);
 
-        $request->session()->flash('message-success', 'Administrador deletado com sucesso!');
-        return redirect()->route('usuario.index');
+        return redirect('/usuario')->with('success', 'Usuário deletado com sucesso.');
     }
 }
