@@ -86,7 +86,7 @@
                             <div class="icon">
                                 <i class="fa fa-info"></i>
                             </div>
-                            <a href="/timeline/equipamento/buscar" class="small-box-footer">
+                            <a href="/timeline/equipamento" class="small-box-footer">
                                 Ver Ocorrências <i class="fa fa-arrow-circle-right"></i>
                             </a>
                         </div>
@@ -104,83 +104,36 @@
             <div class='box-body'>
                 <div class='row'>
                     <div class='col-md-12'>
-                        <table id="lista-hidrometros" class="table table-bordered table-hover powertabela">
+                        <table id="lista-hidrometros" class="table table-bordered table-hover powertabelaDesc">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th># Ocorrência</th>
+                                    <th># Hidrômetro</th>
                                     <th>Serial</th>
                                     <th>Localização</th>
                                     <th>Status</th>
                                     <th>Leitura atual</th>
-                                    <th>Torre / Operadora</th>
+                                    <th>Operadora</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($pruAtivas as $pruAtiva)
                                 <tr>
-                                    <td>01</td>
-                                    <td>100001</td>
-                                    <td>Goiânia - GO</td>
-                                    <td>Configurado / Ativo</td>
-                                    <td>0000445</td>
-                                    <td>Radio / TIM</td>
+                                    <td>{{ $pruAtiva['TIMELINE_ID'] }}</td>
+                                    <td>{{ $pruAtiva['PRU_ID'] }}</td>
+                                    <td>{{ $pruAtiva['PRU_SERIAL'] }}</td>
+                                    <td>{{ $pruAtiva['localizacao'] }}</td>
+                                    <td>
+                                        @if($pruAtiva['PRU_STATUS'] == 1)
+                                        Ativo
+                                        @else
+                                        Inativo
+                                        @endif
+                                    </td>
+                                    <td>{{ $pruAtiva['leituraAtual'] }}</td>
+                                    <td>{{ $pruAtiva['PRU_OPERADORA'] }}</td>
                                 </tr>
-                                <tr>
-                                    <td>02</td>
-                                    <td>100002</td>
-                                    <td>Goiânia - GO</td>
-                                    <td>Configurado / Ativo</td>
-                                    <td>0001891</td>
-                                    <td>Torre / VIVO</td>
-                                </tr>
-                                <tr>
-                                    <td>03</td>
-                                    <td>100003</td>
-                                    <td>Goiânia - GO</td>
-                                    <td>Configurado / Ativo</td>
-                                    <td>0000136</td>
-                                    <td>Torre / Algar</td>
-                                </tr>
-                                <tr>
-                                    <td>04</td>
-                                    <td>100004</td>
-                                    <td>Goiânia - GO</td>
-                                    <td>Configurado / Ativo</td>
-                                    <td>0000045</td>
-                                    <td>Torre / TIM</td>
-                                </tr>
-                                <tr>
-                                    <td>05</td>
-                                    <td>100005</td>
-                                    <td>Goiânia - GO</td>
-                                    <td>Configurado / Ativo</td>
-                                    <td>0011789</td>
-                                    <td>Radio / Oi</td>
-                                </tr>
-                                <tr>
-                                    <td>06</td>
-                                    <td>100006</td>
-                                    <td>Goiânia - GO</td>
-                                    <td>Configurado / Ativo</td>
-                                    <td>0000401</td>
-                                    <td>Radio / TIM</td>
-                                </tr>
-                                <tr>
-                                    <td>07</td>
-                                    <td>100007</td>
-                                    <td>Goiânia - GO</td>
-                                    <td>Configurado / Ativo</td>
-                                    <td>0000445</td>
-                                    <td>Torre / Oi</td>
-                                </tr>
-                                <tr>
-                                    <td>08</td>
-                                    <td>100008</td>
-                                    <td>Goiânia - GO</td>
-                                    <td>Configurado / Ativo</td>
-                                    <td>0008457</td>
-                                    <td>Radio / TIM</td>
-                                </tr>
-
+                                @endforeach
                             </tbody>
                         </table>
 
