@@ -7,20 +7,17 @@
 @section('content_header')
 <h1>Usuários <small>Adicionar Usuário</small></h1>
 <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="#">Usuários</a></li>
+    <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/usuario">Usuários</a></li>
     <li class="active">Adicionar</li>
 </ol>
 @stop
 
 @section('content')
-
+{!! Form::open(['route' => 'usuario.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 <div class="row">
     <div class="col-md-8">
-        {!! Form::open(['route' => 'usuario.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
-
-        <!-- Dados de Identificação -->
-        <div class="box box-warning">
+        <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title"><i class="fa fa-user"></i> Dados do usuário</h3>
                 <div class="box-tools pull-right">
@@ -28,7 +25,6 @@
                     </button>
                 </div>
             </div>
-
             <div class='box-body'>
                 <div class='row'>
 
@@ -108,8 +104,6 @@
                 </div>
             </div>
         </div>
-        <!-- [FIM] Dados de Identificação -->
-
     </div>
 
     <div class="col-md-4">
@@ -137,8 +131,6 @@
 
     </div>
 
-    {!! Form::close() !!}
-
 </div>
-
+{!! Form::close() !!}
 @stop

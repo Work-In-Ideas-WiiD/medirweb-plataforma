@@ -6,7 +6,7 @@
 <h1>{{$role->name}}<small>Lista de Usuários</small></h1>
 
 <ol class="breadcrumb">
-    <li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="#">Usuários</a></li>
     <li class="active">Listar</li>
 </ol>
@@ -15,7 +15,6 @@
 @section('content')
 <div class="row">
     <div class="col-md-12">
-
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Listagem</h3>
@@ -45,7 +44,6 @@
                                     <td>{{ $usuario->name }}</td>
                                     <td>{{ $usuario->email }}</td>
                                     <td>
-
                                         <?php // Botão editar ?>
                                         <div class="btn-group">
                                             @if($role->name == "Administrador")
@@ -80,23 +78,18 @@
                                                     </div>
                                                 </div>
                                             </div>
-
                                             {!! Form::open(['route' => ['usuario.destroy', 'usuario' => $usuario->id], 'method' => 'DELETE', 'id' => $deleteForm, 'style' => 'display:none']) !!}
                                             {!! Form::close() !!}
-
                                         </div>
-
                                     </td>
-                                </form>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 @stop

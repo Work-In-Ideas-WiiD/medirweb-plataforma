@@ -7,20 +7,17 @@
 @section('content_header')
 <h1>Usuários <small>Atualizar Usuário</small></h1>
 <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="#">Usuários</a></li>
     <li class="active">Atualizar</li>
 </ol>
 @stop
 
 @section('content')
-
+{{ Form::model($user, ['route' => ['usuario.update', $user->id], 'method' => 'PUT', 'files' => true, 'id' => 'formUsuario']) }}
 <div class="row">
     <div class="col-md-8">
-        {{ Form::model($user, ['route' => ['usuario.update', $user->id], 'method' => 'PUT', 'files' => true, 'id' => 'formUsuario']) }}
-
-        <!-- Dados de Identificação -->
-        <div class="box box-warning">
+        <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title"><i class="fa fa-user"></i> Dados do usuário</h3>
                 <div class="box-tools pull-right">
@@ -28,7 +25,6 @@
                     </button>
                 </div>
             </div>
-
             <div class='box-body'>
                 <div class='row'>
 
@@ -115,7 +111,7 @@
                             @endif
                         </div>
                         @else
-                            {{ Form::select('USER_IMOID', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off', 'style' => 'display:none']) }}
+                        {{ Form::select('USER_IMOID', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off', 'style' => 'display:none']) }}
                         @endis
 
                     </div>
@@ -123,8 +119,6 @@
                 </div>
             </div>
         </div>
-        <!-- [FIM] Dados de Identificação -->
-
     </div>
 
     <div class="col-md-4">
@@ -152,8 +146,6 @@
 
     </div>
 
-    {!! Form::close() !!}
-
 </div>
-
+{!! Form::close() !!}
 @stop

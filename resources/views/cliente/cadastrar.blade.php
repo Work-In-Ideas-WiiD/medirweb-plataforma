@@ -19,7 +19,7 @@
         {!! Form::open(['action' => 'ClienteController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
         <!-- Informações Pessoais -->
-        <div class="box box-warning">
+        <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title"><i class="fa fa-user"></i> Dados de Identificação</h3>
                 <div class="box-tools pull-right">
