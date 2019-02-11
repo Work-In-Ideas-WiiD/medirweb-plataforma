@@ -7,6 +7,7 @@ use App\Models\Timeline;
 use App\Models\Imovel;
 use App\Models\Prumada;
 use Ping;
+use App\Http\Requests\Timeline\TimelineSaveRequest;
 
 class TimelineController extends Controller
 {
@@ -89,7 +90,7 @@ class TimelineController extends Controller
         return view('timeline.cadastrar_prumada', compact('imoveis'));
     }
 
-    public function store(Request $request)
+    public function store(TimelineSaveRequest $request)
     {
         if(!app('defender')->hasRoles('Administrador')){
             return view('error403');
