@@ -518,6 +518,8 @@ class ImovelController extends Controller
                 curl_setopt_array($curl, array(
                     CURLOPT_RETURNTRANSFER => 1,
                     CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/leitura/'.dechex($prumada->PRU_IDFUNCIONAL),
+                    CURLOPT_CONNECTTIMEOUT => 15,
+                    CURLOPT_TIMEOUT        => 15,
                     CURLOPT_USERAGENT => 'Codular Sample cURL Request'
                 ));
 
@@ -591,6 +593,8 @@ class ImovelController extends Controller
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/ativacao/'.dechex($prumada->PRU_IDFUNCIONAL),
+            CURLOPT_CONNECTTIMEOUT => 15,
+            CURLOPT_TIMEOUT        => 15,
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
         ));
         // Send the request & save response to $resp
@@ -655,6 +659,8 @@ class ImovelController extends Controller
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/corte/'.dechex($prumada->PRU_IDFUNCIONAL),
+            CURLOPT_CONNECTTIMEOUT => 15,
+            CURLOPT_TIMEOUT        => 15,
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
         ));
         // Send the request & save response to $resp
