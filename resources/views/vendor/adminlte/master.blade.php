@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/Ionicons/css/ionicons.min.css') }}">
 
     <!-- Chosen -->
-    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/chosen/chosen.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/vendor/chosen/chosen.css') }}">
 
     @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->
@@ -56,7 +56,7 @@
     <script src="{{ asset('js/jquery-inputmask/dist/jquery.inputmask.bundle.js') }}"></script>
 
     <!-- Chosen -->
-    <script src="{{ asset('vendor/adminlte/vendor/chosen/chosen.jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/adminlte/vendor/chosen/chosen.jquery.js') }}"></script>
 
     @if(config('adminlte.plugins.select2'))
     <!-- Select2 -->
