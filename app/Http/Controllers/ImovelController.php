@@ -359,8 +359,11 @@ class ImovelController extends Controller
                         $somaLeiMensalAnoAtual_1New = array(0);
                     }
 
-                    $somaLeiMensalAnoAnterior_1 = array_sum($somaLeiMensalAnoAnterior_1New);
-                    $somaLeiMensalAnoAtual_1 = array_sum($somaLeiMensalAnoAtual_1New);
+//                    $somaLeiMensalAnoAnterior_1 = array_sum($somaLeiMensalAnoAnterior_1New);
+//                    $somaLeiMensalAnoAtual_1 = array_sum($somaLeiMensalAnoAtual_1New);
+
+                    $somaLeiMensalAnoAnterior_1 = 0;
+                    $somaLeiMensalAnoAtual_1 = 0;
                 }
 
                 $consumoCalAnt = $somaLeiMensalAnoAnterior - $somaLeiMensalAnoAnterior_1;
