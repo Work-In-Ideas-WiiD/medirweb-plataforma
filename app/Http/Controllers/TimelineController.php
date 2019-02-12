@@ -164,6 +164,6 @@ class TimelineController extends Controller
 
         $codigoHTTP = Ping::check($url);
 
-        return view('timeline.serverTest', compact('imoveis', 'url', 'codigoHTTP', ));
+        return view('timeline.serverTest', compact('imoveis', 'url', 'codigoHTTP'));
     }
 }
