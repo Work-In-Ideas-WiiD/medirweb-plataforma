@@ -209,6 +209,7 @@
 
     function loading() {
         $('.loading').slideDown();
+        $('.ocultar').addClass('disabled');
     }
     </script>
 

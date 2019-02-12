@@ -13,6 +13,10 @@
 	<li class="active">Vizualizar</li>
 </ol>
 
+@stop
+
+@section('content')
+
 <div id="loading" class="loading text-center oculto">
 	<div class="col-md-12">
 		<div class="col-md-1">
@@ -20,16 +24,13 @@
 			</div>
 		</div>
 		<div class="col-md-11">
-			<h2>Leitura sendo realizada...</h2>
+			<h2>Requisição sendo realizada...</h2>
 			<h2>Comunicando com o servidor...</h2>
 			<h5 id="aguarde"></h5>
 		</div>
 	</div>
 </div>
 
-@stop
-
-@section('content')
 <div class="row">
 	<div class="col-md-12">
 		<div class="row">
@@ -128,17 +129,17 @@
 
 										@if($unidade->getPrumadas()->count() > 0)
 
-										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$prumada->PRU_ID.'') }}" onclick="loading()" type="button" class="btn btn-default btn-sm" style="width: 100%; margin-bottom: 2px;">
+										<a  href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()"  type="button" class="btn btn-default btn-sm ocultar" style="width: 100%; margin-bottom: 2px;">
 											<i class="fa fa-retweet"></i> Leitura
 										</a>
 
 										@is(['Administrador', 'Sindico'])
 										@if($prumada->PRU_STATUS == 1)
-										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$prumada->PRU_ID.'') }}" type="button" class="btn btn-danger btn-sm" style="width: 100%;" >
+										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" type="button" class="btn btn-danger btn-sm ocultar" style="width: 100%;" >
 											<i class="fa fa-close"></i> Corte
 										</a>
 										@else
-										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$prumada->PRU_ID.'') }}" type="button" class="btn btn-success btn-sm" style="width: 100%;" >
+										<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" type="button" class="btn btn-success btn-sm ocultar" style="width: 100%;" >
 											<i class="fa fa-power-off"></i> Ativação
 										</a>
 										@endif
