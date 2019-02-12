@@ -333,8 +333,11 @@ class ImovelController extends Controller
                     $leiMensalAnoAtualNew = array(0);
                 }
 
-                $somaLeiMensalAnoAnterior = array_sum($leiMensalAnoAnteriorNew);
-                $somaLeiMensalAnoAtual = array_sum($leiMensalAnoAtualNew);
+//                $somaLeiMensalAnoAnterior = array_sum($leiMensalAnoAnteriorNew);
+//                $somaLeiMensalAnoAtual = array_sum($leiMensalAnoAtualNew);
+
+                $somaLeiMensalAnoAnterior = 0;
+                $somaLeiMensalAnoAtual = 0;
 
                 if($mes == 1){
 
