@@ -191,7 +191,7 @@
                         <div class='form-group'>
                             {{ Form::label('CLI_ESTADO', 'Estado') }}
                             {{--{{ Form::text('CLI_ESTADO', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                            {{ Form::select('CLI_ESTADO', $estados, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('CLI_ESTADO', $estados, null, ['class' => 'avalidate form-control chosen-select-CLI_ESTADO', 'autocomplete' => 'off']) }}
 
                             @if ($errors->has('CLI_ESTADO'))
                             <span class="help-block">
@@ -202,7 +202,7 @@
                         <div class='form-group'>
                             {{ Form::label('CLI_CIDADE', 'Cidade') }}
                             {{--{{ Form::text('CLI_CIDADE', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                            {{ Form::select('CLI_CIDADE', $cidades, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('CLI_CIDADE', $cidades, null, ['class' => 'avalidate form-control chosen-select-CLI_CIDADE', 'autocomplete' => 'off']) }}
 
                             @if ($errors->has('CLI_CIDADE'))
                             <span class="help-block">

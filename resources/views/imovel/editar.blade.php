@@ -99,7 +99,7 @@
                         <div class='form-group'>
                             {{ Form::label('IMO_IDESTADO', 'Estado') }}
                             {{--{{ Form::text('IMO_IDESTADO', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                            {{ Form::select('IMO_IDESTADO', $estados, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('IMO_IDESTADO', $estados, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
 
                             @if ($errors->has('IMO_IDESTADO'))
                             <span class="help-block">
@@ -110,7 +110,7 @@
                         <div class='form-group'>
                             {{ Form::label('IMO_IDCIDADE', 'Cidade') }}
                             {{--{{ Form::text('IMO_IDCIDADE', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                            {{ Form::select('IMO_IDCIDADE', $cidades, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('IMO_IDCIDADE', $cidades, null, ['class' => 'avalidate form-control chosen-select-IMO_IDCIDADE', 'autocomplete' => 'off']) }}
 
                             @if ($errors->has('IMO_IDCIDADE'))
                             <span class="help-block">

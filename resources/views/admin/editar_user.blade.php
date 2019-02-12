@@ -102,7 +102,7 @@
                         <?php // Imovel ?>
                         <div class='form-group'>
                             {{ Form::label('USER_IMOID', 'Imóvel') }}
-                            {{ Form::select('USER_IMOID', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('USER_IMOID', $imoveis, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
 
                             @if ($errors->has('USER_IMOID'))
                             <span class="help-block">

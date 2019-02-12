@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class='form-group'>
                             {{ Form::label('IMO_ID', 'Imóvel') }}
-                            {{ Form::select('IMO_ID', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('IMO_ID', $imoveis, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
 
                             @if ($errors->has('IMO_ID'))
                             <span class="help-block">

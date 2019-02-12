@@ -34,7 +34,7 @@
                         <?php //Imovel ?>
                         <div class='form-group'>
                             {{ Form::label('PRU_IDIMOVEL', 'Imóvel') }}
-                            {{ Form::select('PRU_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('PRU_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control chosen-select-PRU_IDIMOVEL', 'autocomplete' => 'off']) }}
 
                             @if ($errors->has('PRU_IDIMOVEL'))
                             <span class="help-block">
@@ -46,7 +46,7 @@
                         <?php // Unidade?>
                         <div class='form-group'>
                             {{ Form::label('PRU_IDUNIDADE', 'Unidade') }}
-                            {{ Form::select('PRU_IDUNIDADE', ['' => 'Selecionar Unidade'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('PRU_IDUNIDADE', ['' => 'Selecionar Unidade'], null, ['class' => 'avalidate form-control chosen-select-PRU_IDUNIDADE', 'autocomplete' => 'off']) }}
 
                             @if ($errors->has('PRU_IDUNIDADE'))
                             <span class="help-block">
@@ -99,7 +99,7 @@
                         <?php //Agrupamento ?>
                         <div class='form-group'>
                             {{ Form::label('PRU_IDAGRUPAMENTO', 'Agrupamento') }}
-                            {{ Form::select('PRU_IDAGRUPAMENTO', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('PRU_IDAGRUPAMENTO', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control chosen-select-PRU_IDAGRUPAMENTO', 'autocomplete' => 'off']) }}
 
                             @if ($errors->has('PRU_IDAGRUPAMENTO'))
                             <span class="help-block">

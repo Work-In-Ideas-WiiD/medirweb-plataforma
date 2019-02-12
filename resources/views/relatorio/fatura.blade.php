@@ -55,7 +55,7 @@
                                     <div class='col-md-4'>
                                         <div class='form-group'>
                                             {{ Form::label('', 'Imóvel') }}
-                                            {{ Form::select('RELATORIO_IMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                                            {{ Form::select('RELATORIO_IMOVEL', $imoveis, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
                                         </div>
                                     </div>
 

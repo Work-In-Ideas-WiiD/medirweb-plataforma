@@ -31,7 +31,7 @@
                     <div class='col-md-6'>
                         <div class='form-group'>
                             {{ Form::label('AGR_IDIMOVEL', 'Imóvel') }}
-                            {{ Form::select('AGR_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('AGR_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
 
                             @if ($errors->has('AGR_IDIMOVEL'))
                             <span class="help-block">

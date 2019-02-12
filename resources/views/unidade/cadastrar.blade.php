@@ -31,7 +31,7 @@
 					<div class='col-md-6'>
 						<div class='form-group'>
 							{{ Form::label('UNI_IDIMOVEL', 'Imóvel') }}
-							{{ Form::select('UNI_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+							{{ Form::select('UNI_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control chosen-select-UNI_IDIMOVEL', 'autocomplete' => 'off']) }}
 
 							@if ($errors->has('UNI_IDIMOVEL'))
 							<span class="help-block">
@@ -64,7 +64,7 @@
 					<div class="col-md-6">
 						<div class='form-group'>
 							{{ Form::label('UNI_IDAGRUPAMENTO', 'Agrupamento') }}
-							{{ Form::select('UNI_IDAGRUPAMENTO', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+							{{ Form::select('UNI_IDAGRUPAMENTO', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control chosen-select-UNI_IDAGRUPAMENTO', 'autocomplete' => 'off']) }}
 
 							@if ($errors->has('UNI_IDAGRUPAMENTO'))
 							<span class="help-block">

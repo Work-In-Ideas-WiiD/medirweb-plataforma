@@ -76,6 +76,9 @@
     <script type="text/javascript">
     //UNIDADES - CAMPO AGRUPAMENTO
     $(document).ready(function() {
+
+        $(".chosen-select-UNI_IDIMOVEL").chosen({no_results_text: "Oops, nada encontrado!"});
+
         $('select[name="UNI_IDIMOVEL"]').on('change', function() {
             var stateID = $(this).val();
             if(stateID) {
@@ -91,6 +94,9 @@
                             $('select[name="UNI_IDAGRUPAMENTO"]').append('<option value="'+ value.AGR_ID +'">'+ value.AGR_NOME +'</option>');
                         });
 
+                        $('select[name="UNI_IDAGRUPAMENTO"]').trigger('chosen:updated');
+                        $(".chosen-select-UNI_IDAGRUPAMENTO").chosen({no_results_text: "Oops, nada encontrado!"});
+
                     }
                 });
             }else{
@@ -102,6 +108,8 @@
 
     <script type="text/javascript">
     // Equipamento - CAMPO AGRUPAMENTO
+
+    $(".chosen-select-PRU_IDIMOVEL").chosen({no_results_text: "Oops, nada encontrado!"});
 
     $(document).ready(function() {
         $('select[name="PRU_IDIMOVEL"]').on('change', function() {
@@ -119,6 +127,9 @@
                         $.each(data, function(key, value) {
                             $('select[name="PRU_IDAGRUPAMENTO"]').append('<option value="'+ value.AGR_ID +'">'+ value.AGR_NOME +'</option>');
                         });
+
+                        $('select[name="PRU_IDAGRUPAMENTO"]').trigger('chosen:updated');
+                        $(".chosen-select-PRU_IDAGRUPAMENTO").chosen({no_results_text: "Oops, nada encontrado!"});
 
                     }
                 });
@@ -149,6 +160,9 @@
                             $('select[name="PRU_IDUNIDADE"]').append('<option value="'+ value.UNI_ID +'">'+ value.UNI_NOME +'</option>');
                         });
 
+                        $('select[name="PRU_IDUNIDADE"]').trigger('chosen:updated');
+                        $(".chosen-select-PRU_IDUNIDADE").chosen({no_results_text: "Oops, nada encontrado!"});
+
                     }
                 });
             }else{
@@ -177,6 +191,9 @@
                         $.each(data, function(key, value) {
                             $('select[name="TIMELINE_IDPRUMADA"]').append('<option value="'+ value.PRU_ID +'">'+ '#' + value.PRU_ID + ' - ' + value.PRU_FABRICANTE + ' ' + value.PRU_MODELO +'</option>');
                         });
+
+                        $('select[name="TIMELINE_IDPRUMADA"]').trigger('chosen:updated');
+                        $(".chosen-select-TIMELINE_IDPRUMADA").chosen({no_results_text: "Oops, nada encontrado!"});
 
                     }
                 });
@@ -231,6 +248,7 @@
                             $('select[name="UNI_ID"]').append('<option value="'+ value.UNI_ID +'">'+ '#' + value.UNI_ID + ' - Apartamento: ' + value.UNI_NOME + ' | ' + value.UNI_RESPONSAVEL +'</option>');
                         });
 
+                        $('select[name="UNI_ID"]').trigger('chosen:updated');
                         $(".chosen-select-apartamento").chosen({no_results_text: "Oops, nada encontrado!"});
 
                     }
@@ -245,6 +263,9 @@
     <script type="text/javascript">
 
     $(document).ready(function() {
+
+        $(".chosen-select-IMO_IDESTADO").chosen({no_results_text: "Oops, nada encontrado!"});
+
         $('select[name="IMO_IDESTADO"]').on('change', function() {
             var stateID = $(this).val();
             if(stateID) {
@@ -260,6 +281,9 @@
                             $('select[name="IMO_IDCIDADE"]').append('<option value="'+ value.CID_ID +'">'+ value.CID_NOME +'</option>');
                         });
 
+                        $('select[name="IMO_IDCIDADE"]').trigger('chosen:updated');
+                        $(".chosen-select-IMO_IDCIDADE").chosen({no_results_text: "Oops, nada encontrado!"});
+
                     }
                 });
             }else{
@@ -269,6 +293,9 @@
     });
 
     $(document).ready(function() {
+
+        $(".chosen-select-CLI_ESTADO").chosen({no_results_text: "Oops, nada encontrado!"});
+
         $('select[name="CLI_ESTADO"]').on('change', function() {
             var stateID = $(this).val();
             if(stateID) {
@@ -283,6 +310,9 @@
                         $.each(data, function(key, value) {
                             $('select[name="CLI_CIDADE"]').append('<option value="'+ value.CID_ID +'">'+ value.CID_NOME +'</option>');
                         });
+
+                        $('select[name="CLI_CIDADE"]').trigger('chosen:updated');
+                        $(".chosen-select-CLI_CIDADE").chosen({no_results_text: "Oops, nada encontrado!"});
 
                     }
                 });

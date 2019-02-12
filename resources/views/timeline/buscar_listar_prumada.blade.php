@@ -28,7 +28,7 @@
 						<!-- Imóvel -->
 						<div class="form-group">
 							{{ Form::label('PRU_IDIMOVEL', 'Imóvel') }}
-							{{ Form::select('PRU_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+							{{ Form::select('PRU_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control chosen-select-PRU_IDIMOVEL', 'autocomplete' => 'off']) }}
 						</div>
 					</div>
 
@@ -36,7 +36,7 @@
 						<!-- Agrupamento -->
 						<div class="form-group">
 							{{ Form::label('PRU_IDAGRUPAMENTO', 'Agrupamento') }}
-							{{ Form::select('PRU_IDAGRUPAMENTO', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+							{{ Form::select('PRU_IDAGRUPAMENTO', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control chosen-select-PRU_IDAGRUPAMENTO', 'autocomplete' => 'off']) }}
 						</div>
 					</div>
 
@@ -44,7 +44,7 @@
 						<!-- Unidade -->
 						<div class="form-group">
 							{{ Form::label('PRU_IDUNIDADE', 'Unidade') }}
-							{{ Form::select('PRU_IDUNIDADE', ['' => 'Selecionar Unidade'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+							{{ Form::select('PRU_IDUNIDADE', ['' => 'Selecionar Unidade'], null, ['class' => 'avalidate form-control chosen-select-PRU_IDUNIDADE', 'autocomplete' => 'off']) }}
 						</div>
 					</div>
 
@@ -52,7 +52,7 @@
 						<!-- Equipamento -->
 						<div class="form-group">
 							{{ Form::label('TIMELINE_IDPRUMADA', 'Equipamento') }}
-							{{ Form::select('TIMELINE_IDPRUMADA', ['' => 'Selecionar Equipamento'], null, ['class' => 'avalidate form-control', 'placeholder' => 'Escolha uma equipamento', 'id' => 'TIMELINE_IDPRUMADA']) }}
+							{{ Form::select('TIMELINE_IDPRUMADA', ['' => 'Selecionar Equipamento'], null, ['class' => 'avalidate form-control chosen-select-TIMELINE_IDPRUMADA', 'placeholder' => 'Escolha uma equipamento', 'id' => 'TIMELINE_IDPRUMADA']) }}
 
 						</div>
 					</div>
