@@ -67,6 +67,25 @@ class UnidadeController extends Controller
         return redirect('/imovel')->with('success', 'Unidade cadastrada com sucesso.');
     }
 
+    public function show($id)
+    {
+        //
+        $unidade        = Unidade::findorFail($id);
+        $prumadas       = Unidade::find($id)->getPrumadas;
+        $agrupamento    = Unidade::find($id)->agrupamento;
+        $imovel         = Unidade::find($id)->imovel;
+        $leituras       = Leitura::where('LEI_IDPRUMADA',$id)
+                            ->orderBy('LEI_ID', 'desc')
+                            ->get();
+        $ultimaleitura =  Leitura::where('LEI_IDPRUMADA',$id)
+                            ->orderBy('LEI_ID', 'desc')
+                            ->first();
+
+        //$ultimaleitura  = Unidade::find($id)->getPrumadas()->lastest();
+
+        return view('unidade.visualizar', ['agrupamento' => $agrupamento, 'unidade' => $unidade, 'imovel' => $imovel, 'prumadas' => $prumadas, 'leituras' => $leituras, 'ultimaleitura' => $ultimaleitura]);
+    }
+
     public function edit($id)
     {
         $user = auth()->user()->USER_IMOID;
