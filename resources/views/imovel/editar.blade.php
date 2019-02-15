@@ -20,7 +20,7 @@
         {!! Form::model($imovel, ['route' => ['imovel.update', $imovel->IMO_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 
         <!-- Dados de Identificação -->
-        <div class="box box-warning">
+        <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title"><i class="fa fa-home"></i> Dados de identificação</h3>
                 <div class="box-tools pull-right">
@@ -144,14 +144,28 @@
 
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('IMO_STATUS', 'STATUS') }}
-                            {{ Form::select('IMO_STATUS', ['' => 'Selecione', '1' => 'Ativo', '0' => 'Inativo'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            <div class='row'>
+                                <div class='col-md-6'>
+                                    {{ Form::label('IMO_FATURACICLO', 'Dia Fechamento Fatura') }}
+                                    {{ Form::text('IMO_FATURACICLO', null, ['class' => 'form-control', 'disabled' => 'disabled', 'placeholder' => '']) }}
 
-                            @if ($errors->has('IMO_STATUS'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_STATUS') }}</strong>
-                            </span>
-                            @endif
+                                    @if ($errors->has('IMO_FATURACICLO'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('IMO_FATURACICLO') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                                <div class='col-md-6'>
+                                    {{ Form::label('IMO_STATUS', 'STATUS') }}
+                                    {{ Form::select('IMO_STATUS', ['' => 'Selecione', '1' => 'Ativo', '0' => 'Inativo'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+
+                                    @if ($errors->has('IMO_STATUS'))
+                                    <span class="help-block">
+                                        <strong style="color: red;">{{ $errors->first('IMO_STATUS') }}</strong>
+                                    </span>
+                                    @endif
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -162,7 +176,7 @@
 
         @is('Administrador')
         <!-- Configuração Central -->
-        <div class="box box-primary">
+        <div class="box box-success">
             <div class="box-header with-border">
                 <h3 class="box-title"><i class="fa fa-cloud"></i> Configuração Central</h3>
                 <div class="box-tools pull-right">
@@ -196,7 +210,7 @@
         <!-- [FIM] Configuração Central -->
 
         <!-- Informações de contato -->
-        <div class="box box-success collapsed-box">
+        <div class="box box-warning collapsed-box">
             <div class="box-header with-border">
                 <h3 class="box-title"><i class="fa fa-phone"></i> Informações de Contato</h3>
                 <div class="box-tools pull-right">

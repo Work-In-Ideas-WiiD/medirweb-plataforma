@@ -41,6 +41,7 @@ class CreateImoveisTable extends Migration
             $table->longText('IMO_TELEFONES');
 
             $table->boolean('IMO_STATUS');
+            $table->integer('IMO_FATURACICLO', 3);
 
             $table->float('IMO_TAXAFIXA')->nullable();
             $table->float('IMO_TAXAVARIAVEL')->nullable();

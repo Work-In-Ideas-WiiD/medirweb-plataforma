@@ -393,6 +393,8 @@
             $('.mask-num').inputmask('9[99999]');
             $('.mask-phone').inputmask('(99) 9999-9999[9]');
             $('.mask-co').inputmask('Regex', {regex: "[a-zA-Z- ]*"});
+            $('.mask-inteiro').inputmask('Regex', {regex: "[0-9]*"});
+
         }
 
         if($.fn.maskMoney) {
@@ -411,6 +413,21 @@
 
     });
 
+    </script>
+
+
+    <script>
+    $(document).ready(function(){
+        $(".mask-dinheiro").inputmask( 'currency',{"autoUnmask": true,
+        radixPoint:",",
+        groupSeparator: ".",
+        allowMinus: false,
+        prefix: '',
+        digits: 2,
+        digitsOptional: false,
+        rightAlign: true,
+        unmaskAsNumber: true
+    })});
     </script>
 
 

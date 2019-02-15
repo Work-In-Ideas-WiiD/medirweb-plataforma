@@ -22,6 +22,7 @@ class ImovelEditRequest extends ImovelRequest
             'IMO_IDESTADO' =>'required|not_in:0',
             'IMO_CEP' =>'required|max:9',
             'IMO_STATUS' =>'required',
+            //"IMO_FATURACICLO" => 'required|integer',
             'IMO_RESPONSAVEIS' => 'required',
             'IMO_TELEFONES' => 'required',
             //'imagem' => 'required|mimes:jpeg,jpg,png|max:10000',

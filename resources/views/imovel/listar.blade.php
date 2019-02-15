@@ -94,6 +94,16 @@
                                         </div>
                                         @endis
 
+                                        @is(['Administrador', 'Sindico'])
+                                        <?php // Botão lançar consumo
+                                        $ciclo =  $imo->IMO_FATURACICLO - date("d");?>
+                                        @if($ciclo >= -5 &&  $ciclo <= 5)
+                                        <div class="btn-group">
+                                            <a href="{{ route('imovel.consumo', ['imo' => $imo->IMO_ID]) }}" type="button" class="btn btn-success btn-flat"><i class="fa fa-tachometer"></i> <i class="fa fa-dollar"></i></a>
+                                        </div>
+                                        @endif
+                                        @endis
+
                                     </td>
                                 </form>
                             </tr>

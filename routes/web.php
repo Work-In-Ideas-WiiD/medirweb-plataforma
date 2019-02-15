@@ -38,7 +38,6 @@ Route::get('/user/editar/{id}', array('as'=>'user.edit', 'uses' => 'UserControll
 Route::get('/imovel/buscar', 'ImovelController@buscar')->name('Buscar Imóveis');
 Route::get('/imovel/buscar/ver/{id}', array('uses' => 'ImovelController@show_buscar'))->name('Buscar Ver Imovel');
 
-
 Route::get('/imovel', 'ImovelController@index')->name('Listar Imóveis');
 Route::get('/imovel/adicionar', 'ImovelController@create')->name('Adicionar Imóvel');
 Route::post('novo-imovel', array('uses' => 'ImovelController@store'));
@@ -48,6 +47,9 @@ Route::get('/imovel/getCidadesLista/{id}', array('uses' => 'ImovelController@sho
 Route::get('/imovel/editar/{id}', array('as'=>'imovel.edit', 'uses' => 'ImovelController@edit'));
 Route::put('imovel/update/{imovel}', array('as'=>'imovel.update', 'uses'=>'ImovelController@update'));
 Route::delete('imovel/{imovel}', array('as'=>'imovel.destroy', 'uses'=>'ImovelController@destroy'));
+
+Route::get('/imovel/{id}/consumo', array('as'=>'imovel.consumo', 'uses' => 'ImovelController@getLancarConsumo'));
+Route::post('lancar-consumo', array('uses' => 'ImovelController@postLancarConsumo'));
 
 /* imóveis */
 Route::get('/imovel/{imovel}/leitura/{unidade}', array('uses' => 'ImovelController@leituraUnidade'));

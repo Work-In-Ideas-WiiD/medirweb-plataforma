@@ -9,13 +9,15 @@ use App\Models\Prumada;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Imovel\ImovelSaveRequest;
+use App\Http\Requests\Imovel\ImovelEditRequest;
+use App\Http\Requests\Imovel\LancarConsumoRequest;
 use App\Models\Imovel;
 use App\Models\Unidade;
 use App\Models\Leitura;
+use App\Models\Fatura;
 use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\File;
-use App\Http\Requests\Imovel\ImovelEditRequest;
 use App\Charts\ConsumoCharts;
 
 
@@ -24,6 +26,15 @@ class ImovelController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+    }
+
+    public function array_value_recursive($key, array $arr){
+        $val = array();
+        array_walk_recursive($arr, function($v, $k) use($key, &$val){
+            if($k == $key) array_push($val, $v);
+        });
+        $valu = array_map(function($value){return (int)$value;},$val);
+        return count($valu) > 1 ? $valu : array_pop($valu);
     }
 
     public function index()
@@ -67,7 +78,13 @@ class ImovelController extends Controller
         foreach($_estados as $estado)
         $estados[$estado->EST_ID] = $estado->EST_NOME;
 
-        return view('imovel.cadastrar', compact('clientes', 'estados'));
+        $mes = array();
+        $mes = ['' => 'Selecione'];
+        for ($i = 1; $i <= 31; $i++){
+            array_push($mes, $i);
+        }
+
+        return view('imovel.cadastrar', compact('clientes', 'estados', 'mes'));
     }
 
     public function showCidades($id)
@@ -230,6 +247,14 @@ class ImovelController extends Controller
             return redirect( URL::previous() );
         }
 
+        if($request->IMO_IDCLIENTE){
+            return redirect('/imovel/editar/'.$imovel->IMO_ID)->with('error', 'Não é permitido burlar o sistema!');
+        }
+
+        if($request->IMO_FATURACICLO){
+            return redirect('/imovel/editar/'.$imovel->IMO_ID)->with('error', 'Não é permitido burlar o sistema!');
+        }
+
         $dataForm = $request->all();
 
         if($request->hasFile('foto')){
@@ -272,6 +297,198 @@ class ImovelController extends Controller
 
         return redirect('imovel')->with('success', 'Imovel deletado com sucesso!');
     }
+
+
+    public function getLancarConsumo($id)
+    {
+        $user = auth()->user()->USER_IMOID;
+        if(app('defender')->hasRoles('Sindico') && !($user == $id)){
+            return view('error403');
+        }
+        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
+            return view('error403');
+        }
+
+        $imovel = Imovel::findOrFail($id);
+
+        $mesCiclo = array();
+        for ($i = ($imovel->IMO_FATURACICLO - 5); $i <= ($imovel->IMO_FATURACICLO + 5); $i++){
+            if($i <= date("d")){
+                $mesCiclo += [ date('Y-m-d', strtotime(date("Y-m")."-".$i))  => $i ];
+            }
+        }
+
+        $faturas = Fatura::where('FAT_IMOID', $id)->whereMonth('FAT_DTLEIFORNECEDOR', date("m"))->get();
+        $ciclo =  $imovel->IMO_FATURACICLO - date("d");
+
+        if($ciclo >= -5 &&  $ciclo <= 5){
+
+            foreach ($faturas as $fatura) {
+                $mesLeiFornecedor = date('Y-m', strtotime($fatura->FAT_DTLEIFORNECEDOR));
+
+                if($mesLeiFornecedor == date("Y-m")){
+                    return view('imovel.lancarConsumo', compact('faturas'));
+                }
+            }
+
+            return view('imovel.lancarConsumo', compact('mesCiclo', 'id'));
+        }else {
+            return redirect('imovel')->with('error', 'Imovel "'.$imovel->IMO_NOME.'", esta fora do ciclo para lançamento do Consumo Mensal!');
+        }
+
+        return redirect('imovel')->with('error', 'error desconhecido!');
+    }
+
+
+    public function postLancarConsumo(LancarConsumoRequest $request)
+    {
+        $user = auth()->user()->USER_IMOID;
+        if(app('defender')->hasRoles('Sindico') && !($user == $id)){
+            return view('error403');
+        }
+        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
+            return view('error403');
+        }
+
+        // validação se o usuario tentar burlar o sistema
+        // (DATA DA LEITURA)
+        if (!(date('Y-m', strtotime($request->FAT_DTLEIFORNECEDOR)) == date('Y-m'))) {
+            return redirect('/imovel')->with('error', 'Não é permitido burlar o sistema!');
+        }
+
+        // FORA DO CICLO
+        $ciclo = date('d', strtotime($request->FAT_DTLEIFORNECEDOR)) - date('d');
+        if(!($ciclo >= -5 &&  $ciclo <= 5)){
+            return redirect('/imovel')->with('error', 'Não é permitido burlar o sistema!');
+        }
+
+        // ENVIAR INFORMAÇÕES MAIS DE UMA VEZ
+        $faturasValidation = Fatura::where('FAT_IMOID', $request->FAT_IMOID)->whereMonth('FAT_DTLEIFORNECEDOR', date("m"))->get();
+        foreach ($faturasValidation as $value) {
+            $result = date('Y-m', strtotime($value->FAT_DTLEIFORNECEDOR));
+            if($result  == date("Y-m")){
+                return redirect('/imovel')->with('error', 'ATENÇÃO! Este mês já foi coletado o consumo mensal do fornecedor! Não é permitido adicionar novamente!');
+            }
+        }
+        // FIM VALIDAÇÃO
+
+        $dataForm = $request->all();
+
+        // Formatação ponto e virgula do valor que veio no formulario
+        $formatarLeiMetroValorFor1 = str_replace(".", "", $dataForm['FAT_LEIMETRO_VALORFORNECEDOR']);
+        $formatarLeiMetroValorFor = str_replace(",", ".", $formatarLeiMetroValorFor1);
+        // fim - Formatação...
+
+
+        // ##### *INICIO - PEGANDO TODAS LEITURAS DAS UNIDADES e SOMANDO E FAZENDO MEDIA DO MES ATUAL* #####
+        $menos1mes = date("Y-m", strtotime('-1 month'));
+        $leituraAtual = array();
+        $leituraAnterior = array();
+        $leiMetroFornecedorAnterior = 0;
+
+        // BUSCAS
+        $apartamentos = Imovel::findOrFail($dataForm['FAT_IMOID'])->getUnidades;
+        if ($apartamentos->count() == 0) {
+            return redirect('/imovel/ver/'.$dataForm['FAT_IMOID'])->with('error', 'Não tem unidades cadastrada neste Imovel');
+        }
+
+        foreach ($apartamentos as $unid) {
+
+            $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
+            if ($prumadas->count() == 0) {
+                return redirect('/imovel/ver/'.$dataForm['FAT_IMOID'])->with('error', 'Não tem equipamentos cadastrada neste Imovel');
+            }
+
+            foreach ($prumadas as $prumada){
+
+                //LEITURA DO MES ANTERIOR
+                $getLeituraAnterior = $prumada->getLeituras()->where('created_at', '<=', date("Y-m-d", strtotime($menos1mes."-".$prumada->unidade->imovel->IMO_FATURACICLO)).' 23:59:59')
+                ->orderBy('created_at', 'desc')->first();
+                $arrayLeituraAnterior = $getLeituraAnterior['LEI_METRO'];
+                array_push($leituraAnterior, $arrayLeituraAnterior);
+                // fim - LEITURA DO MES ANTERIOR
+
+                // LEITURA DO MES ATUAL
+                $getLeituraAtual = $prumada->getLeituras()->where('created_at', '<=', date("Y-m-d", strtotime($request->FAT_DTLEIFORNECEDOR)).' 23:59:59')
+                ->orderBy('created_at', 'desc')->first();
+                $arrayLeituraAtual = $getLeituraAtual['LEI_METRO'];
+                array_push($leituraAtual, $arrayLeituraAtual);
+                // fim - LEITURA DO MES ATUAL
+            }
+
+        }// FIM - BUSCAS
+
+        // mes anterior (SOMA)
+        $leituraAnteriorInteger = array_map(function($value){return (int)$value;},$leituraAnterior);
+        if(!is_array($leituraAnteriorInteger)){$leituraAnteriorInteger = array($leituraAnteriorInteger);}
+        $somaLeituraAnterior = array_sum($leituraAnteriorInteger);
+        // fim - mes anterior
+
+        // mes atual (SOMA)
+        $leituraAtualInteger = array_map(function($value){return (int)$value;},$leituraAtual);
+        if(!is_array($leituraAtualInteger)){$leituraAtualInteger = array($leituraAtualInteger);}
+        $somaLeituraAtual = array_sum($leituraAtualInteger);
+        // fim - mes atual
+
+        // LEITURA DE TODAS AS UNIDADES DO MES ATUAL
+        //$somaLeituraAtual = 20;
+        $dataForm['FAT_LEIMETRO_UNI'] = $somaLeituraAtual;
+
+        // VERIFICANDO SE NO MES ANTERIOR FOI ADICIONADO O CONSUMO (SE MES ANTERIOR FOI ADIONADO ENTÃO VAI RECEBER O VALOR QUE ESTA NO BANCO)
+        $faturas = Fatura::where('FAT_IMOID', $dataForm['FAT_IMOID'])->whereMonth('FAT_DTLEIFORNECEDOR', date("m", strtotime('-1 month')) )->get();
+        foreach ($faturas as $fatura) {
+            $mesLeiFornecedor = date('Y-m', strtotime($fatura->FAT_DTLEIFORNECEDOR));
+
+            if($mesLeiFornecedor == date("Y-m", strtotime('-1 month'))){
+                $somaLeituraAnterior = $fatura->FAT_LEIMETRO_UNI;
+                $leiMetroFornecedorAnterior = $fatura->FAT_LEIMETRO_FORNECEDOR;
+            }
+        }
+        // ##### *FIM - PEGANDO TODAS LEITURAS DAS UNIDADES e SOMANDO E FAZENDO MEDIA DO MES ATUAL* #####
+
+
+        $consumoUnidades = $somaLeituraAtual - $somaLeituraAnterior;
+        $ConsumoImovel = ($dataForm['FAT_LEIMETRO_FORNECEDOR'] - $leiMetroFornecedorAnterior ) - $consumoUnidades;
+        $ConsumoFornecedor = $dataForm['FAT_LEIMETRO_FORNECEDOR'] - $leiMetroFornecedorAnterior;  // CONSUMO FORNECEDORES
+
+        $dataForm['FAT_CONSUMO_UNI'] = $consumoUnidades; // CONSUMO DE TODAS UNIDADES DO MES ATUAL
+        $dataForm['FAT_CONSUMO_IMOVEL'] = $ConsumoImovel; // CONSUMO AREA COMUM IMOVEL
+        $dataForm['FAT_CONSUMO_FORNECEDOR'] = $ConsumoFornecedor; // CONSUMO DO FORNECEDOR
+
+        // REGRA DE TRES (VALORES CONSUMO)
+        $resultado = $dataForm['FAT_CONSUMO_UNI'] * $formatarLeiMetroValorFor;
+        $valorConsumoUnidades = $resultado / $ConsumoFornecedor;
+        $valorConsumoImovel =  $formatarLeiMetroValorFor - $valorConsumoUnidades;
+        // FIM
+
+        $dataForm['FAT_CONSUMO_VALORUNI'] = number_format($valorConsumoUnidades, 2, ',', '.');
+        $dataForm['FAT_CONSUMO_VALORIMOVEL'] = number_format($valorConsumoImovel, 2, ',', '.');
+
+
+        //Testes
+        //echo "Leitura Anterior do Fornecedor: ".$leiMetroFornecedorAnterior."<br>";
+        //echo "Leitura Anterior das Unidades: ".$somaLeituraAnterior."<br>";  // teste
+        //echo "Leitura Atual das Unidades: ".$somaLeituraAtual."<hr>";        // teste
+
+        //echo "<br>Consumo Mes Atual: ".$consumoUnidades."<hr>";      // teste
+
+
+        //echo "<br> VALOR CONSUMO UNIDADES: ".$dataForm['FAT_CONSUMO_VALORUNI']; //teste
+        //echo "<br> VALOR CONSUMO IMOVEL: ".$dataForm['FAT_CONSUMO_VALORIMOVEL']."<hr>"; //teste
+
+
+        //foreach ($dataForm as $key => $value) {
+        //    echo $key.": ".$value."<br><br>";
+        //}
+        //die;
+        // fim - testes
+
+
+        Fatura::create($dataForm);
+
+        return redirect('imovel')->with('success', 'Adicionado o com sucesso as informações da fatura do fornecedor!');
+    }
+
 
     public function graficoConsumoGeral($id)
     {
