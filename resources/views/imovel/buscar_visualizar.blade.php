@@ -6,6 +6,28 @@
 
 @section('content_header')
 <h1>Imóveis <small>Vizualizar Imóveis</small></h1>
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="row">
+			<div class="col-md-1">
+				<a href="{{ route('Buscar Imóveis') }}" class="btn btn-info"><i class="fa fa-reply"></i> Voltar</a>
+			</div>
+			<div class="col-md-4">
+				<h4 ><i class="fa fa-building"></i> {{ $imovel->IMO_NOME }}</h4>
+			</div>
+			<div class="col-md-7">
+				<div id="loading" class="loading oculto">
+					<div style="margin-top:10px;">
+						<div class="carregar"></div>
+						<p style="margin-top:-20px; color:red;">&emsp;&emsp;Requisição em andamento. <font color="red" id="aguarde"></font></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <ol class="breadcrumb">
 	<li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
 	<li><a href="imovel">Imóveis</a></li>
@@ -17,83 +39,127 @@
 
 @section('content')
 
-<div id="loading" class="loading text-center oculto">
-	<div class="col-md-12">
-		<div class="col-md-1">
-			<div class="square">
-			</div>
-		</div>
-		<div class="col-md-11">
-			<h2>Requisição sendo realizada...</h2>
-			<h2>Comunicando com o servidor...</h2>
-			<h5 id="aguarde"></h5>
-		</div>
-	</div>
-</div>
-
 <div class="row">
+
+
 	<div class="col-md-12">
 		<div class="row">
 
-			<div class="col-md-11">
-				<div class="panel box box-primary">
-					<div class="box-header with-border collaptitlr">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" class="collapsed" >
-							<h4 class="box-title pull-left">
-								<i class="fa fa-building"></i>
-								{{ $imovel->IMO_NOME }}
-							</h4>
-							<i class="fa fa-chevron-down pull-right"></i>
-						</a>
+			<?php // LEITURAS ?>
+			<div class="col-md-8 row leitura_unidade">
+				<div class="col-md-12">
+					
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title"><i class="fa fa-th-large"></i> Leituras</h3>
+							<div class="pull-right">
+								<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/atualizar') }}" class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Atualizar todas</a>
+							</div>
+						</div>
+						<div class="box-body">
+
+
+							@foreach ($agrupamentos as $key=>$agrupamento)
+
+
+
+
+							<div class="box " style="border-top: 2px solid #f4f4f4;">
+								<div class="box-header" style="border-left: 4px solid #f38212">
+									<h3 class="box-title" >{{ $agrupamento->AGR_NOME }}</h3>
+									<div class="box-tools pull-right">
+										<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+										</button>
+									</div>
+								</div>
+
+								<div class="box-body" style="margin-top: 10px; border-left: 4px solid #f38212;">
+									<div style="margin-left: -10px; margin-top: -10px; border-left: 4px solid #f5ae3d;">
+										<div class="row">
+											<div class="col-md-12">
+												<div class="col-md-12">
+
+													vbvbcvb<br>
+													ererer<br>
+													vbvbcvb<br>
+													ererer<br>
+													vbvbcvb<br>
+													ererer<br>
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							@endforeach
+
+
+						</div>
 					</div>
-					<div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+
+				</div>
+			</div>
+			<?php // FIM - LEITURAS ?>
+
+			<?php // INFORMAÇÕES ?>
+			<div class="col-md-4 row">
+				<div class="col-md-12">
+					<div class="box box-primary">
+						<div class="box-header with-border">
+							<h3 class="box-title"><i class="fa fa-file-text-o"></i> Informações</h3>
+						</div>
 						<div class="box-body">
 							<div class="row">
 
-								<!-- Infomação -->
-								<div class="col-md-4">
-									<div class="bloco-imovel-info">
-										<p class="titulo"><i class="fa fa-map"></i> <b>Localização</b></p>
-										<p>{{ $imovel->IMO_LOGRADOURO }}</p>
-										<p>{{ $imovel->IMO_COMPLEMENTO }}</p>
-										<p>{{ $imovel->IMO_IDCIDADE }} - {{ $imovel->IMO_IDESTADO }}</p>
-										<p>{{ $imovel->IMO_CEP }}</p>
-									</div>
+								<!-- Localização -->
+								<div class="bloco-imovel-info">
+									<p class="titulo"><i class="fa fa-map"></i> <b>Localização</b></p>
+									<p>{{ $imovel->IMO_LOGRADOURO }}</p>
+									<p>{{ $imovel->IMO_COMPLEMENTO }}</p>
+									<p>{{ $imovel->IMO_IDCIDADE }} - {{ $imovel->IMO_IDESTADO }}</p>
+									<p>{{ $imovel->IMO_CEP }}</p>
 								</div>
-								<!-- FIM Informação -->
+								<!-- FIM - Localização -->
 
-								<!-- Infomação -->
-								<div class="col-md-4">
-									<div class="bloco-imovel-info">
-										<p class="titulo"><b><i class="fa fa-user"></i> Responsáveis</b></p>
-										<pre style="border: none; background-color: white;">{!! $imovel->IMO_RESPONSAVEIS !!}</pre>
-									</div>
+								<!-- Responsáveis -->
+								<div class="bloco-imovel-info" style="margin-top: -15px;">
+									<p class="titulo"><b><i class="fa fa-user"></i> Responsáveis</b></p>
+									<pre style="border: none; background-color: white;">{!! $imovel->IMO_RESPONSAVEIS !!}</pre>
 								</div>
-								<!-- FIM Informação -->
+								<!-- FIM - Responsáveis -->
 
-								<!-- Infomação -->
-								<div class="col-md-4">
-									<div class="bloco-imovel-info">
-										<p class="titulo"><b><i class="fa fa-phone"></i> Contato</b></p>
-										<pre style="border: none; background-color: white;">{!! $imovel->IMO_TELEFONES !!}</pre>
-									</div>
+								<!-- Contato -->
+								<div class="bloco-imovel-info" style="margin-top: -15px;">
+									<p class="titulo"><b><i class="fa fa-phone"></i> Contato</b></p>
+									<pre style="border: none; background-color: white;">{!! $imovel->IMO_TELEFONES !!}</pre>
 								</div>
-								<!-- FIM Informação -->
+								<!-- FIM - Contato -->
 
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<?php // FIM - INFORMAÇÕES ?>
 
-			<!-- Botao Voltar -->
-			<div class="col-md-1">
-				<div class="row">
-					<a href="{{ route('Buscar Imóveis') }}" class="btn btn-block btn-danger"><i class="fa fa-reply"></i> Voltar</a>
-				</div>
-			</div>
 		</div>
 	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<div class="col-md-12">
 		<div class="nav-tabs-custom">
@@ -103,8 +169,7 @@
 				<li class="{{ $loop->last ? 'active' : '' }}"><a href="#tab_{{ $key }}-{{ $key }}" data-toggle="tab" aria-expanded="false">{{ $agrupamento->AGR_NOME }}</a></li>
 				@endforeach
 
-				<li class="pull-left header"><h4><i class="fa fa-th-large"></i> Unidades <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/atualizar') }}" class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Atualizar todas</a><h4></li>
-				</ul>
+
 
 				<div class="tab-content">
 
@@ -207,29 +272,32 @@
 
 		</div> <!-- FIM .nav-tabs-custom -->
 
-		<?php // GRAFICO ?>
+		<?php /* GRAFICO ?>
 		<div class="col-md-12">
-			<div class="row">
-				<div class="form-group">
-					<div class="box box-primary collapse-box">
-						<div class="box-header with-border gray" style="background-color: #3c8dbc; color: white; text-align: center;">
-							<h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> GRAFICO</h3>
-							<div class="box-tools pull-right">
-								<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-								</button>
-							</div>
-						</div>
-						<div class='box-body' style="text-align: center;">
-							<div class="col-md-12">
-								{!! $chartConsumoLine->container() !!}
-								{!! $chartConsumoLine->script() !!}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+		<div class="row">
+		<div class="form-group">
+		<div class="box box-primary collapse-box">
+		<div class="box-header with-border gray" style="background-color: #3c8dbc; color: white; text-align: center;">
+		<h3 class="box-title" style="font-weight: 600; font-size: 15px; text-align: center;"></i> GRAFICO</h3>
+		<div class="box-tools pull-right">
+		<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+		</button>
 		</div>
-		<?php // FIM - GRAFICO ?>
+		</div>
+		<div class='box-body' style="text-align: center;">
+		<div class="col-md-12">
+		<?php
+		//{!! $chartConsumoLine->container() !!}
+		//{!! $chartConsumoLine->script() !!}
+		?>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		</div>
+		<?php // FIM - GRAFICO
+		*/?>
 
 	</div><!-- FIM .col-md-12 -->
 </div>

@@ -215,14 +215,14 @@
 
     <script>
     // Por Favor aguarde
-    var ponto = 'Por Favor Aguarde.';
+    var ponto = 'Por favor, aguarde.';
     var timeout = false;
     var velocidade = 400;
     function animaPonto() {
         timeout = setTimeout('animaPonto()', velocidade);
         document.getElementById('aguarde').innerHTML = ponto;
-        if( ponto == 'Por Favor Aguarde...' ) {
-            ponto = 'Por Favor Aguarde.';
+        if( ponto == 'Por favor, aguarde...' ) {
+            ponto = 'Por favor, aguarde.';
         } else {
             ponto += '.';
         }

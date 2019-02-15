@@ -292,6 +292,17 @@ p.bloco-imovel-cad
     from {transform: rotate(0deg);}
     to   {transform: rotate(180deg);}
 }
+.carregar {
+    width: 20px;
+    height: 20px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: #999 #ccc;
+    border-radius: 10px;
+    -webkit-animation: spinning 0.75s infinite linear;
+    animation: spinning 0.75s infinite linear;
+}
+
 .square {
     width: 100px;
     height: 100px;
