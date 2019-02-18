@@ -5,26 +5,25 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-<h1>Imóveis <small>Seus imóveis</small></h1>
+<div class="col-md-4">
+	<div class="row" style="margin-top: -15px">
+		<h3>Imóveis <small>Seus imóveis</small></h3>
+	</div>
+</div>
+<div class="col-md-8">
+	<div id="loading" class="loading oculto">
+		<div style="margin-top:10px;">
+			<div class="carregar"></div>
+			<p style="margin-top:-20px; color:red;">&emsp;&emsp;Requisição em andamento. <font color="red" id="aguarde"></font></p>
+		</div>
+	</div>
+</div>
+
 <ol class="breadcrumb">
 	<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 	<li><a href="#">Imóveis</a></li>
 	<li class="active">Buscar imóveis</li>
 </ol>
-
-<div id="loading" class="loading text-center oculto">
-	<div class="col-md-12">
-		<div class="col-md-1">
-			<div class="square">
-			</div>
-		</div>
-		<div class="col-md-11">
-			<h2>Carregando todos os dados da leitura...</h2>
-			<h2>Comunicando com o servidor...</h2>
-			<h5 id="aguarde"></h5>
-		</div>
-	</div>
-</div>
 @stop
 
 @section('content')

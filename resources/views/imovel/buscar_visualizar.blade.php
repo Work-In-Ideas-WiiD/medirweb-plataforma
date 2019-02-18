@@ -104,28 +104,30 @@
 
 															<!-- Consumo -->
 															<div class="col-md-5 text-right">
+																<div class="row">
 
-																<div class="col-md-4">
-																	<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
-																		@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 0 @endif
-																	</a>
-																	<small style="color: grey;">m³</small>
+																	<div class="col-md-4">
+																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
+																			@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 0 @endif
+																		</a>
+																		<small style="color: grey;">m³</small>
+																	</div>
+
+																	<div class="col-md-4">
+																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
+																			@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_LITRO }} @else 0 @endif
+																		</a>
+																		<small style="color: grey;">L</small>
+																	</div>
+
+																	<div class="col-md-4">
+																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
+																			@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_MILILITRO }} @else 0 @endif
+																		</a>
+																		<small style="color: grey;">dL</small>
+																	</div>
+
 																</div>
-
-																<div class="col-md-4">
-																	<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
-																		@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_LITRO }} @else 0 @endif
-																	</a>
-																	<small style="color: grey;">L</small>
-																</div>
-
-																<div class="col-md-4">
-																	<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
-																		@if($unidade->getPrumadas()->count() > 0 && $unidade->getPrumadas()->first()->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_MILILITRO }} @else 0 @endif
-																	</a>
-																	<small style="color: grey;">dL</small>
-																</div>
-
 															</div>
 															<!-- fim - Consumo -->
 
