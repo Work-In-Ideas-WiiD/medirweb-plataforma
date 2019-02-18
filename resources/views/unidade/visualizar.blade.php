@@ -3,18 +3,50 @@
 @section('title', 'MedirWeb')
 
 {!! Html::style( asset('css/total.css')) !!}
-{!! Html::style( asset('css/correct_content.css')) !!}
+
+@section('content_header')
+<h1>Unidades <small>Vizualizar Unidades</small></h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-1">
+                <a onclick="history.back()" class="btn btn-info"><i class="fa fa-reply"></i> Voltar</a>
+            </div>
+            <div class="col-md-4">
+                <h4 ><i class="fa fa-home"></i> {{ $unidade->UNI_NOME }}</h4>
+            </div>
+            <div class="col-md-7">
+                <div id="loading" class="loading oculto">
+                    <div style="margin-top:10px;">
+                        <div class="carregar"></div>
+                        <p style="margin-top:-20px; color:red;">&emsp;&emsp;Requisição em andamento. <font color="red" id="aguarde"></font></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li><a href="#">Unidades</a></li>
+    <li class="active">Vizualizar</li>
+</ol>
+
+@stop
 
 @section('content')
-<div class="col-md-8 row leitura_unidade">
-    <div class="col-md-12">
-        <div class="box box-primary">
+<div class="row">
 
+    <div class="col-md-8">
+
+        <!-- Idenficação da Unidade -->
+        <div class="box box-primary">
             <div class="box-header with-border">
                 <i class="fa fa-text-width"></i>
                 <h3 class="box-title">Geral</h3>
-            </div> <!-- /.box-header -->
-
+            </div>
             <div class="box-body">
                 <dl>
                     <dt>Proprietário</dt>
@@ -22,18 +54,18 @@
                     <dt>Idenficação do Apartamento</dt>
                     <dd class="infoprop" ><a class="linkbread" href="{{  url('/imovel/ver/'.$imovel->IMO_ID) }}">{{ $unidade->UNI_NOME }} - {{ $agrupamento->AGR_NOME }} - {{ $imovel->IMO_NOME }}</a></dd>
                 </dl>
-            </div> <!-- /.box-body -->
+            </div>
+        </div>
+        <!-- fim -  Idenficação da Unidade -->
 
-        </div> <!-- /.box-primary -->
-
+        <!-- Leitura -->
         <div class="box box-success" id="boxdeacoes">
-
             <div class="box-header with-border">
                 <i class="fa fa-external-link"></i>
                 <h3 class="box-title">Ações</h3>
-            </div> <!-- /.box-header -->
-
+            </div>
             <div class="box-body row">
+
                 <div class="col-md-3 text-center">
                     <div class="form-group">
                         <select class="form-control">
@@ -51,83 +83,77 @@
                         </select>
                     </div>
                 </div>
+
+                @foreach($prumadas as $prumada)
+                <!-- Botao Leitura -->
                 <div class="col-md-3 text-center">
-                    <a href="{{ url('/unidade/leitura/'.$unidade->UNI_ID) }}" class="btn btn-default"><i class="fa fa-retweet"></i> Leitura</a>
+                    <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-default ocultar"><i class="fa fa-retweet"></i> Leitura</a>
                 </div>
-                @if($unidade->getPrumadas()->count() > 0 )
-                @if($unidade->getPrumadas()->first()->PRU_STATUS == 1)
+
+                <!-- fim - Botao Leitura -->
+
+                <!-- Botao Desligar / Ligar -->
                 <div class="col-md-3 text-center">
-                    <a href="{{ url('/unidade/desligar/'.$unidade->UNI_ID) }}" class="btn btn-danger"><i class="fa fa-close"></i> Efetuar corte</a>
+                    @is(['Administrador', 'Sindico'])
+
+                    @if($prumada->PRU_STATUS == 1)
+                    <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-danger ocultar" ><i class="fa fa-close"></i> Efetuar corte</a>
+                    @else
+                    <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-success ocultar" ><i class="fa fa-power-off"></i> Ativação</a>
+                    @endif
+
+                    @endis
                 </div>
-                @else
-                <div class="col-md-3 text-center">
-                    <a href="{{ url('/unidade/ligar/'.$unidade->UNI_ID) }}" class="btn btn-success"><i class="fa fa-power-off"></i> Ativação</a>
-                </div>
-                @endif
-                @else
-                <div class="col-md-3 text-center">
-                    <a href="" class="btn btn-danger"><i class="fa fa-close"></i> Efetuar corte</a>
-                </div>
-                @endif
+                <!-- fim -  Botao Desligar / Ligar -->
+                @endforeach
+
                 <div class="col-md-3 text-center">
                     <a href="#" class="btn btn-default" disabled><i class="fa fa-calculator"></i> Faturamento</a>
                 </div>
-            </div> <!-- /.box-body -->
 
-        </div> <!-- /.box-primary -->
+            </div>
+        </div>
+        <!-- fim - Leitura -->
 
+        <!-- Consumo Atual -->
         <div class="box box-warning">
             <div class="box-header with-border">
                 <h3 class="box-title"><i class="fa fa-tachometer"></i> Consumo atual (m³) @if($unidade->getPrumadas()->count() > 0 ) @if($unidade->getPrumadas()->first()->PRU_STATUS == 1) <i class="fa fa-circle" style="color: #009900;"></i> @else <i class="fa fa-circle" style="color: #d73925;"></i> @endif @endif</h3>
             </div>
-
             <div class="box-body">
                 <div class="bloco-medicao row">
+
                     <div class="col-md-5">
-
                         <div class="medicao-num">
-
                             @if(isset($ultimaleitura->LEI_METRO))
                             <p class="registronum" >{{ sprintf("%04d", $ultimaleitura->LEI_METRO) }} <span class="unidade" >m³</span></p>
                             @else
                             <p class="registronum" >0000 <span class="unidade" >m³</span></p>
                             @endif
-
                         </div>
-                        <!--<p style="margin-top: 0.8em;"><a class="btn btn-flat btn-default" href="" alt="Adicionar Agrupamento" style="width: 100%;" ><i class="fa fa-edit"></i> Editar informações</a></p>-->
                     </div>
 
                     <div class="col-md-7">
-
+                        @foreach($duasUltimaLeituras as $leitura)
                         <div class="medicao-num">
                             <table class="table" >
                                 <tbody>
                                     <tr>
-                                        <th>LEITURA ANTERIOR: <b>0000</b></th>
-                                        <th>DATA: <b>00/00/0000</b></th>
+                                        <th>LEITURA ANTERIOR: <b>{{ $leitura->LEI_METRO }} m³</b></th>
+                                        <th>DATA: <b>{{ date('d/m/Y', strtotime($leitura->created_at)) }}</b></th>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-
-                        <div class="medicao-num">
-                            <table class="table" >
-                                <tbody>
-                                    <tr>
-                                        <th>LEITURA ANTERIOR: <b>0000</b></th>
-                                        <th>DATA: <b>00/00/0000</b></th>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        @endforeach
                     </div>
 
                 </div>
             </div>
         </div>
-    </div> <!-- /.col-md-12 -->
+        <!-- fim - Consumo Atual -->
 
-    <div class="col-md-12">
+        <!-- Histórico de Leituras -->
         <div class="box box-danger">
             <div class="box-header">
                 <h3 class="box-title"><i class="fa fa-hourglass-1"></i> Histórico de Leituras</h3>
@@ -143,7 +169,6 @@
                         <th>Data da Leitura</th>
                     </thead>
                     <tbody>
-
                         @foreach ($leituras as $lei)
                         <tr>
                             <td>{{ $lei->LEI_ID }}</td>
@@ -154,28 +179,29 @@
                             <td>{{ $lei->created_at->format('d/m/Y H:i') }}</td>
                         </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
         </div>
-    </div>
+        <!-- fim - Histórico de Leituras -->
 
-    <div class="col-md-12">
+        <!-- Grafico -->
         <div class="box box-success">
             <div class="box-header">
                 <h3 class="box-title"><i class="fa fa-tachometer"></i> Análise gráfica</h3>
             </div>
             <div class="box-body">
-                <canvas id="grafico" style="width: 100%; height: 23.5rem;"></canvas>
+                {!! $grafico->container() !!}
+                {!! $grafico->script() !!}
             </div>
         </div>
+        <!-- fim - Grafico -->
+
     </div>
-</div>
 
-<div class="col-md-4 row">
+    <div class="col-md-4">
 
-    <div class="col-md-12">
+        <!-- Prumadas -->
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title"><i class="fa fa-tachometer"></i> Prumadas</h3>
@@ -205,12 +231,9 @@
                                             @else
                                             00/00/00 - 00:00
                                             @endif
-
                                         </span>
                                     </div>
-                                    <!-- /.info-box-content -->
                                 </div>
-                                <!-- /.info-box -->
                             </div>
                             @endforeach
                             @else
@@ -221,9 +244,9 @@
                 </div>
             </div>
         </div>
-    </div>
+        <!-- fim - Prumadas -->
 
-    <div class="col-md-12">
+        <!-- Histórico de consumo mensal -->
         <div class="box box-danger">
             <div class="box-header">
                 <h3 class="box-title"><i class="fa fa-hourglass-1"></i> Histórico de consumo mensal</h3>
@@ -237,44 +260,40 @@
                                     <th>MÊS</th>
                                     <th>LEITURA</th>
                                 </tr>
+
+                                @foreach($consumoAnoAnterior as $key => $anoAnterior)
+                                @if(($key + 1) >= date('m'))
+                                @if(!empty($anoAnterior[0]))
                                 <tr>
-                                    <td>JUL/2018</td>
-                                    <td>0000</td>
+                                    <td>{{$key + 1}}/{{date("Y", strtotime('-1 year'))}}</td>
+                                    <td>{{ $anoAnterior[0] }} m³</td>
                                 </tr>
+                                @endif
+                                @endif
+                                @endforeach
+
+                                @foreach($consumoAnoAtual as $key => $anoAtual)
+                                @if(!empty($anoAtual[0]))
                                 <tr>
-                                    <td>JUN/2018</td>
-                                    <td>0000</td>
+                                    <td>{{$key + 1}}/{{date('Y')}}</td>
+                                    <td>{{ $anoAtual[0] }} m³</td>
                                 </tr>
-                                <tr>
-                                    <td>MAI/2018</td>
-                                    <td>0000</td>
-                                </tr>
-                                <tr>
-                                    <td>ABR/2018</td>
-                                    <td>0000</td>
-                                </tr>
-                                <tr>
-                                    <td>MAR/2018</td>
-                                    <td>0000</td>
-                                </tr>
+                                @endif
+                                @if(($key + 1) == date('m'))
+                                @break
+                                @endif
+                                @endforeach
+
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- fim - Histórico de consumo mensal -->
+
     </div>
 
 </div>
 
-@stop
-
-@section('footer')
-<footer class="main-footer">
-    <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright © 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
-</footer>
 @stop

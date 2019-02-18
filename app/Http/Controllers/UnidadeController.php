@@ -9,6 +9,7 @@ use App\Models\Agrupamento;
 use App\Models\Imovel;
 use App\Models\Prumada;
 use App\Http\Requests\Unidade\UnidadeSaveRequest;
+use App\Charts\ConsumoCharts;
 
 class UnidadeController extends Controller
 {
@@ -75,21 +76,69 @@ class UnidadeController extends Controller
         $agrupamento    = Unidade::find($id)->agrupamento;
         $imovel         = Unidade::find($id)->imovel;
         $leituras       = Leitura::where('LEI_IDPRUMADA',$id)
-                            ->orderBy('LEI_ID', 'desc')
-                            ->get();
+        ->orderBy('LEI_ID', 'desc')
+        ->get();
+
         $ultimaleitura =  Leitura::where('LEI_IDPRUMADA',$id)
-                            ->orderBy('LEI_ID', 'desc')
-                            ->first();
+        ->orderBy('LEI_ID', 'desc')
+        ->first();
 
-        //$ultimaleitura  = Unidade::find($id)->getPrumadas()->lastest();
+        $duasUltimaLeituras =  Leitura::where('LEI_IDPRUMADA',$id)
+        ->orderBy('LEI_ID', 'desc')
+        ->skip(1)
+        ->take(2)
+        ->get();
 
-        return view('unidade.visualizar', ['agrupamento' => $agrupamento, 'unidade' => $unidade, 'imovel' => $imovel, 'prumadas' => $prumadas, 'leituras' => $leituras, 'ultimaleitura' => $ultimaleitura]);
+        //Grafico
+
+        // INICIALIZAÇÃO de arrays
+        $consumoAnoAnterior = array();
+        $consumoAnoAtual = array();
+        // FIM - INICIALIZAÇÃO de arrays
+
+        // RESULTADO DA PESQUISA CONSUMO AVANÇADO
+        $hidromentros = Unidade::find($id)->getPrumadas;
+
+        foreach ($hidromentros as $hidromentro)
+        {
+            // ARRAY GRAFICO CONSUMO MENSAL
+            $anoAnterior = date("Y", strtotime('-1 year'));
+            $anoAtual = date("Y");
+
+            for ($mes=1; $mes <= 12; $mes++) {
+                $leituraAnoAnterior = $hidromentro->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAnterior."-".$mes."-31")).' 23:59:59')
+                ->orderBy('created_at', 'desc')->first();
+
+                $leituraAnoAtual = $hidromentro->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
+                ->orderBy('created_at', 'desc')->first();
+
+                $arrayConsumoAnoAnterior = array($leituraAnoAnterior['LEI_METRO']);
+                $arrayConsumoAnoAtual = array($leituraAnoAtual['LEI_METRO']);
+
+                array_push($consumoAnoAnterior, $arrayConsumoAnoAnterior);
+                array_push($consumoAnoAtual, $arrayConsumoAnoAtual);
+            }
+            // FIM - ARRAY GRAFICO CONSUMO MENSAL
+
+        }
+
+        // GRAFICO CONSUMO MENSAL (TYPE: LINE)
+        $grafico = new ConsumoCharts;
+        $grafico->title("Media Consumo Mensal");
+        $grafico->labels(['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ']);
+        $grafico->dataset($anoAnterior, 'line', $consumoAnoAnterior)->backgroundcolor('#3c8dbc');
+        $grafico->dataset($anoAtual, 'line', $consumoAnoAtual)->backgroundcolor('#ffcc00');
+        // GRAFICO CONSUMO MENSA (TYPE: LINE)
+
+        // fim - Grafico
+
+        return view('unidade.visualizar', compact('agrupamento', 'unidade', 'imovel', 'prumadas', 'leituras', 'ultimaleitura', 'duasUltimaLeituras', 'grafico', 'consumoAnoAnterior', 'consumoAnoAtual'));
     }
 
     public function edit($id)
     {
         $user = auth()->user()->USER_IMOID;
-		$ID_IMO = Unidade::find($id)->agrupamento->imovel->IMO_ID;
+        $ID_IMO = Unidade::find($id)->agrupamento->imovel->IMO_ID;
         if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
             return view('error403');
         }
@@ -123,7 +172,7 @@ class UnidadeController extends Controller
     public function update(Request $request, $id)
     {
         $user = auth()->user()->USER_IMOID;
-		$ID_IMO = Unidade::find($id)->agrupamento->imovel->IMO_ID;
+        $ID_IMO = Unidade::find($id)->agrupamento->imovel->IMO_ID;
         if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
             return view('error403');
         }
@@ -157,182 +206,182 @@ class UnidadeController extends Controller
 
     /*public function leituraUnidade($undd)
     {
-        $user = auth()->user()->USER_IMOID;
-		$ID_IMO = Unidade::find($undd)->imovel->IMO_ID;
+    $user = auth()->user()->USER_IMOID;
+    $ID_IMO = Unidade::find($undd)->imovel->IMO_ID;
 
-        var_dump($ID_IMO);
-        die;
-        if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
-            return view('error403');
-        }
-        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-            return view('error403');
-        }
+    var_dump($ID_IMO);
+    die;
+    if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
+    return view('error403');
+}
+if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
+return view('error403');
+}
 
-        $unidade = Unidade::find($undd);
+$unidade = Unidade::find($undd);
 
-        //var_dump($unidade->getPrumadas); die();
-        foreach ($unidade->getPrumadas as $prumada)
-        {
-            $curl = curl_init();
-            // Set some options - we are passing in a useragent too here
-            curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://192.168.130.4/api/leitura/'.$prumada->PRU_ID,
-                CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-            ));
-            // Send the request & save response to $resp
-            $resp = curl_exec($curl);
-            // Close request to clear up some resources
-            curl_close($curl);
+//var_dump($unidade->getPrumadas); die();
+foreach ($unidade->getPrumadas as $prumada)
+{
+$curl = curl_init();
+// Set some options - we are passing in a useragent too here
+curl_setopt_array($curl, array(
+CURLOPT_RETURNTRANSFER => 1,
+CURLOPT_URL => 'http://192.168.130.4/api/leitura/'.$prumada->PRU_ID,
+CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+));
+// Send the request & save response to $resp
+$resp = curl_exec($curl);
+// Close request to clear up some resources
+curl_close($curl);
 
-            $jsons = json_decode($resp);
+$jsons = json_decode($resp);
 
-            //var_dump($jsons);
-            if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
-            {
-                $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
+//var_dump($jsons);
+if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
+{
+$metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
 
-                $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
+$litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
 
-                $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
+$mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
 
-                // var_dump($metro_cubico);
-                // var_dump($litros);
-                // var_dump($mililitro);
+// var_dump($metro_cubico);
+// var_dump($litros);
+// var_dump($mililitro);
 
-                $subtotal = ($metro_cubico * 1000) + $litros;
-                $total = $subtotal.'.'.$mililitro.'';
-
-
-                $leitura = [
-                    'LEI_IDPRUMADA' => $prumada->PRU_ID,
-                    'LEI_METRO' => $metro_cubico,
-                    'LEI_LITRO' => $litros,
-                    'LEI_MILILITRO' => $mililitro,
-                    'LEI_VALOR' => $total,
-                ];
-
-                Leitura::create($leitura);
-            }
-            else
-            {
-                $prumada->PRU_STATUS = 0;
-                $prumada->save();
-                Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.');
-            }
+$subtotal = ($metro_cubico * 1000) + $litros;
+$total = $subtotal.'.'.$mililitro.'';
 
 
-        }
+$leitura = [
+'LEI_IDPRUMADA' => $prumada->PRU_ID,
+'LEI_METRO' => $metro_cubico,
+'LEI_LITRO' => $litros,
+'LEI_MILILITRO' => $mililitro,
+'LEI_VALOR' => $total,
+];
 
-        return redirect('unidade/ver/'.$undd);
-    }
-
-    public function ligarUnidade($undd)
-    {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
-        $unidade = Unidade::find($undd);
-
-        //var_dump($unidade->getPrumadas); die();
-        foreach ($unidade->getPrumadas as $prumada)
-        {
-            $curl = curl_init();
-            // Set some options - we are passing in a useragent too here
-            curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://192.168.130.4/api/ativacao/'.$prumada->PRU_ID,
-                CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-            ));
-            // Send the request & save response to $resp
-            $resp = curl_exec($curl);
-            // Close request to clear up some resources
-            curl_close($curl);
-
-            $jsons = json_decode($resp);
-
-            if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
-            {
-                if($jsons[4] == '00')
-                {
-                    $status = 1;
-                }
-                else
-                {
-                    $status = 0;
-                }
+Leitura::create($leitura);
+}
+else
+{
+$prumada->PRU_STATUS = 0;
+$prumada->save();
+Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.');
+}
 
 
-                $atualizacao = [
-                    'PRU_STATUS' => $status,
-                ];
+}
 
-                $prumada->update($atualizacao);
-            }
-            else
-            {
-                $prumada->PRU_STATUS = 0;
-                $prumada->save();
-                Session::flash('error', 'Unidade não pode ser ligada. Por favor, verifique a conexão.');
-            }
+return redirect('unidade/ver/'.$undd);
+}
 
-        }
+public function ligarUnidade($undd)
+{
+if(!app('defender')->hasRoles('Administrador')){
+return view('error403');
+}
 
-        return redirect('unidade/ver/'.$undd);
-    }
+$unidade = Unidade::find($undd);
 
-    public function desligarUnidade($undd)
-    {
+//var_dump($unidade->getPrumadas); die();
+foreach ($unidade->getPrumadas as $prumada)
+{
+$curl = curl_init();
+// Set some options - we are passing in a useragent too here
+curl_setopt_array($curl, array(
+CURLOPT_RETURNTRANSFER => 1,
+CURLOPT_URL => 'http://192.168.130.4/api/ativacao/'.$prumada->PRU_ID,
+CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+));
+// Send the request & save response to $resp
+$resp = curl_exec($curl);
+// Close request to clear up some resources
+curl_close($curl);
 
-        $unidade = Unidade::find($undd);
+$jsons = json_decode($resp);
 
-        //var_dump($unidade->getPrumadas); die();
-        foreach ($unidade->getPrumadas as $prumada)
-        {
-            $curl = curl_init();
-            // Set some options - we are passing in a useragent too here
-            curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_URL => 'http://192.168.130.4/api/corte/'.$prumada->PRU_ID,
-                CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-            ));
-            // Send the request & save response to $resp
-            $resp = curl_exec($curl);
-            // Close request to clear up some resources
-            curl_close($curl);
-
-            $jsons = json_decode($resp);
-
-            if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
-            {
-                if($jsons[4] == '00')
-                {
-                    $status = '1';
-                }
-                else
-                {
-                    $status = '0';
-                }
+if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
+{
+if($jsons[4] == '00')
+{
+$status = 1;
+}
+else
+{
+$status = 0;
+}
 
 
-                $atualizacao = [
-                    'PRU_STATUS' => $status,
-                ];
+$atualizacao = [
+'PRU_STATUS' => $status,
+];
 
-                $prumada->update($atualizacao);
-            }
-            else
-            {
-                $prumada->PRU_STATUS = 0;
-                $prumada->save();
-                Session::flash('error', 'Unidade não pode ser desligada. Por favor, verifique a conexão.');
-            }
+$prumada->update($atualizacao);
+}
+else
+{
+$prumada->PRU_STATUS = 0;
+$prumada->save();
+Session::flash('error', 'Unidade não pode ser ligada. Por favor, verifique a conexão.');
+}
 
-        }
+}
 
-        return redirect('unidade/ver/'.$unidd);
-    }*/
+return redirect('unidade/ver/'.$undd);
+}
+
+public function desligarUnidade($undd)
+{
+
+$unidade = Unidade::find($undd);
+
+//var_dump($unidade->getPrumadas); die();
+foreach ($unidade->getPrumadas as $prumada)
+{
+$curl = curl_init();
+// Set some options - we are passing in a useragent too here
+curl_setopt_array($curl, array(
+CURLOPT_RETURNTRANSFER => 1,
+CURLOPT_URL => 'http://192.168.130.4/api/corte/'.$prumada->PRU_ID,
+CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+));
+// Send the request & save response to $resp
+$resp = curl_exec($curl);
+// Close request to clear up some resources
+curl_close($curl);
+
+$jsons = json_decode($resp);
+
+if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
+{
+if($jsons[4] == '00')
+{
+$status = '1';
+}
+else
+{
+$status = '0';
+}
+
+
+$atualizacao = [
+'PRU_STATUS' => $status,
+];
+
+$prumada->update($atualizacao);
+}
+else
+{
+$prumada->PRU_STATUS = 0;
+$prumada->save();
+Session::flash('error', 'Unidade não pode ser desligada. Por favor, verifique a conexão.');
+}
+
+}
+
+return redirect('unidade/ver/'.$unidd);
+}*/
 
 }
