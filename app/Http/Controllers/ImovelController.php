@@ -191,9 +191,9 @@ class ImovelController extends Controller
             }
         }
 
-        //$chartConsumoLine = ImovelController::graficoConsumoGeral($id);
+        $chartConsumoLine = ImovelController::graficoConsumoGeral($id);
 
-    return view('imovel.buscar_visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades, /*"chartConsumoLine" => $chartConsumoLine*/]);
+    return view('imovel.buscar_visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades, "chartConsumoLine" => $chartConsumoLine]);
     }
 
     public function edit($id)
