@@ -200,14 +200,14 @@
 							<!-- Responsáveis -->
 							<div class="bloco-imovel-info" style="margin-top: -15px;">
 								<p class="titulo"><b><i class="fa fa-user"></i> Responsáveis</b></p>
-								<pre style="border: none; background-color: white;">{!! $imovel->IMO_RESPONSAVEIS !!}</pre>
+								<pre style="border: none; background-color: white; font-family: 'Source Sans Pro'; ">{!! $imovel->IMO_RESPONSAVEIS !!}</pre>
 							</div>
 							<!-- FIM - Responsáveis -->
 
 							<!-- Contato -->
 							<div class="bloco-imovel-info" style="margin-top: -15px;">
 								<p class="titulo"><b><i class="fa fa-phone"></i> Contato</b></p>
-								<pre style="border: none; background-color: white;">{!! $imovel->IMO_TELEFONES !!}</pre>
+								<pre style="border: none; background-color: white; font-family: 'Source Sans Pro'">{!! $imovel->IMO_TELEFONES !!}</pre>
 							</div>
 							<!-- FIM - Contato -->
 

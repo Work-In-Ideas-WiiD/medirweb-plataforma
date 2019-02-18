@@ -71,7 +71,7 @@
 						<div class="col-md-3">
 							<div class="bloco-imovel-info">
 								<p class="titulo"><b><i class="fa fa-phone"></i> Contato</b></p>
-								<pre style="border: none; background-color: white;">{!! $cliente->CLI_DADOSCONTATO !!}</pre>
+								<pre style="border: none; background-color: white; font-family: 'Source Sans Pro';">{!! $cliente->CLI_DADOSCONTATO !!}</pre>
 							</div>
 						</div>
 						<!-- FIM - Informação de contato -->
@@ -80,7 +80,7 @@
 						<div class="col-md-3">
 							<div class="bloco-imovel-info">
 								<p class="titulo"><b><i class="fa fa-dollar"></i> Dados Bancarios</b></p>
-								<pre style="border: none; background-color: white;">{!! $cliente->CLI_DADOSBANCARIOS !!}</pre>
+								<pre style="border: none; background-color: white; font-family: 'Source Sans Pro';">{!! $cliente->CLI_DADOSBANCARIOS !!}</pre>
 							</div>
 						</div>
 						<!-- FIM -  Dados Bancarios -->
