@@ -51,7 +51,7 @@
 					<div class="box-header with-border">
 						<h3 class="box-title"><i class="fa fa-th-large"></i> Leituras</h3>
 						<div class="pull-right">
-							<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/atualizar') }}" class="btn btn-default btn-sm"><i class="fa fa-retweet"></i> Atualizar todas</a>
+							<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/atualizar') }}" id="ocultar" onclick="loading()" class="btn btn-default btn-sm ocultar"><i class="fa fa-retweet"></i> Atualizar todas</a>
 						</div>
 					</div>
 					<div class="box-body">

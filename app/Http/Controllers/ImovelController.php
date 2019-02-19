@@ -193,7 +193,7 @@ class ImovelController extends Controller
 
         $chartConsumoLine = ImovelController::graficoConsumoGeral($id);
 
-    return view('imovel.buscar_visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades, "chartConsumoLine" => $chartConsumoLine]);
+        return view('imovel.buscar_visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades, "chartConsumoLine" => $chartConsumoLine]);
     }
 
     public function edit($id)
@@ -697,6 +697,7 @@ class ImovelController extends Controller
 
             Leitura::create($leitura);
 
+            Session::flash('success', 'Leitura realizada com sucesso.' );
             return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
         }
         else
@@ -773,6 +774,8 @@ class ImovelController extends Controller
                     ];
 
                     Leitura::create($leitura);
+                    Session::flash('success', 'Procedimento realizado com sucesso.' );
+
                 }
                 //                    else
                 //                    {
@@ -839,6 +842,7 @@ class ImovelController extends Controller
 
             $prumada->update($atualizacao);
 
+            Session::flash('success', 'Equipamento ligado com sucesso.' );
             return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
         }
         else
@@ -905,6 +909,7 @@ class ImovelController extends Controller
 
             $prumada->update($atualizacao);
 
+            Session::flash('success', 'Equipamento desligado com sucesso.' );
             return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
         }
         else
