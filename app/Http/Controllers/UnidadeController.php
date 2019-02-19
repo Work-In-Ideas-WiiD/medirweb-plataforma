@@ -8,7 +8,9 @@ use App\Models\Leitura;
 use App\Models\Agrupamento;
 use App\Models\Imovel;
 use App\Models\Prumada;
+use App\User;
 use App\Http\Requests\Unidade\UnidadeSaveRequest;
+use App\Http\Requests\Unidade\UnidadeEditRequest;
 use App\Charts\ConsumoCharts;
 
 class UnidadeController extends Controller
@@ -61,7 +63,23 @@ class UnidadeController extends Controller
             return view('error403');
         }
 
+        //ADICIONAR USUARIO COMUM
+        $dataFormUser['USER_IMOID'] = $request->UNI_IDIMOVEL;
+        $dataFormUser['name'] = $request->UNI_RESPONSAVEL;
+        $dataFormUser['email'] = $request->email;
+        $dataFormUser['password'] = "123456";
+        $dataFormUser['roles'] = array("4"); //COMUM
+
+        $dataFormUser['password'] = bcrypt($dataFormUser['password']);
+
+        $user = User::create($dataFormUser);
+
+        $user->roles()->attach($dataFormUser['roles']);
+        // fim - ADICIONAR USUARIO COMUM
+
         $dataForm = $request->all();
+
+        $dataForm['UNI_IDUSER'] = $user->id;
 
         $undiade = Unidade::create($dataForm);
 
@@ -164,12 +182,18 @@ class UnidadeController extends Controller
 
         $prumadas = Prumada::where('PRU_IDUNIDADE', $unidade->UNI_ID)->get();
 
+        $user = User::find($unidade->UNI_IDUSER);
+        if(is_null($user)){
+            $email = "";
+        }else{
+            $email = $user->email;
+        }
         //$prumadas = $unidade->getPrumadas();
 
-        return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas'));
+        return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas', 'email'));
     }
 
-    public function update(Request $request, $id)
+    public function update(UnidadeEditRequest $request, $id)
     {
         $user = auth()->user()->USER_IMOID;
         $ID_IMO = Unidade::find($id)->agrupamento->imovel->IMO_ID;
@@ -189,6 +213,34 @@ class UnidadeController extends Controller
         $dataForm = $request->all();
 
         $unidade->update($dataForm);
+
+        $user = User::find($unidade->UNI_IDUSER);
+        if(is_null($user)){
+            // Se o usuario não existe
+            //ADICIONAR USUARIO COMUM
+            $dataFormUser['USER_IMOID'] = $unidade->UNI_IDIMOVEL;
+            $dataFormUser['name'] = $unidade->UNI_RESPONSAVEL;
+            $dataFormUser['email'] = $request->email;
+            $dataFormUser['password'] = "123456";
+            $dataFormUser['roles'] = array("4"); //COMUM
+
+            $dataFormUser['password'] = bcrypt($dataFormUser['password']);
+
+            $user = User::create($dataFormUser);
+
+            $user->roles()->attach($dataFormUser['roles']);
+            // fim - ADICIONAR USUARIO COMUM
+
+            $dataFormNew['UNI_IDUSER'] = $user->id;
+
+            $unidade->update($dataFormNew);
+        }else{
+            //user atualizar
+            $dataFormUser['name'] = $request->UNI_RESPONSAVEL;
+            $dataFormUser['email'] = $request->email;
+            $user->update($dataFormUser);
+            //fim - user atualizar
+        }
 
         return redirect('/unidade/editar/'.$id)->with('success', 'Unidade atualizado com sucesso.');
     }

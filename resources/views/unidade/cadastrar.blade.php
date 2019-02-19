@@ -60,12 +60,12 @@
 							@endif
 						</div>
 						<div class='form-group'>
-							{{ Form::label('UNI_EMAIL', 'E-mail do Responsável') }}
-							{{ Form::text('UNI_EMAIL', '', ['class' => 'form-control', 'placeholder' => '']) }}
+							{{ Form::label('email', 'E-mail do Responsável') }}
+							{{ Form::text('email', '', ['class' => 'form-control', 'placeholder' => '']) }}
 
-							@if ($errors->has('UNI_EMAIL'))
+							@if ($errors->has('email'))
 							<span class="help-block">
-								<strong style="color: red;">{{ $errors->first('UNI_EMAIL') }}</strong>
+								<strong style="color: red;">{{ $errors->first('email') }}</strong>
 							</span>
 							@endif
 						</div>

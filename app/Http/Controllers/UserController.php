@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests\User\UserSaveRequest;
 use App\Http\Requests\User\UserEditRequest;
 use App\Models\Imovel;
+use App\Models\Unidade;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\File;
 
@@ -202,6 +203,14 @@ class UserController extends Controller
 
         if(key_exists('roles', $dataForm))
         $user->roles()->sync($dataForm['roles']);
+
+        // ATUALIZAR NOME RESPONSAVEL DA UNIDADE
+        $unidade = Unidade::where('UNI_IDUSER', $id)->first();
+        if(!is_null($unidade)){
+            $dataFormUNI['UNI_RESPONSAVEL'] = $user->name;
+            $unidade->update($dataFormUNI);
+        }
+        // fim
 
         if(!app('defender')->hasRoles('Administrador')){
             return redirect('/user/editar/'.$id)->with('success', 'Usuário atualizado com sucesso.');
