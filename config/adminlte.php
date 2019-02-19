@@ -217,11 +217,6 @@ return [
                     'icon' => 'user',
                     'url'  => 'user/secretario/',
                 ],
-                [
-                    'text' => 'Usuário Comum',
-                    'icon' => 'user',
-                    'url'  => 'user/comum/',
-                ],
             ],
         ],
         [

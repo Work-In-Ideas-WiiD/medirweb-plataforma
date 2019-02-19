@@ -251,9 +251,13 @@ class UnidadeController extends Controller
             return view('error403');
         }
 
+        $unidade = Unidade::find($id);
+
+        User::destroy($unidade->UNI_IDUSER);
+
         Unidade::destroy($id);
 
-        return redirect('/imovel')->with('success', 'Unidade deletado com sucesso.');
+        return redirect('/imovel')->with('success', 'Unidade e Usuario "'.$unidade->UNI_RESPONSAVEL.'" deletado com sucesso.');
     }
 
     /*public function leituraUnidade($undd)

@@ -47,8 +47,11 @@ class UserController extends Controller
 
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
-        foreach($_roles as $role)
-        $roles[$role->id] = $role->name;
+        foreach($_roles as $role){
+            if(!($role->id == 4)){
+                $roles[$role->id] = $role->name;
+            }
+        }
 
         $imoveis = ['' => 'Selecionar Imovel'];
         $_imoveis = Imovel::all();
@@ -67,8 +70,11 @@ class UserController extends Controller
 
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
-        foreach($_roles as $role)
-        $roles[$role->id] = $role->name;
+        foreach($_roles as $role){
+            if(!($role->id == 4)){
+                $roles[$role->id] = $role->name;
+            }
+        }
 
         $imoveis = ['' => 'Selecionar Imovel'];
         $_imoveis = Imovel::all();
@@ -127,8 +133,11 @@ class UserController extends Controller
 
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
-        foreach($_roles as $role)
-        $roles[$role->id] = $role->name;
+        foreach($_roles as $role){
+            if(!($role->id == 4)){
+                $roles[$role->id] = $role->name;
+            }
+        }
 
         $imoveis = ['' => 'Selecionar Imovel'];
         $_imoveis = Imovel::all();
@@ -154,13 +163,23 @@ class UserController extends Controller
 
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
-        foreach($_roles as $role)
-        $roles[$role->id] = $role->name;
+        foreach($_roles as $role){
+            if(!($role->id == 5)){
+                $roles[$role->id] = $role->name;
+            }
+        }
 
         $imoveis = ['' => 'Selecionar Imovel'];
         $_imoveis = Imovel::all();
         foreach($_imoveis as $imovel){
             $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+        }
+
+        foreach ($user->roles as $roleUser) {
+            if($roleUser->id = "4" ){
+                $unidade = Unidade::where('UNI_IDUSER', $id)->first();
+                return redirect('/unidade/editar/'.$unidade->UNI_ID)->with('error', 'Usuário COMUM é excluviso do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
+            }
         }
 
         return view('admin.editar_user', compact('user', 'roles', 'imoveis'));

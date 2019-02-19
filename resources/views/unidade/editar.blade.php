@@ -111,6 +111,13 @@
 						</div>
 
 					</div>
+
+					@if(!empty($email))
+					<div class="alert alert-warning" role="alert">
+						<p>OBS.: Se alterar email, o responsável da unidade só conseguirar acessar o aplicativo com novo email inserido! Por favor, avise o mesmo!</p>
+					</div>
+					@endif
+
 				</div>
 
 				<div class="col-md-4">
@@ -163,9 +170,9 @@
 									<td>{{ $pru->PRU_MODELO }}</td>
 									<td>
 										@if($pru->PRU_STATUS == 1)
-											Ativo
-											@elseif($pru->PRU_STATUS == 0)
-											Inativo
+										Ativo
+										@elseif($pru->PRU_STATUS == 0)
+										Inativo
 										@endif
 									</td>
 									<td>
