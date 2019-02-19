@@ -22,6 +22,9 @@ class CreateUnidadesTable extends Migration
             $table->integer('UNI_IDIMOVEL')->unsigned();
             $table->foreign('UNI_IDIMOVEL')->references('IMO_ID')->on('imoveis');
 
+            $table->integer('UNI_IDUSER')->unsigned();
+            $table->foreign('UNI_IDUSER')->references('id')->on('users');
+
             $table->string('UNI_NOME', 200);
             $table->string('UNI_RESPONSAVEL', 200);
             $table->string('UNI_CPFRESPONSAVEL', 200);

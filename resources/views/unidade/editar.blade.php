@@ -45,7 +45,7 @@
 								@endif
 							</div>
 							<div class='form-group'>
-								{{ Form::label('UNI_NOME', 'Nome') }}
+								{{ Form::label('UNI_NOME', 'Nome da Unidade') }}
 								{{ Form::text('UNI_NOME', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
 								@if ($errors->has('UNI_NOME'))
@@ -61,6 +61,16 @@
 								@if ($errors->has('UNI_CPFRESPONSAVEL'))
 								<span class="help-block">
 									<strong style="color: red;">{{ $errors->first('UNI_CPFRESPONSAVEL') }}</strong>
+								</span>
+								@endif
+							</div>
+							<div class='form-group'>
+								{{ Form::label('UNI_EMAIL', 'E-mail do Responsável') }}
+								{{ Form::text('UNI_EMAIL', null, ['class' => 'form-control', 'placeholder' => '']) }}
+
+								@if ($errors->has('UNI_EMAIL'))
+								<span class="help-block">
+									<strong style="color: red;">{{ $errors->first('UNI_EMAIL') }}</strong>
 								</span>
 								@endif
 							</div>
