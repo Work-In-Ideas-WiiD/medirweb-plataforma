@@ -192,13 +192,13 @@ class UnidadeController extends Controller
 
         $user = User::find($unidade->UNI_IDUSER);
         if(is_null($user)){
-            $email = "";
+            $unidade['email'] = "";
         }else{
-            $email = $user->email;
+            $unidade['email'] = $user->email;
         }
         //$prumadas = $unidade->getPrumadas();
 
-        return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas', 'email'));
+        return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas'));
     }
 
     public function update(UnidadeEditRequest $request, $id)
@@ -223,31 +223,65 @@ class UnidadeController extends Controller
         $unidade->update($dataForm);
 
         $user = User::find($unidade->UNI_IDUSER);
+
+        // VALIDAÇÃO SE EMAIL JA EXISTE
+        $userALL = User::where('email', $request->email)->get();
+        foreach ($userALL as $userALL1) {
+            if(!($userALL1->id == $user->id)){
+                return redirect('/unidade/editar/'.$id)->with('error', 'Email já cadastrado em outro usuário do sistema!');
+            }
+        }
+        // fim - VALIDAÇÃO SE EMAIL JA EXISTE
+
         if(is_null($user)){
             // Se o usuario não existe
             //ADICIONAR USUARIO COMUM
-            $dataFormUser['USER_IMOID'] = $unidade->UNI_IDIMOVEL;
-            $dataFormUser['name'] = $unidade->UNI_RESPONSAVEL;
+            $password = rand(100000,9999999);
+            $dataFormUser['USER_IMOID'] = $request->UNI_IDIMOVEL;
+            $dataFormUser['name'] = $request->UNI_RESPONSAVEL;
             $dataFormUser['email'] = $request->email;
-            $dataFormUser['password'] = "123456";
+            $dataFormUser['password'] = bcrypt($password);
             $dataFormUser['roles'] = array("4"); //COMUM
-
-            $dataFormUser['password'] = bcrypt($dataFormUser['password']);
 
             $user = User::create($dataFormUser);
 
             $user->roles()->attach($dataFormUser['roles']);
             // fim - ADICIONAR USUARIO COMUM
 
+            // ENVIAR EMAIL com a senha.
+            Mail::send('email.senhaUser', ['nome' => $user->nome,'senha' => $password], function($message) use ($user) {
+                $message->from('contato@wi-id.com', 'MedirWeb - Plataforma individualizadora');
+                $message->to($user->email);
+                $message->subject('Senha de acesso ao app');
+            });
+            // fim - enviar email
+
             $dataFormNew['UNI_IDUSER'] = $user->id;
 
             $unidade->update($dataFormNew);
         }else{
-            //user atualizar
+            //user name atualizar
             $dataFormUser['name'] = $request->UNI_RESPONSAVEL;
-            $dataFormUser['email'] = $request->email;
             $user->update($dataFormUser);
-            //fim - user atualizar
+            //fim - name atualizar
+
+            // se mudar email
+            if(!($request->email == $user->email)){
+                $password = rand(100000,9999999);
+                $dataFormUser['email'] = $request->email;
+                $dataFormUser['password'] = bcrypt($password);
+
+                $user->update($dataFormUser);
+
+                // ENVIAR EMAIL com a senha.
+                Mail::send('email.senhaUser', ['nome' => $user->nome,'senha' => $password], function($message) use ($user) {
+                    $message->from('contato@wi-id.com', 'MedirWeb - Plataforma individualizadora');
+                    $message->to($user->email);
+                    $message->subject('Senha de acesso ao app');
+                });
+                // fim - enviar email
+            }
+            // fim - se mudar email
         }
 
         return redirect('/unidade/editar/'.$id)->with('success', 'Unidade atualizado com sucesso.');

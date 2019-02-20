@@ -66,7 +66,7 @@
 							</div>
 							<div class='form-group'>
 								{{ Form::label('email', 'E-mail do Responsável') }}
-								{{ Form::text('email', $email, ['class' => 'form-control', 'placeholder' => '']) }}
+								{{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => '']) }}
 
 								@if ($errors->has('email'))
 								<span class="help-block">

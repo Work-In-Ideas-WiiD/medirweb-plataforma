@@ -145,6 +145,13 @@ class UserController extends Controller
             $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
         }
 
+        foreach ($user->roles as $roleUser) {
+            if($roleUser->id == "4" ){
+                $unidade = Unidade::where('UNI_IDUSER', $id)->first();
+                return redirect('/unidade/editar/'.$unidade->UNI_ID)->with('error', 'Usuário COMUM é excluviso do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
+            }
+        }
+
         return view('admin.editar', compact('user', 'roles', 'imoveis'));
     }
 
