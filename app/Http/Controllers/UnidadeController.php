@@ -12,6 +12,7 @@ use App\User;
 use App\Http\Requests\Unidade\UnidadeSaveRequest;
 use App\Http\Requests\Unidade\UnidadeEditRequest;
 use App\Charts\ConsumoCharts;
+use Mail;
 
 class UnidadeController extends Controller
 {
@@ -64,18 +65,25 @@ class UnidadeController extends Controller
         }
 
         //ADICIONAR USUARIO COMUM
+        $password = rand(100000,9999999);
         $dataFormUser['USER_IMOID'] = $request->UNI_IDIMOVEL;
         $dataFormUser['name'] = $request->UNI_RESPONSAVEL;
         $dataFormUser['email'] = $request->email;
-        $dataFormUser['password'] = "123456";
+        $dataFormUser['password'] = bcrypt($password);
         $dataFormUser['roles'] = array("4"); //COMUM
-
-        $dataFormUser['password'] = bcrypt($dataFormUser['password']);
 
         $user = User::create($dataFormUser);
 
         $user->roles()->attach($dataFormUser['roles']);
         // fim - ADICIONAR USUARIO COMUM
+
+        // ENVIAR EMAIL com a senha.
+        Mail::send('email.senhaUser', ['nome' => $user->nome,'senha' => $password], function($message) use ($user) {
+            $message->from('contato@wi-id.com', 'MedirWeb - Plataforma individualizadora');
+            $message->to($user->email);
+            $message->subject('Senha de acesso ao app');
+        });
+        // fim - enviar email
 
         $dataForm = $request->all();
 

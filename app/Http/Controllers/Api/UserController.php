@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use Artesaos\Defender\Facades\Defender;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Hash;
+use Mail;
 
 class UserController extends Controller
 {
