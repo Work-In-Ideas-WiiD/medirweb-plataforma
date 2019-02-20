@@ -19,22 +19,6 @@ class UserController extends Controller
         //
     }
 
-    public function getUsers($id)
-    {
-        $role = 'Comum';
-        $role = Defender::findRole(ucfirst($role));
-
-        $user = $role->users()->find($id);
-        if(!$user)
-        {
-            return response()->json(['error' => 'Usuário não encontrado!'], 400);
-        }
-
-
-
-        return response()->json($user, 200);
-    }
-
     public function login(Request $request)
     {
         $role = 'Comum';
@@ -54,6 +38,45 @@ class UserController extends Controller
 
         return response()->json(response()->make($user), 200);
     }
+
+    public function updateUsers(Request $request)
+    {
+        $user = User::find($request->input('user_id'));
+        if(!$user)
+        {
+            return response()->json(['error' => 'Usuário não encontrado!'], 400);
+        }
+
+        if ($request->input('foto')) {
+            $this->destroyFile($user, 'foto', 'uploads/fotos/');
+            $request->merge(['foto' => $this->cropImage($request->input('foto'), 'uploads/fotos/')]);
+        } else
+            $request->offsetUnset('foto');
+
+        if ($request->input('doc_rg')) {
+            $this->destroyFile($user, 'doc_rg', 'uploads/docs/');
+            $request->merge(['doc_rg' => $this->cropImage($request->input('doc_rg'), 'uploads/docs/')]);
+        } else
+            $request->offsetUnset('doc_rg');
+
+        if ($request->input('doc_end')) {
+            $this->destroyFile($user, 'doc_end', 'uploads/docs/');
+            $request->merge(['doc_end' => $this->cropImage($request->input('doc_end'), 'uploads/docs/')]);
+        } else
+            $request->offsetUnset('doc_end');
+
+        $dataForm = $request->all();
+
+        if(!isset($dataForm['password']) || $dataForm['password'] == '')
+            unset($dataForm['password'] );
+        else
+            $dataForm['password'] = bcrypt($dataForm['password']);
+
+        $user->update($dataForm);
+
+        return response()->json(response()->make($user), 200);
+    }
+
 
 
     public function create()

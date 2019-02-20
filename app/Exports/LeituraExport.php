@@ -27,12 +27,10 @@ class LeituraExport implements FromArray
         $this->dataAtual = $dataAtual;
     }
 
-    /**
-    * @return array
-    */
     public function array(): array
     {
-        $sheets = array();
+        $sheets = array(0 => array('Imovel', 'Indice Geral', 'NOMES', 'Apartamentos', 'Leitura Anterior', 'Leitura Atual',
+        'Consumo M³', 'Valor','Data leitura Anterior', 'Data leitura Atual'),1 => array(''));
 
         $unidades = Imovel::find($this->imovel)->getUnidades;
         foreach ($unidades as $unid) {
@@ -45,15 +43,19 @@ class LeituraExport implements FromArray
 
                 if(isset($leituraAnterior) && isset($leituraAtual))
                 {
-                    $comsumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
+                    $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
 
-                    if($comsumo > 10 && $comsumo <= 15)
-                    {
-                        $valor = (($comsumo - 10) * 11.37) + 59;
+                    if(empty($consumo)){
+                        $consumo = 0;
                     }
-                    elseif ($comsumo > 15)
+
+                    if($consumo > 10 && $consumo <= 15)
                     {
-                        $valor = (($comsumo - 10) * 13.98) + 59;
+                        $valor = (($consumo - 10) * 11.37) + 59;
+                    }
+                    elseif ($consumo > 15)
+                    {
+                        $valor = (($consumo - 10) * 13.98) + 59;
                     }
                     else
                     {
@@ -66,12 +68,12 @@ class LeituraExport implements FromArray
                         'Indice Geral' => $prumada->PRU_ID,
                         'NOMES' => $unid->UNI_RESPONSAVEL,
                         'Apartamentos' => $unid->UNI_NOME,
-                        'LEITURA DEZ.2018 - ANTERIOR' => $leituraAnterior->LEI_METRO,
-                        'LEITURA JAN.2019 - ATUAL' => $leituraAtual->LEI_METRO,
-                        'Cosumo M³' => $comsumo,
-                        'Valor' => number_format($valor, 2, ',', '.'),
-                        'Data leitura DEZ.2018' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
-                        'Data leitura JAN.2019' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
+                        'Leitura Anterior' => $leituraAnterior->LEI_METRO.' m³',
+                        'Leitura Atual' => $leituraAtual->LEI_METRO.' m³',
+                        'Consumo M³' => $consumo.' m³',
+                        'Valor' => 'R$ '.number_format($valor, 2, ',', '.'),
+                        'Data leitura Anterior' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
+                        'Data leitura Atual' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
                     );
 
                     array_push($sheets, $relatorio);
