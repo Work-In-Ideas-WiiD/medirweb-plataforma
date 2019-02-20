@@ -22,3 +22,13 @@ Route::group(['prefix' => 'login'], function()
 {
     Route::post('', ['uses' => 'Api\UserController@login']);
 });
+
+Route::group(['prefix' => 'user'], function()
+{
+    //Caminho /api/user/update
+    Route::group(['prefix' => 'update'], function()
+    {
+        Route::post('', ['uses' => 'Api\UserController@updateUsers']);
+    });
+
+});
