@@ -171,7 +171,7 @@ class UserController extends Controller
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
         foreach($_roles as $role){
-            if(!($role->id == 5)){
+            if(!($role->id == 4)){
                 $roles[$role->id] = $role->name;
             }
         }
