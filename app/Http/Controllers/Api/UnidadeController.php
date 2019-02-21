@@ -14,6 +14,37 @@ use Session;
 class UnidadeController extends Controller
 {
 
+    public function showImovel($id)
+    {
+        $imovel = Unidade::find($id)->imovel;
+
+        return response()->json(response()->make($imovel), 200);
+    }
+
+    public function showAgrupamento($id)
+    {
+        $agrupamento = Unidade::find($id)->agrupamento;
+
+        return response()->json(response()->make($agrupamento), 200);
+    }
+
+    public function showUnidade($id)
+    {
+        $unidade = Unidade::findorFail($id);
+
+        return response()->json(response()->make($unidade), 200);
+    }
+
+    public function showPrumadas($id)
+    {
+        $prumadas = Unidade::find($id)->getPrumadas;
+
+        return response()->json(response()->make($prumadas), 200);
+    }
+
+
+    // PARA BAIXO É SOMENTE MANIPULAÇÃO DOS HIDROMETROS
+
     public function leituraPrumada($prumada)
     {
         $prumada = Prumada::find($prumada);
@@ -65,32 +96,97 @@ class UnidadeController extends Controller
 
     }
 
-    public function showImovel($id)
+    public function ligarPrumada($prumada)
     {
-        $imovel = Unidade::find($id)->imovel;
+        $prumada = Prumada::find($prumada);
 
-        return response()->json(response()->make($imovel), 200);
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/ativacao/'.dechex($prumada->PRU_IDFUNCIONAL),
+            CURLOPT_CONNECTTIMEOUT => 15,
+            CURLOPT_TIMEOUT        => 15,
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        ));
+
+        $resp = curl_exec($curl);
+
+        curl_close($curl);
+
+        $jsons = json_decode($resp);
+
+        if($jsons !== NULL)
+        {
+            if($jsons[4] == '00')
+            {
+                $status = 1;
+            }
+            else
+            {
+                $status = 0;
+            }
+
+            $atualizacao = [
+                'PRU_STATUS' => $status,
+            ];
+
+            $prumada->update($atualizacao);
+            return response()->json(['success' => 'Equipamento ligado com sucesso.'], 200);
+        }
+        else
+        {
+            $prumada->PRU_STATUS = 0;
+            $prumada->save();
+            return response()->json(['error' => 'Não foi possível ligar o equipamento. Por favor, verifique a conexão.'], 400);
+        }
+
     }
 
-    public function showAgrupamento($id)
+    public function desligarPrumada($prumada)
     {
-        $agrupamento = Unidade::find($id)->agrupamento;
+        $prumada = Prumada::find($prumada);
 
-        return response()->json(response()->make($agrupamento), 200);
-    }
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/corte/'.dechex($prumada->PRU_IDFUNCIONAL),
+            CURLOPT_CONNECTTIMEOUT => 15,
+            CURLOPT_TIMEOUT        => 15,
+            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
+        ));
 
-    public function showUnidade($id)
-    {
-        $unidade = Unidade::findorFail($id);
+        $resp = curl_exec($curl);
 
-        return response()->json(response()->make($unidade), 200);
-    }
+        curl_close($curl);
 
-    public function showPrumadas($id)
-    {
-        $prumadas = Unidade::find($id)->getPrumadas;
+        $jsons = json_decode($resp);
 
-        return response()->json(response()->make($prumadas), 200);
+        if($jsons !== NULL)
+        {
+            if($jsons[4] == '00')
+            {
+                $status = '1';
+            }
+            else
+            {
+                $status = '0';
+            }
+
+
+            $atualizacao = [
+                'PRU_STATUS' => $status,
+            ];
+
+            $prumada->update($atualizacao);
+            return response()->json(['success' => 'Equipamento desligado com sucesso.'], 200);
+        }
+        else
+        {
+            $prumada->PRU_STATUS = 1;
+            $prumada->save();
+            return response()->json(['error' => 'Não foi possível desligar o equipamento. Por favor, verifique a conexão.'], 400);
+        }
+
     }
 
 }

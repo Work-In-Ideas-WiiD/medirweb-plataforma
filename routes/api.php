@@ -39,10 +39,7 @@ Route::group(['prefix' => 'user'], function()
 });
 
 
-// ### UNIDADE ###
-
-// Realizar Leitura do Hidrômetro
-Route::get('/leitura/prumada/{prumada}', array('uses' => 'Api\UnidadeController@leituraPrumada'));
+// ### UNIDADE CONTROLER ###
 
 //Caminho /api/unidade
 Route::group(['prefix' => 'unidade'], function()
@@ -55,9 +52,17 @@ Route::group(['prefix' => 'unidade'], function()
         Route::get('/agrupamento', ['uses' => 'Api\UnidadeController@showAgrupamento']);
         Route::get('/unidade', ['uses' => 'Api\UnidadeController@showUnidade']);
         Route::get('/prumadas', ['uses' => 'Api\UnidadeController@showPrumadas']);
-
     });
 
 });
 
-// fim - ### UNIDADE ###
+// Realizar Leitura do Hidrômetro
+Route::get('/leitura/prumada/{prumada}', array('uses' => 'Api\UnidadeController@leituraPrumada'));
+
+// Ligar Hidrômetro
+Route::get('/ligar/prumada/{prumada}', array('uses' => 'Api\UnidadeController@ligarPrumada'));
+
+// Desligar Hidrômetro
+Route::get('/desligar/prumada/{prumada}', array('uses' => 'Api\UnidadeController@desligarPrumada'));
+
+// fim - ### UNIDADE CONTROLER ####
