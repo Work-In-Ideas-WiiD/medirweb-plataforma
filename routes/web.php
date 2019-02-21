@@ -135,3 +135,7 @@ Route::post('relatorio/consumo', array('uses' => 'RelatorioController@getConsumo
 Route::get('/relatorio/faturas', 'RelatorioController@relatorioFatura')->name('Relatorio Fatura');
 Route::post('relatorio/faturas', array('uses' => 'RelatorioController@getFaturaLista'));
 Route::get('relatorio/faturas/getApartamentoLista/{id}', array('uses' => 'RelatorioController@showUnidade'));
+
+
+// PAGINA DE ERROR
+Route::get('404',['as'=>'404','uses'=>'ErrorHandlerController@errorCode404']);
