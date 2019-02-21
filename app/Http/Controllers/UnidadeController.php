@@ -201,6 +201,8 @@ class UnidadeController extends Controller
         return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas'));
     }
 
+
+    /*
     public function update(UnidadeEditRequest $request, $id)
     {
         $user = auth()->user()->USER_IMOID;
@@ -286,6 +288,45 @@ class UnidadeController extends Controller
 
         return redirect('/unidade/editar/'.$id)->with('success', 'Unidade atualizado com sucesso.');
     }
+    */
+
+
+    // TESTE
+    public function update(Request $request, $id)
+    {
+
+        // PERMISSÃO DE USUARIO
+        $user = auth()->user()->USER_IMOID;
+        $ID_IMO = Unidade::find($id)->agrupamento->imovel->IMO_ID;
+        if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
+            return view('error403');
+        }
+        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
+            return view('error403');
+        }
+        // FIM - PERMISSÃO DE USUARIO
+
+
+
+
+
+
+        $unidade = Unidade::findOrFail($id);
+
+        if(is_null($unidade)){
+            return redirect( URL::previous() );
+        }
+
+        $dataForm = $request->all();
+
+        $unidade->update($dataForm);
+
+
+
+        return redirect('/unidade/editar/'.$id)->with('success', 'Unidade atualizado com sucesso.');
+    }
+    // TESTE
+
 
     public function destroy(Request $request, $id)
     {
