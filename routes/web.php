@@ -52,7 +52,7 @@ Route::get('/imovel/{id}/consumo', array('as'=>'imovel.consumo', 'uses' => 'Imov
 Route::post('lancar-consumo', array('uses' => 'ImovelController@postLancarConsumo'));
 
 /* imóveis */
-Route::get('/imovel/{imovel}/leitura/{unidade}', array('uses' => 'ImovelController@leituraUnidade'));
+Route::get('/leitura/prumada/{prumada}', array('uses' => 'ImovelController@leituraUnidade'));
 
 Route::get('/imovel/{imovel}/ligar/{unidade}', array('uses' => 'ImovelController@ligarUnidade'));
 Route::get('/imovel/{imovel}/desligar/{unidade}', array('uses' => 'ImovelController@desligarUnidade'));

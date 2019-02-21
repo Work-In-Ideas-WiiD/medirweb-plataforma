@@ -20,7 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 
-
 //Caminho /api/login
 Route::group(['prefix' => 'login'], function()
 {
@@ -42,18 +41,23 @@ Route::group(['prefix' => 'user'], function()
 
 // ### UNIDADE ###
 
-// Leitura do Hidrômetro
-Route::get('/imovel/{imovel}/unidade/{unidade}', array('uses' => 'Api\UnidadeController@leituraUnidade'));
+// Realizar Leitura do Hidrômetro
+Route::get('/leitura/prumada/{prumada}', array('uses' => 'Api\UnidadeController@leituraPrumada'));
 
 //Caminho /api/unidade
-/*Route::group(['prefix' => 'unidade'], function()
+Route::group(['prefix' => 'unidade'], function()
 {
 
-    //Caminho /api/unidade/{imovel}/leitura/{unidade}
-    Route::group(['prefix' => '{imovel}/leitura/{unidade}'], function()
+    //Caminho /api/unidade/ver/{id}
+    Route::group(['prefix' => 'ver/{id}'], function()
     {
-        Route::post('', ['uses' => 'Api\UnidadeController@leituraUnidade']);
+        Route::get('/imovel', ['uses' => 'Api\UnidadeController@showImovel']);
+        Route::get('/agrupamento', ['uses' => 'Api\UnidadeController@showAgrupamento']);
+        Route::get('/unidade', ['uses' => 'Api\UnidadeController@showUnidade']);
+        Route::get('/prumadas', ['uses' => 'Api\UnidadeController@showPrumadas']);
+
     });
 
 });
-*/
+
+// fim - ### UNIDADE ###

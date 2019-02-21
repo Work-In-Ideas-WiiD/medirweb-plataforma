@@ -133,7 +133,7 @@
 
 															<!-- Botao Leitura -->
 															<div class="col-md-1">
-																<a  href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-default ocultar"><i class="fa fa-retweet"></i></a>
+																<a  href="{{ url('/leitura/prumada/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-default ocultar"><i class="fa fa-retweet"></i></a>
 															</div>
 															<!-- fim - Botao Leitura -->
 

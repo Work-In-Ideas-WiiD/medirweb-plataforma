@@ -640,23 +640,17 @@ class ImovelController extends Controller
         return response()->json(['imoveis'=>$retorno]);
     }
 
-    public function leituraUnidade($imovel, $unidade)
+    public function leituraUnidade($prumada)
     {
         $user = auth()->user()->USER_IMOID;
         if(app('defender')->hasRoles(['Sindico', 'Secretário']) && !($user == $imovel)){
             return view('error403');
         }
 
-        $imovel = Imovel::find($imovel);
+        $prumada = Prumada::find($prumada);
 
-        //$unidade = Unidade::find($unidade);
-        $prumada = Prumada::find($unidade);
-
-        //var_dump($unidade->getPrumadas); die();
-        //        foreach ($unidade->getPrumadas as $prumada)
-        //        {
         $curl = curl_init();
-        // Set some options - we are passing in a useragent too here
+
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/leitura/'.dechex($prumada->PRU_IDFUNCIONAL),
@@ -678,10 +672,6 @@ class ImovelController extends Controller
             $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
 
             $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-            //
-            //                var_dump($metro_cubico);
-            //                var_dump($litros);
-            //                var_dump($mililitro);
 
             $subtotal = ($metro_cubico * 1000) + $litros;
             $total = $subtotal.'.'.$mililitro.'';
@@ -698,7 +688,7 @@ class ImovelController extends Controller
             Leitura::create($leitura);
 
             Session::flash('success', 'Leitura realizada com sucesso.' );
-            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID);
         }
         else
         {
@@ -706,7 +696,7 @@ class ImovelController extends Controller
             $prumada->save();
             Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.' );
 
-            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID);
         }
 
         //        }

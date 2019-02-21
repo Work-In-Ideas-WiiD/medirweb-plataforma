@@ -14,12 +14,9 @@ use Session;
 class UnidadeController extends Controller
 {
 
-    public function leituraUnidade($imovel, $unidade)
+    public function leituraPrumada($prumada)
     {
-
-        $imovel = Imovel::find($imovel);
-
-        $prumada = Prumada::find($unidade);
+        $prumada = Prumada::find($prumada);
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -68,40 +65,32 @@ class UnidadeController extends Controller
 
     }
 
-    public function index()
+    public function showImovel($id)
     {
-        //
+        $imovel = Unidade::find($id)->imovel;
+
+        return response()->json(response()->make($imovel), 200);
     }
 
-    public function create()
+    public function showAgrupamento($id)
     {
-        //
+        $agrupamento = Unidade::find($id)->agrupamento;
+
+        return response()->json(response()->make($agrupamento), 200);
     }
 
-
-    public function store(Request $request)
+    public function showUnidade($id)
     {
-        //
+        $unidade = Unidade::findorFail($id);
+
+        return response()->json(response()->make($unidade), 200);
     }
 
-    public function show($id)
+    public function showPrumadas($id)
     {
-        //
-    }
+        $prumadas = Unidade::find($id)->getPrumadas;
 
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
+        return response()->json(response()->make($prumadas), 200);
     }
 
 }
