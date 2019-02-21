@@ -17,12 +17,18 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
+
+
 //Caminho /api/login
 Route::group(['prefix' => 'login'], function()
 {
     Route::post('', ['uses' => 'Api\UserController@login']);
 });
 
+
+//Caminho /api/user
 Route::group(['prefix' => 'user'], function()
 {
     //Caminho /api/user/update
@@ -33,8 +39,21 @@ Route::group(['prefix' => 'user'], function()
 
 });
 
+
+// ### UNIDADE ###
+
+// Leitura do Hidrômetro
+Route::get('/imovel/{imovel}/unidade/{unidade}', array('uses' => 'Api\UnidadeController@leituraUnidade'));
+
 //Caminho /api/unidade
-Route::group(['prefix' => 'unidade'], function()
+/*Route::group(['prefix' => 'unidade'], function()
 {
-    Route::post('', ['uses' => 'Api\UnidadeController@leitura']);
+
+    //Caminho /api/unidade/{imovel}/leitura/{unidade}
+    Route::group(['prefix' => '{imovel}/leitura/{unidade}'], function()
+    {
+        Route::post('', ['uses' => 'Api\UnidadeController@leituraUnidade']);
+    });
+
 });
+*/
