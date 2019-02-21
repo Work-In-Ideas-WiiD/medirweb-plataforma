@@ -63,20 +63,20 @@ class AgrupamentoController extends Controller
 
 	public function edit($id)
 	{
+		$agrupamento  = Agrupamento::find($id);
+
+		if(is_null($agrupamento)){
+            return redirect()->route('404');
+        }
+
 		$user = auth()->user()->USER_IMOID;
-		$ID_IMO = Agrupamento::find($id)->imovel->IMO_ID;
+		$ID_IMO = $agrupamento->imovel->IMO_ID;
         if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
             return view('error403');
         }
         if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
             return view('error403');
         }
-
-		$agrupamento  = Agrupamento::findOrFail($id);
-
-		if(is_null($agrupamento)){
-			return redirect( URL::previous() );
-		}
 
 		$imoveis  = Imovel::pluck('IMO_NOME', 'IMO_ID');
 
@@ -86,20 +86,20 @@ class AgrupamentoController extends Controller
 
 	public function update(Request $request, $id)
 	{
+		$agrupamento  = Agrupamento::find($id);
+
+		if(is_null($agrupamento)){
+            return redirect()->route('404');
+        }
+
 		$user = auth()->user()->USER_IMOID;
-		$ID_IMO = Agrupamento::find($id)->imovel->IMO_ID;
+		$ID_IMO = $agrupamento->imovel->IMO_ID;
         if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
             return view('error403');
         }
         if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
             return view('error403');
         }
-
-		$agrupamento = Agrupamento::findOrFail($id);
-
-		if(is_null($agrupamento)){
-			return redirect( URL::previous() );
-		}
 
 		$dataForm = $request->all();
 

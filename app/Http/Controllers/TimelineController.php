@@ -112,7 +112,7 @@ class TimelineController extends Controller
         $prumadas = Prumada::where('PRU_IDUNIDADE', $id)->get();
 
         if(is_null($prumadas)){
-            return redirect( URL::previous() );
+            return redirect()->route('404');
         }
 
         return json_encode($prumadas);

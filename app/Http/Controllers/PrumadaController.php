@@ -62,7 +62,7 @@ class PrumadaController extends Controller
 
 	public function show($id)
 	{
-
+		return redirect()->route('404');
 
 	}
 
@@ -99,11 +99,11 @@ class PrumadaController extends Controller
 	public function edit($id)
 	{
 
-		$prumadas  = Prumada::findOrFail($id);
+		$prumadas  = Prumada::find($id);
 
 		if(is_null($prumadas)){
-			return redirect( URL::previous() );
-		}
+            return redirect()->route('404');
+        }
 
 		$_unidades = Unidade::where('UNI_ID', $prumadas->PRU_IDUNIDADE)->get();
 		foreach($_unidades as $unidade){
@@ -136,11 +136,11 @@ class PrumadaController extends Controller
 
 	public function update(PrumadaEditRequest $request, $id)
 	{
-		$prumada = Prumada::findOrFail($id);
+		$prumada = Prumada::find($id);
 
 		if(is_null($prumada)){
-			return redirect( URL::previous() );
-		}
+            return redirect()->route('404');
+        }
 
 		$dataForm = $request->all();
 

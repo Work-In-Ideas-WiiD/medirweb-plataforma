@@ -133,7 +133,11 @@ class ImovelController extends Controller
             return view('error403');
         }
 
-        $imovel =  Imovel::findorFail($id);
+        $imovel =  Imovel::find($id);
+
+        if(is_null($imovel)){
+            return redirect()->route('404');
+        }
 
         $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
         $imovel['IMO_IDESTADO'] = Imovel::find($id)->estado->EST_ABREVIACAO;
@@ -159,7 +163,11 @@ class ImovelController extends Controller
             return redirect('teste/'.$id);
         }
 
-        $imovel =  Imovel::findorFail($id);
+        $imovel =  Imovel::find($id);
+
+        if(is_null($imovel)){
+            return redirect()->route('404');
+        }
 
         $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
         $imovel['IMO_IDESTADO'] = Imovel::find($id)->estado->EST_ABREVIACAO;
@@ -206,10 +214,10 @@ class ImovelController extends Controller
             return view('error403');
         }
 
-        $imovel = Imovel::findOrFail($id);
+        $imovel = Imovel::find($id);
 
         if(is_null($imovel)){
-            return redirect( URL::previous() );
+            return redirect()->route('404');
         }
 
         $clientes = ['' => 'Selecionar Cliente'];
@@ -241,10 +249,10 @@ class ImovelController extends Controller
             return view('error403');
         }
 
-        $imovel = Imovel::findOrFail($id);
+        $imovel = Imovel::find($id);
 
         if(is_null($imovel)){
-            return redirect( URL::previous() );
+            return redirect()->route('404');
         }
 
         if($request->IMO_IDCLIENTE){

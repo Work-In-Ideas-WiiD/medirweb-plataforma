@@ -96,8 +96,12 @@ class UnidadeController extends Controller
 
     public function show($id)
     {
-        //
-        $unidade        = Unidade::findorFail($id);
+        $unidade        = Unidade::find($id);
+
+        if(is_null($unidade)){
+            return redirect()->route('404');
+        }
+
         $prumadas       = Unidade::find($id)->getPrumadas;
         $agrupamento    = Unidade::find($id)->agrupamento;
         $imovel         = Unidade::find($id)->imovel;
@@ -163,19 +167,19 @@ class UnidadeController extends Controller
 
     public function edit($id)
     {
+        $unidade  = Unidade::find($id);
+
+        if(is_null($unidade)){
+            return redirect()->route('404');
+        }
+
         $user = auth()->user()->USER_IMOID;
-        $ID_IMO = Unidade::find($id)->agrupamento->imovel->IMO_ID;
+        $ID_IMO = $unidade->agrupamento->imovel->IMO_ID;
         if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
             return view('error403');
         }
         if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
             return view('error403');
-        }
-
-        $unidade  = Unidade::findOrFail($id);
-
-        if(is_null($unidade)){
-            return redirect( URL::previous() );
         }
 
         $_imoveis = Imovel::all();
@@ -203,19 +207,19 @@ class UnidadeController extends Controller
 
     public function update(UnidadeEditRequest $request, $id)
     {
+        $unidade  = Unidade::find($id);
+
+        if(is_null($unidade)){
+            return redirect()->route('404');
+        }
+
         $user = auth()->user()->USER_IMOID;
-        $ID_IMO = Unidade::find($id)->agrupamento->imovel->IMO_ID;
+        $ID_IMO = $unidade->agrupamento->imovel->IMO_ID;
         if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
             return view('error403');
         }
         if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
             return view('error403');
-        }
-
-        $unidade = Unidade::findOrFail($id);
-
-        if(is_null($unidade)){
-            return redirect( URL::previous() );
         }
 
         $dataForm = $request->all();

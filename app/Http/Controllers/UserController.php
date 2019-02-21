@@ -125,10 +125,10 @@ class UserController extends Controller
             return view('error403');
         }
 
-        $user = User::findOrFail($id);
+        $user = User::find($id);
 
         if(is_null($user)){
-            return redirect( URL::previous() );
+            return redirect()->route('404');
         }
 
         $roles =[];
@@ -162,10 +162,10 @@ class UserController extends Controller
             return view('error403');
         }
 
-        $user = User::findOrFail($id);
+        $user = User::find($id);
 
         if(is_null($user)){
-            return redirect( URL::previous() );
+            return redirect()->route('404');
         }
 
         $roles =[];
@@ -199,10 +199,10 @@ class UserController extends Controller
             return view('error403');
         }
 
-        $user = User::findOrFail($id);
+        $user = User::find($id);
 
         if(is_null($user)){
-            return redirect( URL::previous() );
+            return redirect()->route('404');
         }
 
         $dataForm = $request->all();

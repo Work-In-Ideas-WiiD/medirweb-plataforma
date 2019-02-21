@@ -100,7 +100,12 @@ class ClienteController extends Controller
             return view('error403');
         }
 
-        $cliente =  Cliente::findorFail($id);
+        $cliente =  Cliente::find($id);
+
+        if(is_null($cliente)){
+            return redirect()->route('404');
+        }
+
         $cliente['CLI_CIDADE'] = Cliente::find($id)->cidade->CID_NOME;
         $cliente['CLI_ESTADO'] = Cliente::find($id)->estado->EST_ABREVIACAO;
 
@@ -113,10 +118,10 @@ class ClienteController extends Controller
             return view('error403');
         }
 
-        $cliente = Cliente::findOrFail($id);
+        $cliente = Cliente::find($id);
 
         if(is_null($cliente)){
-            return redirect( URL::previous() );
+            return redirect()->route('404');
         }
 
         $estados = ['' => 'Selecionar Estado'];
@@ -143,10 +148,10 @@ class ClienteController extends Controller
 
         $dataForm = $request->all();
 
-        $cliente = Cliente::findOrFail($id);
+        $cliente = Cliente::find($id);
 
         if(is_null($cliente)){
-            return redirect( URL::previous() );
+            return redirect()->route('404');
         }
 
         if($request->hasFile('foto')){
