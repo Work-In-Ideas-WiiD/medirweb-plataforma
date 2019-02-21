@@ -32,3 +32,9 @@ Route::group(['prefix' => 'user'], function()
     });
 
 });
+
+//Caminho /api/unidade
+Route::group(['prefix' => 'unidade'], function()
+{
+    Route::post('', ['uses' => 'Api\UnidadeController@leitura']);
+});

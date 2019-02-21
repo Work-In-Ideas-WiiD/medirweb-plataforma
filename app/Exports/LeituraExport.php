@@ -29,8 +29,10 @@ class LeituraExport implements FromArray
 
     public function array(): array
     {
-        $sheets = array(0 => array('Imovel', 'Indice Geral', 'NOMES', 'Apartamentos', 'Leitura Anterior', 'Leitura Atual',
-        'Consumo M³', 'Valor','Data leitura Anterior', 'Data leitura Atual'),1 => array(''));
+        $imovel =  Imovel::find($this->imovel);
+
+        $sheets = array(0 => array('Imovel' => $imovel->IMO_NOME,), 1 => array(''), 2 => array('Nomes', 'Apartamentos', '# Hidrômetro',
+        'Leitura Anterior', 'Leitura Atual', 'Consumo M³', 'Valor','Data leitura Anterior', 'Data leitura Atual'),3 => array(''));
 
         $unidades = Imovel::find($this->imovel)->getUnidades;
         foreach ($unidades as $unid) {
@@ -64,10 +66,9 @@ class LeituraExport implements FromArray
 
 
                     $relatorio = array(
-                        'Imovel' => $unid->imovel->IMO_NOME,
-                        'Indice Geral' => $prumada->PRU_ID,
-                        'NOMES' => $unid->UNI_RESPONSAVEL,
+                        'Nomes' => $unid->UNI_RESPONSAVEL,
                         'Apartamentos' => $unid->UNI_NOME,
+                        '# Hidrômetro' => '#'.$prumada->PRU_ID,
                         'Leitura Anterior' => $leituraAnterior->LEI_METRO.' m³',
                         'Leitura Atual' => $leituraAtual->LEI_METRO.' m³',
                         'Consumo M³' => $consumo.' m³',
