@@ -642,12 +642,12 @@ class ImovelController extends Controller
 
     public function leituraUnidade($prumada)
     {
+        $prumada = Prumada::find($prumada);
+
         $user = auth()->user()->USER_IMOID;
-        if(app('defender')->hasRoles(['Sindico', 'Secretário']) && !($user == $imovel)){
+        if(app('defender')->hasRoles(['Sindico', 'Secretário']) && !($user == $prumada->unidade->imovel->IMO_ID)){
             return view('error403');
         }
-
-        $prumada = Prumada::find($prumada);
 
         $curl = curl_init();
 
