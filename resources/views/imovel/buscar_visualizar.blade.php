@@ -55,9 +55,20 @@
 						</div>
 					</div>
 					<div class="box-body">
+
+						<?php $collapsed_box = "collapsed-box";?>
 						@foreach ($agrupamentos as $key=>$agrupamento)
 
-						<div class="box collapsed-box" style="border-top: 2px solid #f4f4f4;">
+						<?php if(!empty($_GET['a'])){
+							$AGRID = $_GET['a'];
+							if($agrupamento->AGR_ID == $AGRID){
+								$collapsed_box = "";
+							}else {
+								$collapsed_box = "collapsed-box";
+							}
+						}?>
+
+						<div class="box {{$collapsed_box}}" style="border-top: 2px solid #f4f4f4;">
 							<div class="box-header" data-widget="collapse" style="border-left: 4px solid #f38212">
 								<h3 class="box-title" >{{ $agrupamento->AGR_NOME }}</h3>
 								<div class="box-tools pull-right">

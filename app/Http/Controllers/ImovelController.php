@@ -696,7 +696,7 @@ class ImovelController extends Controller
             Leitura::create($leitura);
 
             Session::flash('success', 'Leitura realizada com sucesso.' );
-            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID);
+            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
         }
         else
         {
@@ -704,13 +704,10 @@ class ImovelController extends Controller
             $prumada->save();
             Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.' );
 
-            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID);
+            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
+
         }
 
-        //        }
-
-
-        //return redirect::back();
     }
 
     public function atualizarTodasLeituraUnidade($id)
@@ -841,15 +838,14 @@ class ImovelController extends Controller
             $prumada->update($atualizacao);
 
             Session::flash('success', 'Equipamento ligado com sucesso.' );
-            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
         }
         else
         {
             $prumada->PRU_STATUS = 0;
             $prumada->save();
             Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
-
-            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
         }
 
 
@@ -908,15 +904,14 @@ class ImovelController extends Controller
             $prumada->update($atualizacao);
 
             Session::flash('success', 'Equipamento desligado com sucesso.' );
-            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
         }
         else
         {
             $prumada->PRU_STATUS = 1;
             $prumada->save();
             Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
-
-            return redirect('imovel/buscar/ver/'.$imovel->IMO_ID);
+            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
         }
 
         //        }
