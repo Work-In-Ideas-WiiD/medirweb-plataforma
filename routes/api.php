@@ -43,7 +43,6 @@ Route::group(['prefix' => 'user'], function()
 //Caminho /api/unidade
 Route::group(['prefix' => 'unidade'], function()
 {
-
     //Caminho /api/unidade/ver/{id}
     Route::group(['prefix' => 'ver/{id}'], function()
     {
@@ -52,7 +51,6 @@ Route::group(['prefix' => 'unidade'], function()
         Route::get('/unidade', ['uses' => 'Api\UnidadeController@showUnidade']);
         Route::get('/prumadas', ['uses' => 'Api\UnidadeController@showPrumadas']);
     });
-
 });
 // fim - ### UNIDADE CONTROLER ####
 
@@ -70,3 +68,13 @@ Route::get('/desligar/prumada/{prumada}', array('uses' => 'Api\PrumadaController
 // Ultima Leitura do Hidrômetro
 Route::get('/prumada/{prumada}/ultimaLeitura', array('uses' => 'Api\PrumadaController@ultimaLeitura'));
 // fim - ### Prumada CONTROLER ###
+
+
+// ### Relatorio CONTROLER ###
+//Caminho /api/relatorio
+Route::group(['prefix' => 'relatorio'], function()
+{
+    Route::post('/consumo', array('uses' => 'Api\RelatorioController@consumo'));
+    Route::post('/fatura', array('uses' => 'Api\RelatorioController@fatura'));
+});
+// fim - ### Relatorio CONTROLER ###

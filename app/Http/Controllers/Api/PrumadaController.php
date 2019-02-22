@@ -158,4 +158,13 @@ class PrumadaController extends Controller
 
     }
 
+    public function ultimaLeitura($id)
+    {
+        $ultimaleitura =  Leitura::where('LEI_IDPRUMADA',$id)
+        ->orderBy('LEI_ID', 'desc')
+        ->first();
+
+        return response()->json(response()->make($ultimaleitura), 200);
+    }
+
 }
