@@ -25,7 +25,7 @@ class UnidadeController extends Controller
 
     public function showUnidade(Request $request)
     {
-        $unidade = Unidade::where('UNI_IDUSER', $request->UNI_IDUSER)->get();
+        $unidade = Unidade::where('UNI_IDUSER', $request->UNI_IDUSER)->first();
 
         return response()->json(response()->make($unidade), 200);
     }
