@@ -13,6 +13,9 @@ class UnidadeController extends Controller
     {
         $imovel = Unidade::find($request->UNI_ID)->imovel;
 
+        $imovel['IMO_IDCIDADE'] = Unidade::find($request->UNI_ID)->imovel->cidade->CID_NOME;
+        $imovel['IMO_IDESTADO'] = Unidade::find($request->UNI_ID)->imovel->estado->EST_ABREVIACAO;
+
         return response()->json(response()->make($imovel), 200);
     }
 
