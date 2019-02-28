@@ -44,12 +44,12 @@ Route::group(['prefix' => 'user'], function()
 Route::group(['prefix' => 'unidade'], function()
 {
     //Caminho /api/unidade/ver/{id}
-    Route::group(['prefix' => 'ver/{id}'], function()
+    Route::group(['prefix' => 'ver'], function()
     {
-        Route::get('/imovel', ['uses' => 'Api\UnidadeController@showImovel']);
-        Route::get('/agrupamento', ['uses' => 'Api\UnidadeController@showAgrupamento']);
-        Route::get('/unidade', ['uses' => 'Api\UnidadeController@showUnidade']);
-        Route::get('/prumadas', ['uses' => 'Api\UnidadeController@showPrumadas']);
+        Route::post('/imovel', ['uses' => 'Api\UnidadeController@showImovel']);
+        Route::post('/agrupamento', ['uses' => 'Api\UnidadeController@showAgrupamento']);
+        Route::post('/unidade', ['uses' => 'Api\UnidadeController@showUnidade']);
+        Route::post('/prumadas', ['uses' => 'Api\UnidadeController@showPrumadas']);
     });
 });
 // fim - ### UNIDADE CONTROLER ####
@@ -57,16 +57,16 @@ Route::group(['prefix' => 'unidade'], function()
 
 // ### Prumada CONTROLER ###
 // Realizar Leitura do Hidrômetro
-Route::get('/leitura/prumada/{prumada}', array('uses' => 'Api\PrumadaController@leituraPrumada'));
+Route::post('/leitura/prumada', array('uses' => 'Api\PrumadaController@leituraPrumada'));
 
 // Ligar Hidrômetro
-Route::get('/ligar/prumada/{prumada}', array('uses' => 'Api\PrumadaController@ligarPrumada'));
+//Route::post('/ligar/prumada/{prumada}', array('uses' => 'Api\PrumadaController@ligarPrumada'));
 
 // Desligar Hidrômetro
-Route::get('/desligar/prumada/{prumada}', array('uses' => 'Api\PrumadaController@desligarPrumada'));
+//Route::post('/desligar/prumada/{prumada}', array('uses' => 'Api\PrumadaController@desligarPrumada'));
 
 // Ultima Leitura do Hidrômetro
-Route::get('/prumada/{prumada}/ultimaLeitura', array('uses' => 'Api\PrumadaController@ultimaLeitura'));
+Route::post('/prumada/ultimaLeitura', array('uses' => 'Api\PrumadaController@ultimaLeitura'));
 // fim - ### Prumada CONTROLER ###
 
 

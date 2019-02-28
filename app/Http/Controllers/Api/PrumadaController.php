@@ -14,9 +14,9 @@ use Session;
 class PrumadaController extends Controller
 {
 
-    public function leituraPrumada($prumada)
+    public function leituraPrumada(Request $request)
     {
-        $prumada = Prumada::find($prumada);
+        $prumada = Prumada::find($request->PRU_ID);
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -65,9 +65,9 @@ class PrumadaController extends Controller
 
     }
 
-    public function ligarPrumada($prumada)
+    public function ligarPrumada(Request $request)
     {
-        $prumada = Prumada::find($prumada);
+        $prumada = Prumada::find($request->PRU_ID);
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -111,9 +111,9 @@ class PrumadaController extends Controller
 
     }
 
-    public function desligarPrumada($prumada)
+    public function desligarPrumada(Request $request)
     {
-        $prumada = Prumada::find($prumada);
+        $prumada = Prumada::find($request->PRU_ID);
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -158,9 +158,9 @@ class PrumadaController extends Controller
 
     }
 
-    public function ultimaLeitura($id)
+    public function ultimaLeitura(Request $request)
     {
-        $ultimaleitura =  Leitura::where('LEI_IDPRUMADA',$id)
+        $ultimaleitura =  Leitura::where('LEI_IDPRUMADA',$request->PRU_ID)
         ->orderBy('LEI_ID', 'desc')
         ->first();
 
