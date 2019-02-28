@@ -25,7 +25,7 @@ class UnidadeController extends Controller
 
     public function showUnidade($id)
     {
-        $unidade = Unidade::findorFail($id);
+        $unidade = Unidade::where("UNI_IDUSER", $id)->get();
 
         return response()->json(response()->make($unidade), 200);
     }
