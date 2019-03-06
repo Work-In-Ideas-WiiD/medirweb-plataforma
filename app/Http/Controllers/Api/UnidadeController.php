@@ -33,11 +33,11 @@ class UnidadeController extends Controller
         return response()->json(response()->make($unidade), 200);
     }
 
-    public function showPrumadas(Request $request)
+    /*public function showPrumadas(Request $request)
     {
         $prumadas = Unidade::find($request->UNI_ID)->getPrumadas;
 
         return response()->json(response()->make($prumadas), 200);
-    }
+    }*/
 
 }

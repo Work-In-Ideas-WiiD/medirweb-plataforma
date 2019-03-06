@@ -66,7 +66,7 @@ Route::post('/leitura/prumada', array('uses' => 'Api\PrumadaController@leituraPr
 //Route::post('/desligar/prumada/{prumada}', array('uses' => 'Api\PrumadaController@desligarPrumada'));
 
 // Ultima Leitura do Hidrômetro
-Route::post('/prumada/ultimaLeitura', array('uses' => 'Api\PrumadaController@ultimaLeitura'));
+//Route::post('/prumada/ultimaLeitura', array('uses' => 'Api\PrumadaController@ultimaLeitura'));
 // fim - ### Prumada CONTROLER ###
 
 

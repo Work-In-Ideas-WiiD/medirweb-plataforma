@@ -118,7 +118,7 @@
         <!-- Consumo Atual -->
         <div class="box box-warning">
             <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-tachometer"></i> Consumo atual (m³) @if($unidade->getPrumadas()->count() > 0 ) @if($unidade->getPrumadas()->first()->PRU_STATUS == 1) <i class="fa fa-circle" style="color: #009900;"></i> @else <i class="fa fa-circle" style="color: #d73925;"></i> @endif @endif</h3>
+                <h3 class="box-title"><i class="fa fa-tachometer"></i> Leitura atual (m³) @if($unidade->getPrumadas()->count() > 0 ) @if($unidade->getPrumadas()->first()->PRU_STATUS == 1) <i class="fa fa-circle" style="color: #009900;"></i> @else <i class="fa fa-circle" style="color: #d73925;"></i> @endif @endif</h3>
             </div>
             <div class="box-body">
                 <div class="bloco-medicao row">
