@@ -43,13 +43,13 @@ Route::group(['prefix' => 'user'], function()
 //Caminho /api/unidade
 Route::group(['prefix' => 'unidade'], function()
 {
-    //Caminho /api/unidade/ver/{id}
+    //Caminho /api/unidade/ver
     Route::group(['prefix' => 'ver'], function()
     {
         Route::post('/imovel', ['uses' => 'Api\UnidadeController@showImovel']);
         Route::post('/agrupamento', ['uses' => 'Api\UnidadeController@showAgrupamento']);
         Route::post('/unidade', ['uses' => 'Api\UnidadeController@showUnidade']);
-        Route::post('/prumadas', ['uses' => 'Api\UnidadeController@showPrumadas']);
+        //Route::post('/prumadas', ['uses' => 'Api\UnidadeController@showPrumadas']);
     });
 });
 // fim - ### UNIDADE CONTROLER ####
