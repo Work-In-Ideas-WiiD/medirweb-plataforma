@@ -87,6 +87,7 @@ class UserController extends Controller
         $unidade = Unidade::where('UNI_IDUSER', $id)->first();
         if(!is_null($unidade)){
             $dataFormUNI['UNI_RESPONSAVEL'] = $user->name;
+            $dataFormUNI['UNI_TELRESPONSAVEL'] = $request->telefone;
             $unidade->update($dataFormUNI);
         }
         // fim
