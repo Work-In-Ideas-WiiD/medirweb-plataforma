@@ -30,6 +30,12 @@ Route::group(['prefix' => 'login'], function()
 //Caminho /api/user
 Route::group(['prefix' => 'user'], function()
 {
+    //Caminho /api/user/show
+    Route::group(['prefix' => 'show'], function()
+    {
+        Route::post('', ['uses' => 'Api\UserController@showUsers']);
+    });
+
     //Caminho /api/user/update
     Route::group(['prefix' => 'update'], function()
     {

@@ -43,19 +43,27 @@ class UserController extends Controller
         return response()->json(response()->make($user), 200);
     }
 
+    public function showUsers(Request $request)
+    {
+        $role = 'Comum';
+        $role = Defender::findRole(ucfirst($role));
+
+        $user = $role->users()->find($request->user_id);
+
+        if(!isset($user)){
+            return response()->json(['error' => 'Usuário não existe!'], 400);
+        }
+
+        return response()->json(response()->make($user), 200);
+    }
+
     public function updateUsers(Request $request)
     {
         $id = $request->input('user_id');
         $user = User::find($id);
-        if(!$user)
-        {
 
-        }
-
-        foreach ($user->roles as $roleUser) {
-            if(!($roleUser->id == "4") ){
-                return response()->json(['error' => 'Usuário não existe!'], 400);
-            }
+        if(!isset($user)){
+            return response()->json(['error' => 'Usuário não existe!'], 400);
         }
 
         $dataForm = $request->all();
