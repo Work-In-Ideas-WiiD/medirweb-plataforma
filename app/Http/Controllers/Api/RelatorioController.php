@@ -134,11 +134,7 @@ class RelatorioController extends Controller
                 }
             }
 
-            /*return \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual'))
-            ->download('fatura_individual.pdf');*/
-
-            $dirAnt = public_path('upload/temp/faturas/');
-            $dirHoje = public_path('upload/temp/faturas/'.date("Y-m-d").'/');
+            $dir = public_path('upload/temp/faturas/');
 
             // EXCLUINDO DIRETORIO QUE NÃO É DE HOJE
             for ($m=1; $m <= 12; $m++) {
@@ -146,23 +142,23 @@ class RelatorioController extends Controller
                     $dt = date("Y-m-d", strtotime(date("Y").'-'.$m.'-'.$d));
 
                     if(!($dt == date("Y-m-d"))){
-                        if (File::exists($dirAnt.$dt.'/')) {
-                            File::deleteDirectory($dirAnt.$dt.'/');
+                        if (File::exists($dir.$dt.'/')) {
+                            File::deleteDirectory($dir.$dt.'/');
                         }
                     }
                 }
             }
 
             // CRIANDO DIRETORIO
-            if (!(File::exists($dirHoje))){
-                File::makeDirectory($dirHoje);
+            if (!(File::exists($dir.date("Y-m-d").'/'))){
+                File::makeDirectory($dir.date("Y-m-d").'/');
             }
 
             // NOME DO ARQUIVO ALEATORIO
-            $fatura['fileName'] = str_random(10).".pdf";
+            $fatura['fileName'] = date("Y-m-d").'/'.str_random(10).".pdf";
 
             \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual'))
-            ->save($dirHoje.$fatura['fileName']);
+            ->save($dir.$fatura['fileName']);
 
             return response()->json(response()->make($fatura), 200);
         }else{
