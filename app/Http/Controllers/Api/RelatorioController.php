@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use App\Models\Imovel;
 use App\Models\Unidade;
 
@@ -133,8 +134,25 @@ class RelatorioController extends Controller
                 }
             }
 
-            return \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual'))
-            ->download('fatura_individual.pdf');
+            /*return \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual'))
+            ->download('fatura_individual.pdf');*/
+
+            $diretorioHoje = public_path('upload/temp/faturas/'.date("Y-m-d").'/');
+
+            // CRIANDO DIRETORIO
+            if (!(File::exists($diretorioHoje))){
+                File::makeDirectory($diretorioHoje);
+            }
+
+            // NOME DO ARQUIVO ALEATORIO
+            $fatura['fileName'] = str_random(10).".pdf";
+
+            \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual'))
+            ->save($diretorioHoje.$fatura['fileName']);
+
+            return response()->json(response()->make($fatura), 200);
+
+
         }else{
             return response()->json(['error' => 'Unidade não existe!'], 400);
         }
