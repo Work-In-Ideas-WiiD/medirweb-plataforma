@@ -137,22 +137,34 @@ class RelatorioController extends Controller
             /*return \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual'))
             ->download('fatura_individual.pdf');*/
 
-            $diretorioHoje = public_path('upload/temp/faturas/'.date("Y-m-d").'/');
+            $dirAnt = public_path('upload/temp/faturas/');
+            $dirHoje = public_path('upload/temp/faturas/'.date("Y-m-d").'/');
+
+            // EXCLUINDO DIRETORIO QUE NÃO É DE HOJE
+            for ($m=1; $m <= 12; $m++) {
+                for ($d=1; $d <= 31; $d++) {
+                    $dt = date("Y-m-d", strtotime(date("Y").'-'.$m.'-'.$d));
+
+                    if(!($dt == date("Y-m-d"))){
+                        if (File::exists($dirAnt.$dt.'/')) {
+                            File::deleteDirectory($dirAnt.$dt.'/');
+                        }
+                    }
+                }
+            }
 
             // CRIANDO DIRETORIO
-            if (!(File::exists($diretorioHoje))){
-                File::makeDirectory($diretorioHoje);
+            if (!(File::exists($dirHoje))){
+                File::makeDirectory($dirHoje);
             }
 
             // NOME DO ARQUIVO ALEATORIO
             $fatura['fileName'] = str_random(10).".pdf";
 
             \PDF::loadView('relatorio.pdf.fatura_individual', compact('dadosFaturaIndividual'))
-            ->save($diretorioHoje.$fatura['fileName']);
+            ->save($dirHoje.$fatura['fileName']);
 
             return response()->json(response()->make($fatura), 200);
-
-
         }else{
             return response()->json(['error' => 'Unidade não existe!'], 400);
         }
