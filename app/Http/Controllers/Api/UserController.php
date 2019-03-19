@@ -96,6 +96,7 @@ class UserController extends Controller
         if(!is_null($unidade)){
             $dataFormUNI['UNI_RESPONSAVEL'] = $user->name;
             $dataFormUNI['UNI_TELRESPONSAVEL'] = $request->telefone;
+            $dataFormUNI['UNI_CPFRESPONSAVEL'] = $request->cpf;
             $unidade->update($dataFormUNI);
         }
         // fim
