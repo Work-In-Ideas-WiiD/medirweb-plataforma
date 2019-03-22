@@ -147,7 +147,7 @@
                             <div class='row'>
                                 <div class='col-md-6'>
                                     {{ Form::label('IMO_FATURACICLO', 'Dia Fechamento Fatura') }}
-                                    {{ Form::text('IMO_FATURACICLO', null, ['class' => 'form-control', 'placeholder' => '']) }}
+                                    {{ Form::text('IMO_FATURACICLO', null, ['class' => 'form-control', 'disabled' => 'disabled', 'placeholder' => '']) }}
 
                                     @if ($errors->has('IMO_FATURACICLO'))
                                     <span class="help-block">
