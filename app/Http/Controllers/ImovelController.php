@@ -259,9 +259,9 @@ class ImovelController extends Controller
             return redirect('/imovel/editar/'.$imovel->IMO_ID)->with('error', 'Não é permitido burlar o sistema!');
         }
 
-        if($request->IMO_FATURACICLO){
+        /*if($request->IMO_FATURACICLO){
             return redirect('/imovel/editar/'.$imovel->IMO_ID)->with('error', 'Não é permitido burlar o sistema!');
-        }
+        }*/
 
         $dataForm = $request->all();
 
