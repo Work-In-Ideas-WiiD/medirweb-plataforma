@@ -7,9 +7,50 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use App\Models\Imovel;
 use App\Models\Unidade;
+use App\Models\Fatura;
+use App\Models\FaturaUnidade;
 
 class RelatorioController extends Controller
 {
+
+    public function historicoFaturas(Request $request)
+    {
+        $dadosFatura = array();
+
+        $faturaImovel = Fatura::where('FAT_IMOID', $request->IMO_ID)->orderBy('FAT_DTLEIFORNECEDOR', 'desc')->take(3)->get();
+
+        if ($faturaImovel->count() == 0) {
+            return response()->json(['error' => 'Não existe fatura(s) cadastradas no sistema!'], 400);
+        }
+
+        foreach ($faturaImovel as $fatImo) {
+
+          $faturaUnidade = FaturaUnidade::where('FATUNI_IDUNI', $request->UNI_ID)->where('FATUNI_IDFATURA', $fatImo->FAT_ID)->get();
+
+          array_push($dadosFatura, $faturaUnidade);
+
+        }
+
+
+
+        return response()->json(response()->make($dadosFatura), 200);
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function tarifa($consumo){
 

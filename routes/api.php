@@ -82,5 +82,6 @@ Route::group(['prefix' => 'relatorio'], function()
 {
     Route::post('/consumo', array('uses' => 'Api\RelatorioController@consumo'));
     Route::post('/fatura', array('uses' => 'Api\RelatorioController@fatura'));
+    Route::post('/historicoFaturas', array('uses' => 'Api\RelatorioController@historicoFaturas'));
 });
 // fim - ### Relatorio CONTROLER ###
