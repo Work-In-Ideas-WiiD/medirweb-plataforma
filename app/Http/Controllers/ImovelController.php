@@ -579,11 +579,6 @@ class ImovelController extends Controller
         }
         // FIM
 
-
-
-
-
-
         return redirect('imovel')->with('success', 'Adicionado o com sucesso as informações da fatura do fornecedor!');
     }
 
