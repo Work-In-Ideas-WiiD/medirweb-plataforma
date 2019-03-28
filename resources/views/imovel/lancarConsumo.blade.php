@@ -2,8 +2,31 @@
 
 @section('title', 'MedirWeb')
 
+{!! Html::style( asset('css/total.css')) !!}
+
 @section('content_header')
 <h1>Imóveis <small>Lançar Consumo</small></h1>
+
+<div class="row" style="margin-top: 5px;">
+	<div class="col-md-12">
+		<div class="row">
+
+			<div class="col-md-5">
+        <h4 ><i class="fa fa-building"></i> {{ $imovel->IMO_NOME }}</h4>
+			</div>
+
+			<div class="col-md-7">
+				<div id="loading" class="loading oculto">
+					<div style="margin-top:10px;">
+						<div class="carregar"></div>
+						<p style="margin-top:-20px; color:red;">&emsp;&emsp;Requisição em andamento. <font color="red" id="aguarde"></font></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
 <ol class="breadcrumb">
     <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
     <li><a href="/imovel">Imóveis</a></li>
@@ -74,7 +97,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <button type="submit" type="button" class="btn btn-block btn-success"><i class="fa fa-floppy-o"></i> Adicionar</button>
+        <button type="submit" type="button" id="ocultar" onclick="loading()" class="btn btn-block btn-success ocultar"><i class="fa fa-floppy-o"></i> Adicionar</button>
         <button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
     </div>
 </div>
