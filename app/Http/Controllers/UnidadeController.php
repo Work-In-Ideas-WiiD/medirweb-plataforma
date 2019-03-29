@@ -79,7 +79,7 @@ class UnidadeController extends Controller
 
         // ENVIAR EMAIL com a senha.
         Mail::send('email.senhaUser', ['nome' => $user->nome,'senha' => $password], function($message) use ($user) {
-            $message->from('contato@wi-id.com', 'MedirWeb - Plataforma individualizadora');
+            $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
             $message->to($user->email);
             $message->subject('Senha de acesso ao app');
         });
@@ -254,7 +254,7 @@ class UnidadeController extends Controller
 
             // ENVIAR EMAIL com a senha.
             Mail::send('email.senhaUser', ['nome' => $user->nome,'senha' => $password], function($message) use ($user) {
-                $message->from('contato@wi-id.com', 'MedirWeb - Plataforma individualizadora');
+                $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
                 $message->to($user->email);
                 $message->subject('Senha de acesso ao app');
             });
