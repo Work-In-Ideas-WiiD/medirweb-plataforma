@@ -393,7 +393,6 @@ class ImovelController extends Controller
 
 
         // ##### *INICIO - PEGANDO TODAS LEITURAS DAS UNIDADES e SOMANDO E FAZENDO MEDIA DO MES ATUAL* #####
-        $menos1mes = date("Y-m", strtotime('-1 month'));
         $leituraAtual = array();
         $leituraAnterior = array();
         $leiMetroFornecedorAnterior = 0;
@@ -414,8 +413,10 @@ class ImovelController extends Controller
 
             foreach ($prumadas as $prumada){
 
+                $fatCicloMenos1mes = date("Y-m-d", strtotime(date("Y-m")."-".$prumada->unidade->imovel->IMO_FATURACICLO.'-1 month'));
+
                 //LEITURA DO MES ANTERIOR
-                $getLeituraAnterior = $prumada->getLeituras()->where('created_at', '<=', date("Y-m-d", strtotime($menos1mes."-".$prumada->unidade->imovel->IMO_FATURACICLO)).' 23:59:59')
+                $getLeituraAnterior = $prumada->getLeituras()->where('created_at', '<=', $fatCicloMenos1mes.' 23:59:59')
                 ->orderBy('created_at', 'desc')->first();
                 $arrayLeituraAnterior = $getLeituraAnterior['LEI_METRO'];
                 array_push($leituraAnterior, $arrayLeituraAnterior);
