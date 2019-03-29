@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 use App\Models\Imovel;
 use App\Models\Unidade;
 use App\Models\Fatura;
+use App\Models\Prumada;
 use App\Models\FaturaUnidade;
 
 class RelatorioController extends Controller
@@ -24,33 +25,26 @@ class RelatorioController extends Controller
         }
 
         foreach ($faturaImovel as $fatImo) {
+            $faturaUnidade = FaturaUnidade::where('FATUNI_IDUNI', $request->UNI_ID)->where('FATUNI_IDFATURA', $fatImo->FAT_ID)->get();
 
-          $faturaUnidade = FaturaUnidade::where('FATUNI_IDUNI', $request->UNI_ID)->where('FATUNI_IDFATURA', $fatImo->FAT_ID)->get();
+            foreach ($faturaUnidade as $fatUni) {
 
-          array_push($dadosFatura, $faturaUnidade);
+                $arrayPruNome = array();
+                $jsonConsumo = json_decode($fatUni['FATUNI_PRUCONSUMO'], true);
+
+                foreach ($jsonConsumo as $key => $value) {
+                    $prumada = Prumada::find($key);
+                    array_push($arrayPruNome, $prumada->PRU_NOME);
+                }
+
+                $fatUni['PRU_NOME'] = $arrayPruNome;
+                array_push($dadosFatura, $fatUni);
+            }
 
         }
 
-
-
         return response()->json(response()->make($dadosFatura), 200);
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public function tarifa($consumo){
 
