@@ -147,7 +147,12 @@
                             <div class='row'>
                                 <div class='col-md-6'>
                                     {{ Form::label('IMO_FATURACICLO', 'Dia Fechamento Fatura') }}
+
+                                    @if(auth()->user()->id == 7)
+                                    {{ Form::text('IMO_FATURACICLO', null, ['class' => 'form-control', 'placeholder' => '']) }}
+                                    @else
                                     {{ Form::text('IMO_FATURACICLO', null, ['class' => 'form-control', 'disabled' => 'disabled', 'placeholder' => '']) }}
+                                    @endif
 
                                     @if ($errors->has('IMO_FATURACICLO'))
                                     <span class="help-block">

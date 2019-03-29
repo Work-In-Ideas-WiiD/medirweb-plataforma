@@ -260,8 +260,11 @@ class ImovelController extends Controller
             return redirect('/imovel/editar/'.$imovel->IMO_ID)->with('error', 'Não é permitido burlar o sistema!');
         }
 
-        if($request->IMO_FATURACICLO){
-            return redirect('/imovel/editar/'.$imovel->IMO_ID)->with('error', 'Não é permitido burlar o sistema!');
+        // SOMENTE USUARIO "CONTATO WIID" PODE ALTERAR O FECHAMENTO DA FATURA
+        if(!(auth()->user()->id == 7)){
+            if($request->IMO_FATURACICLO){
+                return redirect('/imovel/editar/'.$imovel->IMO_ID)->with('error', 'Não é permitido burlar o sistema!');
+            }
         }
 
         $dataForm = $request->all();
