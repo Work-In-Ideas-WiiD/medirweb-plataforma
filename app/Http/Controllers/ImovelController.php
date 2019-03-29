@@ -510,8 +510,13 @@ class ImovelController extends Controller
           $value['FATUNI_IDFATURA'] = $faturaImovel->FAT_ID;
 
           //CALCULO VALOR DE CADA PRUMADA
+
           $r1 = $value['consumo'] * $valorConsumoUnidades;
-          $valor = $r1 / $faturaImovel->FAT_CONSUMO_UNI;
+          if($r1 == 0){
+              $valor = 0;
+          }else{
+              $valor = $r1 / $faturaImovel->FAT_CONSUMO_UNI;
+          }
 
           $valorPrumada = number_format($valor, 2, ',', '.');
           $value['FATUNI_PRUVALOR'] = '{"'.$value['pru_id'].'": "'.$valorPrumada.'"}';
