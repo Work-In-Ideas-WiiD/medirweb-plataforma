@@ -39,7 +39,14 @@ class RelatorioController extends Controller
 
                 $fatUni['PRU_NOME'] = $arrayPruNome;
 
-                $fatUni['DT'] = $fatImo->FAT_DTLEIFORNECEDOR;
+                setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+                date_default_timezone_set('America/Sao_Paulo');
+
+                $fatUni['DT'] = ucwords(strftime('%B %Y', strtotime($fatImo->FAT_DTLEIFORNECEDOR)));
+
+
+
+
 
                 array_push($dadosFatura, $fatUni);
             }
