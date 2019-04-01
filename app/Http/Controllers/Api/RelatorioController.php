@@ -38,6 +38,9 @@ class RelatorioController extends Controller
                 }
 
                 $fatUni['PRU_NOME'] = $arrayPruNome;
+
+                $fatUni['DT'] = $fatImo->FAT_DTLEIFORNECEDOR;
+
                 array_push($dadosFatura, $fatUni);
             }
 
