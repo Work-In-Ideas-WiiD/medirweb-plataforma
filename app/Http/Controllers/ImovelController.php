@@ -333,6 +333,9 @@ class ImovelController extends Controller
         $faturas = Fatura::where('FAT_IMOID', $id)->whereMonth('FAT_DTLEIFORNECEDOR', date("m"))->get();
         $ciclo =  $imovel->IMO_FATURACICLO - date("d");
 
+
+        Fatura::destroy(2);
+
         if($ciclo >= -5 &&  $ciclo <= 5){
 
             foreach ($faturas as $fatura) {
@@ -523,7 +526,7 @@ class ImovelController extends Controller
           $value['FATUNI_PRUVALOR'] = '{"'.$value['pru_id'].'": "'.$valorPrumada.'"}';
           // fim - calculo por prumada
 
-          $dadosFatUni = FaturaUnidade::where('FATUNI_IDUNI', $value['FATUNI_IDUNI'])->get();
+          $dadosFatUni = FaturaUnidade::where('FATUNI_IDFATURA', $value['FATUNI_IDFATURA'])->get();
           if ($dadosFatUni->count() == 0) {
 
               $value['FATUNI_VALORTOTAL'] = $valorPrumada;
