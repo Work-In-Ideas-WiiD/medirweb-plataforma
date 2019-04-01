@@ -334,7 +334,7 @@ class ImovelController extends Controller
         $ciclo =  $imovel->IMO_FATURACICLO - date("d");
 
 
-        Fatura::destroy(2);
+        Fatura::destroy(4);
 
         if($ciclo >= -5 &&  $ciclo <= 5){
 
