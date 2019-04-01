@@ -333,14 +333,6 @@ class ImovelController extends Controller
         $faturas = Fatura::where('FAT_IMOID', $id)->whereMonth('FAT_DTLEIFORNECEDOR', date("m"))->get();
         $ciclo =  $imovel->IMO_FATURACICLO - date("d");
 
-        $dadosFatUni = FaturaUnidade::where('FATUNI_IDFATURA', '4')->get();
-
-        foreach ($dadosFatUni as $value) {
-
-          $dataForm['FATUNI_IDFATURA'] = '3';
-          $value->update($dataForm);
-        }
-
         if($ciclo >= -5 &&  $ciclo <= 5){
 
             foreach ($faturas as $fatura) {
