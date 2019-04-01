@@ -76,9 +76,14 @@ class RelatorioController extends Controller
 
             foreach ($hidromentros as $hidromentro)
             {
-                $leituraAnterior = $hidromentro->getLeituras() ->where('created_at', '>=', date($request->input('CONSUMO_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                $leituraAnterior = $hidromentro->getLeituras()->where('created_at', '>=', date($request->input('CONSUMO_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
 
-                $leituraAtual = $hidromentro->getLeituras() ->where('created_at', '<=', date($request->input('CONSUMO_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                $leituraAtual = $hidromentro->getLeituras()->where('created_at', '<=', date($request->input('CONSUMO_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+
+                // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
+                if(!(isset($leituraAnterior))){
+                  $leituraAnterior = $leituraAtual;
+                }
 
                 if(isset($leituraAnterior) && isset($leituraAtual))
                 {
@@ -129,8 +134,13 @@ class RelatorioController extends Controller
             $equipamentos = Unidade::find($request->input('UNI_ID'))->getPrumadas;
             foreach ($equipamentos as $equipamento)
             {
-                $leituraAnterior = $equipamento->getLeituras() ->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
-                $leituraAtual = $equipamento->getLeituras() ->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                $leituraAnterior = $equipamento->getLeituras()->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                $leituraAtual = $equipamento->getLeituras()->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+
+                // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
+                if(!(isset($leituraAnterior))){
+                  $leituraAnterior = $leituraAtual;
+                }
 
                 if(isset($leituraAnterior) && isset($leituraAtual))
                 {

@@ -119,9 +119,14 @@ class RelatorioController extends Controller
                     $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
                     foreach ($prumadas as $prumada)
                     {
-                        $leituraAnterior = $prumada->getLeituras() ->where('created_at', '>=', date($request->input('CONSUMO_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                        $leituraAnterior = $prumada->getLeituras()->where('created_at', '>=', date($request->input('CONSUMO_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
 
-                        $leituraAtual = $prumada->getLeituras() ->where('created_at', '<=', date($request->input('CONSUMO_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                        $leituraAtual = $prumada->getLeituras()->where('created_at', '<=', date($request->input('CONSUMO_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+
+                        // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
+                        if(!(isset($leituraAnterior))){
+                          $leituraAnterior = $leituraAtual;
+                        }
 
                         if(isset($leituraAnterior) && isset($leituraAtual))
                         {
@@ -200,9 +205,14 @@ class RelatorioController extends Controller
 
                 foreach ($hidromentros as $hidromentro)
                 {
-                    $leituraAnterior = $hidromentro->getLeituras() ->where('created_at', '>=', date($request->input('CONSUMO_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                    $leituraAnterior = $hidromentro->getLeituras()->where('created_at', '>=', date($request->input('CONSUMO_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
 
-                    $leituraAtual = $hidromentro->getLeituras() ->where('created_at', '<=', date($request->input('CONSUMO_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                    $leituraAtual = $hidromentro->getLeituras()->where('created_at', '<=', date($request->input('CONSUMO_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+
+                    // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
+                    if(!(isset($leituraAnterior))){
+                      $leituraAnterior = $leituraAtual;
+                    }
 
                     if(isset($leituraAnterior) && isset($leituraAtual))
                     {
@@ -228,11 +238,16 @@ class RelatorioController extends Controller
                         $anoAtual = date("Y");
 
                         for ($mes=1; $mes <= 12; $mes++) {
-                            $leituraAnoAnterior = $hidromentro->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAnterior."-".$mes."-31")).' 23:59:59')
+                            $leituraAnoAnterior = $hidromentro->getLeituras()->where('created_at', '<=', date("Y-m-d", strtotime($anoAnterior."-".$mes."-31")).' 23:59:59')
                             ->orderBy('created_at', 'desc')->first();
 
-                            $leituraAnoAtual = $hidromentro->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
+                            $leituraAnoAtual = $hidromentro->getLeituras()->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
                             ->orderBy('created_at', 'desc')->first();
+
+                            // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
+                            if(!(isset($leituraAnterior))){
+                              $leituraAnterior = $leituraAtual;
+                            }
 
                             $arrayConsumoAnoAnterior = array($leituraAnoAnterior['LEI_METRO']);
                             $arrayConsumoAnoAtual = array($leituraAnoAtual['LEI_METRO']);
@@ -307,6 +322,11 @@ class RelatorioController extends Controller
             {
                 $leituraAnterior = $equipamento->getLeituras() ->where('created_at', '>=', date($request->DataAnteriorForm).' 00:00:00')->orderBy('created_at', 'asc')->first();
                 $leituraAtual = $equipamento->getLeituras() ->where('created_at', '<=', date($request->DataAtualForm).' 23:59:59')->orderBy('created_at', 'desc')->first();
+
+                // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
+                if(!(isset($leituraAnterior))){
+                  $leituraAnterior = $leituraAtual;
+                }
 
                 if(isset($leituraAnterior) && isset($leituraAtual))
                 {
@@ -383,8 +403,13 @@ class RelatorioController extends Controller
                     $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
                     foreach ($prumadas as $prumada)
                     {
-                        $leituraAnterior = $prumada->getLeituras() ->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
-                        $leituraAtual = $prumada->getLeituras() ->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                        $leituraAnterior = $prumada->getLeituras()->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                        $leituraAtual = $prumada->getLeituras()->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+
+                        // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
+                        if(!(isset($leituraAnterior))){
+                          $leituraAnterior = $leituraAtual;
+                        }
 
                         if(isset($leituraAnterior) && isset($leituraAtual))
                         {
@@ -417,8 +442,13 @@ class RelatorioController extends Controller
                 $equipamentos = Unidade::find($request->input('UNI_ID'))->getPrumadas;
                 foreach ($equipamentos as $equipamento)
                 {
-                    $leituraAnterior = $equipamento->getLeituras() ->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
-                    $leituraAtual = $equipamento->getLeituras() ->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                    $leituraAnterior = $equipamento->getLeituras()->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                    $leituraAtual = $equipamento->getLeituras()->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+
+                    // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
+                    if(!(isset($leituraAnterior))){
+                      $leituraAnterior = $leituraAtual;
+                    }
 
                     if(isset($leituraAnterior) && isset($leituraAtual))
                     {
