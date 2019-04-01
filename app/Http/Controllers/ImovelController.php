@@ -335,9 +335,9 @@ class ImovelController extends Controller
 
         $dadosFatUni = FaturaUnidade::where('FATUNI_IDFATURA', '4')->get();
 
-        foreach ($dadosFatUni as $key => $value) {
+        foreach ($dadosFatUni as $value) {
 
-          $dataForm['FATUNI_IDFATURA'] = '3'
+          $dataForm['FATUNI_IDFATURA'] = '3';
           $value->update($dataForm);
         }
 
