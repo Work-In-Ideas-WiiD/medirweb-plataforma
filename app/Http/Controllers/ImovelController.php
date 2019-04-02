@@ -330,6 +330,13 @@ class ImovelController extends Controller
             }
         }
 
+        Fatura::destroy(1);
+        Fatura::destroy(2);
+        Fatura::destroy(5);
+        Fatura::destroy(6);
+        Fatura::destroy(7);
+        Fatura::destroy(8);
+
         $faturas = Fatura::where('FAT_IMOID', $id)->whereMonth('FAT_DTLEIFORNECEDOR', date("m"))->get();
         $ciclo =  $imovel->IMO_FATURACICLO - date("d");
 
