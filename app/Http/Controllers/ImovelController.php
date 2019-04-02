@@ -418,34 +418,36 @@ class ImovelController extends Controller
                 //LEITURA DO MES ANTERIOR
                 $getLeituraAnterior = $prumada->getLeituras()->where('created_at', '<=', $fatCicloMenos1mes.' 23:59:59')
                 ->orderBy('created_at', 'desc')->first();
-                $arrayLeituraAnterior = $getLeituraAnterior['LEI_METRO'];
-                array_push($leituraAnterior, $arrayLeituraAnterior);
+                array_push($leituraAnterior, $getLeituraAnterior['LEI_METRO']);
                 // fim - LEITURA DO MES ANTERIOR
 
                 // LEITURA DO MES ATUAL
                 $getLeituraAtual = $prumada->getLeituras()->where('created_at', '<=', date("Y-m-d", strtotime($request->FAT_DTLEIFORNECEDOR)).' 23:59:59')
                 ->orderBy('created_at', 'desc')->first();
-                $arrayLeituraAtual = $getLeituraAtual['LEI_METRO'];
-                array_push($leituraAtual, $arrayLeituraAtual);
+                array_push($leituraAtual, $getLeituraAtual['LEI_METRO']);
                 // fim - LEITURA DO MES ATUAL
 
+                // VALIDAÇÃO LEITURA ANTERIOR = null
+                if(!(isset($getLeituraAnterior))){
+                  $getLeituraAnterior['LEI_METRO'] = 0;
+                  $getLeituraAnterior['created_at'] = $fatCicloMenos1mes;
+                }
+
                 // CONSUMO POR PRUMADAS
-                if(isset($getLeituraAnterior) && isset($getLeituraAtual)){
-                    $consumo = $getLeituraAtual->LEI_METRO - $getLeituraAnterior->LEI_METRO;
+                if( isset($getLeituraAtual)){
+                    $consumo = $getLeituraAtual['LEI_METRO'] - $getLeituraAnterior['LEI_METRO'];
 
                     $relatorioConsumoUnidade = array(
                         'FATUNI_IDUNI' => $unid->UNI_ID,
-                        'FATUNI_PRUCONSUMO' => '{"'.$prumada->PRU_ID.'": '.$consumo.'}',
-
-                        'FATUNI_LEIANTERIOR' => '{"'.$prumada->PRU_ID.'": '.$getLeituraAnterior->LEI_METRO.'}',
-                        'FATUNI_DTLEIANTERIOR' => '{"'.$prumada->PRU_ID.'": "'.date('Y-m-d', strtotime($getLeituraAnterior->created_at)).'"}',
-
-                        'FATUNI_LEIATUAL' => '{"'.$prumada->PRU_ID.'": '.$getLeituraAtual->LEI_METRO.'}',
-                        'FATUNI_DTLEIATUAL' => '{"'.$prumada->PRU_ID.'": "'.date('Y-m-d', strtotime($getLeituraAtual->created_at)).'"}',
 
 
                         'pru_id' => $prumada->PRU_ID,
+                        'pru_nome' => $prumada->PRU_NOME,
                         'consumo' => $consumo,
+                        'leiAnterior' => $getLeituraAnterior['LEI_METRO'],
+                        'dtLeiAnterior' => date('Y-m-d', strtotime($getLeituraAnterior['created_at'])),
+                        'leiAtual' => $getLeituraAtual['LEI_METRO'],
+                        'dtLeiAtual' => date('Y-m-d', strtotime($getLeituraAtual['created_at'])),
                     );
                     array_push($faturaUnidade, $relatorioConsumoUnidade);
                 }
@@ -481,6 +483,11 @@ class ImovelController extends Controller
                 $somaLeituraAnterior = $fatura->FAT_LEIMETRO_UNI;
                 $leiMetroFornecedorAnterior = $fatura->FAT_LEIMETRO_FORNECEDOR;
             }
+
+            // Se o consumo do fornecedor for menor que mes anterior
+            if($request->FAT_LEIMETRO_FORNECEDOR < $fatura->FAT_LEIMETRO_FORNECEDOR){
+                return redirect('/imovel/'.$dataForm['FAT_IMOID'].'/consumo')->with('error', 'Leitura do Fornecedor esta menor que o mês anterior');
+            }
         }
         // ##### *FIM - PEGANDO TODAS LEITURAS DAS UNIDADES e SOMANDO E FAZENDO MEDIA DO MES ATUAL* #####
 
@@ -495,33 +502,60 @@ class ImovelController extends Controller
 
         // REGRA DE TRES (VALORES CONSUMO)
         $resultado = $dataForm['FAT_CONSUMO_UNI'] * $formatarLeiMetroValorFor;
-        $valorConsumoUnidades = $resultado / $ConsumoFornecedor;
+        if ($resultado == 0) {
+          $valorConsumoUnidades = 0;
+        }else{
+          $valorConsumoUnidades = $resultado / $ConsumoFornecedor;
+        }
         $valorConsumoImovel =  $formatarLeiMetroValorFor - $valorConsumoUnidades;
         // FIM
 
         $dataForm['FAT_CONSUMO_VALORUNI'] = number_format($valorConsumoUnidades, 2, ',', '.');
         $dataForm['FAT_CONSUMO_VALORIMOVEL'] = number_format($valorConsumoImovel, 2, ',', '.');
 
+        // Se o consumo do fornecedor for menor que consumo das unidade
+        if($dataForm['FAT_LEIMETRO_FORNECEDOR'] < $leiMetroFornecedorAnterior + $dataForm['FAT_CONSUMO_UNI']){
+            return redirect('/imovel/'.$dataForm['FAT_IMOID'].'/consumo')->with('error', 'Leitura do Fornecedor esta menor que o Leitura total das unidades');
+        }
+
         $faturaImovel = Fatura::create($dataForm);
+        // FIM FATURA Imovel
+        /*********/
+
 
 
         // Adicionando consumo das unidades
         foreach ($faturaUnidade as $key => $value) {
 
+          setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+          date_default_timezone_set('America/Sao_Paulo');
+
+          $value['FATUNI_DT'] = ucwords(strftime('%B %Y', strtotime($faturaImovel->FAT_DTLEIFORNECEDOR)));
           $value['FATUNI_IDFATURA'] = $faturaImovel->FAT_ID;
 
           //CALCULO VALOR DE CADA PRUMADA
-
           $r1 = $value['consumo'] * $valorConsumoUnidades;
           if($r1 == 0){
               $valor = 0;
           }else{
               $valor = $r1 / $faturaImovel->FAT_CONSUMO_UNI;
           }
-
           $valorPrumada = number_format($valor, 2, ',', '.');
-          $value['FATUNI_PRUVALOR'] = '{"'.$value['pru_id'].'": "'.$valorPrumada.'"}';
           // fim - calculo por prumada
+
+          // ARRAY DE CADA PRUMADA
+          $arrayPrumada = array(
+              'PRU_ID' => $value['pru_id'],
+              'PRU_NOME' => $value['pru_nome'],
+              'PRU_CONSUMO' => $value['consumo'],
+              'PRU_LEIANTERIOR' => $value['leiAnterior'],
+              'PRU_DTLEIANTERIOR' => $value['dtLeiAnterior'],
+              'PRU_LEIATUAL' => $value['leiAtual'],
+              'PRU_DTLEIATUAL' => $value['dtLeiAtual'],
+              'PRU_VALOR' => $valorPrumada,
+          );
+
+          $value['FATUNI_PRUMADAS'] = json_encode($arrayPrumada);
 
           $dadosFatUni = FaturaUnidade::where('FATUNI_IDFATURA', $value['FATUNI_IDFATURA'])->get();
           if ($dadosFatUni->count() == 0) {
@@ -531,53 +565,13 @@ class ImovelController extends Controller
           }else{
               foreach ($dadosFatUni as $fatUni) {
 
-                  // Consumo de cada prumada
-                  $objBDPruConsumo = str_replace("}", "",$fatUni->FATUNI_PRUCONSUMO);
-                  $objAtualPruConsumo = str_replace("}", "",$value['FATUNI_PRUCONSUMO']);
-                  $value['FATUNI_PRUCONSUMO'] = '{'.str_replace("{", "",$objBDPruConsumo).', '.str_replace("{", "",$objAtualPruConsumo).'}';
-                  // fim
-
-                  // Valor de cada prumada
-                  $objBDPruValor = str_replace("}", "",$fatUni->FATUNI_PRUVALOR);
-                  $objAtualPruValor = str_replace("}", "",$value['FATUNI_PRUVALOR']);
-                  $value['FATUNI_PRUVALOR'] = '{'.str_replace("{", "",$objBDPruValor).', '.str_replace("{", "",$objAtualPruValor).'}';
-                  // fim
-
-                  // Leitura Anterior de cada prumada
-                  $objBDLeiAnterior = str_replace("}", "",$fatUni->FATUNI_LEIANTERIOR);
-                  $objAtualLeiAnterior = str_replace("}", "",$value['FATUNI_LEIANTERIOR']);
-                  $value['FATUNI_LEIANTERIOR'] = '{'.str_replace("{", "",$objBDLeiAnterior).', '.str_replace("{", "",$objAtualLeiAnterior).'}';
-                  // fim
-
-                  // Data da Leitura Anterior de cada prumada
-                  $objBDDtLeiAnterior = str_replace("}", "",$fatUni->FATUNI_DTLEIANTERIOR);
-                  $objAtualDtLeiAnterior = str_replace("}", "",$value['FATUNI_DTLEIANTERIOR']);
-                  $value['FATUNI_DTLEIANTERIOR'] = '{'.str_replace("{", "",$objBDDtLeiAnterior).', '.str_replace("{", "",$objAtualDtLeiAnterior).'}';
-                  // fim
-
-                  // Leitura Atual de cada prumada
-                  $objBDLeiAtual = str_replace("}", "",$fatUni->FATUNI_LEIATUAL);
-                  $objAtualLeiAtual = str_replace("}", "",$value['FATUNI_LEIATUAL']);
-                  $value['FATUNI_LEIATUAL'] = '{'.str_replace("{", "",$objBDLeiAtual).', '.str_replace("{", "",$objAtualLeiAtual).'}';
-                  // fim
-
-                  // Data da Leitura Atual de cada prumada
-                  $objBDdtLeiAtual = str_replace("}", "",$fatUni->FATUNI_DTLEIATUAL);
-                  $objAtualdtLeiAtual = str_replace("}", "",$value['FATUNI_DTLEIATUAL']);
-                  $value['FATUNI_DTLEIATUAL'] = '{'.str_replace("{", "",$objBDdtLeiAtual).', '.str_replace("{", "",$objAtualdtLeiAtual).'}';
-                  // fim
+                  $value['FATUNI_PRUMADAS'] = $fatUni->FATUNI_PRUMADAS.', '.$value['FATUNI_PRUMADAS'];
 
                   //  Valor Total da Unidade
-                  $ArrayUniValor = array();
-                  $arrayPruValor = json_decode($value['FATUNI_PRUVALOR'], true);
+                  $valorTotalDBSemPonto =  str_replace(".", "",$fatUni->FATUNI_VALORTOTAL);
+                  $valorTotalDBVirculaparaPonto =  str_replace(",", ".",$valorTotalDBSemPonto);
 
-                  foreach ($arrayPruValor as $key => $pruValor) {
-                    $pruValorSemPonto =  str_replace(".", "",$pruValor);
-                    $pruValorVirculaparaPonto =  str_replace(",", ".",$pruValorSemPonto);
-                    array_push($ArrayUniValor, $pruValorVirculaparaPonto);
-                  }
-
-                  $uniValor = array_sum($ArrayUniValor);
+                  $uniValor = array_sum(array($valorTotalDBVirculaparaPonto, $valor));
                   $value['FATUNI_VALORTOTAL'] = number_format($uniValor, 2, ',', '.');
                   // fim
 

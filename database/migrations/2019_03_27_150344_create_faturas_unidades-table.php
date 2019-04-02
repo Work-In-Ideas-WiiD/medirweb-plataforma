@@ -16,22 +16,17 @@ class CreateFaturasUnidadesTable extends Migration
         Schema::create('faturas_unidades', function (Blueprint $table) {
             $table->increments('FATUNI_ID');
 
+            $table->string('FATUNI_DT', 255);
+
             $table->integer('FATUNI_IDUNI')->unsigned();
             $table->foreign('FATUNI_IDUNI')->references('UNI_ID')->on('unidades');
 
             $table->integer('FATUNI_IDFATURA')->unsigned();
             $table->foreign('FATUNI_IDFATURA')->references('FAT_ID')->on('faturas');
 
-            $table->longText('FATUNI_PRUCONSUMO');
-            $table->longText('FATUNI_PRUVALOR');
-
-            $table->longText('FATUNI_LEIANTERIOR');
-            $table->longText('FATUNI_DTLEIANTERIOR');
-
-            $table->longText('FATUNI_LEIATUAL');
-            $table->longText('FATUNI_DTLEIATUAL');
-
             $table->string('FATUNI_VALORTOTAL', 255);
+
+            $table->longText('FATUNI_PRUMADAS');
 
             $table->timestamps();
         });

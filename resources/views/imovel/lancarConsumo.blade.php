@@ -68,7 +68,7 @@
 
                     <div class='col-md-4'>
                         <div class='form-group'>
-                            {{ Form::label('FAT_LEIMETRO_FORNECEDOR', 'Consumo m³') }}
+                            {{ Form::label('FAT_LEIMETRO_FORNECEDOR', 'Leitura m³') }}
                             {{ Form::text('FAT_LEIMETRO_FORNECEDOR', '', ['class' => 'avalidate form-control mask-inteiro', 'placeholder' => '']) }}
 
                             @if ($errors->has('FAT_LEIMETRO_FORNECEDOR'))

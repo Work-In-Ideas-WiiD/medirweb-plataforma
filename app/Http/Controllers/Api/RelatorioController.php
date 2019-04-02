@@ -27,30 +27,7 @@ class RelatorioController extends Controller
         foreach ($faturaImovel as $fatImo) {
             $faturaUnidade = FaturaUnidade::where('FATUNI_IDUNI', $request->UNI_ID)->where('FATUNI_IDFATURA', $fatImo->FAT_ID)->get();
 
-            foreach ($faturaUnidade as $fatUni) {
-
-                $arrayPruNome = array();
-                $jsonConsumo = json_decode($fatUni['FATUNI_PRUCONSUMO'], true);
-
-                foreach ($jsonConsumo as $key => $value) {
-                    $prumada = Prumada::find($key);
-                    array_push($arrayPruNome, $prumada->PRU_NOME);
-                }
-
-                $fatUni['PRU_NOME'] = $arrayPruNome;
-
-                setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
-                date_default_timezone_set('America/Sao_Paulo');
-
-                $fatUni['DT'] = ucwords(strftime('%B %Y', strtotime($fatImo->FAT_DTLEIFORNECEDOR)));
-
-
-
-
-
-                array_push($dadosFatura, $fatUni);
-            }
-
+            array_push($dadosFatura, $faturaUnidade);
         }
 
         return response()->json(response()->make($dadosFatura), 200);
