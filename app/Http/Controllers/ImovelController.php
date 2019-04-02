@@ -339,7 +339,7 @@ class ImovelController extends Controller
 
         foreach ($teste as  $value) {
 
-          $opa = $value->FAT_ID);
+          $opa = $value->FAT_ID;
 
           $value->destroy($opa);
         }
