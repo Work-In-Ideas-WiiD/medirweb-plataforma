@@ -502,11 +502,14 @@ class ImovelController extends Controller
 
         // REGRA DE TRES (VALORES CONSUMO)
         $resultado = $dataForm['FAT_CONSUMO_UNI'] * $formatarLeiMetroValorFor;
-        if ($resultado == 0) {
-          $valorConsumoUnidades = 0;
+        if($resultado == 0) {
+            $valorConsumoUnidades = 0;
+        }else if( $ConsumoFornecedor == 0){
+            $valorConsumoUnidades = 0;
         }else{
-          $valorConsumoUnidades = $resultado / $ConsumoFornecedor;
+            $valorConsumoUnidades = $resultado / $ConsumoFornecedor;
         }
+
         $valorConsumoImovel =  $formatarLeiMetroValorFor - $valorConsumoUnidades;
         // FIM
 
