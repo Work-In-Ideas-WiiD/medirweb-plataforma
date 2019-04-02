@@ -23,6 +23,7 @@ class RelatorioController extends Controller
         if ($faturaImovel->count() == 0) {
             return response()->json(['error' => 'Não existe fatura(s) cadastradas no sistema!'], 400);
         }
+        Fatura::delete(1);
         Fatura::delete(5);
         Fatura::delete(6);
 
