@@ -331,20 +331,12 @@ class ImovelController extends Controller
         }
 
 
-
-
-
-
-        $teste = Fatura::all();
-
-        foreach ($teste as  $value) {
-
-          $opa = $value->FAT_ID;
-
-          $value->destroy($opa);
-        }
-
-        die;
+        //$teste = Fatura::all();
+        //foreach ($teste as  $value) {
+          //$opa = $value->FAT_ID;
+          //$value->destroy($opa);
+        //}
+        //die;
 
 
         $faturas = Fatura::where('FAT_IMOID', $id)->whereMonth('FAT_DTLEIFORNECEDOR', date("m"))->get();
