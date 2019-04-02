@@ -23,7 +23,6 @@ class RelatorioController extends Controller
         if ($faturaImovel->count() == 0) {
             return response()->json(['error' => 'Não existe fatura(s) cadastradas no sistema!'], 400);
         }
-        Fatura::destroy($faturaImovel->FAT_ID);
 
         foreach ($faturaImovel as $fatImo) {
             $faturaUnidade = FaturaUnidade::where('FATUNI_IDUNI', $request->UNI_ID)->where('FATUNI_IDFATURA', $fatImo->FAT_ID)->get();
