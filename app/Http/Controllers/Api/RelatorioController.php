@@ -27,7 +27,10 @@ class RelatorioController extends Controller
         foreach ($faturaImovel as $fatImo) {
             $faturaUnidade = FaturaUnidade::where('FATUNI_IDUNI', $request->UNI_ID)->where('FATUNI_IDFATURA', $fatImo->FAT_ID)->get();
 
-            array_push($dadosFatura, $faturaUnidade);
+            foreach ($faturaUnidade as $fatUni) {
+                array_push($dadosFatura, $fatUni);
+            }
+
         }
 
         return response()->json(response()->make($dadosFatura), 200);
