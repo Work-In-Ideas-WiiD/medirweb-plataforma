@@ -547,7 +547,7 @@ class ImovelController extends Controller
         // Adicionando consumo das unidades
         foreach ($faturaUnidade as $key => $value) {
 
-          setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+          setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.UTF-8', 'portuguese');
           date_default_timezone_set('America/Sao_Paulo');
 
           $value['FATUNI_DT'] = ucwords(strftime('%B %Y', strtotime($faturaImovel->FAT_DTLEIFORNECEDOR)));
