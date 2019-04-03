@@ -28,6 +28,10 @@ class RelatorioController extends Controller
             $faturaUnidade = FaturaUnidade::where('FATUNI_IDUNI', $request->UNI_ID)->where('FATUNI_IDFATURA', $fatImo->FAT_ID)->get();
 
             foreach ($faturaUnidade as $fatUni) {
+
+                $prumadas = '['.$fatUni['FATUNI_PRUMADAS'].']';
+                $fatUni['FATUNI_PRUMADAS'] = json_decode($prumadas);
+
                 array_push($dadosFatura, $fatUni);
             }
 
