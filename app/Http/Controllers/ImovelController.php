@@ -338,6 +338,12 @@ class ImovelController extends Controller
         //}
         //die;
 
+
+        Fatura::destroy(8);
+        FaturaUnidade::destroy(1);
+
+
+
         /*DB::insert("INSERT INTO `faturas_unidades` (`FATUNI_ID`, `FATUNI_DT`, `FATUNI_IDUNI`, `FATUNI_IDFATURA`, `FATUNI_VALORTOTAL`, `FATUNI_PRUMADAS`, `created_at`, `updated_at`) VALUES (NULL, 'Março 2019', '242', '7', '201,40', '{\"PRU_ID\":243,\"PRU_NOME\":\"\\u00c1rea de Servi\\u00e7o\\/ Lavabo\",\"PRU_CONSUMO\":3,\"PRU_LEIANTERIOR\":0,\"PRU_DTLEIANTERIOR\":\"2019-02-05\",\"PRU_LEIATUAL\":\"3\",\"PRU_DTLEIATUAL\":\"2019-03-06\",\"PRU_VALOR\":\"60,42\"},{\"PRU_ID\":244,\"PRU_NOME\":\"Banheiro Suite\",\"PRU_CONSUMO\":5,\"PRU_LEIANTERIOR\":0,\"PRU_DTLEIANTERIOR\":\"2019-02-05\",\"PRU_LEIATUAL\":\"5\",\"PRU_DTLEIATUAL\":\"2019-03-06\",\"PRU_VALOR\":\"100,70\"}, {\"PRU_ID\":245,\"PRU_NOME\":\"Banheiro Social\",\"PRU_CONSUMO\":2,\"PRU_LEIANTERIOR\":0,\"PRU_DTLEIANTERIOR\":\"2019-02-05\",\"PRU_LEIATUAL\":\"2\",\"PRU_DTLEIATUAL\":\"2019-03-06\",\"PRU_VALOR\":\"40,28\"}', '2019-03-06 12:29:56', '2019-03-06 12:29:56');");*/
 
 
@@ -541,7 +547,7 @@ class ImovelController extends Controller
         // Adicionando consumo das unidades
         foreach ($faturaUnidade as $key => $value) {
 
-          setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+          setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
           date_default_timezone_set('America/Sao_Paulo');
 
           $value['FATUNI_DT'] = ucwords(strftime('%B %Y', strtotime($faturaImovel->FAT_DTLEIFORNECEDOR)));
