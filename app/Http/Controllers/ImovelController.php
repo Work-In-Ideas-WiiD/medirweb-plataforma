@@ -355,9 +355,16 @@ class ImovelController extends Controller
         $teste = ucwords(strftime('%B %Y', strtotime('2019-03-03')));
 
         var_dump($teste);
+
+
+        phpinfo();
+
+
         die;
 
-        
+
+
+
 
         $faturas = Fatura::where('FAT_IMOID', $id)->whereMonth('FAT_DTLEIFORNECEDOR', date("m"))->get();
         $ciclo =  $imovel->IMO_FATURACICLO - date("d");
