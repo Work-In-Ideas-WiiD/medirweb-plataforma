@@ -339,8 +339,8 @@ class ImovelController extends Controller
         //die;
 
 
-        Fatura::destroy(8);
-        FaturaUnidade::destroy(1);
+        //Fatura::destroy(8);
+        //FaturaUnidade::destroy(1);
 
 
 
