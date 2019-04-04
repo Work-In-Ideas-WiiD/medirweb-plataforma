@@ -25,13 +25,11 @@ class UserController extends Controller
 
         $user = $role->users()->where('email', '=',  $request->input('email'))->first();
 
-        if(!isset($user))
-        {
+        if(!isset($user)){
             return response()->json(['error' => 'Usuário não existe!'], 400);
         }
 
         if ($user->count() <= 0 || !Hash::check($request->input('password'), $user->password)) {
-
             return response()->json(['error' => 'Usuário ou senha inválidos'], 400);
         }
 
@@ -45,21 +43,15 @@ class UserController extends Controller
 
         $user = $role->users()->where('email', '=',  $request->input('email'))->first();
 
-        if(!isset($user))
-        {
+        if(!isset($user)){
             return response()->json(['error' => 'Usuário não existe!'], 400);
         }
 
-
-
-
-
-
-
-
+        // GERANDO UMA SENHA ALETORIA
         $password = rand(100000,9999999);
-        $dataFormUser['password'] = bcrypt($password);
 
+        // ATUALIZANDO NO BANCO NOVA SENHA
+        $dataFormUser['password'] = bcrypt($password);
         $user->update($dataFormUser);
 
         // ENVIAR EMAIL com a senha.
@@ -68,11 +60,6 @@ class UserController extends Controller
             $message->to($user->email);
             $message->subject('Senha de acesso ao app');
         });
-
-
-
-
-
 
         return response()->json(['success' => 'Email Enviado com Sucesso!'], 200);
     }
