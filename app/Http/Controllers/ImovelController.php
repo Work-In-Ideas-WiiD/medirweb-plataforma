@@ -349,7 +349,7 @@ class ImovelController extends Controller
 
 
 
-        setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.UTF-8', 'portuguese');
+        /*setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.UTF-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
         $teste = utf8_encode(ucwords(strftime('%B %Y', strtotime('2019-03-03'))));
@@ -360,7 +360,7 @@ class ImovelController extends Controller
         phpinfo();
 
 
-        die;
+        die;*/
 
 
 
@@ -569,7 +569,7 @@ class ImovelController extends Controller
           setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.UTF-8', 'portuguese');
           date_default_timezone_set('America/Sao_Paulo');
 
-          $value['FATUNI_DT'] = ucwords(strftime('%B %Y', strtotime($faturaImovel->FAT_DTLEIFORNECEDOR)));
+          $value['FATUNI_DT'] = utf8_encode(ucwords(strftime('%B %Y', strtotime($faturaImovel->FAT_DTLEIFORNECEDOR))));
           $value['FATUNI_IDFATURA'] = $faturaImovel->FAT_ID;
 
           //CALCULO VALOR DE CADA PRUMADA
