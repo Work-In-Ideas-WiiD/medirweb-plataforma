@@ -17,7 +17,7 @@ class CreateEquipamentosTable extends Migration
             $table->increments('EQP_ID');
 
             $table->integer('EQP_IDUNIDADE')->unsigned();
-            $table->foreign('EQP_IDUNIDADE')->references('UNI_ID')->on('unidades');
+            $table->foreign('EQP_IDUNIDADE')->references('UNI_ID')->on('unidades')->onDelete('cascade');
 
             $table->integer('EQP_IDFUNCIONAL')->unsigned();
 

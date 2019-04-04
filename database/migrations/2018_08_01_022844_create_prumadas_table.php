@@ -17,7 +17,7 @@ class CreatePrumadasTable extends Migration
             $table->increments('PRU_ID');
 
             $table->integer('PRU_IDUNIDADE')->unsigned();
-            $table->foreign('PRU_IDUNIDADE')->references('UNI_ID')->on('unidades');
+            $table->foreign('PRU_IDUNIDADE')->references('UNI_ID')->on('unidades')->onDelete('cascade')->onDelete('cascade');
 
             $table->string('PRU_NOME', 255);
             $table->string('PRU_IDFUNCIONAL',255);

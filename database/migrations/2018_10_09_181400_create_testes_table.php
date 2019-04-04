@@ -24,6 +24,7 @@ class CreateTestesTable extends Migration
             $table->string('id_imovel');
             $table->string('ip_equipamento');
             $table->string('id_hidrometro');
+            $table->integer('tipo');
             $table->timestamps();
         });
     }

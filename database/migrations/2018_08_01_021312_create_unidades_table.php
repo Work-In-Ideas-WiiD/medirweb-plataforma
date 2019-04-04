@@ -17,13 +17,13 @@ class CreateUnidadesTable extends Migration
             $table->increments('UNI_ID');
 
             $table->integer('UNI_IDAGRUPAMENTO')->unsigned();
-            $table->foreign('UNI_IDAGRUPAMENTO')->references('AGR_ID')->on('agrupamentos');
+            $table->foreign('UNI_IDAGRUPAMENTO')->references('AGR_ID')->on('agrupamentos')->onDelete('cascade');
 
             $table->integer('UNI_IDIMOVEL')->unsigned();
-            $table->foreign('UNI_IDIMOVEL')->references('IMO_ID')->on('imoveis');
+            $table->foreign('UNI_IDIMOVEL')->references('IMO_ID')->on('imoveis')->onDelete('cascade');
 
-            $table->integer('UNI_IDUSER')->unsigned();
-            $table->foreign('UNI_IDUSER')->references('id')->on('users');
+            $table->integer('UNI_IDUSER')->unsigned()->nullable();
+            $table->foreign('UNI_IDUSER')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('UNI_NOME', 200);
             $table->string('UNI_RESPONSAVEL', 200);

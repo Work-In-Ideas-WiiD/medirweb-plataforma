@@ -33,10 +33,10 @@ class CreateClientesTable extends Migration
             $table->string('CLI_BAIRRO', 300);
 
             $table->integer('CLI_CIDADE')->unsigned();
-            $table->foreign('CLI_CIDADE')->references('CID_ID')->on('cidades');
+            $table->foreign('CLI_CIDADE')->references('CID_ID')->on('cidades')->onDelete('cascade');
 
             $table->integer('CLI_ESTADO')->unsigned();
-            $table->foreign('CLI_ESTADO')->references('EST_ID')->on('estados');
+            $table->foreign('CLI_ESTADO')->references('EST_ID')->on('estados')->onDelete('cascade');
 
             $table->string('CLI_CEP', 200);
 

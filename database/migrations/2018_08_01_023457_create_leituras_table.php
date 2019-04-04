@@ -17,7 +17,7 @@ class CreateLeiturasTable extends Migration
             $table->increments('LEI_ID');
 
             $table->integer('LEI_IDPRUMADA')->unsigned();
-            $table->foreign('LEI_IDPRUMADA')->references('PRU_ID')->on('prumadas');
+            $table->foreign('LEI_IDPRUMADA')->references('PRU_ID')->on('prumadas')->onDelete('cascade');
 
             $table->string('LEI_METRO');
             $table->string('LEI_LITRO');

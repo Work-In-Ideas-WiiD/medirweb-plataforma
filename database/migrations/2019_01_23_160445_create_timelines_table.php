@@ -17,7 +17,7 @@ class CreateTimelinesTable extends Migration
             $table->increments('TIMELINE_ID');
 
             $table->integer('TIMELINE_IDPRUMADA')->unsigned();
-            $table->foreign('TIMELINE_IDPRUMADA')->references('PRU_ID')->on('prumadas');
+            $table->foreign('TIMELINE_IDPRUMADA')->references('PRU_ID')->on('prumadas')->onDelete('cascade');
 
             $table->string('TIMELINE_USER', 100);
             $table->longText('TIMELINE_DESCRICAO');

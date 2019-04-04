@@ -19,10 +19,10 @@ class CreateFaturasUnidadesTable extends Migration
             $table->string('FATUNI_DT', 255);
 
             $table->integer('FATUNI_IDUNI')->unsigned();
-            $table->foreign('FATUNI_IDUNI')->references('UNI_ID')->on('unidades');
+            $table->foreign('FATUNI_IDUNI')->references('UNI_ID')->on('unidades')->onDelete('cascade');
 
             $table->integer('FATUNI_IDFATURA')->unsigned();
-            $table->foreign('FATUNI_IDFATURA')->references('FAT_ID')->on('faturas');
+            $table->foreign('FATUNI_IDFATURA')->references('FAT_ID')->on('faturas')->onDelete('cascade');
 
             $table->string('FATUNI_VALORTOTAL', 255);
 

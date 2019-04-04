@@ -17,7 +17,7 @@ class CreateFaturasTable extends Migration
             $table->increments('FAT_ID');
 
             $table->integer('FAT_IMOID')->unsigned();
-            $table->foreign('FAT_IMOID')->references('IMO_ID')->on('imoveis');
+            $table->foreign('FAT_IMOID')->references('IMO_ID')->on('imoveis')->onDelete('cascade');
 
             $table->date('FAT_DTLEIFORNECEDOR');
 
