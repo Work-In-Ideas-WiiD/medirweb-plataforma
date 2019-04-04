@@ -18,11 +18,6 @@ use Mail;
 class UserController extends Controller
 {
 
-    public function index()
-    {
-        //
-    }
-
     public function login(Request $request)
     {
         $role = 'Comum';
@@ -41,6 +36,45 @@ class UserController extends Controller
         }
 
         return response()->json(response()->make($user), 200);
+    }
+
+    public function esqueciSenha(Request $request)
+    {
+        $role = 'Comum';
+        $role = Defender::findRole(ucfirst($role));
+
+        $user = $role->users()->where('email', '=',  $request->input('email'))->first();
+
+        if(!isset($user))
+        {
+            return response()->json(['error' => 'Usuário não existe!'], 400);
+        }
+
+
+
+
+
+
+
+
+        $password = rand(100000,9999999);
+        $dataFormUser['password'] = bcrypt($password);
+
+        $user->update($dataFormUser);
+
+        // ENVIAR EMAIL com a senha.
+        Mail::send('email.senhaUser', ['nome' => $user->nome,'senha' => $password], function($message) use ($user) {
+            $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
+            $message->to($user->email);
+            $message->subject('Senha de acesso ao app');
+        });
+
+
+
+
+
+
+        return response()->json(['success' => 'Email Enviado com Sucesso!'], 200);
     }
 
     public function showUsers(Request $request)

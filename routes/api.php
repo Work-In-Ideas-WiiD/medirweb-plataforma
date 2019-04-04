@@ -23,7 +23,11 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //Caminho /api/login
 Route::group(['prefix' => 'login'], function()
 {
+    //Caminho /api/login
     Route::post('', ['uses' => 'Api\UserController@login']);
+
+    //Caminho /api/login/esqueciSenha
+    Route::post('esqueciSenha', ['uses' => 'Api\UserController@esqueciSenha']);
 });
 
 
