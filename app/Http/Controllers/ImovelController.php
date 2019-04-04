@@ -352,7 +352,7 @@ class ImovelController extends Controller
         setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.UTF-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
-        $teste = ucwords(strftime('%B %Y', strtotime('2019-03-03')));
+        $teste = utf8_encode(ucwords(strftime('%B %Y', strtotime('2019-03-03'))));
 
         var_dump($teste);
 
