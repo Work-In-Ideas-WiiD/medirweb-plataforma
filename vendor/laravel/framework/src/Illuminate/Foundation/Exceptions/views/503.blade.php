@@ -1,5 +1,5 @@
 @extends('errors::layout')
 
-@section('title', 'Service Unavailable')
+@section('title', 'Serviço indisponível')
 
-@section('message', 'Be right back.')
+@section('message', 'Volto logo.')
