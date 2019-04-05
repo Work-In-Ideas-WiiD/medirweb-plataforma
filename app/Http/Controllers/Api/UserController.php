@@ -44,7 +44,7 @@ class UserController extends Controller
         $user = $role->users()->where('email', '=',  $request->input('email'))->first();
 
         if(!isset($user)){
-            return response()->json(['error' => 'Usuário inválido!'], 400);
+            return response()->json(['error' => 'E-mail inválido!'], 400);
         }
 
         // GERANDO UMA SENHA ALETORIA
@@ -61,7 +61,7 @@ class UserController extends Controller
             $message->subject('Senha de acesso ao app');
         });
 
-        return response()->json(['success' => 'Senha gerado com Sucesso!'], 200);
+        return response()->json(['success' => 'Senha gerada com Sucesso!'], 200);
     }
 
     public function showUsers(Request $request)
