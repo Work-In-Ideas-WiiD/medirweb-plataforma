@@ -139,3 +139,4 @@ Route::get('relatorio/faturas/getApartamentoLista/{id}', array('uses' => 'Relato
 
 // PAGINA DE ERROR
 Route::get('404',['as'=>'404','uses'=>'ErrorHandlerController@errorCode404']);
+Route::get('500',['as'=>'500','uses'=>'ErrorHandlerController@errorCode500']);

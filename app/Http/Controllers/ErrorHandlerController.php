@@ -9,4 +9,9 @@ class ErrorHandlerController extends Controller
     {
         return view('error404');
     }
+
+    public function errorCode500()
+    {
+        return view('error500');
+    }
 }
