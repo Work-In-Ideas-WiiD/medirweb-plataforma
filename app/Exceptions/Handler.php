@@ -33,6 +33,10 @@ class Handler extends ExceptionHandler
                 break;
             }
         }
+
+        var_dump($exception);
+        die;
+        
         return parent::render($request, $exception);
     }
 }
