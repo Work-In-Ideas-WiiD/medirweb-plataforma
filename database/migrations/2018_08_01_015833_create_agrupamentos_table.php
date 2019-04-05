@@ -19,7 +19,7 @@ class CreateAgrupamentosTable extends Migration
             $table->integer('AGR_IDIMOVEL')->unsigned();
             $table->foreign('AGR_IDIMOVEL')->references('IMO_ID')->on('imoveis')->onDelete('cascade');
 
-            $table->string('AGR_NOME', 300);
+            $table->string('AGR_NOME', 300)->nullable();
             $table->string('AGR_TAXAFIXA', 200)->nullable();
             $table->string('AGR_TAXAVARIAVEL', 200)->nullable();
 
