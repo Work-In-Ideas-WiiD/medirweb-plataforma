@@ -54,7 +54,9 @@ class PrumadaController extends Controller
             ];
 
             Leitura::create($leitura);
-            return response()->json(['success' => 'Leitura realizada com sucesso.'], 200);
+            //return response()->json(['success' => 'Leitura realizada com sucesso.'], 200);
+
+            return response()->json(response()->make($leitura), 200);
         }
         else
         {
