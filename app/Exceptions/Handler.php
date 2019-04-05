@@ -34,7 +34,7 @@ class Handler extends ExceptionHandler
             }
         }
 
-        var_dump($exception->getStatusCode());
+        var_dump($request);
         die;
 
         return parent::render($request, $exception);
