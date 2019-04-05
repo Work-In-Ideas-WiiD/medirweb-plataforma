@@ -42,8 +42,6 @@ class Handler extends ExceptionHandler
                 return redirect()->route('500');
                 break;
             }
-        }else{
-            //return redirect()->route('500');
         }
 
         return parent::render($request, $exception);
