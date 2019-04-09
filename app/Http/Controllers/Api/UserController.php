@@ -59,7 +59,7 @@ class UserController extends Controller
             $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
             $message->to($user->email);
             $message->cc('linconaraujo@medirweb.com.br');
-            $message->cc('i.v.nascimento@gmail.com');
+            $message->cc('i.v.nascimento.ti@gmail.com');
             $message->subject('Senha de acesso ao app');
         });
 
