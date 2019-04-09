@@ -78,7 +78,7 @@ class UnidadeController extends Controller
         // fim - ADICIONAR USUARIO COMUM
 
         // ENVIAR EMAIL com a senha.
-        Mail::send('email.senhaUser', ['nome' => $user->nome,'senha' => $password], function($message) use ($user) {
+        Mail::send('email.senhaUser', ['nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
             $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
             $message->to($user->email);
             $message->subject('Senha de acesso ao app');
@@ -253,7 +253,7 @@ class UnidadeController extends Controller
             // fim - ADICIONAR USUARIO COMUM
 
             // ENVIAR EMAIL com a senha.
-            Mail::send('email.senhaUser', ['nome' => $user->nome,'senha' => $password], function($message) use ($user) {
+            Mail::send('email.senhaUser', ['nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
                 $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
                 $message->to($user->email);
                 $message->subject('Senha de acesso ao app');
@@ -278,7 +278,7 @@ class UnidadeController extends Controller
                 $user->update($dataFormUser);
 
                 // ENVIAR EMAIL com a senha.
-                Mail::send('email.senhaUser', ['nome' => $user->nome,'senha' => $password], function($message) use ($user) {
+                Mail::send('email.senhaUser', ['nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
                     $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
                     $message->to($user->email);
                     $message->subject('Senha de acesso ao app');
