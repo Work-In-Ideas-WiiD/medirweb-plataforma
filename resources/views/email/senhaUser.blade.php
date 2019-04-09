@@ -51,9 +51,13 @@
 
                     <p>Obrigado, seu usuário foi criado com sucesso na nossa Plataforma MedirWeb.</p>
 
-                    <p>Sua senha para acesso ao aplicativo MedirWeb é: {{$senha}}</p>
+                    <p>Segue as informações abaixo para o acesso ao aplicativo MedirWeb</p>
 
-                    <p>Baixe o app gratis! Disponível para iPhone e Android.</p>
+                    <p>Email: {{email}}<br>
+                      Senha: {{$senha}}
+                    </p>
+
+                    <p><a href="https://play.google.com/store/apps/details?id=com.wiid.medirweb">Baixe o app gratis!</a> Disponível somente para Android.</p>
 
                     <p style="color: #848484;">Muito obrigado!<br/>Equipe MedirWeb - Plataforma individualizadora</p><br/>
                 </div>

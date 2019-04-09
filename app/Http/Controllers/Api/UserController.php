@@ -55,9 +55,11 @@ class UserController extends Controller
         $user->update($dataFormUser);
 
         // ENVIAR EMAIL com a senha.
-        Mail::send('email.senhaUser', ['nome' => $user->nome,'senha' => $password], function($message) use ($user) {
+        Mail::send('email.senhaUser', ['nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
             $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
             $message->to($user->email);
+            $message->cc('linconaraujo@medirweb.com.br');
+            $message->cc('i.v.nascimento@gmail.com');
             $message->subject('Senha de acesso ao app');
         });
 
