@@ -25,7 +25,12 @@ class CentralController extends Controller
             $prumadas = $unidade->getPrumadas;
 
             foreach ($prumadas as $prumada) {
-                array_push($arrayPrumadas, $prumada);
+
+                $dados['EQP_IDUNI'] = $unidade->UNI_ID;
+                $dados['EQP_IDPRU'] = $prumada->PRU_ID;
+                $dados['EQP_IDFUNCIONAL'] = $prumada->PRU_IDFUNCIONAL;
+
+                array_push($arrayPrumadas, $dados);
             }
         }
 
