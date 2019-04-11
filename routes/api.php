@@ -89,3 +89,15 @@ Route::group(['prefix' => 'relatorio'], function()
     Route::post('/historicoFaturas', array('uses' => 'Api\RelatorioController@historicoFaturas'));
 });
 // fim - ### Relatorio CONTROLER ###
+
+
+
+
+
+
+// ### CentralResp CONTROLER ###
+Route::group(['prefix' => 'central'], function()
+{
+    Route::get('{ip}/getprumadas/', array('uses' => 'Api\CentralController@getPrumadas'));
+});
+// fim - ### CentralResp CONTROLER ###
