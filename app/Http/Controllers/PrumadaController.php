@@ -259,8 +259,8 @@ class PrumadaController extends Controller
 		// PRUCURANDO prumada na central raspberry para pegar o id da prumada da central
 		$chPruCentral = curl_init();
 		curl_setopt($chPruCentral, CURLOPT_RETURNTRANSFER, 1);
-		//curl_setopt($chPruCentral, CURLOPT_URL, 'http://localhost:8000/equipamentos/');
-		curl_setopt($chPruCentral, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/');
+		curl_setopt($chPruCentral, CURLOPT_URL, 'http://localhost:8000/equipamentos/');
+		//curl_setopt($chPruCentral, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/');
 		$getPruCentral_json = curl_exec($chPruCentral);
 		curl_close($chPruCentral);
 
@@ -279,8 +279,8 @@ class PrumadaController extends Controller
 
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		//curl_setopt($curl, CURLOPT_URL, 'http://localhost:8000/equipamentos/'.$idPruCentral.'/');
-		curl_setopt($curl, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/'.$idPruCentral.'/');
+		curl_setopt($curl, CURLOPT_URL, 'http://localhost:8000/equipamentos/'.$idPruCentral.'/');
+		//curl_setopt($curl, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/'.$idPruCentral.'/');
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $dadosCentral);
 		$resposta = curl_exec($curl);

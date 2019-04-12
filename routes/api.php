@@ -99,5 +99,6 @@ Route::group(['prefix' => 'relatorio'], function()
 Route::group(['prefix' => 'central'], function()
 {
     Route::get('{ip}/getprumadas/', array('uses' => 'Api\CentralController@getPrumadas'));
+    Route::post('addleituras', array('uses' => 'Api\CentralController@addLeituras'));
 });
 // fim - ### CentralResp CONTROLER ###

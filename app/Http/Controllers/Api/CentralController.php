@@ -41,7 +41,8 @@ class CentralController extends Controller
 
     public function addLeituras(Request $request)
     {
-
+        $dataForm = $request->all();
+        Leitura::create($dataForm);
 
     }
 
