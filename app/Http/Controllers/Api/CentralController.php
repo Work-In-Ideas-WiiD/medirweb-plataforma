@@ -37,4 +37,12 @@ class CentralController extends Controller
         return response()->json(response()->make($arrayPrumadas), 200);
     }
 
+
+
+    public function addLeituras(Request $request)
+    {
+
+
+    }
+
 }

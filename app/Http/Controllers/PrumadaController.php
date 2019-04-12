@@ -50,6 +50,25 @@ class PrumadaController extends Controller
 		$dataForm = $request->all();
 		$prumada = Prumada::create($dataForm);
 
+
+		// Adicionar prumada no central raspberry
+		$dadosCentral['EQP_IDUNI'] = $prumada->PRU_IDUNIDADE;
+		$dadosCentral['EQP_IDPRU'] = $prumada->PRU_ID;
+		$dadosCentral['EQP_IDFUNCIONAL'] = $prumada->PRU_IDFUNCIONAL;
+
+		$curl = curl_init();
+
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_URL, 'http://localhost:8000/equipamentos/');
+		//curl_setopt($curl, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/');
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $dadosCentral);
+
+		$resposta = curl_exec($curl);
+		curl_close($curl);
+		// fim
+
+
 		$logado = auth()->user()->name;
 		$timelineData = ["TIMELINE_IDPRUMADA" => $prumada->PRU_ID,
 		"TIMELINE_USER" => $logado,
@@ -232,8 +251,42 @@ class PrumadaController extends Controller
 			Timeline::create($timelineData7);
 		}
 
-		// PRUMADA - ATUALZAR
+		// PRUMADA - ATUALIZAR
 		$prumada->update($dataForm);
+
+
+
+		// PRUCURANDO prumada na central raspberry para pegar o id da prumada da central
+		$chPruCentral = curl_init();
+		curl_setopt($chPruCentral, CURLOPT_RETURNTRANSFER, 1);
+		//curl_setopt($chPruCentral, CURLOPT_URL, 'http://localhost:8000/equipamentos/');
+		curl_setopt($chPruCentral, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/');
+		$getPruCentral_json = curl_exec($chPruCentral);
+		curl_close($chPruCentral);
+
+		$getPruCentral = json_decode($getPruCentral_json, true);
+		foreach ($getPruCentral as $key => $pruCentral) {
+			if($pruCentral['EQP_IDPRU'] == $prumada->PRU_ID){
+				$idPruCentral = $pruCentral['id'];
+			}
+		}
+		// fim
+
+		// Atualizar prumada no central raspberry
+		$dadosCentral['EQP_IDUNI'] = $prumada->PRU_IDUNIDADE;
+		$dadosCentral['EQP_IDPRU'] = $prumada->PRU_ID;
+		$dadosCentral['EQP_IDFUNCIONAL'] = $prumada->PRU_IDFUNCIONAL;
+
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		//curl_setopt($curl, CURLOPT_URL, 'http://localhost:8000/equipamentos/'.$idPruCentral.'/');
+		curl_setopt($curl, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/'.$idPruCentral.'/');
+		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $dadosCentral);
+		$resposta = curl_exec($curl);
+		curl_close($curl);
+		// fim
+
 
 		return redirect('/imovel')->with('success', 'Equipamento atualizado com sucesso.');
 	}
