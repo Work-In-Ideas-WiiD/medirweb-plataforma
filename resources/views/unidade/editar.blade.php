@@ -108,11 +108,28 @@
 								</span>
 								@endif
 							</div>
+
+							@if(!empty($unidade['rolesUNI']))
+							@is('Administrador')
+							<?php // Perfil extra?>
+							<div class='form-group'>
+									{!! Form::label('rolesUNI', 'Perfil extra', ['class' => 'control-label']) !!}
+									{!! Form::select('rolesUNI[]', $rolesUNI, null, ['class' => 'form-control']) !!}
+
+									@if ($errors->has('roles'))
+									<span class="help-block">
+											<strong style="color: red;">{{ $errors->first('roles') }}</strong>
+									</span>
+									@endif
+							</div>
+							@endis
+							@endif
+
 						</div>
 
 					</div>
 
-					@if(!empty($email))
+					@if(!empty($unidade['email']))
 					<div class="alert alert-warning" role="alert">
 						<p>OBS.: Se alterar email, o responsável da unidade só conseguirar acessar o aplicativo com novo email inserido! Por favor, avise o mesmo!</p>
 					</div>

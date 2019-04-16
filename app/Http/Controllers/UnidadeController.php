@@ -197,12 +197,27 @@ class UnidadeController extends Controller
         $user = User::find($unidade->UNI_IDUSER);
         if(is_null($user)){
             $unidade['email'] = "";
+            $unidade['rolesUNI'] = "";
         }else{
             $unidade['email'] = $user->email;
-        }
-        //$prumadas = $unidade->getPrumadas();
 
-        return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas'));
+            // PEFIL EXTRA
+            foreach ($user->roles as $roleUser) {
+                $unidade['rolesUNI'] = $roleUser->id;
+            }
+
+            $rolesUNI = ['' => '-- Sem Perfil Extra --'];
+            $_roles = \Artesaos\Defender\Role::all();
+            foreach($_roles as $role){
+                if(!($role->id == 4)){
+                    $rolesUNI[$role->id] = $role->name;
+                }
+            }
+            //
+
+        }
+
+        return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas', 'rolesUNI'));
     }
 
     public function update(UnidadeEditRequest $request, $id)
@@ -268,6 +283,20 @@ class UnidadeController extends Controller
             $dataFormUser['name'] = $request->UNI_RESPONSAVEL;
             $user->update($dataFormUser);
             //fim - name atualizar
+
+            // Se tiver perfil extra
+            $rolesUNIForm = $dataForm['rolesUNI'];
+            foreach ($rolesUNIForm as $key => $rolesUNI) {
+                if(empty($rolesUNI)){
+                    $dataFormUser['roles'] = array("4");
+                }else{
+                    $dataFormUser['roles'] = array("4", $rolesUNI);
+                }
+            }
+
+            if(key_exists('roles', $dataFormUser))
+            $user->roles()->sync($dataFormUser['roles']);
+            // fim --
 
             // se mudar email
             if(!($request->email == $user->email)){
