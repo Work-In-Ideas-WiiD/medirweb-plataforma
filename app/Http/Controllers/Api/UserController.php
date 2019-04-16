@@ -68,14 +68,18 @@ class UserController extends Controller
 
     public function showUsers(Request $request)
     {
-        $role = 'Comum';
-        $role = Defender::findRole(ucfirst($role));
+        // PESQUISANDO USUARIO COMUM
+        $roleComum = Defender::findRole(ucfirst('Comum'));
+        $userComum = $roleComum->users()->find($request->user_id);
 
-        $user = $role->users()->find($request->user_id);
-
-        if(!isset($user)){
+        if(!isset($userComum)){
             return response()->json(['error' => 'Usuário não existe!'], 400);
         }
+        // fim
+
+        //Exibir todos os perfil vinculado ao usuario comum encontrado
+        $user = User::find($userComum->id);
+        $user->roles;
 
         return response()->json(response()->make($user), 200);
     }
