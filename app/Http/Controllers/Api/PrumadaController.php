@@ -67,7 +67,7 @@ class PrumadaController extends Controller
 
     }
 
-    /*public function ligarPrumada(Request $request)
+    public function ligarPrumada(Request $request)
     {
         $prumada = Prumada::find($request->PRU_ID);
 
@@ -111,9 +111,9 @@ class PrumadaController extends Controller
             return response()->json(['error' => 'Não foi possível ligar o equipamento. Por favor, verifique a conexão.'], 400);
         }
 
-    }*/
+    }
 
-    /*public function desligarPrumada(Request $request)
+    public function desligarPrumada(Request $request)
     {
         $prumada = Prumada::find($request->PRU_ID);
 
@@ -158,7 +158,7 @@ class PrumadaController extends Controller
             return response()->json(['error' => 'Não foi possível desligar o equipamento. Por favor, verifique a conexão.'], 400);
         }
 
-    }*/
+    }
 
     /*public function ultimaLeitura(Request $request)
     {
