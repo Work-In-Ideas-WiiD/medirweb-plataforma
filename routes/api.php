@@ -70,10 +70,10 @@ Route::group(['prefix' => 'unidade'], function()
 Route::post('/leitura/prumada', array('uses' => 'Api\PrumadaController@leituraPrumada'));
 
 // Ligar Hidrômetro
-Route::post('/ligar/prumada/{prumada}', array('uses' => 'Api\PrumadaController@ligarPrumada'));
+Route::post('/ligar/prumada', array('uses' => 'Api\PrumadaController@ligarPrumada'));
 
 // Desligar Hidrômetro
-Route::post('/desligar/prumada/{prumada}', array('uses' => 'Api\PrumadaController@desligarPrumada'));
+Route::post('/desligar/prumada', array('uses' => 'Api\PrumadaController@desligarPrumada'));
 
 // Ultima Leitura do Hidrômetro
 //Route::post('/prumada/ultimaLeitura', array('uses' => 'Api\PrumadaController@ultimaLeitura'));
