@@ -88,6 +88,7 @@ class RelatorioController extends Controller
                     $relatorio_consumoAvancados = array(
                         'PRU_ID' => $hidromentro->PRU_ID,
                         'PRU_NOME' => $hidromentro->PRU_NOME,
+                        'PRU_STATUS' => $hidromentro->PRU_STATUS,
                         'LeituraAnterior' => $leituraAnterior->LEI_METRO,
                         'LeituraAtual' => $leituraAtual->LEI_METRO,
                         'Consumo' => $consumo,
