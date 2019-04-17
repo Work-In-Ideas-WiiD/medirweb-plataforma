@@ -187,7 +187,7 @@
 										@elseif($pru->PRU_TIPO == 3)
 										<div class="col-md-1"><i class="text-danger fa fa-bolt"></i></div>
 										@endif
-										<div class="col-md-10">{{ $pru->PRU_NOME }}</div>
+										<div class="col-md-9">{{ $pru->PRU_NOME }}</div>
 									</td>
 									<td>{{ $pru->PRU_IDFUNCIONAL }}</td>
 									<td>{{ $pru->PRU_SERIAL }}</td>
