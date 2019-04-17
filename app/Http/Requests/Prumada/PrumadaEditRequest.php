@@ -18,7 +18,7 @@ class PrumadaEditRequest extends PrumadaRequest
             'PRU_OPERADORA' => 'required|max:255',
             'PRU_FABRICANTE' => 'required|max:255',
             'PRU_MODELO' => 'required|max:255',
-
+            'PRU_TIPO' => 'required|integer',
         ];
     }
 }

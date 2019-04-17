@@ -76,6 +76,13 @@ class PrumadaController extends Controller
 		"TIMELINE_ICON" => "fa fa-plus bg-green",];
 		$timeline = Timeline::create($timelineData);
 
+
+		// Sem comunicação com a central do imovel
+		if($resposta == NULL){
+				return redirect('/equipamento/editar/'.$prumada->PRU_ID)->with('error', 'Sem comunicação com a central do imovel! Tente novamente mais tarde no ATUALIZAR EQUIPAMENTO, para atualizar a base de dados!');
+		}
+		//
+
 		return redirect('/imovel')->with('success', 'Equipamento cadastrada com sucesso.');
 	}
 
@@ -263,6 +270,13 @@ class PrumadaController extends Controller
 		//curl_setopt($chPruCentral, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/');
 		$getPruCentral_json = curl_exec($chPruCentral);
 		curl_close($chPruCentral);
+
+
+		// Sem comunicação com a central do imovel
+		if($getPruCentral_json == NULL){
+				return redirect('/equipamento/editar/'.$prumada->PRU_ID)->with('error', 'Sem comunicação com a central do imovel! Tente novamente mais tarde para atualizar a base de dados!');
+		}
+		//
 
 		$getPruCentral = json_decode($getPruCentral_json, true);
 		foreach ($getPruCentral as $key => $pruCentral) {

@@ -144,16 +144,40 @@
                             @endif
                         </div>
 
-                        <?php // Status ?>
-                        <div class='form-group'>
-                            {{ Form::label('PRU_STATUS', 'Status') }}
-                            {{ Form::select('PRU_STATUS', [1 => 'Ativo', 0 => 'Inativo'], null, ['class' => 'form-control']) }}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
 
-                            @if ($errors->has('PRU_STATUS'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('PRU_STATUS') }}</strong>
-                            </span>
-                            @endif
+                                  <?php // TIPO ?>
+                                  <div class="col-md-6">
+                                      <div class='form-group'>
+                                          {{ Form::label('PRU_TIPO', 'Tipo') }}
+                                          {{ Form::select('PRU_TIPO', ['' => 'Selecione... ', 1 => 'Água', 2 => 'Gás', 3 => 'Energia'], null, ['class' => 'form-control']) }}
+
+                                          @if ($errors->has('PRU_TIPO'))
+                                          <span class="help-block">
+                                              <strong style="color: red;">{{ $errors->first('PRU_TIPO') }}</strong>
+                                          </span>
+                                          @endif
+                                      </div>
+                                  </div>
+
+                                  <?php // Status ?>
+                                  <div class="col-md-6">
+                                      <div class='form-group'>
+                                          {{ Form::label('PRU_STATUS', 'Status') }}
+                                          {{ Form::select('PRU_STATUS', [1 => 'Ativo', 0 => 'Inativo'], null, ['class' => 'form-control']) }}
+
+                                          @if ($errors->has('PRU_STATUS'))
+                                          <span class="help-block">
+                                              <strong style="color: red;">{{ $errors->first('PRU_STATUS') }}</strong>
+                                          </span>
+                                          @endif
+                                      </div>
+                                  </div>
+
+                                </div>
+                            </div>
                         </div>
 
                     </div>
