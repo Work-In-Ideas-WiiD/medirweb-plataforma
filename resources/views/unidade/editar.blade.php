@@ -179,7 +179,16 @@
 								@foreach ($prumadas as $pru)
 								<tr>
 									<td>{{ $pru->PRU_ID }}</td>
-									<td>{{ $pru->PRU_NOME }}</td>
+									<td>
+										@if($pru->PRU_TIPO == 1)
+										<div class="col-md-1"><i class="text-primary fa fa-tint"></i></div>
+										@elseif($pru->PRU_TIPO == 2)
+										<div class="col-md-1"><i style="color: #f38212;" class="fa fa-fire"></i></div>
+										@elseif($pru->PRU_TIPO == 3)
+										<div class="col-md-1"><i class="text-danger fa fa-bolt"></i></div>
+										@endif
+										<div class="col-md-10">{{ $pru->PRU_NOME }}</div>
+									</td>
 									<td>{{ $pru->PRU_IDFUNCIONAL }}</td>
 									<td>{{ $pru->PRU_SERIAL }}</td>
 									<td>{{ $pru->PRU_OPERADORA }}</td>

@@ -114,7 +114,26 @@
 
 															<!-- Nome Unidade -->
 															<div class="col-md-5">
-																<h4>{{ $unidade->UNI_NOME }} <small style="color: grey;">#{{ $prumada->PRU_IDFUNCIONAL }} - {{ $prumada->PRU_NOME }}</small> </h4>
+																<div class="row">
+
+																	<!-- Tipo -->
+																	<div class="col-md-1">
+																		<h4>
+																			@if($prumada->PRU_TIPO == 1)
+																			<i class="text-primary fa fa-tint"></i>
+																			@elseif($prumada->PRU_TIPO == 2)
+																			<i style="color: #f38212;" class="fa fa-fire"></i>
+																			@elseif($prumada->PRU_TIPO == 3)
+																			<i class="text-danger fa fa-bolt"></i>
+																			@endif
+																		</h4>
+																	</div>
+
+																	<div class="col-md-10">
+																		<h4>{{ $unidade->UNI_NOME }}<small style="color: grey;">#{{ $prumada->PRU_IDFUNCIONAL }} - {{ $prumada->PRU_NOME }}</small></h4>
+																	</div>
+
+																</div>
 															</div>
 															<!-- fim - Nome Unidade -->
 
