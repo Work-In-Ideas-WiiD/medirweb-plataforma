@@ -88,7 +88,7 @@ Route::get('/prumada/adicionar', 'PrumadaController@create')->name('Adicionar Pr
 Route::get('/unidade/ligar/{unidade}', array('uses' => 'UnidadeController@ligarUnidade'));
 Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
 
-Route::get('/teste/leitura', 'Hello@testeLeitura');
+Route::get('/teste/leitura/{id}', 'Hello@testeLeitura');
 
 Route::get('/teste/{id}', 'Hello@hidrometroTeste');
 
