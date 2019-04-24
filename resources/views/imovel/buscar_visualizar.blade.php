@@ -130,7 +130,7 @@
 																	</div>
 
 																	<div class="col-md-10">
-																		<h4>{{ $unidade->UNI_NOME }}<small style="color: grey;">#{{ $prumada->PRU_IDFUNCIONAL }} - {{ $prumada->PRU_NOME }}</small></h4>
+																		<h4>{{ $unidade->UNI_NOME }} <small style="color: grey;">#{{ $prumada->PRU_IDFUNCIONAL }} - {{ $prumada->PRU_NOME }}</small></h4>
 																	</div>
 
 																</div>
