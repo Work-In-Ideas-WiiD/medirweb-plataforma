@@ -244,15 +244,15 @@ class UnidadeController extends Controller
         $user = User::find($unidade->UNI_IDUSER);
 
         if(is_null($user)){
-          $user['id'] = 0;
+          $u['id'] = 0;
         }else{
-          $user['id'] = $user->id;
+          $u['id'] = $user->id;
         }
 
         // VALIDAÇÃO SE EMAIL JA EXISTE
         $userALL = User::where('email', $request->email)->get();
         foreach ($userALL as $userALL1) {
-            if(!($userALL1->id == $user['id'])){
+            if(!($userALL1->id == $u['id'])){
                 return redirect('/unidade/editar/'.$id)->with('error', 'Email já cadastrado em outro usuário do sistema!');
             }
         }
