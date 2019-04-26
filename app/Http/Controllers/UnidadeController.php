@@ -256,8 +256,8 @@ class UnidadeController extends Controller
             // Se o usuario não existe
             //ADICIONAR USUARIO COMUM
             $password = rand(100000,9999999);
-            $dataFormUser['USER_IMOID'] = $request->UNI_IDIMOVEL;
-            $dataFormUser['name'] = $request->UNI_RESPONSAVEL;
+            $dataFormUser['USER_IMOID'] = $unidade->UNI_IDIMOVEL;
+            $dataFormUser['name'] = $unidade->UNI_RESPONSAVEL;
             $dataFormUser['email'] = $request->email;
             $dataFormUser['password'] = bcrypt($password);
             $dataFormUser['roles'] = array("4"); //COMUM
