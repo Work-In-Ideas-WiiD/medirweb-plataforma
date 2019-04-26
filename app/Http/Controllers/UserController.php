@@ -257,6 +257,18 @@ class UserController extends Controller
 
         $user = User::findOrFail($id);
 
+        if(is_null($user)){
+            return redirect()->route('404');
+        }
+
+        // NÃO EXCLUIR SE TIVER ID DO USUARIO DENTRO DA TABELA UNIDADE
+        $unidade = Unidade::where('UNI_IDUSER', $user->id)->get();
+        foreach ($unidade as $uni) {
+            if($uni->UNI_IDUSER == $user->id){
+                return redirect('/usuario')->with('error', 'Não é permitido excluir usuário vinculado a uma Unidade!');
+            }
+        }
+
         $foto_path = public_path("upload/usuarios/".$user->foto);
 
         if (File::exists($foto_path)) {
