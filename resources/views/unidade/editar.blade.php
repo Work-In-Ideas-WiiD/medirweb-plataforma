@@ -114,7 +114,7 @@
 							<?php // Perfil extra?>
 							<div class='form-group'>
 									{!! Form::label('rolesUNI', 'Perfil extra', ['class' => 'control-label']) !!}
-									{!! Form::select('rolesUNI[]', $rolesUNI, null, ['class' => 'form-control']) !!}
+									{!! Form::select('rolesUNI[]', $rolesUNI, $unidade['rolesUNI'], ['class' => 'form-control']) !!}
 
 									@if ($errors->has('roles'))
 									<span class="help-block">
