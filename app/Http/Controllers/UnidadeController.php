@@ -208,6 +208,9 @@ class UnidadeController extends Controller
                 $unidade['rolesUNI'] = $roleUser->id;
             }
 
+            var_dump($unidade['rolesUNI']);
+            die;
+
             $rolesUNI = ['' => '-- Sem Perfil Extra --'];
             $_roles = \Artesaos\Defender\Role::all();
             foreach($_roles as $role){
