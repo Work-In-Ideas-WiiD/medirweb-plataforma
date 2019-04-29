@@ -204,7 +204,7 @@ class UnidadeController extends Controller
             $unidade['email'] = $user->email;
 
             // PEFIL EXTRA
-            foreach ($user->roles as $roleUser) {
+            foreach ($user->roles()->where("id", "<>", "4")->get() as $roleUser) {
                 $unidade['rolesUNI'] = $roleUser->id;
             }
 
