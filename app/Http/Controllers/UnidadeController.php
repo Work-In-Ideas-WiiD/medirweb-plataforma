@@ -77,6 +77,8 @@ class UnidadeController extends Controller
         $user->roles()->attach($dataFormUser['roles']);
         // fim - ADICIONAR USUARIO COMUM
 
+        $imovelAll = Imovel::find($user->USER_IMOID);
+
         // ENVIAR EMAIL com a senha.
         Mail::send('email.senhaUser', ['nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
             $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
@@ -273,8 +275,10 @@ class UnidadeController extends Controller
             $user->roles()->attach($dataFormUser['roles']);
             // fim - ADICIONAR USUARIO COMUM
 
+            $imovelAll = Imovel::find($user->USER_IMOID);
+
             // ENVIAR EMAIL com a senha.
-            Mail::send('email.senhaUser', ['nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
+            Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
                 $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
                 $message->to($user->email);
                 $message->subject('Senha de acesso ao app');
@@ -312,8 +316,10 @@ class UnidadeController extends Controller
 
                 $user->update($dataFormUser);
 
+                $imovelAll = Imovel::find($user->USER_IMOID);
+
                 // ENVIAR EMAIL com a senha.
-                Mail::send('email.senhaUser', ['nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
+                Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
                     $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
                     $message->to($user->email);
                     $message->subject('Senha de acesso ao app');

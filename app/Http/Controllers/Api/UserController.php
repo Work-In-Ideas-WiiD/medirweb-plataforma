@@ -54,8 +54,10 @@ class UserController extends Controller
         $dataFormUser['password'] = bcrypt($password);
         $user->update($dataFormUser);
 
+        $imovelAll = Imovel::find($user->USER_IMOID);
+
         // ENVIAR EMAIL com a senha.
-        Mail::send('email.senhaUser', ['nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
+        Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
             $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
             $message->to($user->email);
             $message->cc('linconaraujo@medirweb.com.br');
