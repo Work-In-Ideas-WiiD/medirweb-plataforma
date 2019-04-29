@@ -203,7 +203,7 @@ class UnidadeController extends Controller
         }else{
             $unidade['email'] = $user->email;
 
-            // PEFIL EXTRA
+            // PERFIL EXTRA
             foreach ($user->roles()->where("id", "<>", "4")->get() as $roleUser) {
                 $unidade['rolesUNI'] = $roleUser->id;
             }
