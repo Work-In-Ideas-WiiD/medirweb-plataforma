@@ -53,7 +53,7 @@
 
                     <p>Segue as informações abaixo para o acesso ao aplicativo MedirWeb</p>
 
-                    <p>Imóvel: {{$imovel}}
+                    <p>Imóvel: {{$imovel}}<br>
                       Email: {{$email}}<br>
                       Senha: {{$senha}}
                     </p>
