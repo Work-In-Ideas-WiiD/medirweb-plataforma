@@ -136,7 +136,7 @@
                     <div class="col-md-7">
                         @foreach($duasUltimaLeituras as $leitura)
                         <div class="medicao-num">
-                            <table class="table" >
+                            <table class="table table-responsive" >
                                 <tbody>
                                     <tr>
                                         <th>LEITURA ANTERIOR: <b>{{ $leitura->LEI_METRO }} m³</b></th>
@@ -159,7 +159,7 @@
                 <h3 class="box-title"><i class="fa fa-hourglass-1"></i> Histórico de Leituras</h3>
             </div>
             <div class="box-body">
-                <table class="table table-bordered" id="tabelaPrincipal">
+                <table class="table table-responsive table-bordered" id="tabelaPrincipal">
                     <thead>
                         <th>#</th>
                         <th>m³</th>
@@ -254,7 +254,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-bordered">
+                        <table class="table table-responsive table-bordered">
                             <tbody>
                                 <tr>
                                     <th>MÊS</th>

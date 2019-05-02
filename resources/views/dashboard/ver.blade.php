@@ -104,7 +104,7 @@
             <div class='box-body'>
                 <div class='row'>
                     <div class='col-md-12'>
-                        <table id="lista-hidrometros" class="table table-bordered table-hover powertabelaDesc">
+                        <table id="lista-hidrometros" class="table table-responsive table-bordered table-hover powertabelaDesc">
                             <thead>
                                 <tr>
                                     <th># Ocorrência</th>

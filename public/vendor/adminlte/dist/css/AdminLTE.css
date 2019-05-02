@@ -2663,10 +2663,17 @@ a:focus {
 .product-list-in-box > .item:last-of-type {
   border-bottom-width: 0;
 }
+
+
+
+
+
+
 /*
  * Component: Table
  * ----------------
  */
+/*
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
@@ -2701,7 +2708,7 @@ a:focus {
 .table.no-border th {
   border: 0;
 }
-/* .text-center in tables */
+/* .text-center in tables *//*
 table.text-center,
 table.text-center td,
 table.text-center th {
@@ -2712,7 +2719,120 @@ table.text-center th {
 }
 .table.align td {
   text-align: right;
+}*/
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ * Component: Table NEWWWWWW
+ * ----------------
+ */
+
+  table {
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-family: arial;
+  }
+
+  .table {
+    border-bottom: #999999 solid 1px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .table th,
+  .table td {
+    border-right: #999999 solid 1px;
+    font-size: 12px;
+    padding: 8px;
+    line-height: 20px;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  .table td:last-child {
+     border-right: 0;
+  }
+
+  .table thead th {
+    font-weight: normal;
+    background-color: #3c8dbc;
+    color: #fff;
+    font-size: 15px;
+  }
+
+  .table tbody > tr:nth-child(odd) > td,
+  .table tbody > tr:nth-child(odd) > th {
+    background-color: #f8f8f8;
+  }
+
+
+/* Small Sizes */
+@media (max-width: 767px) {
+
+  /* Responsive Table */
+  .table-responsive {
+    display: block;
+    position: relative;
+    width: 100%;
+  }
+
+  .table-responsive thead,
+  .table-responsive tbody,
+  .table-responsive th,
+  .table-responsive td,
+  .table-responsive tr {
+    display: block;
+  }
+  .table-responsive td,
+  .table-responsive th {
+    height: 35px;
+  }
+
+  .table-responsive thead {
+    float: left;
+  }
+
+  .table-responsive tbody {
+    width: auto;
+    position: relative;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+  }
+
+  .table-responsive tbody tr {
+    display: inline-block;
+  }
+
+
+  .table td:last-child {
+     border-right: #999999 solid 1px;
+  }
+
+
 }
+/**/
+
+
+
+
+
+
+
+
+
 /*
  * Component: Label
  * ----------------
@@ -4994,11 +5114,13 @@ table.text-center th {
     float: left;
     width: 33.3333333%;
   }
+
+  /*
   .table-responsive {
     overflow: auto;
   }
   .table-responsive > .table tr th,
   .table-responsive > .table tr td {
     white-space: normal !important;
-  }
+  }*/
 }

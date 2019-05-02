@@ -126,7 +126,7 @@
                 <h3 class="box-title"><i class="fa fa-tachometer"></i> Leituras</h3>
             </div>
             <div class="box-body">
-                <table class="table table-bordered" id="tabelaPrincipal">
+                <table class="table table-responsive table-bordered" id="tabelaPrincipal">
                     <thead>
                         <th>#</th>
                         <th>ID Funcional</th>

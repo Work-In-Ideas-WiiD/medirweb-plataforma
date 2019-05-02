@@ -161,7 +161,7 @@
 			<div class='box-body'>
 				<div class='row'>
 					<div class='col-md-12'>
-						<table id="lista-clientes" class="table table-bordered table-hover powertabela">
+						<table id="lista-clientes" class="table table-responsive table-bordered table-hover powertabela">
 							<thead>
 								<tr>
 									<th>#</th>
