@@ -2798,6 +2798,7 @@ table.text-center th {
   .table-responsive td,
   .table-responsive th {
     height: 35px;
+    min-width: 90px;
   }
 
   .table-responsive thead {
