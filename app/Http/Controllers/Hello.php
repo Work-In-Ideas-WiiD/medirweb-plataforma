@@ -68,7 +68,7 @@ class Hello extends Controller
         // Set some options - we are passing in a useragent too here
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://192.168.130.4/api/leitura/'.dechex($id),
+            CURLOPT_URL => 'http://192.168.130.5/api/leitura/'.dechex($id),
             //CURLOPT_URL => 'http://192.168.255.18/api/leitura/03',
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
         ));
