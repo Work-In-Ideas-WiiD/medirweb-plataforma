@@ -63,7 +63,7 @@
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('AGR_TAXAVARIAVEL', 'Taxa variável (R$/m³)') }}
+                            {{ Form::label('AGR_TAXAVARIAVEL', 'Taxa variável (R$/m³/Kw)') }}
                             {{ Form::text('AGR_TAXAVARIAVEL', '', ['class' => 'form-control', 'placeholder' => '']) }}
 
                             @if ($errors->has('AGR_TAXAVARIAVEL'))

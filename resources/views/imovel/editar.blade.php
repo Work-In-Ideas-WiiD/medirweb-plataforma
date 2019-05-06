@@ -286,7 +286,7 @@
 
                     <div class="col-md-6">
                         <div class='form-group'>
-                            {{ Form::label('IMO_TAXAFIXA', 'Taxa Variável (R$/m³)') }}
+                            {{ Form::label('IMO_TAXAFIXA', 'Taxa Variável (R$/m³/Kw)') }}
                             {{ Form::text('IMO_TAXAVARIAVEL', null, ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89', 'data-error' => $errors->first('IMO_TAXAVARIAVEL')]) }}
 
                             @if ($errors->has('IMO_TAXAFIXA'))

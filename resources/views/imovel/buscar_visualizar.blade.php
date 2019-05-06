@@ -145,21 +145,39 @@
 																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
 																			@if( $prumada->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 0 @endif
 																		</a>
+
+																		@if($prumada->PRU_TIPO == 3)
+																		<small style="color: grey;">Kw</small>
+																		@else
 																		<small style="color: grey;">m³</small>
+																		@endif
+
 																	</div>
 
 																	<div class="col-md-4">
 																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
 																			@if( $prumada->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_LITRO }} @else 0 @endif
 																		</a>
+
+																		@if($prumada->PRU_TIPO == 3)
+																		<small style="color: grey;">W</small>
+																		@else
 																		<small style="color: grey;">L</small>
+																		@endif
+
 																	</div>
 
 																	<div class="col-md-4">
 																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
 																			@if( $prumada->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_MILILITRO }} @else 0 @endif
 																		</a>
+
+																		@if($prumada->PRU_TIPO == 3)
+																		<small style="color: grey;">mW</small>
+																		@else
 																		<small style="color: grey;">dL</small>
+																		@endif
+
 																	</div>
 
 																</div>
