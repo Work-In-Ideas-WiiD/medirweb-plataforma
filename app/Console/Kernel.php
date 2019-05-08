@@ -4,352 +4,171 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Models\Unidade;
+use App\Models\Imovel;
 use App\Models\Leitura;
+use Ping;
+use Mail;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * The Artisan commands provided by your application.
-     *
-     * @var array
-     */
+
     protected $commands = [
         //
     ];
 
-    /**
-     * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
-     */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
 
+        // Cron - Todas as leituras
         $schedule->call(function () {
 
-            //$unidade = Unidade::find(1);
+            $imovel = Imovel::get();
 
-            $unidades = Unidade::all();
+            foreach($imovel as $imo){
 
-            foreach ($unidades as $unidade)
-            {
-                //var_dump($unidade->getPrumadas); die();
-                foreach ($unidade->getPrumadas as $prumada)
-                {
-                    $curl = curl_init();
-                    // Set some options - we are passing in a useragent too here
-                    curl_setopt_array($curl, array(
-                        CURLOPT_RETURNTRANSFER => 1,
-                        CURLOPT_URL => 'http://52.15.197.19/medirweb/doLeitura.php?id='.dechex($prumada->PRU_ID),
-                        CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-                    ));
-                    // Send the request & save response to $resp
-                    $resp = curl_exec($curl);
-                    // Close request to clear up some resources
-                    curl_close($curl);
+                if(sprintf("%02s", $imo->IMO_FATURACICLO) == date("d")){
+                    $codigoHTTP = Ping::check($imo->IMO_IP);
 
-                    $jsons = json_decode($resp);
+                    if($codigoHTTP == 200){
 
-                    //var_dump($jsons);
+                        // Requisiçao leituras de todas as prumadas
+                        $curl = curl_init();
 
-                    if(isset($jsons['5']))
-                    {
-                        $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
+                        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($curl, CURLOPT_URL, 'http://'.$imo->IMO_IP.'/cron/leiturastodasprumadas/');
+                        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 15);
+                        curl_setopt($curl, CURLOPT_TIMEOUT, 15);
 
-                        $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
+                        $resp = curl_exec($curl);
+                        curl_close($curl);
+                        // fim
 
-                        $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-//
-//                var_dump($metro_cubico);
-//                var_dump($litros);
-//                var_dump($mililitro);
+                        echo $resp;
+                        echo ' - '.$imo->IMO_NOME.'<br><hr>';
+                    }else{
 
-                        $subtotal = ($metro_cubico * 1000) + $litros;
-                        $total = $subtotal.'.'.$mililitro.'';
+                        $text = "por este motivo não foi possível realizar as leituras automáticas.";
 
+                        // ENVIAR EMAIL informando a falha de comunicação.
+                        Mail::send('email.falhaCronAllLei', ['imovel'=> $imo->IMO_NOME, 'ip' => $imo->IMO_IP, 'codigoHTTP' => $codigoHTTP, 'text' => $text], function($message) use ($imo) {
+                            $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
+                            $message->to('suporte@medirweb.com.br');
+                            $message->cc('contato@wi-id.com');
+                            $message->cc('i.v.nascimento.ti@gmail.com');
+                            $message->subject('Requisição Leituras de Todas as Prumadas');
+                        });
+                        // fim - enviar email
 
-                        $leitura = [
-                            'LEI_IDPRUMADA' => $prumada->PRU_ID,
-                            'LEI_METRO' => $metro_cubico,
-                            'LEI_LITRO' => $litros,
-                            'LEI_MILILITRO' => $mililitro,
-                            'LEI_VALOR' => $total,
-                        ];
-
-                        Leitura::create($leitura);
-
+                        echo 'error: '.$imo->IMO_NOME.'<br><hr>';
                     }
-                }
 
+                }
             }
 
-        })->hourly();
-//
-//        $schedule->call(function () {
-//
-//            $unidade = Unidade::find(1);
-//
-//            //var_dump($unidade->getPrumadas); die();
-//            foreach ($unidade->getPrumadas as $prumada)
-//            {
-//                $curl = curl_init();
-//                // Set some options - we are passing in a useragent too here
-//                curl_setopt_array($curl, array(
-//                    CURLOPT_RETURNTRANSFER => 1,
-//                    CURLOPT_URL => 'http://52.15.197.19/medirweb/doLeitura.php?id='.$prumada->PRU_ID,
-//                    CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-//                ));
-//                // Send the request & save response to $resp
-//                $resp = curl_exec($curl);
-//                // Close request to clear up some resources
-//                curl_close($curl);
-//
-//                $jsons = json_decode($resp);
-//
-//                //var_dump($jsons);
-//
-//                $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
-//
-//                $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
-//
-//                $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-////
-////                var_dump($metro_cubico);
-////                var_dump($litros);
-////                var_dump($mililitro);
-//
-//                $subtotal = ($metro_cubico * 1000) + $litros;
-//                $total = $subtotal.'.'.$mililitro.'';
-//
-//
-//                $leitura = [
-//                    'LEI_IDPRUMADA' => $prumada->PRU_ID,
-//                    'LEI_METRO' => $metro_cubico,
-//                    'LEI_LITRO' => $litros,
-//                    'LEI_MILILITRO' => $mililitro,
-//                    'LEI_VALOR' => $total,
-//                ];
-//
-//                Leitura::create($leitura);
-//
-//            }
-//
-//        })->everyTenMinutes();
-//
-//        $schedule->call(function () {
-//
-//            $unidade = Unidade::find(2);
-//
-//            //var_dump($unidade->getPrumadas); die();
-//            foreach ($unidade->getPrumadas as $prumada)
-//            {
-//                $curl = curl_init();
-//                // Set some options - we are passing in a useragent too here
-//                curl_setopt_array($curl, array(
-//                    CURLOPT_RETURNTRANSFER => 1,
-//                    CURLOPT_URL => 'http://52.15.197.19/medirweb/doLeitura.php?id='.$prumada->PRU_ID,
-//                    CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-//                ));
-//                // Send the request & save response to $resp
-//                $resp = curl_exec($curl);
-//                // Close request to clear up some resources
-//                curl_close($curl);
-//
-//                $jsons = json_decode($resp);
-//
-//                //var_dump($jsons);
-//
-//                $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
-//
-//                $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
-//
-//                $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-////
-////                var_dump($metro_cubico);
-////                var_dump($litros);
-////                var_dump($mililitro);
-//
-//                $subtotal = ($metro_cubico * 1000) + $litros;
-//                $total = $subtotal.'.'.$mililitro.'';
-//
-//
-//                $leitura = [
-//                    'LEI_IDPRUMADA' => $prumada->PRU_ID,
-//                    'LEI_METRO' => $metro_cubico,
-//                    'LEI_LITRO' => $litros,
-//                    'LEI_MILILITRO' => $mililitro,
-//                    'LEI_VALOR' => $total,
-//                ];
-//
-//                Leitura::create($leitura);
-//
-//            }
-//
-//        })->everyTenMinutes();
-//
-//        $schedule->call(function () {
-//
-//            $unidade = Unidade::find(3);
-//
-//            //var_dump($unidade->getPrumadas); die();
-//            foreach ($unidade->getPrumadas as $prumada)
-//            {
-//                $curl = curl_init();
-//                // Set some options - we are passing in a useragent too here
-//                curl_setopt_array($curl, array(
-//                    CURLOPT_RETURNTRANSFER => 1,
-//                    CURLOPT_URL => 'http://52.15.197.19/medirweb/doLeitura.php?id='.$prumada->PRU_ID,
-//                    CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-//                ));
-//                // Send the request & save response to $resp
-//                $resp = curl_exec($curl);
-//                // Close request to clear up some resources
-//                curl_close($curl);
-//
-//                $jsons = json_decode($resp);
-//
-//                //var_dump($jsons);
-//
-//                $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
-//
-//                $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
-//
-//                $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-////
-////                var_dump($metro_cubico);
-////                var_dump($litros);
-////                var_dump($mililitro);
-//
-//                $subtotal = ($metro_cubico * 1000) + $litros;
-//                $total = $subtotal.'.'.$mililitro.'';
-//
-//
-//                $leitura = [
-//                    'LEI_IDPRUMADA' => $prumada->PRU_ID,
-//                    'LEI_METRO' => $metro_cubico,
-//                    'LEI_LITRO' => $litros,
-//                    'LEI_MILILITRO' => $mililitro,
-//                    'LEI_VALOR' => $total,
-//                ];
-//
-//                Leitura::create($leitura);
-//
-//            }
-//
-//        })->everyTenMinutes();
-//
-//        $schedule->call(function () {
-//
-//            $unidade = Unidade::find(4);
-//
-//            //var_dump($unidade->getPrumadas); die();
-//            foreach ($unidade->getPrumadas as $prumada)
-//            {
-//                $curl = curl_init();
-//                // Set some options - we are passing in a useragent too here
-//                curl_setopt_array($curl, array(
-//                    CURLOPT_RETURNTRANSFER => 1,
-//                    CURLOPT_URL => 'http://52.15.197.19/medirweb/doLeitura.php?id='.$prumada->PRU_ID,
-//                    CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-//                ));
-//                // Send the request & save response to $resp
-//                $resp = curl_exec($curl);
-//                // Close request to clear up some resources
-//                curl_close($curl);
-//
-//                $jsons = json_decode($resp);
-//
-//                //var_dump($jsons);
-//
-//                $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
-//
-//                $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
-//
-//                $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-////
-////                var_dump($metro_cubico);
-////                var_dump($litros);
-////                var_dump($mililitro);
-//
-//                $subtotal = ($metro_cubico * 1000) + $litros;
-//                $total = $subtotal.'.'.$mililitro.'';
-//
-//
-//                $leitura = [
-//                    'LEI_IDPRUMADA' => $prumada->PRU_ID,
-//                    'LEI_METRO' => $metro_cubico,
-//                    'LEI_LITRO' => $litros,
-//                    'LEI_MILILITRO' => $mililitro,
-//                    'LEI_VALOR' => $total,
-//                ];
-//
-//                Leitura::create($leitura);
-//
-//            }
-//
-//        })->everyTenMinutes();
-//
-//        $schedule->call(function () {
-//
-//            $unidade = Unidade::find(5);
-//
-//            //var_dump($unidade->getPrumadas); die();
-//            foreach ($unidade->getPrumadas as $prumada)
-//            {
-//                $curl = curl_init();
-//                // Set some options - we are passing in a useragent too here
-//                curl_setopt_array($curl, array(
-//                    CURLOPT_RETURNTRANSFER => 1,
-//                    CURLOPT_URL => 'http://52.15.197.19/medirweb/doLeitura.php?id='.$prumada->PRU_ID,
-//                    CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-//                ));
-//                // Send the request & save response to $resp
-//                $resp = curl_exec($curl);
-//                // Close request to clear up some resources
-//                curl_close($curl);
-//
-//                $jsons = json_decode($resp);
-//
-//                //var_dump($jsons);
-//
-//                $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
-//
-//                $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
-//
-//                $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-////
-////                var_dump($metro_cubico);
-////                var_dump($litros);
-////                var_dump($mililitro);
-//
-//                $subtotal = ($metro_cubico * 1000) + $litros;
-//                $total = $subtotal.'.'.$mililitro.'';
-//
-//                $leitura = [
-//                    'LEI_IDPRUMADA' => $prumada->PRU_ID,
-//                    'LEI_METRO' => $metro_cubico,
-//                    'LEI_LITRO' => $litros,
-//                    'LEI_MILILITRO' => $mililitro,
-//                    'LEI_VALOR' => $total,
-//                ];
-//
-//                Leitura::create($leitura);
-//
-//            }
-//
-//        })->everyTenMinutes();
+        })->daily();
+
+
+        // Cron - Todas as leituras falhadas
+        $schedule->call(function () {
+
+            $imovel = Imovel::get();
+
+            foreach($imovel as $imo){
+
+                if(sprintf("%02s", $imo->IMO_FATURACICLO) == date("d")){
+                    $codigoHTTP = Ping::check($imo->IMO_IP);
+
+                    if($codigoHTTP == 200){
+
+                        // Requisiçao leituras falhadas
+                        $curl = curl_init();
+
+                        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($curl, CURLOPT_URL, 'http://'.$imo->IMO_IP.'/cron/leiturasfalhas/');
+                        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 15);
+                        curl_setopt($curl, CURLOPT_TIMEOUT, 15);
+
+                        $resp = curl_exec($curl);
+                        curl_close($curl);
+                        // fim
+
+                        echo $resp;
+                        echo ' - '.$imo->IMO_NOME.'<br><hr>';
+                    }else{
+
+                        $text = "por este motivo não foi possível realizar as leituras com falhas.";
+
+                        // ENVIAR EMAIL informando a falha de comunicação.
+                        Mail::send('email.falhaCronAllLei', ['imovel'=> $imo->IMO_NOME, 'ip' => $imo->IMO_IP, 'codigoHTTP' => $codigoHTTP, 'text' => $text], function($message) use ($imo) {
+                            $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
+                            $message->to('suporte@medirweb.com.br');
+                            $message->cc('contato@wi-id.com');
+                            $message->cc('i.v.nascimento.ti@gmail.com');
+                            $message->subject('Requisição Leituras Falhadas');
+                        });
+                        // fim - enviar email
+
+                        echo 'error: '.$imo->IMO_NOME.'<br><hr>';
+                    }
+
+                }
+            }
+
+        })->twiceDaily(1,2,3,4,5);
+
+
+        // Cron - Enviar Leitura Plataforma
+        $schedule->call(function () {
+
+            $imovel = Imovel::get();
+
+            foreach($imovel as $imo){
+
+                if(sprintf("%02s", $imo->IMO_FATURACICLO) == date("d")){
+                    $codigoHTTP = Ping::check($imo->IMO_IP);
+
+                    if($codigoHTTP == 200){
+
+                        // Enviar Todas as Leitura para Plataforma
+                        $curl = curl_init();
+
+                        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+                        curl_setopt($curl, CURLOPT_URL, 'http://'.$imo->IMO_IP.'/cron/enviarleituras/');
+                        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 15);
+                        curl_setopt($curl, CURLOPT_TIMEOUT, 15);
+
+                        $resp = curl_exec($curl);
+                        curl_close($curl);
+                        // fim
+
+                        echo $resp;
+                        echo ' - '.$imo->IMO_NOME.'<br><hr>';
+                    }else{
+
+                        $text = "por este motivo não foi possível enviar todas as leituras que esta na base da central do imóvel para a plataforma da MedirWeb.";
+
+                        // ENVIAR EMAIL informando a falha de comunicação.
+                        Mail::send('email.falhaCronAllLei', ['imovel'=> $imo->IMO_NOME, 'ip' => $imo->IMO_IP, 'codigoHTTP' => $codigoHTTP, 'text' => $text], function($message) use ($imo) {
+                            $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
+                            $message->to('suporte@medirweb.com.br');
+                            $message->cc('contato@wi-id.com');
+                            $message->cc('i.v.nascimento.ti@gmail.com');
+                            $message->subject('Enviar Todas as Leitura para Plataforma');
+                        });
+                        // fim - enviar email
+
+                        echo 'error: '.$imo->IMO_NOME.'<br><hr>';
+                    }
+
+                }
+            }
+
+        })->dailyAt('6:00');
+
 
     }
 
-    /**
-     * Register the commands for the application.
-     *
-     * @return void
-     */
+
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
