@@ -59,16 +59,6 @@
 							</span>
 							@endif
 						</div>
-						<div class='form-group'>
-							{{ Form::label('email', 'E-mail do Responsável') }}
-							{{ Form::text('email', '', ['class' => 'form-control', 'placeholder' => '']) }}
-
-							@if ($errors->has('email'))
-							<span class="help-block">
-								<strong style="color: red;">{{ $errors->first('email') }}</strong>
-							</span>
-							@endif
-						</div>
 					</div>
 
 					<div class="col-md-6">

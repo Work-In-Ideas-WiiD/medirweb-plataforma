@@ -18,7 +18,6 @@ class UnidadeSaveRequest extends UnidadeRequest
             'UNI_RESPONSAVEL' => 'required|max:255',
             'UNI_CPFRESPONSAVEL' => 'required|cpf|formato_cpf',
             'UNI_TELRESPONSAVEL' => 'required',
-            'email' =>'required|email|unique:users,email',
         ];
     }
 }

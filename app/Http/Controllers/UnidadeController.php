@@ -11,6 +11,8 @@ use App\Models\Prumada;
 use App\User;
 use App\Http\Requests\Unidade\UnidadeSaveRequest;
 use App\Http\Requests\Unidade\UnidadeEditRequest;
+use App\Http\Requests\Unidade\UnidadeUserSaveRequest;
+use App\Http\Requests\Unidade\UnidadeUserEditRequest;
 use App\Charts\ConsumoCharts;
 use Mail;
 
@@ -21,10 +23,6 @@ class UnidadeController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
-        //
-    }
 
     public function create()
     {
@@ -64,36 +62,11 @@ class UnidadeController extends Controller
             return view('error403');
         }
 
-        //ADICIONAR USUARIO COMUM
-        $password = rand(100000,9999999);
-        $dataFormUser['USER_IMOID'] = $request->UNI_IDIMOVEL;
-        $dataFormUser['name'] = $request->UNI_RESPONSAVEL;
-        $dataFormUser['email'] = $request->email;
-        $dataFormUser['password'] = bcrypt($password);
-        $dataFormUser['roles'] = array("4"); //COMUM
-
-        $user = User::create($dataFormUser);
-
-        $user->roles()->attach($dataFormUser['roles']);
-        // fim - ADICIONAR USUARIO COMUM
-
-        $imovelAll = Imovel::find($user->USER_IMOID);
-
-        // ENVIAR EMAIL com a senha.
-        Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
-            $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
-            $message->to($user->email);
-            $message->subject('Senha de acesso ao app');
-        });
-        // fim - enviar email
-
         $dataForm = $request->all();
 
-        $dataForm['UNI_IDUSER'] = $user->id;
+        $unidade = Unidade::create($dataForm);
 
-        $undiade = Unidade::create($dataForm);
-
-        return redirect('/imovel')->with('success', 'Unidade cadastrada com sucesso.');
+        return redirect('/unidade/editar/'.$unidade->UNI_ID)->with('success', 'Unidade cadastrada com sucesso.');
     }
 
     public function show($id)
@@ -196,30 +169,10 @@ class UnidadeController extends Controller
 
         $prumadas = Prumada::where('PRU_IDUNIDADE', $unidade->UNI_ID)->get();
 
-        $user = User::find($unidade->UNI_IDUSER);
-        if(is_null($user)){
-            $unidade['email'] = "";
-            $unidade['rolesUNI'] = "";
-        }else{
-            $unidade['email'] = $user->email;
+        // PESQUISAR TODOS OS USUARIOS VINCULADOS À UNIDADE
+        $userVinculado = User::where('USER_UNIID', $id)->get();
 
-            // PERFIL EXTRA
-            foreach ($user->roles()->where("id", "<>", "4")->get() as $roleUser) {
-                $unidade['rolesUNI'] = $roleUser->id;
-            }
-
-            $rolesUNI = ['' => '-- Sem Perfil Extra --'];
-            $_roles = \Artesaos\Defender\Role::all();
-            foreach($_roles as $role){
-                if(!($role->id == 4)){
-                    $rolesUNI[$role->id] = $role->name;
-                }
-            }
-            //
-
-        }
-
-        return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas', 'rolesUNI'));
+        return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas', 'userVinculado'));
     }
 
     public function update(UnidadeEditRequest $request, $id)
@@ -243,92 +196,6 @@ class UnidadeController extends Controller
 
         $unidade->update($dataForm);
 
-        $user = User::find($unidade->UNI_IDUSER);
-
-        if(is_null($user)){
-          $u['id'] = 0;
-        }else{
-          $u['id'] = $user->id;
-        }
-
-        // VALIDAÇÃO SE EMAIL JA EXISTE
-        $userALL = User::where('email', $request->email)->get();
-        foreach ($userALL as $userALL1) {
-            if(!($userALL1->id == $u['id'])){
-                return redirect('/unidade/editar/'.$id)->with('error', 'Email já cadastrado em outro usuário do sistema!');
-            }
-        }
-        // fim - VALIDAÇÃO SE EMAIL JA EXISTE
-
-        if(is_null($user)){
-            // Se o usuario não existe
-            //ADICIONAR USUARIO COMUM
-            $password = rand(100000,9999999);
-            $dataFormUser['USER_IMOID'] = $unidade->UNI_IDIMOVEL;
-            $dataFormUser['name'] = $unidade->UNI_RESPONSAVEL;
-            $dataFormUser['email'] = $request->email;
-            $dataFormUser['password'] = bcrypt($password);
-            $dataFormUser['roles'] = array("4"); //COMUM
-
-            $user = User::create($dataFormUser);
-
-            $user->roles()->attach($dataFormUser['roles']);
-            // fim - ADICIONAR USUARIO COMUM
-
-            $imovelAll = Imovel::find($user->USER_IMOID);
-
-            // ENVIAR EMAIL com a senha.
-            Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
-                $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
-                $message->to($user->email);
-                $message->subject('Senha de acesso ao app');
-            });
-            // fim - enviar email
-
-            $dataFormNew['UNI_IDUSER'] = $user->id;
-
-            $unidade->update($dataFormNew);
-        }else{
-            //user name atualizar
-            $dataFormUser['name'] = $request->UNI_RESPONSAVEL;
-            $user->update($dataFormUser);
-            //fim - name atualizar
-
-            // Se tiver perfil extra
-            $rolesUNIForm = $dataForm['rolesUNI'];
-            foreach ($rolesUNIForm as $key => $rolesUNI) {
-                if(empty($rolesUNI)){
-                    $dataFormUser['roles'] = array("4");
-                }else{
-                    $dataFormUser['roles'] = array("4", $rolesUNI);
-                }
-            }
-
-            if(key_exists('roles', $dataFormUser))
-            $user->roles()->sync($dataFormUser['roles']);
-            // fim --
-
-            // se mudar email
-            if(!($request->email == $user->email)){
-                $password = rand(100000,9999999);
-                $dataFormUser['email'] = $request->email;
-                $dataFormUser['password'] = bcrypt($password);
-
-                $user->update($dataFormUser);
-
-                $imovelAll = Imovel::find($user->USER_IMOID);
-
-                // ENVIAR EMAIL com a senha.
-                Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
-                    $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
-                    $message->to($user->email);
-                    $message->subject('Senha de acesso ao app');
-                });
-                // fim - enviar email
-            }
-            // fim - se mudar email
-        }
-
         return redirect('/unidade/editar/'.$id)->with('success', 'Unidade atualizado com sucesso.');
     }
 
@@ -346,6 +213,207 @@ class UnidadeController extends Controller
 
         return redirect('/imovel')->with('success', 'Unidade e Usuario "'.$unidade->UNI_RESPONSAVEL.'" deletado com sucesso.');
     }
+
+
+
+
+
+
+
+    // USUARIO COMUM VINCULADO À UNIDADE
+
+    public function create_user($id)
+    {
+
+      if(!app('defender')->hasRoles('Administrador')){
+          return view('error403');
+      }
+
+      $unidade = Unidade::find($id);
+
+      return view('unidade.create_user', compact('unidade'));
+    }
+
+    public function store_user(UnidadeUserSaveRequest $request)
+    {
+
+      if(!app('defender')->hasRoles('Administrador')){
+          return view('error403');
+      }
+
+      //ADICIONAR USUARIO COMUM
+      $password = rand(100000,9999999);
+      $dataFormUser['USER_IMOID'] = $request->USER_IMOID;
+      $dataFormUser['USER_UNIID'] = $request->USER_UNIID;
+      $dataFormUser['name'] = $request->name;
+      $dataFormUser['email'] = $request->email;
+      $dataFormUser['password'] = bcrypt($password);
+      $dataFormUser['roles'] = array("4"); //COMUM
+
+      $user = User::create($dataFormUser);
+
+      $user->roles()->attach($dataFormUser['roles']);
+      // fim - ADICIONAR USUARIO COMUM
+
+      $imovelAll = Imovel::find($user->USER_IMOID);
+
+      // ENVIAR EMAIL com a senha.
+      /*Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
+          $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
+          $message->to($user->email);
+          $message->subject('Senha de acesso ao app');
+      });*/
+      // fim - enviar email
+
+
+      return redirect('/unidade/editar/'.$request->USER_UNIID)->with('success', 'Usuário criado e Vinculado à essa unidade!');
+    }
+
+    public function add_user_existente($id)
+    {
+
+      if(!app('defender')->hasRoles('Administrador')){
+          return view('error403');
+      }
+
+      $unidade = Unidade::find($id);
+
+      $user = User::all();
+
+      return view('unidade.add_user_existente', compact('unidade', 'user'));
+    }
+
+    public function edit_user($id, $id_user)
+    {
+
+      if(!app('defender')->hasRoles('Administrador')){
+          return view('error403');
+      }
+
+      $unidade = Unidade::find($id);
+      $user = User::find($id_user);
+
+      /*foreach ($user->roles as $roleUser) {
+          if($roleUser->id != "4" ){
+              return redirect('/unidade/editar/'.$id)->with('error', 'Este Usuário não é Usuário Comum!');
+          }
+      }*/
+
+      if($user->USER_UNIID != $unidade->UNI_ID){
+        return redirect('/unidade/editar/'.$id)->with('error', 'Este Usuário não esta vinculado a essa Unidade!');
+      }
+
+      // PERFIL EXTRA
+      foreach ($user->roles()->where("id", "<>", "4")->get() as $roleUser) {
+          $unidade['rolesUNI'] = $roleUser->id;
+      }
+
+      $rolesUNI = ['' => '-- Sem Perfil Extra --'];
+      $_roles = \Artesaos\Defender\Role::all();
+      foreach($_roles as $role){
+          if(!($role->id == 4)){
+              $rolesUNI[$role->id] = $role->name;
+          }
+      }
+      //
+
+      return view('unidade.edit_user', compact('unidade', 'user', 'rolesUNI'));
+    }
+
+    public function update_user(UnidadeUserEditRequest $request, $id, $id_user)
+    {
+
+      if(!app('defender')->hasRoles('Administrador')){
+          return view('error403');
+      }
+
+      $user = User::find($id_user);
+
+      // VALIDAÇÃO SE EMAIL JA EXISTE
+      $userALL = User::where('email', $request->email)->get();
+      foreach ($userALL as $userALL1) {
+          if(!($userALL1->id == $user['id'])){
+              return redirect('/unidade/editar/'.$id.'/user/editar/'.$id_user)->with('error', 'Email já cadastrado em outro usuário do sistema!');
+          }
+      }
+      // fim - VALIDAÇÃO SE EMAIL JA EXISTE
+
+      //user name atualizar
+      $dataFormUser['name'] = $request->name;
+      $user->update($dataFormUser);
+      //fim - name atualizar
+
+      // se mudar email
+      if(!($request->email == $user->email)){
+          $password = rand(100000,9999999);
+          $dataFormUser['email'] = $request->email;
+          $dataFormUser['password'] = bcrypt($password);
+
+          $user->update($dataFormUser);
+
+          $imovelAll = Imovel::find($user->USER_IMOID);
+
+          // ENVIAR EMAIL com a senha.
+          /*Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
+              $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
+              $message->to($user->email);
+              $message->subject('Senha de acesso ao app');
+          });*/
+          // fim - enviar email
+      }
+      // fim - se mudar email
+
+      // Se tiver perfil extra
+      $rolesUNIForm = $request->rolesUNI;
+      foreach ($rolesUNIForm as $key => $rolesUNI) {
+          if(empty($rolesUNI)){
+              $dataFormUser['roles'] = array("4");
+          }else{
+              $dataFormUser['roles'] = array("4", $rolesUNI);
+          }
+      }
+
+      if(key_exists('roles', $dataFormUser))
+      $user->roles()->sync($dataFormUser['roles']);
+      // fim --
+
+
+      return redirect('/unidade/editar/'.$id)->with('success', 'Usuario atualizado com sucesso!');
+    }
+
+    public function destroy_user(Request $request, $id, $id_user)
+    {
+        if(!app('defender')->hasRoles('Administrador')){
+            return view('error403');
+        }
+
+        User::destroy($id_user);
+
+        return redirect('/unidade/editar/'.$id)->with('success', 'Usuário deletado com sucesso.');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*public function leituraUnidade($undd)
     {

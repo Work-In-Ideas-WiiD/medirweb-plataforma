@@ -79,6 +79,13 @@ Route::get('/unidade/ver/{id}', array('uses' => 'UnidadeController@show'))->name
 Route::put('/unidade/update/{unidade}', array('as'=>'unidade.update', 'uses'=>'UnidadeController@update'));
 Route::delete('/unidade/{unidade}', array('as'=>'unidade.destroy', 'uses'=>'UnidadeController@destroy'));
 
+//Unidade_User
+Route::get('/unidade/editar/{id}/user/create', array('as'=>'unidade.create_users', 'uses' => 'UnidadeController@create_user'));
+Route::post('nova-unidade-user', array('uses' => 'UnidadeController@store_user'));
+Route::get('/unidade/editar/{id}/user/editar/{id_user}', array('as'=>'unidade.edit_user', 'uses' => 'UnidadeController@edit_user'));
+Route::put('/unidade/update/{id}/user/{id_user}', array('as'=>'unidade.update_user', 'uses'=>'UnidadeController@update_user'));
+Route::delete('/unidade/{id}/user/{id_user}', array('as'=>'unidade.destroy_user', 'uses'=>'UnidadeController@destroy_user'));
+
 /* Unidades */
 
 Route::get('/prumada/adicionar', 'PrumadaController@create')->name('Adicionar Prumada');
