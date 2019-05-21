@@ -97,8 +97,8 @@
 						@is('Administrador')
 						<?php // Perfil extra?>
 						<div class='form-group'>
-								{!! Form::label('rolesUNI', 'Perfil extra', ['class' => 'control-label']) !!}
-								{!! Form::select('rolesUNI[]', $rolesUNI, $unidade['rolesUNI'], ['class' => 'form-control']) !!}
+								{!! Form::label('roles', 'Perfil Extra', ['class' => 'control-label']) !!}
+								{!! Form::select('roles[]', $roles, null, ['class' => 'form-control', 'multiple' => true]) !!}
 
 								@if ($errors->has('roles'))
 								<span class="help-block">

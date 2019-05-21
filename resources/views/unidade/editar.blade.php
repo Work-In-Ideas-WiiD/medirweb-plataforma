@@ -112,8 +112,8 @@
 				</div>
 
 				<div class="col-md-4">
-					<a href="{{ route('unidade.create_users', ['unidade' => $unidade['UNI_ID']]) }}" class="btn btn-block btn-primary"><i class="fa fa-user"></i> Criar Usuários à Unidade</a>
-					<a href="{{ route('unidade.create_users', ['unidade' => $unidade['UNI_ID']]) }}" class="btn btn-block btn-default"><i class="fa fa-user"></i> Adicionar Usuário Existente à Unidade</a>
+					<a href="{{ route('unidade.create_user', ['unidade' => $unidade['UNI_ID']]) }}" class="btn btn-block btn-primary"><i class="fa fa-user"></i> Criar Usuários à Unidade</a>
+					<a href="{{ route('unidade.add_user_existente', ['unidade' => $unidade['UNI_ID']]) }}" class="btn btn-block btn-default"><i class="fa fa-user"></i> Adicionar Usuário Existente à Unidade</a>
 					<button type="submit" type="button" class="btn btn-block btn-warning"><i class="fa fa-pencil"></i> Atualizar cadastro</button>
 					<button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
 				</div>
@@ -146,6 +146,9 @@
 							</thead>
 							<tbody>
 								@foreach ($userVinculado as $user)
+								@foreach ($user->roles as $roleUser)
+				        @if($roleUser->id == "4" )
+
 								<tr>
 									<td>{{ $user->id }}</td>
 									<td>{{ $user->name }}</td>
@@ -169,11 +172,11 @@
 													<div class="modal-content">
 														<div class="modal-header">
 															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-															<h4 class="modal-title text-primary" id="delete_user_ID{{$user->id}}Label"><i class="fa fa-trash-o"></i> Deletar Equipamento</h4>
+															<h4 class="modal-title text-primary" id="delete_user_ID{{$user->id}}Label"><i class="fa fa-trash-o"></i> Deletar Usuário</h4>
 														</div>
 														<div class="modal-body">
 
-															<p class="alert alert-danger">Tem certeza que deseja excluir usuário "{{ $user->name }}"" ?</p>
+															<p class="alert alert-danger">Tem certeza que deseja excluir usuário "{{ $user->name }}" ?</p>
 															<div class="form-actions">
 																<a href="{{ route('unidade.destroy_user', ['id' => $user->USER_UNIID, 'id_user' => $user->id]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormUSER}}').submit();" class="btn btn-danger btn-flat">SIM</a>
 																<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
@@ -190,8 +193,44 @@
 										</div>
 										@endis
 
+										@is('Administrador')
+										<?php // Botão Desvincular ?>
+										<div class="btn-group">
+											<?php $desvincularFormUSER = "desvincular-formUSER-{$loop->index}"; ?>
+											<a class="btn btn-primary btn-flat" data-toggle="modal" data-target="#desvincular_user_ID{{$user->id}}"><i class="fa fa-chain-broken"></i></a>
+
+											<?php // modal desvincular ?>
+											<div class="modal fade" id="desvincular_user_ID{{$user->id }}" tabindex="-1" role="dialog" aria-labelledby="desvincular_user_ID{{$user->id}}Label" aria-hidden="true">
+												<div class="modal-dialog">
+													<div class="modal-content">
+														<div class="modal-header">
+															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+															<h4 class="modal-title text-primary" id="desvincular_user_ID{{$user->id}}Label"><i class="fa fa-chain-broken"></i> Desvincular Usuário</h4>
+														</div>
+														<div class="modal-body">
+
+															<p class="alert alert-danger">Tem certeza que deseja desvincular usuário "{{ $user->name }}" dessa unidade ?</p>
+															<div class="form-actions">
+																<a href="{{ route('unidade.desvincular_user', ['id' => $user->USER_UNIID, 'id_user' => $user->id]) }}" onclick="event.preventDefault(); document.getElementById('{{$desvincularFormUSER}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+																<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
+															</div>
+
+														</div>
+													</div>
+												</div>
+											</div>
+
+											{!! Form::open(['route' => ['unidade.desvincular_user', 'id' => $user->USER_UNIID, 'id_user' => $user->id], 'method' => 'DELETE', 'id' => $desvincularFormUSER, 'style' => 'display:none']) !!}
+											{!! Form::close() !!}
+
+										</div>
+										@endis
+
 									</td>
 								</tr>
+
+								@endif
+								@endforeach
 								@endforeach
 							</tbody>
 						</table>

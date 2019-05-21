@@ -18,7 +18,7 @@ class Unidade extends Model
     protected $primaryKey = 'UNI_ID';
 
     protected $fillable = [
-        'UNI_IDAGRUPAMENTO', 'UNI_IDIMOVEL', 'UNI_IDUSER', 'UNI_NOME', 'UNI_RESPONSAVEL', 'UNI_CPFRESPONSAVEL', 'UNI_TELRESPONSAVEL'
+        'UNI_IDAGRUPAMENTO', 'UNI_IDIMOVEL', 'UNI_NOME', 'UNI_RESPONSAVEL', 'UNI_CPFRESPONSAVEL', 'UNI_TELRESPONSAVEL'
     ];
 
 

@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\File;
 use App\Models\Imovel;
-use App\Models\Unidade;
 use Hash;
 use Mail;
 
@@ -23,7 +22,7 @@ class UserController extends Controller
         $role = 'Comum';
         $role = Defender::findRole(ucfirst($role));
 
-        $user = $role->users()->where('email', '=',  $request->input('email'))->first();
+        $user = $role->users()->where('email', '=',  $request->input('email'))->whereNotNull('USER_UNIID')->first();
 
         if(!isset($user)){
             return response()->json(['error' => 'Usuário não existe!'], 400);
@@ -117,18 +116,8 @@ class UserController extends Controller
 
         $user->update($dataForm);
 
-        if(key_exists('roles', $dataForm))
-        $user->roles()->sync($dataForm['roles']);
-
-        // ATUALIZAR NOME RESPONSAVEL DA UNIDADE
-        $unidade = Unidade::where('UNI_IDUSER', $id)->first();
-        if(!is_null($unidade)){
-            $dataFormUNI['UNI_RESPONSAVEL'] = $user->name;
-            $dataFormUNI['UNI_TELRESPONSAVEL'] = $request->telefone;
-            $dataFormUNI['UNI_CPFRESPONSAVEL'] = $request->cpf;
-            $unidade->update($dataFormUNI);
-        }
-        // fim
+        /*if(key_exists('roles', $dataForm))
+        $user->roles()->sync($dataForm['roles']);*/
 
         return response()->json(response()->make($user), 200);
     }

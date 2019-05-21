@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Session;
 use App\Http\Requests\User\UserSaveRequest;
 use App\Http\Requests\User\UserEditRequest;
 use App\Models\Imovel;
-use App\Models\Unidade;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\File;
 
@@ -147,8 +146,7 @@ class UserController extends Controller
 
         foreach ($user->roles as $roleUser) {
             if($roleUser->id == "4" ){
-                $unidade = Unidade::where('UNI_IDUSER', $id)->first();
-                return redirect('/unidade/editar/'.$unidade->UNI_ID)->with('error', 'Usuário COMUM é exclusivo do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
+                return redirect('/unidade/editar/'.$user->USER_UNIID)->with('error', 'Usuário COMUM é exclusivo do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
             }
         }
 
@@ -184,8 +182,7 @@ class UserController extends Controller
 
         foreach ($user->roles as $roleUser) {
             if($roleUser->id == "4" ){
-                $unidade = Unidade::where('UNI_IDUSER', $id)->first();
-                return redirect('/unidade/editar/'.$unidade->UNI_ID)->with('error', 'Usuário COMUM é excluviso do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
+                return redirect('/unidade/editar/'.$user->USER_UNIID)->with('error', 'Usuário COMUM é exclusivo do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
             }
         }
 
@@ -230,14 +227,6 @@ class UserController extends Controller
         if(key_exists('roles', $dataForm))
         $user->roles()->sync($dataForm['roles']);
 
-        // ATUALIZAR NOME RESPONSAVEL DA UNIDADE
-        $unidade = Unidade::where('UNI_IDUSER', $id)->first();
-        if(!is_null($unidade)){
-            $dataFormUNI['UNI_RESPONSAVEL'] = $user->name;
-            $unidade->update($dataFormUNI);
-        }
-        // fim
-
         if(!app('defender')->hasRoles('Administrador')){
             return redirect('/user/editar/'.$id)->with('success', 'Usuário atualizado com sucesso.');
         }
@@ -259,14 +248,6 @@ class UserController extends Controller
 
         if(is_null($user)){
             return redirect()->route('404');
-        }
-
-        // NÃO EXCLUIR SE TIVER ID DO USUARIO DENTRO DA TABELA UNIDADE
-        $unidade = Unidade::where('UNI_IDUSER', $user->id)->get();
-        foreach ($unidade as $uni) {
-            if($uni->UNI_IDUSER == $user->id){
-                return redirect('/usuario')->with('error', 'Não é permitido excluir usuário vinculado a uma Unidade!');
-            }
         }
 
         $foto_path = public_path("upload/usuarios/".$user->foto);
