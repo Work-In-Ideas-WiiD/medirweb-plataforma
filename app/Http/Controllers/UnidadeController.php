@@ -416,13 +416,15 @@ class UnidadeController extends Controller
 
 
       // Adicionando como Usuário Comum
+      $rolesForm = [];
+
       foreach ($user->roles as $roleUser) {
-        $dataFormUser['roles'] = array("4", $roleUser->id);
+        array_push($rolesForm, $roleUser->id);
       }
 
-      if(key_exists('roles', $dataFormUser)){
-        $user->roles()->sync($dataFormUser['roles']);
-      }
+      array_push($rolesForm, "4");
+
+      $user->roles()->sync($rolesForm);
       // fim --
 
       return redirect('/unidade/editar/'.$request->USER_UNIID)->with('success', 'Usuário vinculado à Unidade e à Usuário Comum com sucesso!');
@@ -441,10 +443,10 @@ class UnidadeController extends Controller
         $user->update($form);
 
         // Removendo Usuário Comum
+        $dataFormUser['roles'] = [];
 
-        $dataFormUser['roles'] = null;
         foreach ($user->roles()->where("id", "<>", "4")->get() as $roleUser) {
-          $dataFormUser['roles'] = array($roleUser->id);
+          array_push($dataFormUser['roles'], $roleUser->id);
         }
 
         if(key_exists('roles', $dataFormUser)){
