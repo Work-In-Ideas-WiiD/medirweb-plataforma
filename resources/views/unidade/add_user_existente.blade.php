@@ -73,7 +73,7 @@
 
 						<div class='form-group'>
 							{{ Form::label('name', 'Usuários Existente') }}
-							{{ Form::select('name', $users, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+							{{ Form::select('name', $users, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
 
 							@if ($errors->has('name'))
 							<span class="help-block">
