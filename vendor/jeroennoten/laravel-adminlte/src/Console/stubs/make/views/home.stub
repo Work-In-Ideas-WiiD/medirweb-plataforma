@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'MedirWeb')
+@section('title', 'AdminLTE')
 
 @section('content_header')
     <h1>Dashboard</h1>

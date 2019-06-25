@@ -108,13 +108,12 @@ class ServiceProvider extends BaseServiceProvider
     public static function registerMenu(Dispatcher $events, Repository $config)
     {
         $events->listen(BuildingMenu::class, function (BuildingMenu $event) use ($config) {
-
             if(app('defender')->hasRoles('Administrador')){
                 $menu = $config->get('adminlte.menu_admin');
             }else{
                 $menu = $config->get('adminlte.menu2');
             }
-
+            // $menu = $config->get('adminlte.menu');
             call_user_func_array([$event->menu, 'add'], $menu);
         });
     }

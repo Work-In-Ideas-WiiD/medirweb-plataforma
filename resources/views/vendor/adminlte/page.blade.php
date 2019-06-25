@@ -185,7 +185,8 @@
 
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    @each('adminlte::partials.menu-item', $adminlte->menu(), 'item')
+                    <!-- Chamada do menu -->
+                    @each('adminlte::partials.menu-item', $adminlte->menu(), 'item');
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>

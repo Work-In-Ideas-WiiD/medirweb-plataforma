@@ -9,6 +9,7 @@ use App\Models\Imovel;
 use App\Models\Unidade;
 use App\Models\Prumada;
 use App\Models\Leitura;
+USE App\Models\Fechamento;
 use Session;
 
 class CentralController extends Controller
@@ -41,9 +42,25 @@ class CentralController extends Controller
 
     public function addLeituras(Request $request)
     {
-        $dataForm = $request->all();
-        Leitura::create($dataForm);
+        // $dataForm = $request->all();
+        // var_dump($dataForm);
+        // echo $request->FEC_IDPRUMADA;
+        $fechamento = Fechamento::where('FEC_IDPRUMADA', $request->FEC_IDPRUMADA)->first();
 
+        if($fechamento != null) {
+            $dataDB = explode('-',$fechamento->created_at);
+            $mesAtual = date('m');
+            $anoAtual = date('Y');
+            if($dataDB[0] != $anoAtual && $dataDB[1] != $mesAtual) {
+                Fechamento::create($request->all());
+            }
+        }else {
+            Fechamento::create($request->all());
+        }
+        // Validação de mes
+        // Leitura::create($dataForm);
+
+        // return response()->json(response()->make(), 200);
     }
 
 }

@@ -57,9 +57,9 @@ class ImovelController extends Controller
     {
         $estados = ['' => 'Selecionar Estado'];
         $_estados = Estado::all();
+
         foreach($_estados as $estado)
         $estados[$estado->EST_ID] = $estado->EST_NOME;
-
         return view('imovel.buscar_listar', compact( 'estados'));
     }
 
