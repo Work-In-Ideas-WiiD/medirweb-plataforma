@@ -42,25 +42,31 @@ class CentralController extends Controller
 
     public function addLeituras(Request $request)
     {
-        // $dataForm = $request->all();
+        $dataForm = [
+            "FEC_IDPRUMADA" => $request->LEI_IDPRUMADA,
+            "FEC_METRO" => $request->LEI_METRO,
+            "FEC_LITRO" => $request->LEI_LITRO,
+            "FEC_MILILITRO" => $request->LEI_MILILITRO,
+            "FEC_VALOR" => $request->LEI_VALOR
+        ];
         // var_dump($dataForm);
         // echo $request->FEC_IDPRUMADA;
-        $fechamento = Fechamento::where('FEC_IDPRUMADA', $request->FEC_IDPRUMADA)->first();
+        $fechamento = Fechamento::where('FEC_IDPRUMADA', $dataForm['FEC_IDPRUMADA'])->first();
 
         if($fechamento != null) {
             $dataDB = explode('-',$fechamento->created_at);
             $mesAtual = date('m');
             $anoAtual = date('Y');
             if($dataDB[0] != $anoAtual && $dataDB[1] != $mesAtual) {
-                Fechamento::create($request->all());
+                Fechamento::create($dataForm);
             }
         }else {
-            Fechamento::create($request->all());
+            Fechamento::create($dataForm);
         }
         // Validação de mes
         // Leitura::create($dataForm);
 
-        // return response()->json(response()->make(), 200);
+        return response()->json($dataForm, 200);
     }
 
 }
