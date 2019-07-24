@@ -10,6 +10,11 @@ class Estado extends Model
 
     protected $primaryKey = 'EST_ID';
 
+    public function cidade()
+    {
+        return $this->belongsTo(Cidade::class);
+    }
+
     public function getCidades()
     {
     	return $this->hasMany('App\Models\Cidade');

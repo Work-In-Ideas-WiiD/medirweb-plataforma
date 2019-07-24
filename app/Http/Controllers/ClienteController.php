@@ -27,7 +27,7 @@ class ClienteController extends Controller
             return view('error403');
         }
 
-        $clientes = Cliente::with('estado', 'cidade')->all();
+        $clientes = Cliente::with('estado', 'cidade')->get();
 
         
         return view('cliente.listar', ['clientes' => $clientes]);
@@ -42,38 +42,26 @@ class ClienteController extends Controller
         $estados = ['' => 'Selecionar Estado'];
         $_estados = Estado::all();
         foreach($_estados as $estado)
-        $estados[$estado->EST_ID] = $estado->EST_NOME;
+            $estados[$estado->EST_ID] = $estado->EST_NOME;
 
-        //return view('cliente.cadastrar', ['' => ]);
+
         return view('cliente.cadastrar', compact('estados'));
     }
 
     public function store(ClienteSaveRequest $request)
     {
-        if(!app('defender')->hasRoles('Administrador')){
+        if(!app('defender')->hasRoles('Administrador'))
             return view('error403');
-        }
-
+        
         $dataForm = $request->all();
 
-        if($request->input('cnpj') != NULL)
-        {
-            $dataForm['CLI_DOCUMENTO'] = $request->input('cnpj');
-            unset( $dataForm['cnpj'] );
-        }
-        else
-        {
-            if($request->input('cpf') != NULL)
-            {
-                $dataForm['CLI_DOCUMENTO'] = $request->input('cpf');
-                unset( $dataForm['cpf'] );
-            }
-            else
-            {
-                $request->session()->flash('error', 'Por favor preencha o formulario com algum número de documento CNPJ ou CPF.');
-                return redirect('/cliente/adicionar');
-            }
-
+        if($request->cnpj != null) {
+            $dataForm['CLI_DOCUMENTO'] = $request->cnpj;
+        } else if($request->cpf != null) {
+            $dataForm['CLI_DOCUMENTO'] = $request->cpf;
+        } else {
+            return redirect('/cliente/adicionar')
+                ->withError('Por favor preencha o formulario com algum número de documento CNPJ ou CPF.');
         }
 
         if($request->hasFile('foto')){
@@ -89,65 +77,46 @@ class ClienteController extends Controller
         return redirect('cliente')->with('success', 'Cliente cadastrado com sucesso.');
     }
 
-    public function show($id)
+    public function show(Cliente $cliente)
     {
-        if(!app('defender')->hasRoles('Administrador')){
+        if(!app('defender')->hasRoles('Administrador'))
             return view('error403');
-        }
 
-        $cliente =  Cliente::find($id);
-
-        if(is_null($cliente)){
-            return redirect()->route('404');
-        }
-
-        $cliente['CLI_CIDADE'] = Cliente::find($id)->cidade->CID_NOME;
-        $cliente['CLI_ESTADO'] = Cliente::find($id)->estado->EST_ABREVIACAO;
+        $cliente['CLI_CIDADE'] = $cliente->cidade->CID_NOME;
+        $cliente['CLI_ESTADO'] = $cliente->estado->EST_ABREVIACAO;
 
         return view('cliente.visualizar', compact('cliente'));
     }
 
-    public function edit($id)
+    public function edit(Cliente $cliente)
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
+        if(!app('defender')->hasRoles('Administrador'))
+            return view('error403');       
 
-        $cliente = Cliente::find($id);
-
-        if(is_null($cliente)){
-            return redirect()->route('404');
-        }
 
         $estados = ['' => 'Selecionar Estado'];
         $_estados = Estado::all();
         foreach($_estados as $estado)
-        $estados[$estado->EST_ID] = $estado->EST_NOME;
+            $estados[$estado->EST_ID] = $estado->EST_NOME;
 
 
         $cidades = ['' => 'Selecionar Estado'];
         $_cidades = Cidade::where('CID_IDESTADO', $cliente->CLI_ESTADO)->get();
         foreach($_cidades as $cidade)
-        $cidades[$cidade->CID_ID] = $cidade->CID_NOME;
+            $cidades[$cidade->CID_ID] = $cidade->CID_NOME;
 
         $imoveis = $cliente->getImoveis()->count();
 
         return view('cliente.editar', compact('cliente', 'estados', 'imoveis', 'cidades'));
     }
 
-    public function update(ClienteEditRequest $request, $id)
+    public function update(ClienteEditRequest $request, Cliente $cliente)
     {
-        if(!app('defender')->hasRoles('Administrador')){
+        if(!app('defender')->hasRoles('Administrador'))
             return view('error403');
-        }
 
         $dataForm = $request->all();
 
-        $cliente = Cliente::find($id);
-
-        if(is_null($cliente)){
-            return redirect()->route('404');
-        }
 
         if($request->hasFile('foto')){
             $foto_path = public_path("upload/clientes/".$cliente->CLI_FOTO);
@@ -164,16 +133,14 @@ class ClienteController extends Controller
 
         $cliente->update($dataForm);
 
-        return redirect('cliente')->with('success', 'Cliente atualizado com sucesso.');
+        return redirect('cliente')->withSuccess('Cliente atualizado com sucesso.');
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, Cliente $cliente)
     {
-        if(!app('defender')->hasRoles('Administrador')){
+        if(!app('defender')->hasRoles('Administrador'))
             return view('error403');
-        }
 
-        $cliente = Cliente::findOrFail($id);
 
         $foto_path = public_path("upload/clientes/".$cliente->CLI_FOTO);
 
@@ -181,8 +148,8 @@ class ClienteController extends Controller
             File::delete($foto_path);
         }
 
-        Cliente::destroy($id);
+        $cliente->delete();
 
-        return redirect('cliente')->with('success', 'Cliente deletado com sucesso.');
+        return redirect('cliente')->withSuccess('Cliente deletado com sucesso.');
     }
 }

@@ -111,12 +111,13 @@ Route::get('/teste/ligar/{id}', 'Hello@ligarTeste');
 Route::get('/teste/desligar/{id}', 'Hello@desligarTeste');
 
 /* Clientes */
+
 Route::get('/cliente', 'ClienteController@index')->name('Listar Clientes');
 Route::get('/cliente/adicionar', 'ClienteController@create')->name('Adicionar Cliente');
 Route::post('novo-cliente', array('uses' => 'ClienteController@store'));
-Route::get('/cliente/ver/{id}', array('uses' => 'ClienteController@show'))->name('Ver Cliente');
-Route::get('/cliente/editar/{id}', 'ClienteController@edit')->name('clinete.edit');
-Route::put('/cliente/update/{id}', 'ClienteController@update')->name('clinete.update');
+Route::get('/cliente/ver/{cliente}', array('uses' => 'ClienteController@show'))->name('Ver Cliente');
+Route::get('/cliente/editar/{cliente}', 'ClienteController@edit')->name('clinete.edit');
+Route::put('/cliente/update/{cliente}', 'ClienteController@update')->name('clinete.update');
 Route::delete('cliente/{cliente}', array('as'=>'cliente.destroy', 'uses'=>'ClienteController@destroy'));
 
 
@@ -155,3 +156,11 @@ Route::get('relatorio/faturas/getApartamentoLista/{id}', array('uses' => 'Relato
 Route::get('404',['as'=>'404','uses'=>'ErrorHandlerController@errorCode404']);
 Route::get('500',['as'=>'500','uses'=>'ErrorHandlerController@errorCode500']);
 
+
+$this->get('testee', function() {
+    dd(
+        config()->set('app.name', 'outro nome'),
+        config('app.name')
+    );
+
+});

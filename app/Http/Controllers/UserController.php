@@ -28,12 +28,12 @@ class UserController extends Controller
             return view('error403');
         }
 
-        $order = ($request->input('order')) ? $request->input('order') : 'asc';
+        $order = $request->order ?? 'asc';
 
         $role = Defender::findRole(ucfirst($role));
         $usuarios = $role->users()->orderBy('name', $order)
-        ->where('name', 'like', '%' . $request->input('like') . '%')
-        ->paginate($request->input('mostrar'));
+        ->where('name', 'like', '%' . $request->like . '%')
+        ->paginate($request->mostrar);
 
         return view('admin.lista', compact('usuarios', 'role'));
     }

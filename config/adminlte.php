@@ -106,8 +106,9 @@ return [
     |
     */
 
+    'menu' => ['GERENCIAL'],
+
     'menu_admin' => [
-        'GERENCIAL',
         [
             'text' => 'Dashboard',
             'url'  => 'home',
@@ -242,7 +243,6 @@ return [
 
 
     'menu2' => [
-        'GERENCIAL',
         [
             'text'    => 'Imóveis',
             'icon'    => 'building',
