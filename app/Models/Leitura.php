@@ -7,14 +7,9 @@ use DB;
 
 class Leitura extends Model
 {
-    /*const created_at = 'tempo_criacao';
-    const updated_at = 'tempo_alteracao';*/
-
     protected $primaryKey = 'LEI_ID';
 
-    protected $fillable = [
-        'LEI_IDPRUMADA', 'LEI_VALOR', 'LEI_METRO', 'LEI_LITRO', 'LEI_MILILITRO',
-        ];
+    protected $guarded = [];
 
     protected  $dates = [
         'created_at', 'updated_at'

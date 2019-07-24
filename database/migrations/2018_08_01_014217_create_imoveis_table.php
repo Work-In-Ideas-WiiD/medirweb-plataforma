@@ -16,8 +16,12 @@ class CreateImoveisTable extends Migration
         Schema::create('imoveis', function(Blueprint $table) {
             $table->increments('IMO_ID');
 
-            $table->integer('IMO_IDCLIENTE')->unsigned();
-            $table->foreign('IMO_IDCLIENTE')->references('CLI_ID')->on('clientes')->onDelete('cascade');
+            $table->unsignedInteger('IMO_IDCLIENTE');
+            $table->foreign('IMO_IDCLIENTE')
+                ->references('CLI_ID')
+                ->on('clientes')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->string('IMO_FOTO', 200)->nullable();
             $table->string('IMO_CAPA', 200)->nullable();
@@ -29,11 +33,19 @@ class CreateImoveisTable extends Migration
             $table->string('IMO_NUMERO', 300);
             $table->string('IMO_BAIRRO', 300);
 
-            $table->integer('IMO_IDCIDADE')->unsigned();
-            $table->foreign('IMO_IDCIDADE')->references('CID_ID')->on('cidades')->onDelete('cascade');
+            $table->unsignedInteger('IMO_IDCIDADE');
+            $table->foreign('IMO_IDCIDADE')
+                ->references('CID_ID')
+                ->on('cidades')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
-            $table->integer('IMO_IDESTADO')->unsigned();
-            $table->foreign('IMO_IDESTADO')->references('EST_ID')->on('estados')->onDelete('cascade');
+            $table->unsignedInteger('IMO_IDESTADO');
+            $table->foreign('IMO_IDESTADO')
+                ->references('EST_ID')
+                ->on('estados')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->string('IMO_CEP', 200);
 
@@ -41,12 +53,12 @@ class CreateImoveisTable extends Migration
             $table->longText('IMO_TELEFONES');
 
             $table->boolean('IMO_STATUS');
-            $table->integer('IMO_FATURACICLO');
+            $table->integer('IMO_FATURACICLO')->nullable();
 
             $table->float('IMO_TAXAFIXA')->nullable();
             $table->float('IMO_TAXAVARIAVEL')->nullable();
 
-            $table->string('IMO_IP', 15);
+            $table->string('IMO_IP', 15)->nullable();
 
             $table->timestamps();
         });

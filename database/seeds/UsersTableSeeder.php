@@ -12,12 +12,30 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->delete();
 
-        User::create([
-            'name'                  => 'Usuario 1',
-            'email'                 => 'brasilia1@usuario.com.br',
-            'password'              => bcrypt('123456'),
-        ]);
+        $roleAdmin = Defender::createRole('Administrador');
+        Defender::createRole('Sindico');
+        Defender::createRole('Secretário');
+        Defender::createRole('Comum');
+        Defender::createRole('Vendedor');
+
+        $users = [
+            [
+                'name' => 'Work In Ideas - WiiD',
+                'email' => 'contato@wi-id.com',
+                'password' => bcrypt('secret')
+            ],
+            [
+                'name' => 'MedirWeb Admin',
+                'email' => 'contato@medirweb.com',
+                'password' => bcrypt('secret')
+            ]
+        ];
+
+
+        foreach ($users as $user)
+            User::create($user)->roles()->attach($roleAdmin);
+
+
     }
 }

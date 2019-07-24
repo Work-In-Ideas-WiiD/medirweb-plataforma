@@ -3,7 +3,6 @@
 use Illuminate\Database\Seeder;
 use App\Models\Cliente;
 
-use Carbon\Carbon;
 
 class ClientesTableSeeder extends Seeder
 {
@@ -22,7 +21,7 @@ class ClientesTableSeeder extends Seeder
             'CLI_DOCUMENTO'             => '4969821',
             'CLI_NOMEJUR'               => 'Marcela Barbosa',
             'CLI_NOMEFAN'               => '',
-            'CLI_DATANASC'              => Carbon::now()->format('Y-m-d'),
+            'CLI_DATANASC'              => now(),
             'CLI_STATUS'                => 1,
             'CLI_LOGRADOURO'            => 'Rua A',
             'CLI_COMPLEMENTO'           => 'Quadra 7',
@@ -32,9 +31,7 @@ class ClientesTableSeeder extends Seeder
             'CLI_CEP'                   => '74210-180',
             'CLI_DADOSBANCARIOS'        => '',
             'CLI_DADOSCONTATO'          => '',
-            'CLI_NUMERO'                => '11',
-            'created_at'                => Carbon::now()->format('Y-m-d H:i'),
-            'updated_at'                => Carbon::now()->format('Y-m-d H:i')
+            'CLI_NUMERO'                => '11'
         ]);
 
     }

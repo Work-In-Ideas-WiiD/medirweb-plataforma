@@ -10,9 +10,7 @@ class Fechamento extends Model
 
     protected $primaryKey = 'FEC_ID';
 
-    protected $fillable = [
-        'FEC_ID','FEC_IDPRUMADA', 'FEC_VALOR', 'FEC_METRO', 'FEC_LITRO', 'FEC_MILILITRO','FEC_DIFERENCA'
-        ];
+    protected $guarded = [];
 
     protected  $dates = [
         'created_at', 'updated_at'

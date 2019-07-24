@@ -15,9 +15,7 @@ class Agrupamento extends Model
 
     protected $primaryKey = 'AGR_ID';
 
-    protected $fillable = [
-        'AGR_IDIMOVEL', 'AGR_NOME', 'AGR_TAXAFIXA', 'AGR_TAXAVARIAVEL'
-    ];
+    protected $guarded = [];
 
     public function imovel()
     {

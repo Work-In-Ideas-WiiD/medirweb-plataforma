@@ -16,14 +16,18 @@ class CreateAgrupamentosTable extends Migration
         Schema::create('agrupamentos', function (Blueprint $table) {
             $table->increments('AGR_ID');
 
-            $table->integer('AGR_IDIMOVEL')->unsigned();
-            $table->foreign('AGR_IDIMOVEL')->references('IMO_ID')->on('imoveis')->onDelete('cascade');
+            $table->unsignedInteger('AGR_IDIMOVEL');
+            $table->foreign('AGR_IDIMOVEL')
+                ->references('IMO_ID')
+                ->on('imoveis')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             $table->string('AGR_NOME', 300)->nullable();
             $table->string('AGR_TAXAFIXA', 200)->nullable();
             $table->string('AGR_TAXAVARIAVEL', 200)->nullable();
-
-            $table->timestamps();
+            $table->softDeletesTz();
+            $table->timestampsTz();
 
         });
     }

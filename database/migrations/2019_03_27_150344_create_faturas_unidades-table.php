@@ -28,7 +28,8 @@ class CreateFaturasUnidadesTable extends Migration
 
             $table->longText('FATUNI_PRUMADAS');
 
-            $table->timestamps();
+            $table->softDeletesTz();
+            $table->timestampsTz();
         });
     }
 

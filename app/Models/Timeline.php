@@ -13,7 +13,5 @@ class Timeline extends Model
 
     protected $primaryKey = 'TIMELINE_ID';
 
-    protected $fillable = [
-        'TIMELINE_IDPRUMADA', 'TIMELINE_USER', 'TIMELINE_DESCRICAO', 'TIMELINE_ICON'
-    ];
+    protected $guarded = [];
 }

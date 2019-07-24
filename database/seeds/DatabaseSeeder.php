@@ -18,9 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ImoveisTableSeeder::class);
         $this->call(AgrupamentosTableSeeder::class);
         $this->call(UnidadesTableSeeder::class);
-        $this->call(EquipamentosTableSeeder::class);
         $this->call(PrumadasTableSeeder::class);
-        //$this->call(LeiturasTableSeeder::class);
-
+        $this->call(LeiturasTableSeeder::class);
     }
 }

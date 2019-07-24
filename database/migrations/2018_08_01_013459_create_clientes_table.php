@@ -26,7 +26,7 @@ class CreateClientesTable extends Migration
 
             $table->date('CLI_DATANASC');
 
-            $table->boolean('CLI_STATUS');
+            $table->boolean('CLI_STATUS')->nullable();
 
             $table->string('CLI_LOGRADOURO', 300);
             $table->string('CLI_COMPLEMENTO', 300);

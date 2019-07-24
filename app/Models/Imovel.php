@@ -20,9 +20,7 @@ class Imovel extends Model
 
     protected $primaryKey = 'IMO_ID';
 
-    protected $fillable = [
-       'IMO_IDCLIENTE', 'IMO_CNPJ', 'IMO_FOTO', 'IMO_CAPA', 'IMO_NOME', 'IMO_LOGRADOURO', 'IMO_COMPLEMENTO', 'IMO_NUMERO', 'IMO_BAIRRO', 'IMO_IDCIDADE', 'IMO_IDESTADO', 'IMO_CEP', 'IMO_RESPONSAVEIS', 'IMO_TELEFONES', 'IMO_STATUS', 'IMO_FATURACICLO', 'IMO_TAXAFIXA', 'IMO_TAXAVARIAVEL', 'IMO_IP'
-    ];
+    protected $guarded = [];
 
 
     protected  $dates = [

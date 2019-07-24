@@ -16,9 +16,15 @@ class CreateCidadesTable extends Migration
         Schema::create('cidades', function(Blueprint $table) {
             $table->increments('CID_ID');
             $table->string('CID_NOME',255);
-            $table->integer('CID_IDESTADO')->unsigned();
-            $table->foreign('CID_IDESTADO')->references('EST_ID')->on('estados');
-            $table->integer('CID_CODIBGE');
+            $table->unsignedInteger('CID_IDESTADO');
+            $table->foreign('CID_IDESTADO')
+                ->references('EST_ID')
+                ->on('estados')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->unsignedInteger('CID_CODIBGE');
+            $table->softDeletesTz();
+            $table->timestampsTz();
         });
     }
 

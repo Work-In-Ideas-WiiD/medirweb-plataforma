@@ -23,7 +23,8 @@ class CreateTimelinesTable extends Migration
             $table->longText('TIMELINE_DESCRICAO');
             $table->string('TIMELINE_ICON', 50);
 
-            $table->timestamps();
+            $table->softDeletesTz();
+            $table->timestampsTz();
         });
     }
 

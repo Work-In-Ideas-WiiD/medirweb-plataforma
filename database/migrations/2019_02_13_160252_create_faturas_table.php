@@ -31,7 +31,8 @@ class CreateFaturasTable extends Migration
             $table->string('FAT_CONSUMO_VALORUNI', 255);
             $table->string('FAT_CONSUMO_FORNECEDOR', 255);
 
-            $table->timestamps();
+            $table->softDeletesTz();
+            $table->timestampsTz();
         });
     }
 

@@ -13,9 +13,7 @@ class Cliente extends Model
 
     protected $primaryKey = 'CLI_ID';
 
-    protected $fillable = [
-        'CLI_TIPO', 'CLI_FOTO', 'CLI_DOCUMENTO', 'CLI_NOMEJUR', 'CLI_NOMEFAN', 'CLI_DATANASC', 'CLI_STATUS', 'CLI_LOGRADOURO', 'CLI_COMPLEMENTO', 'CLI_BAIRRO', 'CLI_CIDADE', 'CLI_ESTADO', 'CLI_CEP', 'CLI_DADOSBANCARIOS', 'CLI_DADOSCONTATO', 'CLI_NUMERO'
-    ];
+    protected $guarded = [];
 
     protected  $dates = [
         'created_at', 'updated_at'

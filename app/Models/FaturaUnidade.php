@@ -13,7 +13,5 @@ class FaturaUnidade extends Model
 
     protected $primaryKey = 'FATUNI_ID';
 
-    protected $fillable = [
-        'FATUNI_DT', 'FATUNI_IDUNI', 'FATUNI_IDFATURA', 'FATUNI_VALORTOTAL', 'FATUNI_PRUMADAS'
-    ];
+    protected $guarded = [];
 }

@@ -25,7 +25,8 @@ class CreateFechamentoTable extends Migration
             $table->string('FEC_DIFERENCA')->nullable();
 
             $table->integer('FEC_VALOR')->nullable();
-            $table->timestamps();
+            $table->softDeletesTz();
+            $table->timestampsTz();
         });
     }
 

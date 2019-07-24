@@ -17,6 +17,8 @@ class CreateEstadosTable extends Migration
             $table->increments('EST_ID');
             $table->string('EST_NOME',255);
             $table->string('EST_ABREVIACAO',255);
+            $table->softDeletesTz();
+            $table->timestampsTz();
         });
     }
 

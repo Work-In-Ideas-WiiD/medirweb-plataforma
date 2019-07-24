@@ -27,14 +27,9 @@ class ClienteController extends Controller
             return view('error403');
         }
 
-        $clientes = Cliente::all();
+        $clientes = Cliente::with('estado', 'cidade')->all();
 
-        foreach($clientes as $cli)
-        {
-            $cli['CLI_ESTADO'] = $cli->estado->EST_ABREVIACAO;
-            $cli['CLI_CIDADE'] = $cli->cidade->CID_NOME;
-        }
-
+        
         return view('cliente.listar', ['clientes' => $clientes]);
     }
 

@@ -13,7 +13,5 @@ class Fatura extends Model
 
     protected $primaryKey = 'FAT_ID';
 
-    protected $fillable = [
-        'FAT_IMOID', 'FAT_DTLEIFORNECEDOR', 'FAT_LEIMETRO_FORNECEDOR', 'FAT_LEIMETRO_VALORFORNECEDOR', 'FAT_LEIMETRO_UNI', 'FAT_CONSUMO_IMOVEL', 'FAT_CONSUMO_VALORIMOVEL', 'FAT_CONSUMO_UNI', 'FAT_CONSUMO_VALORUNI', 'FAT_CONSUMO_FORNECEDOR'
-    ];
+    protected $guarded = [];
 }

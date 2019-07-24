@@ -22,14 +22,14 @@ class UserController extends Controller
         $role = 'Comum';
         $role = Defender::findRole(ucfirst($role));
 
-        $user = $role->users()->where('email', '=',  $request->input('email'))->whereNotNull('USER_UNIID')->first();
+        $user = $role->users()->where('email', '=',  $request->email)->whereNotNull('USER_UNIID')->first();
 
         if(!isset($user)){
-            return response()->json(['error' => 'Usuário não existe!'], 400);
+            return response(['error' => 'Usuário não existe!'], 400);
         }
 
-        if ($user->count() <= 0 || !Hash::check($request->input('password'), $user->password)) {
-            return response()->json(['error' => 'Usuário ou senha inválidos'], 400);
+        if ($user->count() <= 0 || !Hash::check($request->password, $user->password)) {
+            return response(['error' => 'Usuário ou senha inválidos'], 400);
         }
 
         return response()->json(response()->make($user), 200);
@@ -40,7 +40,7 @@ class UserController extends Controller
         $role = 'Comum';
         $role = Defender::findRole(ucfirst($role));
 
-        $user = $role->users()->where('email', '=',  $request->input('email'))->first();
+        $user = $role->users()->where('email', $request->email)->first();
 
         if(!isset($user)){
             return response()->json(['error' => 'E-mail inválido!'], 400);

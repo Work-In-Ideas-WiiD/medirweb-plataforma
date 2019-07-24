@@ -26,7 +26,8 @@ class CreateLeiturasTable extends Migration
 
             $table->integer('LEI_VALOR')->nullable();;
 
-            $table->timestamps();
+            $table->softDeletesTz();
+            $table->timestampsTz();
         });
         DB::statement('ALTER TABLE leituras MODIFY COLUMN LEI_VALOR INT(6) UNSIGNED ZEROFILL NOT NULL');
     }
