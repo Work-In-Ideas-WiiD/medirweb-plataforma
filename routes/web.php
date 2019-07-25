@@ -157,10 +157,4 @@ Route::get('404',['as'=>'404','uses'=>'ErrorHandlerController@errorCode404']);
 Route::get('500',['as'=>'500','uses'=>'ErrorHandlerController@errorCode500']);
 
 
-$this->get('testee', function() {
-    dd(
-        config()->set('app.name', 'outro nome'),
-        config('app.name')
-    );
-
-});
+$this->get('testee', 'TesteController@index');
