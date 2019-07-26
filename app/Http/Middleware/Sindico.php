@@ -15,7 +15,7 @@ class Sindico
      */
     public function handle($request, Closure $next)
     {
-        if(!app('defender')->hasRoles('Administrador'))
+        if(!app('defender')->hasRoles('Sindico'))
             return redirect('403');
 
         return $next($request);

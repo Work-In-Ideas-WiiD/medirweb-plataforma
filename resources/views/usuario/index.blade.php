@@ -18,11 +18,9 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Listagem</h3>
-                @if($role->name == "Administrador")
+
                 <a style="float: right" href="{{ route('usuario.create') }}" class="btn btn-success">Adicionar</a>
-                @else
-                <a style="float: right" href="{{ url('/user/'.$role->name.'/create') }}" class="btn btn-primary">Adicionar</a>
-                @endif
+               
             </div>
 
             <div class='box-body'>

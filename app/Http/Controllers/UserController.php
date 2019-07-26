@@ -15,13 +15,6 @@ use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
-    public function __construct()
-    {
-
-        $this->middleware(['auth']);
-
-    }
-
     public function index(Request $request, $role = 'Administrador'){
 
         $order = $request->order ?? 'asc';
@@ -31,7 +24,7 @@ class UserController extends Controller
         ->where('name', 'like', '%' . $request->like . '%')
         ->paginate($request->mostrar);
 
-        return view('admin.lista', compact('usuarios', 'role'));
+        return view('usuario.index', compact('usuarios', 'role'));
     }
 
     public function create()
@@ -40,39 +33,20 @@ class UserController extends Controller
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
         foreach($_roles as $role){
-            if(!($role->id == 4)){
+            if(!($role->id == 4))
                 $roles[$role->id] = $role->name;
-            }
+
         }
 
         $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel){
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
 
-        return view('admin.criar', compact('roles', 'imoveis'));
+        foreach(Imovel::all() as $imovel)
+            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+      
+
+        return view('usuario.create', compact('roles', 'imoveis'));
     }
 
-    public function create_user()
-    {
-
-        $roles =[];
-        $_roles = \Artesaos\Defender\Role::all();
-        foreach($_roles as $role){
-            if(!($role->id == 4)){
-                $roles[$role->id] = $role->name;
-            }
-        }
-
-        $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel){
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
-
-        return view('admin.criar_user', compact('roles', 'imoveis'));
-    }
 
     public function store(UserSaveRequest $request)
     {
@@ -102,24 +76,24 @@ class UserController extends Controller
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
         foreach($_roles as $role){
-            if(!($role->id == 4)){
+            if(!($role->id == 4))
                 $roles[$role->id] = $role->name;
-            }
+
         }
 
         $imoveis = ['' => 'Selecionar Imovel'];
         $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel){
+        foreach($_imoveis as $imovel)
             $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
+        
 
         foreach ($user->roles as $roleUser) {
-            if($roleUser->id == "4" ){
+            if($roleUser->id == "4" )
                 return redirect('/unidade/editar/'.$user->USER_UNIID)->with('error', 'Usuário COMUM é exclusivo do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
-            }
+
         }
 
-        return view('admin.editar', compact('user', 'roles', 'imoveis'));
+        return view('usuario.edit', compact('user', 'roles', 'imoveis'));
     }
 
     public function perfil()
@@ -130,24 +104,24 @@ class UserController extends Controller
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
         foreach($_roles as $role){
-            if(!($role->id == 4)){
+            if(!($role->id == 4))
                 $roles[$role->id] = $role->name;
-            }
+
         }
 
         $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel){
+
+        foreach(Imovel::all() as $imovel)
             $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
+        
 
         foreach ($user->roles as $roleUser) {
-            if($roleUser->id == "4" ){
-                return redirect('/unidade/editar/'.$user->USER_UNIID)->with('error', 'Usuário COMUM é exclusivo do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
-            }
+            if($roleUser->id == "4" )
+                return redirect('/unidade/editar/'.$user->USER_UNIID)->withError('Usuário COMUM é exclusivo do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
+
         }
 
-        return view('admin.perfil', compact('user', 'roles', 'imoveis'));
+        return view('usuario.perfil', compact('user', 'roles', 'imoveis'));
     }
 
     public function update(UserEditRequest $request, User $usuario)
@@ -155,18 +129,15 @@ class UserController extends Controller
 
         $dataForm = $request->all();
 
-        if($dataForm['password'] == '')
-        unset($dataForm['password'] );
-        else
-        $dataForm['password'] = bcrypt($dataForm['password']);
+        if ($dataForm)
+            $dataForm['password'] = bcrypt($dataForm['password']);
 
         if($request->hasFile('fotoUser')){
             $foto_path = public_path("upload/usuarios/".$usuario->foto);
 
-            if (File::exists($foto_path)) {
+            if (File::exists($foto_path))
                 File::delete($foto_path);
-            }
-
+ 
             $fileName = md5(uniqid().str_random()).'.'.$request->file('fotoUser')->extension();
             $dataForm['foto'] = $request->file('fotoUser')->move('upload/usuarios', $fileName)->getFilename();
 
@@ -176,38 +147,25 @@ class UserController extends Controller
         $usuario->update($dataForm);
 
         if(key_exists('roles', $dataForm))
-        $usuario->roles()->sync($dataForm['roles']);
+            $usuario->roles()->sync($dataForm['roles']);
 
-        if(!app('defender')->hasRoles('Administrador')){
-            return redirect('/usuario')->with('success', 'Usuário atualizado com sucesso.');
-        }
-
-        return redirect('/usuario')->with('success', 'Usuário atualizado com sucesso.');
+       
+        return back()->withSuccess('Usuário atualizado com sucesso.');
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, User $usuario)
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
 
-        if(auth()->user()->id == $id){
-            return redirect('/usuario')->with('error', 'Não é permitido excluir a si próprio!');
-        }
+        if(auth()->user()->id == $usuario->id)
+            return redirect('/usuario')->withError('Não é permitido excluir a si próprio!');
+    
 
-        $user = User::findOrFail($id);
+        $foto_path = public_path("upload/usuarios/".$usuario->foto);
 
-        if(is_null($user)){
-            return redirect()->route('404');
-        }
-
-        $foto_path = public_path("upload/usuarios/".$user->foto);
-
-        if (File::exists($foto_path)) {
+        if (File::exists($foto_path))
             File::delete($foto_path);
-        }
 
-        User::destroy($id);
+        $usuario->delete();
 
         return redirect('/usuario')->with('success', 'Usuário deletado com sucesso.');
     }

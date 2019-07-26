@@ -205,17 +205,17 @@ return [
                 [
                     'text' => 'Administrador',
                     'icon' => 'user',
-                    'url'  => 'user/administrador',
+                    'url'  => '/usuario/tipo/administrador',
                 ],
                 [
                     'text' => 'Sindico',
                     'icon' => 'user',
-                    'url'  => 'user/sindico/',
+                    'url'  => '/usuario/tipo/sindico/',
                 ],
                 [
                     'text' => 'Secretário',
                     'icon' => 'user',
-                    'url'  => 'user/secretario/',
+                    'url'  => '/usuario/tipo/secretario/',
                 ],
             ],
         ],
