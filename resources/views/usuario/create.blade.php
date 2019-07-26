@@ -82,7 +82,7 @@
                             @endif
                         </div>
 
-                        <?php // Confirma Senha ?>
+                        <!-- Confirma Senha -->
                         <div class='form-group'>
                             {{ Form::label('password-confirm', 'Confirma Senha:', ['data-error' => $errors->first('password_confirmation')]) }}
                             {{ Form::password('password_confirmation', ['class' => 'avalidate form-control']) }}
@@ -93,8 +93,9 @@
                             </span>
                             @endif
                         </div>
-
-                        <?php // Imovel ?>
+                        
+                        <!-- Imoveis -->
+                        
                         <div class='form-group'>
                             {{ Form::label('USER_IMOID', 'Imóvel') }}
                             {{ Form::select('USER_IMOID', $imoveis, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
@@ -105,6 +106,7 @@
                             </span>
                             @endif
                         </div>
+                        
 
                     </div>
 

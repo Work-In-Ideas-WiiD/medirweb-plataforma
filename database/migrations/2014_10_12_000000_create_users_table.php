@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::defaultStringLength(255);
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('USER_IMOID')->default(0);
+            $table->integer('USER_IMOID')->nullable();
             $table->integer('USER_UNIID')->nullable();
             $table->string('foto', 200)->nullable();
             $table->string('name');
