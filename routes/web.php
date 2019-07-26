@@ -14,10 +14,7 @@
 Route::middleware('auth')->group(function () {
 
     Route::get('/', 'ImovelController@buscar')->name('inicio');
-    
-    Route::get('/hello/adicionar', 'Hello@cadastro');
-    Route::post('/hello/postadicionar', 'Hello@postAdicionar');
-    
+  
     Auth::routes();
     
     Route::get('/home', 'HomeController@index')->name('home');
@@ -37,8 +34,12 @@ Route::middleware('auth')->group(function () {
 
 
     /* Imóveis */
+
+    Route::prefix('imovel')->group(function() {
+        Route::get('buscar', 'ImovelController@buscar')->name('Buscar Imóveis');
+
+    });
     
-    Route::get('/imovel/buscar', 'ImovelController@buscar')->name('Buscar Imóveis');
     Route::get('/imovel/buscar/ver/{id}', array('uses' => 'ImovelController@show_buscar'))->name('Buscar Ver Imovel');
     
     Route::get('/imovel', 'ImovelController@index')->name('Listar Imóveis');
