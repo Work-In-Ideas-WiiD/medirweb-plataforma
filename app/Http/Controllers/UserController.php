@@ -18,15 +18,11 @@ class UserController extends Controller
     public function __construct()
     {
 
-        $this->middleware('auth');
+        $this->middleware(['auth']);
 
     }
 
     public function index(Request $request, $role = 'Administrador'){
-
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
 
         $order = $request->order ?? 'asc';
 
@@ -40,9 +36,6 @@ class UserController extends Controller
 
     public function create()
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
 
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
@@ -63,9 +56,6 @@ class UserController extends Controller
 
     public function create_user()
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
 
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
@@ -86,9 +76,6 @@ class UserController extends Controller
 
     public function store(UserSaveRequest $request)
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
 
         $dataForm = $request->all();
 
@@ -108,27 +95,9 @@ class UserController extends Controller
         return redirect('/usuario')->with('success', 'Usuário cadastrado com sucesso.');
     }
 
-    public function show(User $user)
+    public function edit(User $usuario)
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
-        $this->middleware(['auth', 'needsRole:Administrador']);
-
-    }
-
-    public function edit($id)
-    {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
-        $user = User::find($id);
-
-        if(is_null($user)){
-            return redirect()->route('404');
-        }
+        $user = $usuario;
 
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
@@ -153,18 +122,10 @@ class UserController extends Controller
         return view('admin.editar', compact('user', 'roles', 'imoveis'));
     }
 
-    public function edit_user($id)
+    public function perfil()
     {
-        $user = auth()->user()->id;
-        if(!app('defender')->hasRoles('Administrador') && !($user == $id)){
-            return view('error403');
-        }
-
-        $user = User::find($id);
-
-        if(is_null($user)){
-            return redirect()->route('404');
-        }
+    
+        $user = auth()->user();
 
         $roles =[];
         $_roles = \Artesaos\Defender\Role::all();
@@ -186,21 +147,11 @@ class UserController extends Controller
             }
         }
 
-        return view('admin.editar_user', compact('user', 'roles', 'imoveis'));
+        return view('admin.perfil', compact('user', 'roles', 'imoveis'));
     }
 
-    public function update(UserEditRequest $request,  $id)
+    public function update(UserEditRequest $request, User $usuario)
     {
-        $user = auth()->user()->id;
-        if(!app('defender')->hasRoles('Administrador') && !($user == $id)){
-            return view('error403');
-        }
-
-        $user = User::find($id);
-
-        if(is_null($user)){
-            return redirect()->route('404');
-        }
 
         $dataForm = $request->all();
 
@@ -210,7 +161,7 @@ class UserController extends Controller
         $dataForm['password'] = bcrypt($dataForm['password']);
 
         if($request->hasFile('fotoUser')){
-            $foto_path = public_path("upload/usuarios/".$user->foto);
+            $foto_path = public_path("upload/usuarios/".$usuario->foto);
 
             if (File::exists($foto_path)) {
                 File::delete($foto_path);
@@ -222,13 +173,13 @@ class UserController extends Controller
             ImageOptimizer::optimize('upload/usuarios/'.$dataForm['foto']);
         }
 
-        $user->update($dataForm);
+        $usuario->update($dataForm);
 
         if(key_exists('roles', $dataForm))
-        $user->roles()->sync($dataForm['roles']);
+        $usuario->roles()->sync($dataForm['roles']);
 
         if(!app('defender')->hasRoles('Administrador')){
-            return redirect('/user/editar/'.$id)->with('success', 'Usuário atualizado com sucesso.');
+            return redirect('/usuario')->with('success', 'Usuário atualizado com sucesso.');
         }
 
         return redirect('/usuario')->with('success', 'Usuário atualizado com sucesso.');

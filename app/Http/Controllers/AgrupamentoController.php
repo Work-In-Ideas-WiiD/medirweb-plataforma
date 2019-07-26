@@ -17,11 +17,6 @@ class AgrupamentoController extends Controller
 
 	}
 
-	public function index()
-	{
-		//
-	}
-
 	public function create()
 	{
 		if(!app('defender')->hasRoles('Administrador')){
@@ -39,36 +34,14 @@ class AgrupamentoController extends Controller
 			return view('error403');
 		}
 
-		$dataForm = $request->all();
-
-		$agrupamento = Agrupamento::create($dataForm);
+		$agrupamento = Agrupamento::create($request->all());
 
 		return redirect('/imovel')->with('success', 'Agrupamento cadastrado com sucesso.');
 	}
 
-	//public function show($id)
-	//{
-	//	$user = auth()->user()->USER_IMOID;
-	//	$agrupamento    = Agrupamento::findorFail($id);
-	//	$unidades       = Agrupamento::find($id)->getUnidades;
-	//	$imovel         = Agrupamento::find($id)->imovel;
-
-	//	if(!app('defender')->hasRoles('Administrador') && !($user == $imovel)){
-	//        return view('error403');
-	//    }
-
-	//	return view('agrupamento.lista', ['agrupamento' => $agrupamento, 'unidades' => $unidades, 'imovel' => $imovel]);
-
-	//}
-
-	public function edit($id)
+	
+	public function edit(Agrupamento $agrupamento)
 	{
-		$agrupamento  = Agrupamento::find($id);
-
-		if(is_null($agrupamento)){
-            return redirect()->route('404');
-        }
-
 		$user = auth()->user()->USER_IMOID;
 		$ID_IMO = $agrupamento->imovel->IMO_ID;
         if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
@@ -84,14 +57,8 @@ class AgrupamentoController extends Controller
 		return view('agrupamento.editar', compact('agrupamento', 'imoveis'));
 	}
 
-	public function update(Request $request, $id)
+	public function update(Request $request, Agrupamento $agrupamento)
 	{
-		$agrupamento  = Agrupamento::find($id);
-
-		if(is_null($agrupamento)){
-            return redirect()->route('404');
-        }
-
 		$user = auth()->user()->USER_IMOID;
 		$ID_IMO = $agrupamento->imovel->IMO_ID;
         if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
@@ -101,20 +68,19 @@ class AgrupamentoController extends Controller
             return view('error403');
         }
 
-		$dataForm = $request->all();
 
-		$agrupamento->update($dataForm);
+		$agrupamento->update($request->all());
 
 		return redirect('/imovel')->with('success', 'Agrupamento atualizado com sucesso.');
 	}
 
-	public function destroy(Request $request, $id)
+	public function destroy(Request $request, Agrupamento $agrupamento)
 	{
 		if(!app('defender')->hasRoles('Administrador')){
             return view('error403');
         }
 
-		Agrupamento::destroy($id);
+		$agrupamento->delete();
 
 		return redirect('/imovel')->with('success', 'Agrupamento deletado com sucesso.');
 	}

@@ -29,9 +29,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 /* Usuários */
 
 Route::resource('usuario', 'UserController');
+
 Route::get('/user/{id}', 'UserController@index');
 Route::get('/user/{id}/create', array('uses' => 'UserController@create_user'))->name('Create User');
-Route::get('/user/editar/{id}', array('as'=>'user.edit', 'uses' => 'UserController@edit_user'));
+Route::get('/perfil', 'UserController@perfil');
 
 /* Imóveis */
 
@@ -65,7 +66,7 @@ Route::get('/imovel/{imovel}/atualizar', array('uses' => 'ImovelController@atual
 
 Route::get('/agrupamento/adicionar', 'AgrupamentoController@create')->name('Adicionar Agrupamento');
 Route::post('novo-agrupamento', array('uses' => 'AgrupamentoController@store'));
-Route::get('/agrupamento/editar/{id}', array('as'=>'agrupamento.edit', 'uses' => 'AgrupamentoController@edit'));
+Route::get('/agrupamento/editar/{agrupamento}', array('as'=>'agrupamento.edit', 'uses' => 'AgrupamentoController@edit'))->middleware('administrador');
 Route::put('/agrupamento/update/{agrupamento}', array('as'=>'agrupamento.update', 'uses'=>'AgrupamentoController@update'));
 Route::delete('/agrupamento/{agrupamento}', array('as'=>'agrupamento.destroy', 'uses'=>'AgrupamentoController@destroy'));
 

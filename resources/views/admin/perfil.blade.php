@@ -54,22 +54,7 @@
                             @endif
                         </div>
 
-                        @is('Administrador')
-                        <?php // Perfil ?>
-                        <div class='form-group'>
-                            {!! Form::label('roles', 'Perfil *', ['class' => 'control-label']) !!}
-                            {!! Form::select('roles[]', $roles, null, ['class' => 'form-control', 'multiple' => true]) !!}
-
-                            @if ($errors->has('roles'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('roles') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        @else
-                        {!! Form::select('roles[]', $roles, null, ['class' => 'form-control', 'multiple' => true, 'style' => 'display:none']) !!}
-                        @endis
-
+                      
                     </div>
 
                     <div class="col-md-6">
@@ -98,22 +83,7 @@
                             @endif
                         </div>
 
-                        @is('Administrador')
-                        <?php // Imovel ?>
-                        <div class='form-group'>
-                            {{ Form::label('USER_IMOID', 'Imóvel') }}
-                            {{ Form::select('USER_IMOID', $imoveis, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
-
-                            @if ($errors->has('USER_IMOID'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('USER_IMOID') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        @else
-                        {{ Form::select('USER_IMOID', $imoveis, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off', 'style' => 'display:none']) }}
-                        @endis
-
+                       
                     </div>
 
                 </div>

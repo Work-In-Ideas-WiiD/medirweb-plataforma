@@ -54,11 +54,7 @@
                                     <td>
                                         <?php // Botão editar ?>
                                         <div class="btn-group">
-                                            @if($role->name == "Administrador")
                                             <a href="{{ route('usuario.edit', ['usuario' => $usuario->id]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
-                                            @else
-                                            <a href="{{ route('user.edit', ['usuario' => $usuario->id]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
-                                            @endif
                                         </div>
 
                                         <?php // Botão deletar ?>

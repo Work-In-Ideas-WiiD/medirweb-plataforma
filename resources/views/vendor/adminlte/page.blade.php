@@ -101,7 +101,7 @@
 
                                         @is(['Sindico', 'Secretário'])
                                         _______<br>
-                                        <a class="btn btn-default"href="/user/editar/{{auth()->user()->id}}">MINHA CONTA</a>
+                                        <a class="btn btn-default"href="/perfil">MINHA CONTA</a>
                                         @endis
 
                                         @is('Administrador')
