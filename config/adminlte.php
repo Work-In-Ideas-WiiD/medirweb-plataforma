@@ -182,6 +182,11 @@ return [
                     'url'  => 'timeline/equipamento/buscar',
                 ],
                 [
+                    'text' => 'Importar Unidades',
+                    'icon' => 'id-card-o',
+                    'url'  => 'importar/csv',
+                ],
+                [
                     'text' => 'Teste de Conexão Servidor',
                     'icon' => 'cloud',
                     'url'  => 'server/test',

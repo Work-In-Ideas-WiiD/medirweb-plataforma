@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/home', 'HomeController@index')->name('home');
 
+    Route::post('importar/csv', 'TesteController@process')->middleware('administrador');
+
     /* Usuários */
     
     Route::resource('usuario', 'UserController', [
@@ -145,6 +147,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/server/test', 'TimelineController@serverTest')->name('Teste de Conexão Servidor');
     Route::post('/server/test', array('uses' => 'TimelineController@getServerTest'));
+    Route::get('importar/csv', 'TesteController@uploadCsv');
     
     /* Relatorios */
     
