@@ -37,7 +37,7 @@
 							<p class="titulo"><i class="fa fa-map"></i> <b>Localização</b></p>
 							<p>{{ $imovel->IMO_LOGRADOURO }}</p>
 							<p>{{ $imovel->IMO_COMPLEMENTO }}</p>
-							<p>{{ $imovel->IMO_IDCIDADE }} - {{ $imovel->IMO_IDESTADO }}</p>
+							<p>{{ $imovel->cidade->CID_NOME }} - {{ $imovel->cidade->estado->EST_NOME }}</p>
 							<p>{{ $imovel->IMO_CEP }}</p>
 						</div>
 					</div>
@@ -91,7 +91,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($agrupamentos as $agrup)
+								@foreach ($imovel->agrupamento()->get() as $agrup)
 								<tr>
 									<td>{{ $agrup->AGR_ID }}</td>
 									<td>{{ $agrup->AGR_NOME }}</td>
@@ -177,7 +177,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($unidades as $uni)
+								@foreach ($imovel->unidade()->get() as $uni)
 								<tr>
 									<td>{{ $uni->UNI_ID }}</td>
 									<td>{{ $uni->UNI_NOME }}</td>

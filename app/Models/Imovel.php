@@ -37,8 +37,17 @@ class Imovel extends Model
         return $this->hasOne('App\Models\Cidade', 'CID_ID', 'IMO_IDCIDADE');
     }
 
+    public function agrupamento()
+    {
+        return $this->hasMany('App\Models\Agrupamento', 'AGR_IDIMOVEL', 'IMO_ID');
+    }
+
     public function getAgrupamentos(){
         return $this->hasMany('App\Models\Agrupamento', 'AGR_IDIMOVEL', 'IMO_ID');
+    }
+
+    public function unidade(){
+        return $this->hasMany('App\Models\Unidade', 'UNI_IDIMOVEL', 'IMO_ID');
     }
 
     public function getUnidades(){

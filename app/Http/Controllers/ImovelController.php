@@ -24,10 +24,6 @@ use DB;
 
 class ImovelController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
 
     public function array_value_recursive($key, array $arr){
         $val = array();
@@ -96,7 +92,7 @@ class ImovelController extends Controller
             return redirect( URL::previous() );
         }
 
-        return json_encode($cidades);
+        return $cidades;
     }
 
     public function store(ImovelSaveRequest $request)
@@ -127,49 +123,17 @@ class ImovelController extends Controller
 
     }
 
-    public function show($id)
+    public function show(Imovel $imovel)
     {
-        $user = auth()->user()->USER_IMOID;
-        if(!app('defender')->hasRoles('Administrador') && !($user == $id)){
-            return view('error403');
-        }
+        $chartConsumoLine = $this->graficoConsumoGeral($imovel->IMO_ID);
 
-        $imovel =  Imovel::find($id);
-
-        if(is_null($imovel)){
-            return redirect()->route('404');
-        }
-
-        $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
-        $imovel['IMO_IDESTADO'] = Imovel::find($id)->estado->EST_ABREVIACAO;
-
-        $agrupamentos = $imovel->getAgrupamentos;
-        $unidades =  $imovel->getUnidades;
-
-        $chartConsumoLine = ImovelController::graficoConsumoGeral($id);
-
-        return view('imovel.visualizar', compact('agrupamentos', 'imovel', 'unidades', 'chartConsumoLine'));
+        return view('imovel.visualizar', compact('imovel', 'chartConsumoLine'));
     }
 
 
-    public function show_buscar($id)
+    public function show_buscar(Imovel $imovel)
     {
-        $user = auth()->user()->USER_IMOID;
-        if(!app('defender')->hasRoles('Administrador') && !($user == $id)){
-            return view('error403');
-        }
-
-        if($id == 4 )
-        {
-            return redirect('teste/'.$id);
-        }
-
-        $imovel =  Imovel::find($id);
-
-        if(is_null($imovel)){
-            return redirect()->route('404');
-        }
-
+        
         $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
         $imovel['IMO_IDESTADO'] = Imovel::find($id)->estado->EST_ABREVIACAO;
 

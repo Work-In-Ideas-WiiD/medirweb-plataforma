@@ -10,12 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::middleware('auth')->group(function () {
 
     Route::get('/', 'ImovelController@buscar')->name('inicio');
   
-    Auth::routes();
+    
     
     Route::get('/home', 'HomeController@index')->name('home');
 
@@ -36,16 +37,15 @@ Route::middleware('auth')->group(function () {
     /* Imóveis */
 
     Route::prefix('imovel')->group(function() {
-        Route::get('buscar', 'ImovelController@buscar')->name('Buscar Imóveis');
-
+        Route::get('buscar', 'ImovelController@buscar')->middleware('administrador');
+        Route::get('buscar/ver/{imovel}', 'ImovelController@show_buscar')->middleware('administrador');
+        
     });
-    
-    Route::get('/imovel/buscar/ver/{id}', array('uses' => 'ImovelController@show_buscar'))->name('Buscar Ver Imovel');
     
     Route::get('/imovel', 'ImovelController@index')->name('Listar Imóveis');
     Route::get('/imovel/adicionar', 'ImovelController@create')->name('Adicionar Imóvel');
     Route::post('novo-imovel', array('uses' => 'ImovelController@store'));
-    Route::get('/imovel/ver/{id}', array('uses' => 'ImovelController@show'))->name('Ver Imovel');
+    Route::get('/imovel/ver/{imovel}', 'ImovelController@show')->name('Ver Imovel');
     Route::post('/imovel/getImoveisLista', array('uses' => 'ImovelController@getImoveisLista'));
     Route::get('/imovel/getCidadesLista/{id}', array('uses' => 'ImovelController@showCidades'));
     Route::get('/imovel/editar/{id}', array('as'=>'imovel.edit', 'uses' => 'ImovelController@edit'));
@@ -106,14 +106,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/unidade/ligar/{unidade}', array('uses' => 'UnidadeController@ligarUnidade'));
     Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
     
-    Route::get('/teste/leitura/{id}', 'Hello@testeLeitura');
+  /*  Route::get('/teste/leitura/{id}', 'Hello@testeLeitura');
     
     Route::get('/teste/{id}', 'Hello@hidrometroTeste');
     
     Route::get('/teste/ler/{id}', 'Hello@leituraTeste');
     Route::get('/teste/ligar/{id}', 'Hello@ligarTeste');
     Route::get('/teste/desligar/{id}', 'Hello@desligarTeste');
-    
+    */
     /* Clientes */
     
     Route::get('/cliente', 'ClienteController@index')->name('Listar Clientes');
