@@ -134,11 +134,11 @@ class ImovelController extends Controller
     public function show_buscar(Imovel $imovel)
     {
         
-        $imovel['IMO_IDCIDADE'] = Imovel::find($id)->cidade->CID_NOME;
-        $imovel['IMO_IDESTADO'] = Imovel::find($id)->estado->EST_ABREVIACAO;
+        $imovel['IMO_IDCIDADE'] = $imovel->cidade->CID_NOME;
+        $imovel['IMO_IDESTADO'] = $imovel->estado->EST_ABREVIACAO;
 
-        $agrupamentos = Imovel::find($id)->getAgrupamentos;
-        $unidades = Imovel::findorFail($id)->getUnidades;
+        $agrupamentos = $imovel->getAgrupamentos;
+        $unidades = $imovel->getUnidades;
 
         // Ajuste para a criação de abas na view de forma correta
         //$agrupamentos = $agrupamentos->reverse();
