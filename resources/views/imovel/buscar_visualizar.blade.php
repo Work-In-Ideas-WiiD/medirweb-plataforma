@@ -13,7 +13,7 @@
 
 			<div class="col-md-5">
 
-				<a href="{{ route('Buscar Imóveis') }}" class="btn btn-info"><i class="fa fa-reply"></i> Voltar</a>
+				<a href="/imovel/buscar" class="btn btn-info"><i class="fa fa-reply"></i> Voltar</a>
 
 				<div style="margin-left: 90px; margin-top: -37px;">
 					<h4 ><i class="fa fa-building"></i> {{ $imovel->IMO_NOME }}</h4>
