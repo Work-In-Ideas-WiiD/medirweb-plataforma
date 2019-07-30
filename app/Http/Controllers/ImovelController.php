@@ -163,9 +163,8 @@ class ImovelController extends Controller
                 $agrup->UNIDADES = null;
             }
         }
-        dd($imovel);
 
-        $chartConsumoLine = ImovelController::graficoConsumoGeral($imovel->id);
+        $chartConsumoLine = ImovelController::graficoConsumoGeral($imovel->IMO_ID);
 
         return view('imovel.buscar_visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades, "chartConsumoLine" => $chartConsumoLine]);
     }
