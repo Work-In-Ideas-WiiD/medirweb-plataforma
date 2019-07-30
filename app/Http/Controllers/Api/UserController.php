@@ -34,7 +34,7 @@ class UserController extends Controller
             return response(['error' => 'Usuário ou senha inválidos'], 400);
         }
 
-        return response()->json(response()->make($user), 200);
+        return response()->make($user);
     }
 
     public function esqueciSenha(Request $request)
@@ -66,7 +66,7 @@ class UserController extends Controller
             $message->subject('Senha de acesso ao app');
         });
 
-        return response()->json(['success' => 'Senha gerada com Sucesso!'], 200);
+        return ['success' => 'Senha gerada com Sucesso!'];
     }
 
     public function showUsers(Request $request)
@@ -84,7 +84,7 @@ class UserController extends Controller
         $user = User::find($userComum->id);
         $user->roles;
 
-        return response()->json(response()->make($user), 200);
+        return response()->make($user);
     }
 
     public function updateUsers(Request $request)
