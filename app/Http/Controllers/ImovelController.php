@@ -163,6 +163,7 @@ class ImovelController extends Controller
                 $agrup->UNIDADES = null;
             }
         }
+        dd($imovel);
 
         $chartConsumoLine = ImovelController::graficoConsumoGeral($imovel->id);
 
