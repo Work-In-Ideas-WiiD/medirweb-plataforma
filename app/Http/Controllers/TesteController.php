@@ -6,10 +6,12 @@ use App\Models\Imovel;
 use App\Models\Unidade;
 use App\Models\Agrupamento;
 use Illuminate\Http\Request;
-
+use App\Traits\UploadFile;
 
 class TesteController extends Controller
 {
+    use UploadFile;
+
     function uploadCsv()
     {
         $imoveis = Imovel::pluck('IMO_NOME', 'IMO_ID');
@@ -69,6 +71,12 @@ class TesteController extends Controller
             'AGR_IDIMOVEL' => $imovel_id,
             'AGR_NOME' => $nome
         ]);
+    }
+
+    function teste()
+    {
+        return $this->cropImage(request()->img, 'upload/app/');
+        
     }
 
 }

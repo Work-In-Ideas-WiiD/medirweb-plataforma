@@ -13,9 +13,11 @@ use Illuminate\Support\Facades\File;
 use App\Models\Imovel;
 use Hash;
 use Mail;
+use App\Traits\UploadFile;
 
 class UserController extends Controller
 {
+    use UploadFile;
 
     public function login(Request $request)
     {
@@ -97,29 +99,19 @@ class UserController extends Controller
         $dataForm = $request->all();
 
         if($dataForm['password'] == '')
-        unset($dataForm['password'] );
+            unset($dataForm['password'] );
         else
-        $dataForm['password'] = bcrypt($dataForm['password']);
+            $dataForm['password'] = bcrypt($dataForm['password']);
 
-        if($request->hasFile('fotoUser')){
-            $foto_path = public_path("upload/usuarios/".$user->foto);
-
-            if (File::exists($foto_path)) {
-                File::delete($foto_path);
-            }
-
-            $fileName = md5(uniqid().str_random()).'.'.$request->file('fotoUser')->extension();
-            $dataForm['foto'] = $request->file('fotoUser')->move('upload/usuarios', $fileName)->getFilename();
+        if($request->foto) {
+            $dataForm['foto'] = $this->cropImage($request->foto, 'upload/usuarios/');
 
             ImageOptimizer::optimize('upload/usuarios/'.$dataForm['foto']);
         }
 
         $user->update($dataForm);
 
-        /*if(key_exists('roles', $dataForm))
-        $user->roles()->sync($dataForm['roles']);*/
-
-        return response()->json(response()->make($user), 200);
+        return response()->make($user);
     }
 
 

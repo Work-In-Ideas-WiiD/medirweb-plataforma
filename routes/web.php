@@ -167,6 +167,4 @@ Route::middleware('auth')->group(function () {
 
 
 
-
-
-$this->get('testee', 'TesteController@index');
+$this->any('teste', 'TesteController@teste')->middleware('guest') ;
