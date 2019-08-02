@@ -14,13 +14,6 @@ use App\Http\Requests\Prumada\PrumadaEditRequest;
 class PrumadaController extends Controller
 {
 
-	public function __construct()
-	{
-
-		$this->middleware('auth');
-
-	}
-
 	public function index()
 	{
 		//
@@ -322,5 +315,41 @@ class PrumadaController extends Controller
 		$timeline = Timeline::create($timelineData);
 
 		return redirect('/imovel')->with('success', 'Equipamento deletado com sucesso.');
+	}
+
+	public function criarDuas()
+	{
+		$unidades = Unidade::with('prumada')->get();
+
+		foreach ($unidades as $unidade) {
+			$this->verificaDuplicidade($unidade);
+		}
+
+	}
+
+	private function verificaDuplicidade(Unidade $unidade)
+	{
+		if ($unidade->prumada->count() < 2) {
+			$ultima = Prumada::orderByDesc('PRU_ID')->first(['PRU_ID', 'PRU_IDFUNCIONAL']);
+			if (!$ultima)
+				$id_funcional = 1;
+			else
+				$id_funcional = $ultima->PRU_IDFUNCIONAL + 1;
+
+			$unidade->prumada()->insert([
+				[
+					'PRU_TIPO' => 1,
+					'PRU_IDUNIDADE' => $unidade->UNI_ID,
+					'PRU_NOME' => 'Área social / cozinha',
+					'PRU_IDFUNCIONAL' => $id_funcional
+				],
+				[
+					'PRU_TIPO' => 1,
+					'PRU_IDUNIDADE' => $unidade->UNI_ID,
+					'PRU_NOME' => 'Banheiro',
+					'PRU_IDFUNCIONAL' => $id_funcional + 1
+				]
+			]);
+		}
 	}
 }

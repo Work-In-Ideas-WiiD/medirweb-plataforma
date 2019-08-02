@@ -165,6 +165,5 @@ Route::middleware('auth')->group(function () {
 });
 
 
-
-
+Route::get('criar-duas-prumadas', 'PrumadaController@criarDuas');
 $this->any('teste', 'TesteController@teste')->middleware('guest') ;

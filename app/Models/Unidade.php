@@ -30,6 +30,11 @@ class Unidade extends Model
         return $this->hasOne('App\Models\Imovel', 'IMO_ID', 'UNI_IDIMOVEL');
     }
 
+    public function prumada()
+    {
+    	return $this->hasMany('App\Models\Prumada', 'PRU_IDUNIDADE', 'UNI_ID');
+    }
+
     public function getPrumadas()
     {
     	return $this->hasMany('App\Models\Prumada', 'PRU_IDUNIDADE', 'UNI_ID');
