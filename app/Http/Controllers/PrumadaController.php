@@ -341,13 +341,17 @@ class PrumadaController extends Controller
 					'PRU_TIPO' => 1,
 					'PRU_IDUNIDADE' => $unidade->UNI_ID,
 					'PRU_NOME' => 'Área social / cozinha',
-					'PRU_IDFUNCIONAL' => $id_funcional
+					'PRU_IDFUNCIONAL' => $id_funcional,
+					'created_at' => now(),
+					'updated_at' => now()
 				],
 				[
 					'PRU_TIPO' => 1,
 					'PRU_IDUNIDADE' => $unidade->UNI_ID,
 					'PRU_NOME' => 'Banheiro',
-					'PRU_IDFUNCIONAL' => $id_funcional + 1
+					'PRU_IDFUNCIONAL' => $id_funcional + 1,
+					'created_at' => now(),
+					'updated_at' => now()
 				]
 			]);
 		}
