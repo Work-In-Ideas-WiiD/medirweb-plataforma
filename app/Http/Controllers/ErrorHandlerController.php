@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 class ErrorHandlerController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function errorCode404()
     {
         return view('error404');

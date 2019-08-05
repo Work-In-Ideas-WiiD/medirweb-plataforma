@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class Sindico
+class Permissao
 {
     /**
      * Handle an incoming request.
@@ -13,9 +13,9 @@ class Sindico
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $tipo_usuario = 'administrador')
     {
-        if(!app('defender')->hasRoles('Sindico'))
+        if(!app('defender')->hasRoles(ucfirst($tipo_usuario)))
             return redirect('403');
 
         return $next($request);

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'MedirWeb')
+@section('title', config('app.name'))
 
 @section('content_header')
 <h1>Imóveis <small>Lista de Imóveis</small></h1>
@@ -17,7 +17,7 @@
         <div class="box box-primary">
             <div class="box-header with-border">
                 <h3 class="box-title">Listagem</h3>
-                <a style="float: right" href="{{ route('Adicionar Imóvel') }}" class="btn btn-primary">Adicionar</a>
+                <a style="float: right" href="{{ route('imovel.create') }}" class="btn btn-primary">Adicionar</a>
             </div>
             <div class='box-body'>
                 <div class='row'>
@@ -51,7 +51,7 @@
 
                                         <?php // Botão visualizar ?>
                                         <div class="btn-group">
-                                            <a href="{{ route('Ver Imovel', ['imo' => $imo->IMO_ID]) }}" type="button" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('imovel.show', ['imo' => $imo->IMO_ID]) }}" type="button" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></a>
                                         </div>
 
                                         @is(['Administrador', 'Sindico'])

@@ -19,44 +19,47 @@ Route::middleware('auth')->group(function () {
     
     
     Route::get('/home', 'HomeController@index')->name('home');
-
-    Route::post('importar/csv', 'TesteController@process')->middleware('administrador');
-
+    
+    Route::post('importar/csv', 'TesteController@process')->middleware('permissao:administrador');
+    
     /* Usuários */
     
     Route::resource('usuario', 'UserController', [
         'middleware' => [
-            'edit' => 'administrador',
-            'create' => 'administrador',
-            'destroy' => 'administrador'
+            'edit' => 'permissao:administrador',
+            'create' => 'permissao:administrador',
+            'destroy' => 'permissao:administrador'
+            ]
+    ]);
+    Route::get('usuario/tipo/{tipo}', 'UserController@index')->middleware('permissao:administrador');
+    Route::get('/perfil', 'UserController@perfil');
+    
+    /* Imóveis 
+    Route::prefix('imovel')->group(function () {
+        Route::get('buscar', 'ImovelController@buscar')->middleware('permissao:administrador');
+        Route::get('buscar/ver/{imovel}', 'ImovelController@show_buscar')->middleware('permissao:administrador');
+        
+    });*/
+
+    Route::resource('/imovel', 'ImovelController', [
+        'middleware' => [
+            'index' => 'permissao:administrador,sindico',
+            'create' => 'permissao:administrador',
+            'store' => 'permissao:administrador',
+            'edit' => 'permissao:administrador,sindico',
+            'update' => 'permissao:administrador',
+            'destroy' => 'permissao:administrador'
         ]
     ]);
-    Route::get('usuario/tipo/{tipo}', 'UserController@index')->middleware('administrador');
-    Route::get('/perfil', 'UserController@perfil');
-
-
-
-    /* Imóveis */
-
-    Route::prefix('imovel')->group(function() {
-        Route::get('buscar', 'ImovelController@buscar')->middleware('administrador');
-        Route::get('buscar/ver/{imovel}', 'ImovelController@show_buscar')->middleware('administrador');
-        
-    });
     
-    Route::get('/imovel', 'ImovelController@index')->name('Listar Imóveis');
-    Route::get('/imovel/adicionar', 'ImovelController@create')->name('Adicionar Imóvel');
-    Route::post('novo-imovel', array('uses' => 'ImovelController@store'));
-    Route::get('/imovel/ver/{imovel}', 'ImovelController@show')->name('Ver Imovel');
+
+    Route::get('/imovel/{id}/consumo', 'ImovelController@getLancarConsumo')->name('imovel.consumo')->middleware('permissao:administrador,sindico');
+    
     Route::post('/imovel/getImoveisLista', array('uses' => 'ImovelController@getImoveisLista'));
     Route::get('/imovel/getCidadesLista/{id}', array('uses' => 'ImovelController@showCidades'));
-    Route::get('/imovel/editar/{id}', array('as'=>'imovel.edit', 'uses' => 'ImovelController@edit'));
-    Route::put('imovel/update/{imovel}', array('as'=>'imovel.update', 'uses'=>'ImovelController@update'));
-    Route::delete('imovel/{imovel}', array('as'=>'imovel.destroy', 'uses'=>'ImovelController@destroy'));
-    
-    Route::get('/imovel/{id}/consumo', array('as'=>'imovel.consumo', 'uses' => 'ImovelController@getLancarConsumo'));
-    Route::post('lancar-consumo', array('uses' => 'ImovelController@postLancarConsumo'));
 
+    Route::post('lancar-consumo', array('uses' => 'ImovelController@postLancarConsumo'));
+    
     /* imóveis */
     Route::get('/leitura/prumada/{prumada}', array('uses' => 'ImovelController@leituraUnidade'));
     
@@ -71,7 +74,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/agrupamento/adicionar', 'AgrupamentoController@create')->name('Adicionar Agrupamento');
     Route::post('novo-agrupamento', array('uses' => 'AgrupamentoController@store'));
-    Route::get('/agrupamento/editar/{agrupamento}', array('as'=>'agrupamento.edit', 'uses' => 'AgrupamentoController@edit'))->middleware('administrador');
+    Route::get('/agrupamento/editar/{agrupamento}', array('as'=>'agrupamento.edit', 'uses' => 'AgrupamentoController@edit'))->middleware('permissao:administrador');
     Route::put('/agrupamento/update/{agrupamento}', array('as'=>'agrupamento.update', 'uses'=>'AgrupamentoController@update'));
     Route::delete('/agrupamento/{agrupamento}', array('as'=>'agrupamento.destroy', 'uses'=>'AgrupamentoController@destroy'));
     
@@ -107,15 +110,7 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/unidade/ligar/{unidade}', array('uses' => 'UnidadeController@ligarUnidade'));
     Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
-    
-  /*  Route::get('/teste/leitura/{id}', 'Hello@testeLeitura');
-    
-    Route::get('/teste/{id}', 'Hello@hidrometroTeste');
-    
-    Route::get('/teste/ler/{id}', 'Hello@leituraTeste');
-    Route::get('/teste/ligar/{id}', 'Hello@ligarTeste');
-    Route::get('/teste/desligar/{id}', 'Hello@desligarTeste');
-    */
+
     /* Clientes */
     
     Route::get('/cliente', 'ClienteController@index')->name('Listar Clientes');
@@ -159,7 +154,7 @@ Route::middleware('auth')->group(function () {
     Route::get('relatorio/faturas/getApartamentoLista/{id}', array('uses' => 'RelatorioController@showUnidade'));
     
     
-    // PAGINA DE ERROR
+ // PAGINA DE ERROR
     Route::get('404',['as'=>'404','uses'=>'ErrorHandlerController@errorCode404']);
     Route::get('500',['as'=>'500','uses'=>'ErrorHandlerController@errorCode500']);
 });

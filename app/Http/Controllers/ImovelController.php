@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+//use Illuminate\Support\Str;
 use App\Models\Cidade;
 use App\Models\Cliente;
 use App\Models\Estado;
@@ -36,6 +37,7 @@ class ImovelController extends Controller
 
     public function index()
     {
+
         $user = auth()->user()->USER_IMOID;
 
         if(app('defender')->hasRoles('Administrador')){
@@ -46,7 +48,7 @@ class ImovelController extends Controller
             return view('error403');
         }
 
-        return view('imovel.listar', compact('imoveis'));
+        return view('imovel.index', compact('imoveis'));
     }
 
     public function buscar()
@@ -61,19 +63,16 @@ class ImovelController extends Controller
 
     public function create()
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
 
         $clientes = ['' => 'Selecionar Cliente'];
         $_clientes = Cliente::where('CLI_STATUS', 1)->get();
         foreach($_clientes as $cliente)
-        $clientes[$cliente->CLI_ID] = $cliente->CLI_NOMEJUR;
+            $clientes[$cliente->CLI_ID] = $cliente->CLI_NOMEJUR;
 
         $estados = ['' => 'Selecionar Estado'];
         $_estados = Estado::all();
         foreach($_estados as $estado)
-        $estados[$estado->EST_ID] = $estado->EST_NOME;
+            $estados[$estado->EST_ID] = $estado->EST_NOME;
 
         $mes = array();
         $mes = ['' => 'Selecione'];
@@ -88,18 +87,15 @@ class ImovelController extends Controller
     {
         $cidades =  Cidade::where('CID_IDESTADO', $id)->get();
 
-        if(is_null($cidades)){
+        if(!$cidades)
             return redirect( URL::previous() );
-        }
+
 
         return $cidades;
     }
 
     public function store(ImovelSaveRequest $request)
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
 
         $dataForm = $request->all();
 
@@ -127,7 +123,7 @@ class ImovelController extends Controller
     {
         $chartConsumoLine = $this->graficoConsumoGeral($imovel->IMO_ID);
 
-        return view('imovel.visualizar', compact('imovel', 'chartConsumoLine'));
+        return view('imovel.show', compact('imovel', 'chartConsumoLine'));
     }
 
 
@@ -146,20 +142,16 @@ class ImovelController extends Controller
         $unid = array();
 
         foreach ($agrupamentos as $key => $agrup) {
-            foreach($unidades as $uni)
-            {
-                if($uni->UNI_IDAGRUPAMENTO == $agrup->AGR_ID)
-                {
+            foreach($unidades as $uni) {
+                if($uni->UNI_IDAGRUPAMENTO == $agrup->AGR_ID) {
                     array_push($unid, $uni);
                 }
             }
-            if(count($unid) > 0)
-            {
+            if(count($unid) > 0) {
                 $agrup->UNIDADES = $unid;
                 $unid = [];
             }
-            else
-            {
+            else {
                 $agrup->UNIDADES = null;
             }
         }
@@ -169,65 +161,42 @@ class ImovelController extends Controller
         return view('imovel.buscar_visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades, "chartConsumoLine" => $chartConsumoLine]);
     }
 
-    public function edit($id)
+    public function edit(Imovel $imovel)
     {
-        $user = auth()->user()->USER_IMOID;
-        if(app('defender')->hasRoles('Sindico') && !($user == $id)){
-            return view('error403');
-        }
-        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-            return view('error403');
-        }
-
-        $imovel = Imovel::find($id);
-
-        if(is_null($imovel)){
-            return redirect()->route('404');
-        }
 
         $clientes = ['' => 'Selecionar Cliente'];
         $_clientes = Cliente::where('CLI_STATUS', 1)->get();
         foreach($_clientes as $cliente)
-        $clientes[$cliente->CLI_ID] = $cliente->CLI_NOMEJUR;
+            $clientes[$cliente->CLI_ID] = $cliente->CLI_NOMEJUR;
 
         $estados = ['' => 'Selecionar Estado'];
         $_estados = Estado::all();
         foreach($_estados as $estado)
-        $estados[$estado->EST_ID] = $estado->EST_NOME;
+            $estados[$estado->EST_ID] = $estado->EST_NOME;
 
         $cidades = ['' => 'Selecionar Estado'];
         $_cidades = Cidade::where('CID_IDESTADO', $imovel->IMO_IDESTADO)->get();
         foreach($_cidades as $cidade)
-        $cidades[$cidade->CID_ID] = $cidade->CID_NOME;
+            $cidades[$cidade->CID_ID] = $cidade->CID_NOME;
 
-        return view('imovel.editar', compact('imovel', 'clientes', 'estados', 'cidades'));
+        return view('imovel.edit', compact('imovel', 'clientes', 'estados', 'cidades'));
     }
 
 
-    public function update(ImovelEditRequest $request, $id)
+    public function update(ImovelEditRequest $request, Imovel $imovel)
     {
-        $user = auth()->user()->USER_IMOID;
-        if(app('defender')->hasRoles('Sindico') && !($user == $id)){
-            return view('error403');
-        }
-        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-            return view('error403');
-        }
-
-        $imovel = Imovel::find($id);
-
-        if(is_null($imovel)){
+        if($imovel->IMO_ID !== auth()->user()->USER_IMOID){
             return redirect()->route('404');
         }
 
         if($request->IMO_IDCLIENTE){
-            return redirect('/imovel/editar/'.$imovel->IMO_ID)->with('error', 'Não é permitido burlar o sistema!');
+            return redirect()-route('imovel.edit', $imovel->IMO_ID)->withError('Não é permitido burlar o sistema!');
         }
 
         // SOMENTE USUARIO "CONTATO WIID" PODE ALTERAR O FECHAMENTO DA FATURA
         if(!(auth()->user()->id == 7)){
             if($request->IMO_FATURACICLO){
-                return redirect('/imovel/editar/'.$imovel->IMO_ID)->with('error', 'Não é permitido burlar o sistema!');
+                return redirect()-route('imovel.edit', $imovel->IMO_ID)->withError('Não é permitido burlar o sistema!');
             }
         }
 
@@ -260,22 +229,18 @@ class ImovelController extends Controller
 
         $imovel->update($dataForm);
 
-        return redirect('/imovel/ver/'.$imovel->IMO_ID)->with('success', 'Imóvel atualizado com sucesso.');
+        return redirect()->route('imovel.show', $imovel->IMO_ID)->withSuccess('Imóvel atualizado com sucesso.');
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, Imovel $imovel)
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
+        $imovel->delete();
 
-        Imovel::destroy($id);
-
-        return redirect('imovel')->with('success', 'Imovel deletado com sucesso!');
+        return redirect('imovel')->withSuccess('Imovel deletado com sucesso!');
     }
 
 
-    public function getLancarConsumo($id)
+    public function getLancarConsumo(Imovel $imovel)
     {
         $user = auth()->user()->USER_IMOID;
         if(app('defender')->hasRoles('Sindico') && !($user == $id)){
@@ -605,23 +570,24 @@ class ImovelController extends Controller
         foreach ($apartamentos as $unid) {
             $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
             foreach ($prumadas as $prumada){
+            
+
+                // TODAS AS LEITURAS DE TODOS OS EQUIPAMENTOS SEPARADOS MENSALMENTE
+                for ($mes=1; $mes <= 12; $mes++) {
+
+                    $leituraAnoAnterior = $prumada->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAnterior."-".$mes."-31")).' 23:59:59')
+                    ->orderBy('created_at', 'desc')->first();
+
+                    $leituraAnoAtual = $prumada->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
+                    ->orderBy('created_at', 'desc')->first();
+
+                    $arrayLeiMensalAnoAnterior = array('mes' => array('mes'.$mes => $leituraAnoAnterior['LEI_METRO']));
+                    $arrayLeiMensalAnoAtual = array('mes' => array('mes'.$mes => $leituraAnoAtual['LEI_METRO']));
+
+                    array_push($leiMensalAnoAnterior, $arrayLeiMensalAnoAnterior);
+                    array_push($leiMensalAnoAtual, $arrayLeiMensalAnoAtual);
+                }// fim - TODAS AS LEITUAS ...
             }
-
-            // TODAS AS LEITURAS DE TODOS OS EQUIPAMENTOS SEPARADOS MENSALMENTE
-            for ($mes=1; $mes <= 12; $mes++) {
-
-                $leituraAnoAnterior = $prumada->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAnterior."-".$mes."-31")).' 23:59:59')
-                ->orderBy('created_at', 'desc')->first();
-
-                $leituraAnoAtual = $prumada->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
-                ->orderBy('created_at', 'desc')->first();
-
-                $arrayLeiMensalAnoAnterior = array('mes' => array('mes'.$mes => $leituraAnoAnterior['LEI_METRO']));
-                $arrayLeiMensalAnoAtual = array('mes' => array('mes'.$mes => $leituraAnoAtual['LEI_METRO']));
-
-                array_push($leiMensalAnoAnterior, $arrayLeiMensalAnoAnterior);
-                array_push($leiMensalAnoAtual, $arrayLeiMensalAnoAtual);
-            }// fim - TODAS AS LEITUAS ...
         }// FIM - BUSCAS
 
         // FUNÇÃO PEGAR VALOR DA INDEX DA ARRAY E CONVERTER O VALOR PARA (INT)
