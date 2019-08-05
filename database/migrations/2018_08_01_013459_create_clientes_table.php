@@ -14,38 +14,26 @@ class CreateClientesTable extends Migration
     public function up()
     {
         Schema::create('clientes', function (Blueprint $table) {
-            $table->increments('CLI_ID');
+            $table->BigIncrements('id');
 
-            $table->integer('CLI_TIPO')->unsigned();
+            $table->unsignedBigInteger('tipo');
 
-            $table->string('CLI_FOTO', 200)->nullable();
+            $table->string('foto', 200)->nullable();
 
-            $table->string('CLI_DOCUMENTO', 200);
-            $table->string('CLI_NOMEJUR', 200);
-            $table->string('CLI_NOMEFAN', 200);
+            $table->string('documento', 50);
+            $table->string('nome_juridico', 200);
+            $table->string('nome_fantasia', 200);
 
-            $table->date('CLI_DATANASC');
+            $table->date('data_nascimento')->nullable();
 
-            $table->boolean('CLI_STATUS')->nullable();
-
-            $table->string('CLI_LOGRADOURO', 300);
-            $table->string('CLI_COMPLEMENTO', 300);
-            $table->string('CLI_BAIRRO', 300);
-
-            $table->integer('CLI_CIDADE')->unsigned();
-            $table->foreign('CLI_CIDADE')->references('CID_ID')->on('cidades')->onDelete('cascade');
-
-            $table->integer('CLI_ESTADO')->unsigned();
-            $table->foreign('CLI_ESTADO')->references('EST_ID')->on('estados')->onDelete('cascade');
-
-            $table->string('CLI_CEP', 200);
+            $table->boolean('status')->nullable();
 
             $table->longText('CLI_DADOSBANCARIOS');
             $table->longText('CLI_DADOSCONTATO');
 
-            $table->string('CLI_NUMERO', 200);
-
-            $table->timestamps();
+            
+            $table->softDeletesTz();
+            $table->timestampsTz();
         });
     }
 
