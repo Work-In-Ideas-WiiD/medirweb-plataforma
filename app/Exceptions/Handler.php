@@ -20,7 +20,7 @@ class Handler extends ExceptionHandler
     {
         parent::report($exception);
     }
-
+/*
     public function render($request, Exception $exception)
     {
         if($this->isHttpException($exception)){
@@ -41,5 +41,5 @@ class Handler extends ExceptionHandler
         }
 
         return parent::render($request, $exception);
-    }
+    }*/
 }

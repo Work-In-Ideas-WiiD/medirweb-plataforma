@@ -152,13 +152,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/relatorio/faturas', 'RelatorioController@relatorioFatura')->name('Relatorio Fatura');
     Route::post('relatorio/faturas', array('uses' => 'RelatorioController@getFaturaLista'));
     Route::get('relatorio/faturas/getApartamentoLista/{id}', array('uses' => 'RelatorioController@showUnidade'));
-    
-    
- // PAGINA DE ERROR
-    Route::get('404',['as'=>'404','uses'=>'ErrorHandlerController@errorCode404']);
-    Route::get('500',['as'=>'500','uses'=>'ErrorHandlerController@errorCode500']);
+
 });
 
 
 Route::get('criar-duas-prumadas', 'PrumadaController@criarDuas');
-$this->any('teste', 'TesteController@teste')->middleware('guest') ;
+Route::any('teste', 'TesteController@teste')->middleware('guest') ;
