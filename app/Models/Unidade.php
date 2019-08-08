@@ -3,38 +3,41 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Prumada;
-use App\Models\Agrupamento;
-use App\Models\Equipamento;
-use App\Models\Imovel;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Unidade extends Model
 {
-    protected $guarded = [];
+    use SoftDeletes;
 
+    protected $guarded = [];
 
     public function agrupamento()
     {
-        return $this->hasOne('App\Models\Agrupamento');
+        return $this->hasOne(Agrupamento::class);
     }
 
     public function imovel()
     {
-        return $this->hasOne('App\Models\Imovel');
+        return $this->hasOne(Imovel::class);
+    }
+
+    public function equipamento()
+    {
+        return $this->hasMany(Equipamento::class);
     }
 
     public function prumada()
     {
-    	return $this->hasMany('App\Models\Prumada');
+    	return $this->hasMany(Prumada::class);
     }
 
     public function getPrumadas()
     {
-    	return $this->hasMany('App\Models\Prumada');
+    	return $this->hasMany(Prumada::class);
     }
 
     public function getEquipamentos()
     {
-        return $this->hasMany('App\Models\Equipamento');
+        return $this->hasMany(Equipamento::class);
     }
 }

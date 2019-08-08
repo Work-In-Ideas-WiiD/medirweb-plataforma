@@ -12,14 +12,14 @@ class CreateDefenderPermissionRoleTable extends Migration
     public function up()
     {
         Schema::create(config('defender.permission_role_table', 'permission_role'), function (Blueprint $table) {
-            $table->unsignedInteger(config('defender.permission_key', 'permission_id'))->index();
+            $table->unsignedBigInteger(config('defender.permission_key', 'permission_id'))->index();
             $table->foreign(config('defender.permission_key', 'permission_id'))
                 ->references('id')
                 ->on(config('defender.permission_table', 'permissions'))
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->unsignedInteger(config('defender.role_key', 'role_id'))->index();
+            $table->unsignedBigInteger(config('defender.role_key', 'role_id'))->index();
             $table->foreign(config('defender.role_key', 'role_id'))
                 ->references('id')
                 ->on(config('defender.role_table', 'roles'))
@@ -27,7 +27,7 @@ class CreateDefenderPermissionRoleTable extends Migration
                 ->onDelete('cascade');
 
             $table->tinyInteger('value')->default(-1);
-            $table->timestamp('expires')->nullable();
+            $table->timestampTz('expires')->nullable();
         });
     }
 

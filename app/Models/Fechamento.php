@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Fechamento extends Model
 {
-    protected $guarded = [];
+    use SoftDeletes;
 
-    protected  $dates = [
-        'created_at', 'updated_at'
-    ];
+    protected $guarded = [];
 
     public function prumada()
     {

@@ -14,17 +14,21 @@ class CreateFaturasUnidadesTable extends Migration
     public function up()
     {
         Schema::create('faturas_unidades', function (Blueprint $table) {
-            $table->increments('FATUNI_ID');
-
+            $table->bigIncrements('id');
             $table->string('FATUNI_DT', 255);
-
-            $table->integer('FATUNI_IDUNI')->unsigned();
-            $table->foreign('FATUNI_IDUNI')->references('UNI_ID')->on('unidades')->onDelete('cascade');
-
-            $table->integer('FATUNI_IDFATURA')->unsigned();
-            $table->foreign('FATUNI_IDFATURA')->references('FAT_ID')->on('faturas')->onDelete('cascade');
-
-            $table->string('FATUNI_VALORTOTAL', 255);
+            $table->unsignedBigInteger('unidade_id');
+            $table->foreign('unidade_id')
+                ->references('id')
+                ->on('unidades')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->unsignedBigInteger('fatura_id');
+            $table->foreign('fatura_id')
+                ->references('id')
+                ->on('faturas')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->string('valor_total', 255);
 
             $table->longText('FATUNI_PRUMADAS');
 

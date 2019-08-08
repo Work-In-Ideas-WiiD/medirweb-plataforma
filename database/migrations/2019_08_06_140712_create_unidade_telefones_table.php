@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTimelinesTable extends Migration
+class CreateUnidadeTelefonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateTimelinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('timelines', function (Blueprint $table) {
+        Schema::create('unidade_telefones', function (Blueprint $table) {
             $table->bigIncrements('id');
-
-            $table->unsignedBigInteger('prumada_id');
-            $table->foreign('prumada_id')
+            $table->unsignedBigInteger('unidade_id');
+            $table->foreign('unidade_id')
                 ->references('id')
-                ->on('prumadas')
+                ->on('unidades')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('user', 100);
-            $table->longText('descricao');
-            $table->string('icone', 50);
+            $table->string('etiqueta', 50);
+            $table->string('numero',20);
+            $table->boolean('whatsapp')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
         });
@@ -37,6 +36,6 @@ class CreateTimelinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('timelines');
+        Schema::dropIfExists('unidade_telefones');
     }
 }

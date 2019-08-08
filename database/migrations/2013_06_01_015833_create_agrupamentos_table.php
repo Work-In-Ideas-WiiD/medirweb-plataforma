@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEnderecosTable extends Migration
+class CreateAgrupamentosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,18 @@ class CreateEnderecosTable extends Migration
      */
     public function up()
     {
-        Schema::create('enderecos', function (Blueprint $table) {
+        Schema::create('agrupamentos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nome', 200);
-            $table->string('logradouro', 300);
-            $table->string('complemento', 300);
-            $table->string('numero', 300);
-            $table->string('bairro', 300);
-            $table->unsignedInteger('cidade_id');
-            $table->foreign('cidade_id')
+            $table->unsignedBigInteger('imovel_id');
+            $table->foreign('imovel_id')
                 ->references('id')
-                ->on('cidades')
+                ->on('imoveis')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
-            $table->string('cep', 20);
+            $table->string('nome', 300)->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
+
         });
     }
 
@@ -40,6 +35,6 @@ class CreateEnderecosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enderecos');
+        Schema::dropIfExists('agrupamentos');
     }
 }

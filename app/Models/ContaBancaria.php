@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Endereco extends Model
+class ContaBancaria extends Model
 {
     use SoftDeletes;
 

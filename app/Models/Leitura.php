@@ -2,20 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Leitura extends Model
 {
     protected $guarded = [];
 
-    protected  $dates = [
-        'created_at', 'updated_at'
-    ];
-
     public function prumada()
     {
-    	return $this->hasOne('App\Models\Prumada');
+    	return $this->hasOne(Prumada::class);
 
     }
 

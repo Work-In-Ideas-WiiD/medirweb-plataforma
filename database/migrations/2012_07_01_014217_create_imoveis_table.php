@@ -14,31 +14,28 @@ class CreateImoveisTable extends Migration
     public function up()
     {
         Schema::create('imoveis', function(Blueprint $table) {
-            $table->BigIncrements('id');
-
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')
                 ->references('id')
                 ->on('clientes')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
+            $table->unsignedBigInteger('endereco_id')->nullable();
+            $table->foreign('endereco_id')
+                ->references('id')
+                ->on('enderecos')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('foto', 200)->nullable();
             $table->string('capa', 200)->nullable();
-
             $table->string('cnpj', 50);
-
-            $table->longText('IMO_RESPONSAVEIS');
-            $table->longText('IMO_TELEFONES');
-
             $table->boolean('status')->nullable();
             $table->integer('fatura_ciclo')->nullable();
-
             $table->float('taxa_fixa')->nullable();
             $table->float('taxa_variavel')->nullable();
-
-            $table->string('ip', 15)->nullable();
-            $table>softDeletesTz();
+            $table->string('ip', 60)->nullable();
+            $table->softDeletesTz();
             $table->timestampsTz();
         });
     }

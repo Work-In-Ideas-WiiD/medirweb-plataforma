@@ -11,11 +11,10 @@ class CreateDefenderRolesTable extends Migration
      */
     public function up()
     {
-        Schema::defaultStringLength(255);
         Schema::create(config('defender.role_table', 'roles'), function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name', 191)->unique();
-            $table->timestamps();
+            $table->timestampsTz();
         });
     }
 

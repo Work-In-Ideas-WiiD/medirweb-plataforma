@@ -16,74 +16,74 @@ class AgrupamentosTableSeeder extends Seeder
 
         Agrupamento::insert([
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 1',
+                'imovel_id' => 1,
+                'nome' => 'Torre 1',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 2',
+                'imovel_id' => 1,
+                'nome' => 'Torre 2',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 3',
+                'imovel_id' => 1,
+                'nome' => 'Torre 3',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 4',
+                'imovel_id' => 1,
+                'nome' => 'Torre 4',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 5',
+                'imovel_id' => 1,
+                'nome' => 'Torre 5',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 6',
+                'imovel_id' => 1,
+                'nome' => 'Torre 6',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 7',
+                'imovel_id' => 1,
+                'nome' => 'Torre 7',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 8',
+                'imovel_id' => 1,
+                'nome' => 'Torre 8',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 9',
+                'imovel_id' => 1,
+                'nome' => 'Torre 9',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 10',
+                'imovel_id' => 1,
+                'nome' => 'Torre 10',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 11',
+                'imovel_id' => 1,
+                'nome' => 'Torre 11',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
-                'AGR_IDIMOVEL' => 1,
-                'AGR_NOME' => 'Torre 12',
+                'imovel_id' => 1,
+                'nome' => 'Torre 12',
                 'created_at' => now(),
                 'updated_at' => now()
             ]

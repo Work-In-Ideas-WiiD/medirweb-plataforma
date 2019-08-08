@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTimelinesTable extends Migration
+class CreateEnderecosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,21 @@ class CreateTimelinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('timelines', function (Blueprint $table) {
+        Schema::create('enderecos', function (Blueprint $table) {
             $table->bigIncrements('id');
-
-            $table->unsignedBigInteger('prumada_id');
-            $table->foreign('prumada_id')
+            $table->string('nome', 200);
+            $table->string('logradouro', 300);
+            $table->string('complemento', 300);
+            $table->string('numero', 300);
+            $table->string('bairro', 300);
+            $table->unsignedBigInteger('cidade_id');
+            $table->foreign('cidade_id')
                 ->references('id')
-                ->on('prumadas')
+                ->on('cidades')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->string('user', 100);
-            $table->longText('descricao');
-            $table->string('icone', 50);
+
+            $table->string('cep', 20);
             $table->softDeletesTz();
             $table->timestampsTz();
         });
@@ -37,6 +40,6 @@ class CreateTimelinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('timelines');
+        Schema::dropIfExists('enderecos');
     }
 }

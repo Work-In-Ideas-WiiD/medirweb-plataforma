@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCidadesTable extends Migration
+class CreateClienteTelefonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateCidadesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cidades', function(Blueprint $table) {
-            $table->increments('id');
-            $table->string('nome',100);
-            $table->unsignedInteger('estado_id');
-            $table->foreign('estado_id')
+        Schema::create('cliente_telefones', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('cliente_id');
+            $table->foreign('cliente_id')
                 ->references('id')
-                ->on('estados')
+                ->on('clientes')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->unsignedInteger('codigo_ibge');
+            $table->string('etiqueta', 50);
+            $table->string('numero', 20);
+            $table->boolean('whatsapp')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
         });
@@ -35,7 +36,6 @@ class CreateCidadesTable extends Migration
      */
     public function down()
     {
-        //
-        Schema::dropIfExists('cidades');
+        Schema::dropIfExists('cliente_telefones');
     }
 }

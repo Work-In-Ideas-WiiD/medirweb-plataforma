@@ -14,27 +14,23 @@ class CreateUnidadesTable extends Migration
     public function up()
     {
         Schema::create('unidades', function (Blueprint $table) {
-            $table->increments('UNI_ID');
-
-            $table->unsignedInteger('UNI_IDAGRUPAMENTO');
-            $table->foreign('UNI_IDAGRUPAMENTO')
-                ->references('AGR_ID')
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('agrupamento_id');
+            $table->foreign('agrupamento_id')
+                ->references('id')
                 ->on('agrupamentos')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
-            $table->unsignedInteger('UNI_IDIMOVEL');
-            $table->foreign('UNI_IDIMOVEL')
-                ->references('IMO_ID')
+            $table->unsignedBigInteger('imovel_id');
+            $table->foreign('imovel_id')
+                ->references('id')
                 ->on('imoveis')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
-            $table->string('UNI_NOME', 200);
-            $table->string('UNI_RESPONSAVEL', 200);
-            $table->string('UNI_CPFRESPONSAVEL', 200);
-            $table->string('UNI_TELRESPONSAVEL', 200);
-
+            $table->string('nome', 200)
+                ->comment('nome da unidade');
+            $table->string('nome_responsavel', 200);
+            $table->string('cpf_responsavel', 200);
             $table->softDeletesTz();
             $table->timestampsTz();
         });

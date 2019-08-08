@@ -14,17 +14,21 @@ class CreateFechamentoTable extends Migration
     public function up()
     {
         Schema::create('fechamentos', function (Blueprint $table) {
-            $table->increments('FEC_ID');
+            $table->BigIncrements('id');
 
-            $table->integer('FEC_IDPRUMADA')->unsigned();
-            $table->foreign('FEC_IDPRUMADA')->references('PRU_ID')->on('prumadas')->onDelete('cascade');
+            $table->unsignedBigInteger('prumada_id');
+            $table->foreign('prumada_id')
+                ->references('id')
+                ->on('prumadas')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
-            $table->string('FEC_METRO')->nullable();
-            $table->string('FEC_LITRO')->nullable();
-            $table->string('FEC_MILILITRO')->nullable();
-            $table->string('FEC_DIFERENCA')->nullable();
+            $table->string('metro')->nullable();
+            $table->string('litro')->nullable();
+            $table->string('mililitro')->nullable();
+            $table->string('diferenca')->nullable();
 
-            $table->integer('FEC_VALOR')->nullable();
+            $table->integer('valor')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
         });

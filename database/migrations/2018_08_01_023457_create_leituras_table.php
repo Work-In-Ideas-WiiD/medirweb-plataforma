@@ -14,22 +14,25 @@ class CreateLeiturasTable extends Migration
     public function up()
     {
         Schema::create('leituras', function (Blueprint $table) {
-            $table->increments('LEI_ID');
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('prumada_id');
+            $table->foreign('prumada_id')
+                ->references('id')
+                ->on('prumadas')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
-            $table->integer('LEI_IDPRUMADA')->unsigned();
-            $table->foreign('LEI_IDPRUMADA')->references('PRU_ID')->on('prumadas')->onDelete('cascade');
+            $table->string('metro')->nullable();
+            $table->string('litro')->nullable();
+            $table->string('mililitro')->nullable();
+            $table->string('diferenca')->nullable();
 
-            $table->string('LEI_METRO')->nullable();;
-            $table->string('LEI_LITRO')->nullable();;
-            $table->string('LEI_MILILITRO')->nullable();;
-            $table->string('LEI_DIFERENCA')->nullable();;
-
-            $table->integer('LEI_VALOR')->nullable();;
+            $table->integer('valor')->nullable();
 
             $table->softDeletesTz();
             $table->timestampsTz();
         });
-        DB::statement('ALTER TABLE leituras MODIFY COLUMN LEI_VALOR INT(6) UNSIGNED ZEROFILL NOT NULL');
+        DB::statement('ALTER TABLE leituras MODIFY COLUMN valor INT(6) UNSIGNED ZEROFILL NOT NULL');
     }
 
     /**

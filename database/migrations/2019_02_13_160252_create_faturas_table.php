@@ -14,23 +14,22 @@ class CreateFaturasTable extends Migration
     public function up()
     {
         Schema::create('faturas', function (Blueprint $table) {
-            $table->increments('FAT_ID');
-
-            $table->integer('FAT_IMOID')->unsigned();
-            $table->foreign('FAT_IMOID')->references('IMO_ID')->on('imoveis')->onDelete('cascade');
-
-            $table->date('FAT_DTLEIFORNECEDOR');
-
-            $table->string('FAT_LEIMETRO_FORNECEDOR', 255);
-            $table->string('FAT_LEIMETRO_VALORFORNECEDOR', 255);
-            $table->string('FAT_LEIMETRO_UNI', 255);
-
-            $table->string('FAT_CONSUMO_IMOVEL', 255);
-            $table->string('FAT_CONSUMO_VALORIMOVEL', 255);
-            $table->string('FAT_CONSUMO_UNI', 255);
-            $table->string('FAT_CONSUMO_VALORUNI', 255);
-            $table->string('FAT_CONSUMO_FORNECEDOR', 255);
-
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('imovel_id');
+            $table->foreign('imovel_id')
+                ->references('id')
+                ->on('imoveis')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->date('data_leitura_fornecedor');
+            $table->integer('metro_fornecedor');
+            $table->decimal('metro_valor_fornecedor', 22,2);
+            $table->integer('metro_unidade');
+            $table->integer('consumo_imovel');
+            $table->decimal('consumo_valor_imovel', 22,2);
+            $table->integer('consumo_unidade');
+            $table->decimal('consumo_valor_unidade', 22,2);
+            $table->integer('consumo_fornecedor');
             $table->softDeletesTz();
             $table->timestampsTz();
         });

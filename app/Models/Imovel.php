@@ -3,56 +3,51 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Estado;
-use App\Models\Cidade;
-use App\Models\Agrupamento;
-use App\Models\Unidade;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 use App\User;
 
 class Imovel extends Model
 {
+    use SoftDeletes;
+
     protected $guarded = [];
-
-
-    protected  $dates = [
-        'created_at', 'updated_at'
-    ];
 
     public function estado()
     {
-        return $this->hasOne('App\Models\Estado');
+        return $this->hasOne(Estado::class);
     }
 
     public function cidade()
     {
-        return $this->hasOne('App\Models\Cidade');
+        return $this->hasOne(Cidade::class);
     }
 
     public function agrupamento()
     {
-        return $this->hasMany('App\Models\Agrupamento');
+        return $this->hasMany(Agrupamento::class);
     }
 
     public function getAgrupamentos(){
-        return $this->hasMany('App\Models\Agrupamento');
+        return $this->hasMany(Agrupamento::class);
     }
 
     public function unidade(){
-        return $this->hasMany('App\Models\Unidade');
+        return $this->hasMany(Unidade::class);
     }
 
     public function getUnidades(){
-        return $this->hasMany('App\Models\Unidade');
+        return $this->hasMany(Unidade::class);
     }
 
     public function administrador()
     {
-        return $this->hasOne('App\Models\Cliente');
+        return $this->hasOne(Cliente::class);
     }
 
     public function users()
     {
-    	return $this->hasMany('App\User');
+    	return $this->hasMany(User::class);
     }
 
 }

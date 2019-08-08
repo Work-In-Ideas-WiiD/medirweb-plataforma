@@ -14,26 +14,21 @@ class CreatePrumadasTable extends Migration
     public function up()
     {
         Schema::create('prumadas', function (Blueprint $table) {
-            $table->increments('PRU_ID');
-
-            $table->unsignedInteger('PRU_IDUNIDADE')->nullable();
-            $table->foreign('PRU_IDUNIDADE')
-                ->references('UNI_ID')
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('unidade_id')->nullable();
+            $table->foreign('unidade_id')
+                ->references('id')
                 ->on('unidades')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-
-            $table->integer('PRU_TIPO')->default(1);
-
-            $table->string('PRU_NOME', 255)->nullable();
-            $table->string('PRU_IDFUNCIONAL',255);
-            $table->string('PRU_SERIAL', 300)->nullable();
-            $table->string('PRU_FABRICANTE', 300)->nullable();
-            $table->string('PRU_MODELO', 300)->nullable();
-            $table->string('PRU_OPERADORA', 300)->nullable();
-
-            $table->boolean('PRU_STATUS')->nullable();
-
+            $table->integer('tipo')->default(1);
+            $table->string('nome', 255)->nullable();
+            $table->string('funcional_id',255);
+            $table->string('serial', 300)->nullable();
+            $table->string('fabricante', 300)->nullable();
+            $table->string('modelo', 300)->nullable();
+            $table->string('operadora', 300)->nullable();
+            $table->boolean('status')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
         });
