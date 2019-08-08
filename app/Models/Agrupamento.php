@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Agrupamento extends Model
 {
-
     protected $guarded = [];
 
     public function imovel()
