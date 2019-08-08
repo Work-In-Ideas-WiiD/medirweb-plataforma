@@ -10,38 +10,31 @@ use App\Models\Imovel;
 
 class Unidade extends Model
 {
-	const created_at = 'tempo_criacao';
-    const updated_at = 'tempo_alteracao';
-
-    //protected $dateFormat = 'Y-m-d H:i';
-
-    protected $primaryKey = 'UNI_ID';
-
     protected $guarded = [];
 
 
     public function agrupamento()
     {
-        return $this->hasOne('App\Models\Agrupamento', 'AGR_ID', 'UNI_IDAGRUPAMENTO');
+        return $this->hasOne('App\Models\Agrupamento');
     }
 
     public function imovel()
     {
-        return $this->hasOne('App\Models\Imovel', 'IMO_ID', 'UNI_IDIMOVEL');
+        return $this->hasOne('App\Models\Imovel');
     }
 
     public function prumada()
     {
-    	return $this->hasMany('App\Models\Prumada', 'PRU_IDUNIDADE', 'UNI_ID');
+    	return $this->hasMany('App\Models\Prumada');
     }
 
     public function getPrumadas()
     {
-    	return $this->hasMany('App\Models\Prumada', 'PRU_IDUNIDADE', 'UNI_ID');
+    	return $this->hasMany('App\Models\Prumada');
     }
 
     public function getEquipamentos()
     {
-        return $this->hasMany('App\Models\Equipamento', 'EQP_IDUNIDADE', 'UNI_ID');
+        return $this->hasMany('App\Models\Equipamento');
     }
 }

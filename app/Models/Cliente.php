@@ -6,13 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cliente extends Model
 {
-    protected $table = 'clientes';
-
-    /*const created_at = 'tempo_criacao';
-    const updated_at = 'tempo_alteracao';*/
-
-    protected $primaryKey = 'CLI_ID';
-
     protected $guarded = [];
 
     protected  $dates = [
@@ -23,16 +16,16 @@ class Cliente extends Model
 
     public function estado()
     {
-        return $this->hasOne('App\Models\Estado', 'EST_ID', 'CLI_ESTADO');
+        return $this->hasOne('App\Models\Estado');
     }
 
     public function cidade()
     {
-        return $this->hasOne('App\Models\Cidade', 'CID_ID', 'CLI_CIDADE');
+        return $this->hasOne('App\Models\Cidade');
     }
 
     public function getImoveis(){
-        return $this->hasMany('App\Models\Imovel', 'IMO_IDCLIENTE', 'CLI_ID');
+        return $this->hasMany('App\Models\Imovel');
     }
 
 }
