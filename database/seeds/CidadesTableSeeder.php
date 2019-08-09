@@ -1870,448 +1870,384 @@ class CidadesTableSeeder extends Seeder
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2909000',
                 'nome' => "Cordeiros",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2909109',
                 'nome' => "Coribe",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2909208',
                 'nome' => "Coronel João Sá",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2909307',
                 'nome' => "Correntina",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2909406',
                 'nome' => "Cotegipe",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2909505',
                 'nome' => "Cravolândia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2909604',
                 'nome' => "Crisópolis",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2909703',
                 'nome' => "Cristópolis",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2909802',
                 'nome' => "Cruz das Almas",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2909901',
                 'nome' => "Curaçá",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910008',
                 'nome' => "Dário Meira",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910057',
                 'nome' => "Dias d'Ávila",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910107',
                 'nome' => "Dom Basílio",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910206',
                 'nome' => "Dom Macedo Costa",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910305',
                 'nome' => "Elísio Medrado",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910404',
                 'nome' => "Encruzilhada",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910503',
                 'nome' => "Entre Rios",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2900504',
                 'nome' => "Érico Cardoso",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910602',
                 'nome' => "Esplanada",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910701',
                 'nome' => "Euclides da Cunha",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910727',
                 'nome' => "Eunápolis",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910750',
                 'nome' => "Fátima",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910776',
                 'nome' => "Feira da Mata",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910800',
                 'nome' => "Feira de Santana",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910859',
                 'nome' => "Filadélfia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2910909',
                 'nome' => "Firmino Alves",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911006',
                 'nome' => "Floresta Azul",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911105',
                 'nome' => "Formosa do Rio Preto",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911204',
                 'nome' => "Gandu",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911253',
                 'nome' => "Gavião",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911303',
                 'nome' => "Gentio do Ouro",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911402',
                 'nome' => "Glória",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911501',
                 'nome' => "Gongogi",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911600',
                 'nome' => "Governador Mangabeira",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911659',
                 'nome' => "Guajeru",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911709',
                 'nome' => "Guanambi",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911808',
                 'nome' => "Guaratinga",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911857',
                 'nome' => "Heliópolis",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2911907',
                 'nome' => "Iaçu",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2912004',
                 'nome' => "Ibiassucê",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2912103',
                 'nome' => "Ibicaraí",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2912202',
                 'nome' => "Ibicoara",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2912301',
                 'nome' => "Ibicuí",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2912400',
                 'nome' => "Ibipeba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2912509',
                 'nome' => "Ibipitanga",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2912608',
                 'nome' => "Ibiquera",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2912707',
                 'nome' => "Ibirapitanga",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2912806',
                 'nome' => "Ibirapuã",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2912905',
                 'nome' => "Ibirataia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913002',
                 'nome' => "Ibitiara",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913101',
                 'nome' => "Ibititá",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913200',
                 'nome' => "Ibotirama",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913309',
                 'nome' => "Ichu",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913408',
                 'nome' => "Igaporã",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913457',
                 'nome' => "Igrapiúna",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913507',
                 'nome' => "Iguaí",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913606',
                 'nome' => "Ilhéus",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913705',
                 'nome' => "Inhambupe",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913804',
                 'nome' => "Ipecaetá",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2913903',
                 'nome' => "Ipiaú",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2914000',
                 'nome' => "Ipirá",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2914109',
                 'nome' => "Ipupiara",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2914208',
                 'nome' => "Irajuba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 5,
-                'CID_CODIBGE' => '2914307',
                 'nome' => "Iramaia",
                 'created_at' => now(),
                 'updated_at' => now()
@@ -3794,140 +3730,120 @@ class CidadesTableSeeder extends Seeder
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300101',
                 'nome' => "Abaiara",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300150',
                 'nome' => "Acarape",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300200',
                 'nome' => "Acaraú",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300309',
                 'nome' => "Acopiara",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300408',
                 'nome' => "Aiuaba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300507',
                 'nome' => "Alcântaras",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300606',
                 'nome' => "Altaneira",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300705',
                 'nome' => "Alto Santo",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300754',
                 'nome' => "Amontada",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300804',
                 'nome' => "Antonina do Norte",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2300903',
                 'nome' => "Apuiarés",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2301000',
                 'nome' => "Aquiraz",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2301109',
                 'nome' => "Aracati",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2301208',
                 'nome' => "Aracoiaba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2301257',
                 'nome' => "Ararendá",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2301307',
                 'nome' => "Araripe",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2301406',
                 'nome' => "Aratuba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2301505',
                 'nome' => "Arneiroz",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2301604',
                 'nome' => "Assaré",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 6,
-                'CID_CODIBGE' => '2301703',
                 'nome' => "Aurora",
                 'created_at' => now(),
                 'updated_at' => now()
@@ -4919,265 +4835,227 @@ class CidadesTableSeeder extends Seeder
             [
                 'estado_id' => 7,
                 'nome' => 'Brasília',
-                'CID_CODIBGE' => '5300108',
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200102',
                 'nome' => "Afonso Cláudio",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200169',
                 'nome' => "Água Doce do Norte",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200136',
                 'nome' => "Águia Branca",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200201',
                 'nome' => "Alegre",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200300',
                 'nome' => "Alfredo Chaves",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200359',
                 'nome' => "Alto Rio Novo",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200409',
                 'nome' => "Anchieta",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200508',
                 'nome' => "Apiacá",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200607',
                 'nome' => "Aracruz",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200706',
                 'nome' => "Atilio Vivacqua",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200805',
                 'nome' => "Baixo Guandu",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3200904',
                 'nome' => "Barra de São Francisco",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201001',
                 'nome' => "Boa Esperança",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201100',
                 'nome' => "Bom Jesus do Norte",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201159',
                 'nome' => "Brejetuba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201209',
                 'nome' => "Cachoeiro de Itapemirim",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201308',
                 'nome' => "Cariacica",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201407',
                 'nome' => "Castelo",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201506',
                 'nome' => "Colatina",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201605',
                 'nome' => "Conceição da Barra",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201704',
                 'nome' => "Conceição do Castelo",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201803',
                 'nome' => "Divino de São Lourenço",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3201902',
                 'nome' => "Domingos Martins",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202009',
                 'nome' => "Dores do Rio Preto",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202108',
                 'nome' => "Ecoporanga",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202207',
                 'nome' => "Fundão",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202256',
                 'nome' => "Governador Lindenberg",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202306',
                 'nome' => "Guaçuí",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202405',
                 'nome' => "Guarapari",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202454',
                 'nome' => "Ibatiba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202504',
                 'nome' => "Ibiraçu",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202553',
                 'nome' => "Ibitirama",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202603',
                 'nome' => "Iconha",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202652',
                 'nome' => "Irupi",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202702',
                 'nome' => "Itaguaçu",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202801',
                 'nome' => "Itapemirim",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 8,
-                'CID_CODIBGE' => '3202900',
                 'nome' => "Itarana",
                 'created_at' => now(),
                 'updated_at' => now()
@@ -6906,84 +6784,72 @@ class CidadesTableSeeder extends Seeder
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100055',
                 'nome' => "Açailândia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100105',
                 'nome' => "Afonso Cunha",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100154',
                 'nome' => "Água Doce do Maranhão",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100204',
                 'nome' => "Alcântara",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100303',
                 'nome' => "Aldeias Altas",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100402',
                 'nome' => "Altamira do Maranhão",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100436',
                 'nome' => "Alto Alegre do Maranhão",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100477',
                 'nome' => "Alto Alegre do Pindaré",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100501',
                 'nome' => "Alto Parnaíba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100550',
                 'nome' => "Amapá do Maranhão",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100600',
                 'nome' => "Amarante do Maranhão",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 10,
-                'CID_CODIBGE' => '2100709',
                 'nome' => "Anajatuba",
                 'created_at' => now(),
                 'updated_at' => now()
@@ -8220,126 +8086,108 @@ class CidadesTableSeeder extends Seeder
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5100102',
                 'nome' => "Acorizal",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5100201',
                 'nome' => "Água Boa",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5100250',
                 'nome' => "Alta Floresta",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5100300',
                 'nome' => "Alto Araguaia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5100359',
                 'nome' => "Alto Boa Vista",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5100409',
                 'nome' => "Alto Garças",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5100508',
                 'nome' => "Alto Paraguai",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5100607',
                 'nome' => "Alto Taquari",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5100805',
                 'nome' => "Apiacás",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5101001',
                 'nome' => "Araguaiana",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5101209',
                 'nome' => "Araguainha",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5101258',
                 'nome' => "Araputanga",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5101308',
                 'nome' => "Arenápolis",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5101407',
                 'nome' => "Aripuanã",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5101605',
                 'nome' => "Barão de Melgaço",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5101704',
                 'nome' => "Barra do Bugres",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5101803',
                 'nome' => "Barra do Garças",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 11,
-                'CID_CODIBGE' => '5101852',
                 'nome' => "Bom Jesus do Araguaia",
                 'created_at' => now(),
                 'updated_at' => now()
@@ -14670,140 +14518,120 @@ class CidadesTableSeeder extends Seeder
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500107',
                 'nome' => "Abaetetuba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500131',
                 'nome' => "Abel Figueiredo",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500206',
                 'nome' => "Acará",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500305',
                 'nome' => "Afuá",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500347',
                 'nome' => "Água Azul do Norte",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500404',
                 'nome' => "Alenquer",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500503',
                 'nome' => "Almeirim",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500602',
                 'nome' => "Altamira",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500701',
                 'nome' => "Anajás",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500800',
                 'nome' => "Ananindeua",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500859',
                 'nome' => "Anapu",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500909',
                 'nome' => "Augusto Corrêa",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1500958',
                 'nome' => "Aurora do Pará",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1501006',
                 'nome' => "Aveiro",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1501105',
                 'nome' => "Bagre",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1501204',
                 'nome' => "Baião",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1501253',
                 'nome' => "Bannach",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1501303',
                 'nome' => "Barcarena",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1501402',
                 'nome' => "Belém",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 14,
-                'CID_CODIBGE' => '1501451',
                 'nome' => "Belterra",
                 'created_at' => now(),
                 'updated_at' => now()
@@ -15548,126 +15376,108 @@ class CidadesTableSeeder extends Seeder
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500106',
                 'nome' => "Água Branca",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500205',
                 'nome' => "Aguiar",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500304',
                 'nome' => "Alagoa Grande",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500403',
                 'nome' => "Alagoa Nova",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500502',
                 'nome' => "Alagoinha",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500536',
                 'nome' => "Alcantil",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500577',
                 'nome' => "Algodão de Jandaíra",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500601',
                 'nome' => "Alhandra",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500734',
                 'nome' => "Amparo",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500775',
                 'nome' => "Aparecida",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500809',
                 'nome' => "Araçagi",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2500908',
                 'nome' => "Arara",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2501005',
                 'nome' => "Araruna",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2501104',
                 'nome' => "Areia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2501153',
                 'nome' => "Areia de Baraúnas",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2501203',
                 'nome' => "Areial",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2501302',
                 'nome' => "Aroeiras",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 15,
-                'CID_CODIBGE' => '2501351',
                 'nome' => "Assunção",
                 'created_at' => now(),
                 'updated_at' => now()
@@ -26692,147 +26502,126 @@ class CidadesTableSeeder extends Seeder
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400050',
                 'nome' => "Alto Alegre",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400027',
                 'nome' => "Amajari",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400100',
                 'nome' => "Boa Vista",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400159',
                 'nome' => "Bonfim",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400175',
                 'nome' => "Cantá",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400209',
                 'nome' => "Caracaraí",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400233',
                 'nome' => "Caroebe",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400282',
                 'nome' => "Iracema",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400308',
                 'nome' => "Mucajaí",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400407',
                 'nome' => "Normandia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400456',
                 'nome' => "Pacaraima",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400472',
                 'nome' => "Rorainópolis",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400506',
                 'nome' => "São João da Baliza",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400605',
                 'nome' => "São Luiz",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 23,
-                'CID_CODIBGE' => '1400704',
                 'nome' => "Uiramutã",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 24,
-                'CID_CODIBGE' => '4200051',
                 'nome' => "Abdon Batista",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 24,
-                'CID_CODIBGE' => '4200101',
                 'nome' => "Abelardo Luz",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 24,
-                'CID_CODIBGE' => '4200200',
                 'nome' => "Agrolândia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 24,
-                'CID_CODIBGE' => '4200309',
                 'nome' => "Agronômica",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 24,
-                'CID_CODIBGE' => '4200408',
                 'nome' => "Água Doce",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 24,
-                'CID_CODIBGE' => '4200507',
                 'nome' => "Águas de Chapecó",
                 'created_at' => now(),
                 'updated_at' => now()
@@ -28561,273 +28350,234 @@ class CidadesTableSeeder extends Seeder
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500105',
                 'nome' => "Adamantina",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500204',
                 'nome' => "Adolfo",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500303',
                 'nome' => "Aguaí",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500402',
                 'nome' => "Águas da Prata",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500501',
                 'nome' => "Águas de Lindóia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500550',
                 'nome' => "Águas de Santa Bárbara",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500600',
                 'nome' => "Águas de São Pedro",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500709',
                 'nome' => "Agudos",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500758',
                 'nome' => "Alambari",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500808',
                 'nome' => "Alfredo Marcondes",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3500907',
                 'nome' => "Altair",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501004',
                 'nome' => "Altinópolis",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501103',
                 'nome' => "Alto Alegre",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501152',
                 'nome' => "Alumínio",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501202',
                 'nome' => "Álvares Florence",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501301',
                 'nome' => "Álvares Machado",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501400',
                 'nome' => "Álvaro de Carvalho",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501509',
                 'nome' => "Alvinlândia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501608',
                 'nome' => "Americana",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501707',
                 'nome' => "Américo Brasiliense",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501806',
                 'nome' => "Américo de Campos",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3501905',
                 'nome' => "Amparo",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502002',
                 'nome' => "Analândia",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502101',
                 'nome' => "Andradina",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502200',
                 'nome' => "Angatuba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502309',
                 'nome' => "Anhembi",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502408',
                 'nome' => "Anhumas",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502507',
                 'nome' => "Aparecida",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502606',
                 'nome' => "Aparecida d'Oeste",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502705',
                 'nome' => "Apiaí",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502754',
                 'nome' => "Araçariguama",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502804',
                 'nome' => "Araçatuba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3502903',
                 'nome' => "Araçoiaba da Serra",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3503000',
                 'nome' => "Aramina",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3503109',
                 'nome' => "Arandu",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3503158',
                 'nome' => "Arapeí",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3503208',
                 'nome' => "Araraquara",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3503307',
                 'nome' => "Araras",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 25,
-                'CID_CODIBGE' => '3503356',
                 'nome' => "Arco-Íris",
                 'created_at' => now(),
                 'updated_at' => now()
@@ -32470,119 +32220,102 @@ class CidadesTableSeeder extends Seeder
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2800100',
                 'nome' => "Amparo de São Francisco",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2800209',
                 'nome' => "Aquidabã",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2800308',
                 'nome' => "Aracaju",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2800407',
                 'nome' => "Arauá",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2800506',
                 'nome' => "Areia Branca",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2800605',
                 'nome' => "Barra dos Coqueiros",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2800670',
                 'nome' => "Boquim",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2800704',
                 'nome' => "Brejo Grande",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2801009',
                 'nome' => "Campo do Brito",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2801108',
                 'nome' => "Canhoba",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2801207',
                 'nome' => "Canindé de São Francisco",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2801306',
                 'nome' => "Capela",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2801405',
                 'nome' => "Carira",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2801504',
                 'nome' => "Carmópolis",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2801603',
                 'nome' => "Cedro de São João",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2801702',
                 'nome' => "Cristinápolis",
                 'created_at' => now(),
                 'updated_at' => now()
             ],
             [
                 'estado_id' => 26,
-                'CID_CODIBGE' => '2801900',
                 'nome' => "Cumbe",
                 'created_at' => now(),
                 'updated_at' => now()
