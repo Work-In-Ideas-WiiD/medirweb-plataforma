@@ -13,7 +13,6 @@ class ClientesTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('clientes')->delete();
 
         Cliente::create([
             'id' => 1,
@@ -21,18 +20,15 @@ class ClientesTableSeeder extends Seeder
             'documento' => '4969821',
             'nome_juridico' => 'Marcela Barbosa',
             'nome_fantasia' => '',
-            'data_nascimento' => '',
-            'status' => 1,
+            'status' => 1            
+        ])->endereco()->create([
             'logradouro' => 'Rua A',
             'complemento' => 'Quadra 7',
             'bairro' => 'Setor Moura',
             'cidade_id' => 1,
-            'CLI_ESTADO' => 1,
-            'CLI_CEP' => '74210-180',
-            'CLI_DADOSBANCARIOS' => '',
-            'CLI_DADOSCONTATO' => '',
-            'CLI_NUMERO' => '11'
-        ])->;
+            'cep' => '74210-180',
+            'numero' => '11'
+        ]);
 
     }
 }
