@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContaBancariasTable extends Migration
+class CreateClienteContaBancariasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,14 @@ class CreateContaBancariasTable extends Migration
      */
     public function up()
     {
-        Schema::create('conta_bancarias', function (Blueprint $table) {
+        Schema::create('cliente_conta_bancarias', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('cliente_id');
+            $table->foreign('cliente_id')
+                ->references('id')
+                ->on('clientes')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('banco', 100);
             $table->string('agencia', 20);
             $table->enum('tipo',['poupança', 'corrente', 'fácil']);
@@ -32,6 +38,6 @@ class CreateContaBancariasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conta_bancarias');
+        Schema::dropIfExists('cliente_conta_bancarias');
     }
 }

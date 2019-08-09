@@ -13,11 +13,6 @@ class Estado extends Model
 
     public function cidade()
     {
-        return $this->belongsTo(Cidade::class);
-    }
-
-    public function getCidades()
-    {
-    	return $this->hasMany('App\Models\Cidade');
+        return $this->hasMany(Cidade::class);
     }
 }

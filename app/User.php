@@ -20,9 +20,7 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'USER_IMOID', 'USER_UNIID', 'foto', 'name', 'email', 'password',
-    ];
+    protected $guarded = [];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -39,6 +37,6 @@ class User extends Authenticatable
 
     public function imovel()
     {
-        return $this->hasOne('App\Models\Imovel', 'IMO_ID', 'USER_IMOID');
+        return $this->hasOne(Imovel::class);
     }
 }

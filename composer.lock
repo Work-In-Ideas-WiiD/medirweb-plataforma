@@ -981,16 +981,16 @@
         },
         {
             "name": "jeroennoten/laravel-adminlte",
-            "version": "v1.25.1",
+            "version": "v1.26.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jeroennoten/Laravel-AdminLTE.git",
-                "reference": "4a6de826c488cfff01d673ed87aa35f7af402374"
+                "reference": "1b288c79af86a2738ff8f5eb9addbcd14bf26f4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jeroennoten/Laravel-AdminLTE/zipball/4a6de826c488cfff01d673ed87aa35f7af402374",
-                "reference": "4a6de826c488cfff01d673ed87aa35f7af402374",
+                "url": "https://api.github.com/repos/jeroennoten/Laravel-AdminLTE/zipball/1b288c79af86a2738ff8f5eb9addbcd14bf26f4b",
+                "reference": "1b288c79af86a2738ff8f5eb9addbcd14bf26f4b",
                 "shasum": ""
             },
             "require": {
@@ -1030,7 +1030,7 @@
                 "administrator",
                 "laravel"
             ],
-            "time": "2019-03-10T09:17:09+00:00"
+            "time": "2019-08-02T11:08:07+00:00"
         },
         {
             "name": "karlmonson/laravel-ping",

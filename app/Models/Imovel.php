@@ -13,14 +13,9 @@ class Imovel extends Model
 
     protected $guarded = [];
 
-    public function estado()
+    public function endereco()
     {
-        return $this->hasOne(Estado::class);
-    }
-
-    public function cidade()
-    {
-        return $this->hasOne(Cidade::class);
+        return $this->belongsTo(Endereco::class);
     }
 
     public function agrupamento()
@@ -28,21 +23,13 @@ class Imovel extends Model
         return $this->hasMany(Agrupamento::class);
     }
 
-    public function getAgrupamentos(){
-        return $this->hasMany(Agrupamento::class);
-    }
-
     public function unidade(){
         return $this->hasMany(Unidade::class);
     }
 
-    public function getUnidades(){
-        return $this->hasMany(Unidade::class);
-    }
-
-    public function administrador()
+    public function cliente()
     {
-        return $this->hasOne(Cliente::class);
+        return $this->belongsTo(Cliente::class);
     }
 
     public function users()

@@ -13,15 +13,16 @@ class Cliente extends Model
 
     public function contaBancaria()
     {
-        return $this->hasMany(ContaBancaria::class);
+        return $this->hasMany(ClienteContaBancaria::class);
     }
 
-    public function cidade()
+    public function endereco()
     {
-        return $this->hasOne(Cidade::class);
+        return $this->belongsTo(Endereco::class);
     }
 
-    public function getImoveis(){
+    public function imovel()
+    {
         return $this->hasMany(Imovel::class);
     }
 

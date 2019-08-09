@@ -28,12 +28,6 @@ class CreateClientesTable extends Migration
             $table->string('nome_fantasia', 200);
             $table->date('data_nascimento')->nullable();
             $table->boolean('status')->nullable();
-            $table->unsignedBigInteger('conta_bancaria_id');
-            $table->foreign('conta_bancaria_id')
-                ->references('id')
-                ->on('conta_bancarias')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
             $table->softDeletesTz();
             $table->timestampsTz();
         });
