@@ -5688,166 +5688,440 @@ class CidadesTableSeeder extends Seeder
             ['estado_id' => 26, 'nome' => "Tobias Barreto", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 26, 'nome' => "Tomar do Geru", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 26, 'nome' => "Umbaúba", 'created_at' => now(), 'updated_at' => now()],
-
-            ['estado_id' => 27, 'CID_CODIBGE' => '1700251', 'nome' => "Abreulândia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'CID_CODIBGE' => '1700301', 'nome' => "Aguiarnópolis", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'CID_CODIBGE' => '1700350', 'nome' => "Aliança do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'CID_CODIBGE' => '1700400', 'nome' => "Almas", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'CID_CODIBGE' => '1700707', 'nome' => "Alvorada", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'CID_CODIBGE' => '1701002', 'nome' => "Ananás", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Angico", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Aparecida do Rio Negro", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Aragominas", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Araguacema", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Araguaçu", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Araguaína", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Araguanã", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Araguatins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Arapoema", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Arraias", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Augustinópolis", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Aurora do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Axixá do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Babaçulândia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Bandeirantes do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Barra do Ouro", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Barrolândia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Bernardo Sayão", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Bom Jesus do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Brasilândia do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Brejinho de Nazaré", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Buriti do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Cachoeirinha", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Campos Lindos", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Cariri do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Carmolândia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Carrasco Bonito", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Caseara", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Centenário", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Chapada da Natividade", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Chapada de Areia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Colinas do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Colméia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Combinado", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Conceição do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Couto Magalhães", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Cristalândia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Crixás do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            ['estado_id' => 27, 'nome' => "Abreulândia", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27,
+                'nome' => "Aguiarnópolis",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "Aliança do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "Almas",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27, 'nome' => "Alvorada", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Ananás", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Angico", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Aparecida do Rio Negro", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Aragominas", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Araguacema", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Araguaçu", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Araguaína", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Araguanã", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Araguatins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Arapoema", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Arraias", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Augustinópolis", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Aurora do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Axixá do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Babaçulândia", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Bandeirantes do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Barra do Ouro", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Barrolândia", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Bernardo Sayão", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Bom Jesus do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Brasilândia do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Brejinho de Nazaré", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Buriti do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Cachoeirinha", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Campos Lindos", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Cariri do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Carmolândia", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Carrasco Bonito", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Caseara", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Centenário", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Chapada da Natividade", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Chapada de Areia", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Colinas do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Colméia", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Combinado", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Conceição do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Couto Magalhães", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Cristalândia", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Crixás do Tocantins", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Darcinópolis", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Dianópolis", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Divinópolis do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Dianópolis", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Divinópolis do Tocantins", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Dois Irmãos do Tocantins", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Dueré", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Esperantina", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Fátima", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Figueirópolis", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Filadélfia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Formoso do Araguaia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Fortaleza do Tabocão", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Goianorte", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Goiatins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Guaraí", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Gurupi", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Esperantina", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Fátima", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Figueirópolis", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Filadélfia", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Formoso do Araguaia", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Fortaleza do Tabocão", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Goianorte", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Goiatins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Guaraí", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Gurupi", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Ipueiras", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Itacajá", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Itacajá", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Itaguatins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Itapiratins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Itapiratins", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Itaporã do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Jaú do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Jaú do Tocantins", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Juarina", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Lagoa da Confusão", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Lagoa da Confusão", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Lagoa do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Lajeado", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Lajeado", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Lavandeira", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Lizarda", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Lizarda", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Luzinópolis", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Marianópolis do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Mateiros", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Marianópolis do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Mateiros", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Maurilândia do Tocantins", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Miracema do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Miranorte", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Miranorte", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Monte do Carmo", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Monte Santo do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Muricilândia", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Muricilândia", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Natividade", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Nazaré", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Nova Olinda", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Nova Olinda", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Nova Rosalândia", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Novo Acordo", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Novo Alegre", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Novo Alegre", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Novo Jardim", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Oliveira de Fátima", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Palmas", 'created_at' => now(), 'updated_at' => now()],
+            [
+                'estado_id' => 27, 'nome' => "Palmas", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Palmeirante", 'created_at' => now(), 'updated_at' => now()],
             ['estado_id' => 27, 'nome' => "Palmeiras do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Palmeirópolis", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Paraíso do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Paranã", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Pau D'Arco", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Pedro Afonso", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Peixe", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Pequizeiro", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Pindorama do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Piraquê", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Pium", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Ponte Alta do Bom Jesus", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Ponte Alta do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Porto Alegre do Tocantins", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Porto Nacional", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Praia Norte", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Presidente Kennedy", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Pugmil", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'nome' => "Recursolândia", 'created_at' => now(), 'updated_at' => now()],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1718550', 'nome' => "Riachinho", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'CID_CODIBGE' => '1718659', 'nome' => "Rio da Conceição", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Palmeirópolis",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1718709', 'nome' => "Rio dos Bois", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 27, 'CID_CODIBGE' => '1718758', 'nome' => "Rio Sono", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Paraíso do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1718808', 'nome' => "Sampaio", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Paranã",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1718840', 'nome' => "Sandolândia", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Pau D'Arco",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1718865', 'nome' => "Santa Fé do Araguaia", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Pedro Afonso",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1718881', 'nome' => "Santa Maria do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Peixe",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1718899', 'nome' => "Santa Rita do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Pequizeiro",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1718907', 'nome' => "Santa Rosa do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Pindorama do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1719004', 'nome' => "Santa Tereza do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Piraquê",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720002', 'nome' => "Santa Terezinha do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Pium",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720101', 'nome' => "São Bento do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Ponte Alta do Bom Jesus",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720150', 'nome' => "São Félix do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Ponte Alta do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720200', 'nome' => "São Miguel do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Porto Alegre do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720259', 'nome' => "São Salvador do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Porto Nacional",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720309', 'nome' => "São Sebastião do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Praia Norte",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720499', 'nome' => "São Valério", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Presidente Kennedy",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720655', 'nome' => "Silvanópolis", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Pugmil",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720804', 'nome' => "Sítio Novo do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Recursolândia",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720853', 'nome' => "Sucupira", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Riachinho",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720903', 'nome' => "Taguatinga", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Rio da Conceição",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720937', 'nome' => "Taipas do Tocantins", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Rio dos Bois",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1720978', 'nome' => "Talismã", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Rio Sono",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1721109', 'nome' => "Tocantínia", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Sampaio",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 27, 'CID_CODIBGE' => '1721208', 'nome' => "Tocantinópolis", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 27,
+                'nome' => "Sandolândia",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27, 
+                'nome' => "Santa Fé do Araguaia",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27, 
+                'nome' => "Santa Maria do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27, 
+                'nome' => "Santa Rita do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27, 
+                'nome' => "Santa Rosa do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27, 
+                'nome' => "Santa Tereza do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27, 
+                'nome' => "Santa Terezinha do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27, 
+                'nome' => "São Bento do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27, 
+                'nome' => "São Félix do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "São Miguel do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "São Salvador do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "São Sebastião do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "São Valério",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "Silvanópolis",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "Sítio Novo do Tocantins",
+                'created_at' => now(), 'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "Sucupira",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "Taguatinga",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "Taipas do Tocantins",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "Talismã",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "Tocantínia",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 27,
+                'nome' => "Tocantinópolis",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
                 'estado_id' => 27,
                 'nome' => "Tupirama",
