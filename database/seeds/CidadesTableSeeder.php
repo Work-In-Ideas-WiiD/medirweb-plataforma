@@ -75,50 +75,186 @@ class CidadesTableSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now()
             ],
-            ['estado_id' => 1, 'CID_CODIBGE' => '1200344', 'nome' => 'Manoel Urbano', 'created_at' => now(), 'updated_at' => now()],
             [
                 'estado_id' => 1,
-                'nome' => 'Marechal Thaumaturgo', 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 1, 'CID_CODIBGE' => '1200385', 'nome' => 'Plácido de Castro', 'created_at' => now(), 'updated_at' => now()],
+                'nome' => 'Manoel Urbano',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
                 'estado_id' => 1,
-                'nome' => 'Porto Acre', 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 1, 'CID_CODIBGE' => '1200393', 'nome' => 'Porto Walter', 'created_at' => now(), 'updated_at' => now()],
+                'nome' => 'Marechal Thaumaturgo',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 1, 'CID_CODIBGE' => '1200401', 'nome' => 'Rio Branco', 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 1, 'CID_CODIBGE' => '1200427', 'nome' => 'Rodrigues Alves', 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 1,
+                'nome' => 'Plácido de Castro',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 1, 'CID_CODIBGE' => '1200435', 'nome' => 'Santa Rosa do Purus', 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 1, 'CID_CODIBGE' => '1200500', 'nome' => 'Sena Madureira', 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 1,
+                'nome' => 'Porto Acre',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 1, 'CID_CODIBGE' => '1200450', 'nome' => 'Senador Guiomard', 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 1, 'CID_CODIBGE' => '1200609', 'nome' => 'Tarauacá', 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 1, 'CID_CODIBGE' => '1200708', 'nome' => 'Xapuri', 'created_at' => now(), 'updated_at' => now()],
-
+                'estado_id' => 1,
+                'nome' => 'Porto Walter',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 2, 'CID_CODIBGE' => '2700102', 'nome' => "Água Branca", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2700201', 'nome' => "Anadia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2700300', 'nome' => "Arapiraca", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 1,
+                'nome' => 'Rio Branco',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 2, 'CID_CODIBGE' => '2700409', 'nome' => "Atalaia", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2700508', 'nome' => "Barra de Santo Antônio", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2700607', 'nome' => "Barra de São Miguel", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 1,
+                'nome' => 'Rodrigues Alves',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 2, 'CID_CODIBGE' => '2700706', 'nome' => "Batalha", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2700805', 'nome' => "Belém", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2700904', 'nome' => "Belo Monte", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 1,
+                'nome' => 'Santa Rosa do Purus',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 2, 'CID_CODIBGE' => '2701001', 'nome' => "Boca da Mata", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2701100', 'nome' => "Branquinha", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2701209', 'nome' => "Cacimbinhas", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 1,
+                'nome' => 'Sena Madureira',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 2, 'CID_CODIBGE' => '2701308', 'nome' => "Cajueiro", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2701357', 'nome' => "Campestre", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2701407', 'nome' => "Campo Alegre", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 1,
+                'nome' => 'Senador Guiomard',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
-                'estado_id' => 2, 'CID_CODIBGE' => '2701506', 'nome' => "Campo Grande", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2701605', 'nome' => "Canapi", 'created_at' => now(), 'updated_at' => now()],
-            ['estado_id' => 2, 'CID_CODIBGE' => '2701704', 'nome' => "Capela", 'created_at' => now(), 'updated_at' => now()],
+                'estado_id' => 1,
+                'nome' => 'Tarauacá',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 1,
+                'nome' => 'Xapuri',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Água Branca",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Anadia",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Arapiraca",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Atalaia",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Barra de Santo Antônio",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Barra de São Miguel",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Batalha",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Belém",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Belo Monte",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Boca da Mata",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Branquinha",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Cacimbinhas",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Cajueiro",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Campestre",
+                'created_at' => now(), 
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Campo Alegre",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Campo Grande",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Canapi",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'estado_id' => 2,
+                'nome' => "Capela",
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
             [
                 'estado_id' => 2, 'CID_CODIBGE' => '2701803', 'nome' => "Carneiros", 'created_at' => now(), 'updated_at' => now()],
             [
