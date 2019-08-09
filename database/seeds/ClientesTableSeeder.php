@@ -16,23 +16,23 @@ class ClientesTableSeeder extends Seeder
         DB::table('clientes')->delete();
 
         Cliente::create([
-            'CLI_ID'                    => 1,
-            'CLI_TIPO'                  => 1,
-            'CLI_DOCUMENTO'             => '4969821',
-            'CLI_NOMEJUR'               => 'Marcela Barbosa',
-            'CLI_NOMEFAN'               => '',
-            'CLI_DATANASC'              => now(),
-            'CLI_STATUS'                => 1,
-            'CLI_LOGRADOURO'            => 'Rua A',
-            'CLI_COMPLEMENTO'           => 'Quadra 7',
-            'CLI_BAIRRO'                => 'Setor Moura',
-            'CLI_CIDADE'                => 1,
-            'CLI_ESTADO'                => 1,
-            'CLI_CEP'                   => '74210-180',
-            'CLI_DADOSBANCARIOS'        => '',
-            'CLI_DADOSCONTATO'          => '',
-            'CLI_NUMERO'                => '11'
-        ]);
+            'id' => 1,
+            'tipo' => 1,
+            'documento' => '4969821',
+            'nome_juridico' => 'Marcela Barbosa',
+            'nome_fantasia' => '',
+            'data_nascimento' => '',
+            'status' => 1,
+            'logradouro' => 'Rua A',
+            'complemento' => 'Quadra 7',
+            'bairro' => 'Setor Moura',
+            'cidade_id' => 1,
+            'CLI_ESTADO' => 1,
+            'CLI_CEP' => '74210-180',
+            'CLI_DADOSBANCARIOS' => '',
+            'CLI_DADOSCONTATO' => '',
+            'CLI_NUMERO' => '11'
+        ])->;
 
     }
 }

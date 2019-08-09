@@ -10,4 +10,9 @@ class Endereco extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+
+    public function cidade()
+    {
+        return $this->belongsTo(Cidade::class);
+    }
 }

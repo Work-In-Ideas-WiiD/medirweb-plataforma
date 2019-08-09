@@ -11,24 +11,23 @@ class Cliente extends Model
 
     protected $guarded = [];
 
-    protected  $dates = [
-        'created_at', 'updated_at'
-    ];
-
-    //protected $dateFormat = 'Y-m-d H:i';
-
-    public function estado()
+    public function contaBancaria()
     {
-        return $this->hasOne('App\Models\Estado');
+        return $this->hasMany(ContaBancaria::class);
     }
 
     public function cidade()
     {
-        return $this->hasOne('App\Models\Cidade');
+        return $this->hasOne(Cidade::class);
     }
 
     public function getImoveis(){
-        return $this->hasMany('App\Models\Imovel');
+        return $this->hasMany(Imovel::class);
+    }
+
+    public function telefone()
+    {
+        return $this->hasMany(ClienteTelefone::class);
     }
 
 }

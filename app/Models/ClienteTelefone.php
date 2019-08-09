@@ -10,4 +10,9 @@ class ClienteTelefone extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
 }

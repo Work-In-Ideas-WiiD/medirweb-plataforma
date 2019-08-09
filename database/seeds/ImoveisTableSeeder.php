@@ -28,7 +28,7 @@ class ImoveisTableSeeder extends Seeder
 				'cep' => '74000-000',
 				'IMO_RESPONSAVEIS' => 'Eduardo Hudson Josué (Síndico)<br/>Maria Jordana Gomes (Sub-síndico)<br/>Tulio Cairo Pereira (Zelador)',
 				'IMO_TELEFONES' => '(61) 98999-0055 (Eduardo)<br/>(61) 98866-4411 (Tulio)<br/>(61) 4555-0078 (Tulio)',
-				'IMO_STATUS' => 1
+				'status' => 1
 			],
 			[
                 'id' => 2,
@@ -44,7 +44,7 @@ class ImoveisTableSeeder extends Seeder
                 'cep' => '74000-000',
                 'IMO_RESPONSAVEIS' => 'Hudson Josué (Síndico)<br/>Jordana Gomes (Sub-síndico)<br/>Cairo Pereira (Zelador)',
                 'IMO_TELEFONES' => '(61) 98999-0055 (Hudson)<br/>(61) 98866-4411 (Jordana)<br/>(61) 4555-0078 (Cairo)',
-                'IMO_STATUS' => 1
+                'status' => 1
 			],
 			[
                 'id' => 3,
@@ -60,7 +60,7 @@ class ImoveisTableSeeder extends Seeder
                 'cep' => '74000-000',
                 'IMO_RESPONSAVEIS' => 'Josué (Síndico)<br/>Gomes (Sub-síndico)<br/>Pereira (Zelador)',
                 'IMO_TELEFONES' => '(61) 98999-0055 (Josué)<br/>(61) 98866-4411 (Gomes)<br/>(61) 4555-0078 (Pereira)',
-                'IMO_STATUS' => 1
+                'status' => 1
      		]
 
         ]);
