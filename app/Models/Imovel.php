@@ -13,6 +13,8 @@ class Imovel extends Model
 
     protected $guarded = [];
 
+    protected $table = 'imoveis';
+
     public function endereco()
     {
         return $this->belongsTo(Endereco::class);
@@ -22,14 +24,19 @@ class Imovel extends Model
     {
         return $this->hasMany(Agrupamento::class);
     }
+    
+    public function cliente()
+    {
+        return $this->belongsTo(Cliente::class);
+    }
 
     public function unidade(){
         return $this->hasMany(Unidade::class);
     }
 
-    public function cliente()
+    public function responsavel()
     {
-        return $this->belongsTo(Cliente::class);
+        return $this->hasMany(ImovelResponsavel::class);
     }
 
     public function users()
@@ -37,4 +44,8 @@ class Imovel extends Model
     	return $this->hasMany(User::class);
     }
 
+    public function telefone()
+    {
+        return $this->hasMany(ImovelTelefone::class);
+    }
 }

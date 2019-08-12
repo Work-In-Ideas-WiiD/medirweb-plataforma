@@ -10,4 +10,9 @@ class ImovelTelefone extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+
+    public function imovel()
+    {
+        return $this->belongsTo(Imovel::class);
+    }
 }

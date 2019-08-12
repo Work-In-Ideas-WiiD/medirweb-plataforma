@@ -15,4 +15,14 @@ class Endereco extends Model
     {
         return $this->belongsTo(Cidade::class);
     }
+
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class);
+    }
+
+    public function imovel()
+    {
+        return $this->hasOne(Imovel::class);
+    }
 }

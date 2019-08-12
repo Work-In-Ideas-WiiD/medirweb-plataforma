@@ -9,6 +9,8 @@ class Cidade extends Model
 {
     use SoftDeletes;
 
+    protected $guarded = [];
+
     public function estado()
     {
         return $this->belongsTo(Estado::class);

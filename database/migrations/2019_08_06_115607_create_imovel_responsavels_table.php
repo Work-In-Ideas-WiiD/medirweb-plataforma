@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateResponsavelsTable extends Migration
+class CreateImovelResponsavelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,14 @@ class CreateResponsavelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('responsavels', function (Blueprint $table) {
+        Schema::create('imovel_responsavels', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('imovel_id');
+            $table->foreign('imovel_id')
+                ->references('id')
+                ->on('imoveis')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('nome', 50);
             $table->string('descricao', 150)->nullable();
             $table->softDeletesTz();
@@ -29,6 +35,6 @@ class CreateResponsavelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('responsavels');
+        Schema::dropIfExists('imovel_responsavels');
     }
 }

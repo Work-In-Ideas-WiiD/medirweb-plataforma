@@ -30,6 +30,7 @@ class CreateImoveisTable extends Migration
             $table->string('foto', 200)->nullable();
             $table->string('capa', 200)->nullable();
             $table->string('cnpj', 50);
+            $table->string('nome', 200);
             $table->boolean('status')->nullable();
             $table->integer('fatura_ciclo')->nullable();
             $table->float('taxa_fixa')->nullable();
