@@ -216,9 +216,21 @@ class TesteController extends Controller
                     }
                 }
 
+                
             }
         }
-
+        
+        foreach (DB::connection('banco_antigo')->table('agrupamentos')->get() as $agrupamento) {
+            
+            Agrupamento::updateOrCreate([
+                'id' => $agrupamento->AGR_ID,
+                'imovel_id' => $agrupamento->AGR_IDIMOVEL,
+                'nome' => $agrupamento->AGR_NOME,
+                'created_at' => $agrupamento->created_at,
+                'updated_at' => $agrupamento->updated_at
+            ]);
+            
+        }
 
     }
 
