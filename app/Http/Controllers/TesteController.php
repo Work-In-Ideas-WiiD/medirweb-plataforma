@@ -122,13 +122,16 @@ class TesteController extends Controller
                 'numero' => $cliente->CLI_NUMERO,
                 'cep' => $cliente->CLI_CEP
             ])->cliente()->firstOrCreate([ //migrar cliente
+                'id' => $cliente->CLI_ID,
                 'tipo' => $cliente->CLI_TIPO,
                 'foto' => $cliente->CLI_FOTO ?? '',
                 'documento' => $cliente->CLI_DOCUMENTO,
                 'nome_juridico' => $cliente->CLI_NOMEJUR,
                 'nome_fantasia' => $cliente->CLI_NOMEFAN ?? '',
                 'data_nascimento' => $cliente->CLI_DATANASC,
-                'status' => $cliente->CLI_STATUS
+                'status' => $cliente->CLI_STATUS,
+                'created_at' => $cliente->created_at,
+                'updated_at' => $cliente->updated_at
             ]);
 
             foreach (explode('<br/>', $cliente->CLI_DADOSCONTATO) as $telefone) {
@@ -139,6 +142,80 @@ class TesteController extends Controller
                         'etiqueta' => 'pessoal'
                     ]);
                 }
+            }
+
+            //migrar o endereco
+            foreach (DB::connection('banco_antigo')->table('imoveis')
+                ->where('IMO_IDCLIENTE', $cliente->CLI_ID)->get() as $imovel) {
+                
+                //migrar endereco do imovel
+                $imove = Endereco::firstOrCreate([
+                    'logradouro' => $imovel->IMO_LOGRADOURO,
+                    'complemento' => $imovel->IMO_COMPLEMENTO,
+                    'numero' => $imovel->IMO_NUMERO,
+                    'bairro' => $imovel->IMO_BAIRRO,
+                    'cidade_id' => $imovel->IMO_IDCIDADE,
+                    'cep' => $imovel->IMO_CEP,
+                ])->imovel()->firstOrCreate([//migrar imovel
+                    'cliente_id' => $imovel->IMO_IDCLIENTE,
+                    'foto' => $imovel->IMO_FOTO ?? '',
+                    'capa' => $imovel->IMO_CAPA ?? '',
+                    'cnpj' => $imovel->IMO_CNPJ,
+                    'nome' => $imovel->IMO_NOME,
+                    'status' => $imovel->IMO_STATUS,
+                    'fatura_ciclo' => $imovel->IMO_FATURACICLO,
+                    'taxa_fixa' => $imovel->IMO_TAXAFIXA,
+                    'taxa_variavel' => $imovel->IMO_TAXAVARIAVEL,
+                    'ip' => $imovel->IMO_IP,
+                    'created_at' => $imovel->created_at,
+                    'updated_at' => $imovel->updated_at
+                ]);
+                //cadastro de telefone de imovel
+                if (strstr($imovel->IMO_TELEFONES, '<br/>')) {
+                    foreach (explode('<br/>', $imovel->IMO_TELEFONES) as $telefone_imovel) {
+                        if ($telefone_imovel) {
+                            //migrar telefone do imovel
+                            $imove->telefone()->firstOrCreate([
+                                'numero' => $telefone_imovel,
+                                'etiqueta' => 'pessoal'
+                            ]);
+                        }
+                    }
+                } else {
+                    foreach (explode("\r\n", $imovel->IMO_TELEFONES) as $telefone_imovel) {
+                        if ($telefone_imovel) {
+                            //migrar telefone do imovel
+                            $imove->telefone()->firstOrCreate([
+                                'numero' => $telefone_imovel,
+                                'etiqueta' => 'pessoal'
+                            ]);
+                        }
+                    }
+                }
+
+                 //cadastro de responsavel de imovel
+                 if (strstr($imovel->IMO_RESPONSAVEIS, '<br/>')) {
+                    foreach (explode('<br/>', $imovel->IMO_RESPONSAVEIS) as $responsavel_imovel) {
+                        if ($responsavel_imovel) {
+                            //migrar responsavel do imovel
+                            $imove->responsavel()->firstOrCreate([
+                                'nome' => $responsavel_imovel,
+                                'descricao' => 'não informado'
+                            ]);
+                        }
+                    }
+                } else {
+                    foreach (explode("\r\n", $imovel->IMO_RESPONSAVEIS) as $responsavel_imovel) {
+                        if ($responsavel_imovel) {
+                            //migrar responsavel do imovel
+                            $imove->responsavel()->firstOrCreate([
+                                'nome' => $responsavel_imovel,
+                                'descricao' => 'não informado'
+                            ]);
+                        }
+                    }
+                }
+
             }
         }
 

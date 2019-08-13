@@ -22,7 +22,7 @@ class CreateImovelTelefonesTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('etiqueta', 50);
-            $table->string('numero',20);
+            $table->string('numero',30);
             $table->boolean('whatsapp')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
