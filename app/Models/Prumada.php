@@ -11,19 +11,18 @@ class Prumada extends Model
 
     protected $guarded = [];
 
+    public function leitura()
+    {
+        return $this->hasMany(Leitura::class);
+    }
+    
     public function unidade()
     {
         return $this->hasOne(Unidade::class);
     }
 
-    public function leitura()
+    public function prumada()
     {
-        return $this->hasMany(Leitura::class);
+        return $this->hasMany(PrumadaFatura::class);
     }
-
-    public function getLeituras()
-    {
-    	return $this->hasMany('App\Models\Leitura');
-    }
-
 }
