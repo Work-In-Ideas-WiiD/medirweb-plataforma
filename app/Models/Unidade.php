@@ -31,13 +31,8 @@ class Unidade extends Model
     	return $this->hasMany(Prumada::class);
     }
 
-    public function getPrumadas()
+    public function telefone()
     {
-    	return $this->hasMany(Prumada::class);
-    }
-
-    public function getEquipamentos()
-    {
-        return $this->hasMany(Equipamento::class);
+        return $this->hasMany(Telefone::class);
     }
 }

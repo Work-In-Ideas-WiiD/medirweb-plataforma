@@ -46,6 +46,6 @@ class Imovel extends Model
 
     public function telefone()
     {
-        return $this->hasMany(ImovelTelefone::class);
+        return $this->hasMany(Telefone::class);
     }
 }

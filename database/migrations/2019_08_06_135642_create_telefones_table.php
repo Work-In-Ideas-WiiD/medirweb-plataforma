@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateClienteTelefonesTable extends Migration
+class CreateTelefonesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,28 @@ class CreateClienteTelefonesTable extends Migration
      */
     public function up()
     {
-        Schema::create('cliente_telefones', function (Blueprint $table) {
+        Schema::create('telefones', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('cliente_id');
+            $table->unsignedBigInteger('imovel_id')->nullable();
+            $table->foreign('imovel_id')
+                ->references('id')
+                ->on('imoveis')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+            $table->unsignedBigInteger('cliente_id')->nullable();
             $table->foreign('cliente_id')
                 ->references('id')
                 ->on('clientes')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+            $table->unsignedBigInteger('unidade_id')->nullable();
+            $table->foreign('unidade_id')
+                ->references('id')
+                ->on('unidades')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->string('etiqueta', 50);
-            $table->string('numero', 20);
+            $table->string('numero',30);
             $table->boolean('whatsapp')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
@@ -36,6 +48,6 @@ class CreateClienteTelefonesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cliente_telefones');
+        Schema::dropIfExists('telefones');
     }
 }

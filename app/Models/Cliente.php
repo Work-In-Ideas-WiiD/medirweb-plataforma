@@ -13,7 +13,7 @@ class Cliente extends Model
 
     public function contaBancaria()
     {
-        return $this->hasMany(ClienteContaBancaria::class);
+        return $this->hasMany(ContaBancaria::class);
     }
 
     public function endereco()
@@ -28,7 +28,7 @@ class Cliente extends Model
 
     public function telefone()
     {
-        return $this->hasMany(ClienteTelefone::class);
+        return $this->hasMany(Telefone::class);
     }
 
 }

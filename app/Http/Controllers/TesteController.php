@@ -13,7 +13,7 @@ use App\Models\Pais;
 use App\Models\Estado;
 use App\Models\Cidade;
 use App\Models\Endereco;
-
+use App\Models\Fatura;
 class TesteController extends Controller
 {
     use UploadFile;
@@ -231,6 +231,31 @@ class TesteController extends Controller
             ]);
             
         }
+
+        //migra faturas
+        foreach (DB::connection('banco_antigo')->table('faturas')->get() as $fatura) {
+            Fatura::firstOrCreate([
+                'id' => $fatura->FAT_ID,
+                'imovel_id' => $fatura->FAT_IMOID,
+                'data_leitura_fornecedor' => $fatura->FAT_DTLEIFORNECEDOR,
+                'metro_fornecedor' => $fatura->FAT_LEIMETRO_FORNECEDOR,
+                'metro_valor_fornecedor' => floatval($fatura->FAT_LEIMETRO_VALORFORNECEDOR),
+                'metro_unidade' => $fatura->FAT_LEIMETRO_UNI,
+                'consumo_imovel' => $fatura->FAT_CONSUMO_IMOVEL,
+                'consumo_valor_imovel' => floatval($fatura->FAT_CONSUMO_VALORIMOVEL),
+                'consumo_unidade' => $fatura->FAT_CONSUMO_UNI,
+                'consumo_valor_unidade' => floatval($fatura->FAT_CONSUMO_VALORUNI),
+                'consumo_fornecedor' => $fatura->FAT_CONSUMO_FORNECEDOR,
+                'created_at' => $fatura->created_at,
+                'updated_at' => $fatura->updated_at
+            ]);
+        }
+
+
+        foreach (DB::connection('banco_antigo')->table('faturas_unidades')->get() as $fatura_unidade) {
+            
+        }
+
 
     }
 
