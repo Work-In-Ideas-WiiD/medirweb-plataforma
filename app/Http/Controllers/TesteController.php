@@ -274,6 +274,7 @@ class TesteController extends Controller
                     'prumada_data_leitura_atual' => $fatura_unidade_nova->PRU_DTLEIATUAL,
                 ]);
 
+
             }
 
         }
