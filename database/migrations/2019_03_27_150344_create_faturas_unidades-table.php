@@ -13,9 +13,9 @@ class CreateFaturasUnidadesTable extends Migration
      */
     public function up()
     {
-        Schema::create('faturas_unidades', function (Blueprint $table) {
+        Schema::create('fatura_unidades', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('FATUNI_DT', 255);
+            //$table->string('FATUNI_DT', 255);
             $table->unsignedBigInteger('unidade_id');
             $table->foreign('unidade_id')
                 ->references('id')
@@ -28,7 +28,7 @@ class CreateFaturasUnidadesTable extends Migration
                 ->on('faturas')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
-            $table->decimal('valor', 22,2)
+            $table->decimal('prumada_valor', 22,2)
                 ->comment('aqui fica o valor da prumada');
 
             $table->unsignedBigInteger('prumada_id');
@@ -55,6 +55,6 @@ class CreateFaturasUnidadesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faturas_unidades');
+        Schema::dropIfExists('fatura_unidades');
     }
 }

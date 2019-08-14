@@ -14,6 +14,9 @@ use App\Models\Estado;
 use App\Models\Cidade;
 use App\Models\Endereco;
 use App\Models\Fatura;
+use App\Models\FaturaUnidade;
+
+
 class TesteController extends Controller
 {
     use UploadFile;
@@ -81,6 +84,7 @@ class TesteController extends Controller
 
     function teste()
     {
+    
         //Migrar Pais
         Pais::firstOrCreate([
             'nome' => 'Brasil',
@@ -251,9 +255,27 @@ class TesteController extends Controller
             ]);
         }
 
-
+        
         foreach (DB::connection('banco_antigo')->table('faturas_unidades')->get() as $fatura_unidade) {
-            
+
+            $faturas_unidade_nova = json_decode('['.$fatura_unidade->FATUNI_PRUMADAS.']');
+
+            foreach ($faturas_unidade_nova as $fatura_unidade_nova) {
+
+                FaturaUnidade::firstOrCreate([
+                    'unidade_id' => $fatura_unidade->FATUNI_IDUNI,
+                    'fatura_id' => $fatura_unidade->FATUNI_IDFATURA,
+                    'prumada_id' => $fatura_unidade_nova->PRU_ID,
+                    'prumada_valor' => floatval($fatura_unidade_nova->PRU_VALOR),
+                    'prumada_consumo' => $fatura_unidade_nova->PRU_CONSUMO,
+                    'prumada_leitura_anterior' => $fatura_unidade_nova->PRU_LEIANTERIOR,
+                    'prumada_data_leitura_anterior' => $fatura_unidade_nova->PRU_DTLEIANTERIOR,
+                    'prumada_leitura_atual' => $fatura_unidade_nova->PRU_LEIATUAL,
+                    'prumada_data_leitura_atual' => $fatura_unidade_nova->PRU_DTLEIATUAL,
+                ]);
+
+            }
+
         }
 
 
