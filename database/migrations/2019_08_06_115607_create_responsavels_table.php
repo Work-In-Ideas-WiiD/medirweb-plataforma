@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImovelResponsavelsTable extends Migration
+class CreateResponsavelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateImovelResponsavelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('imovel_responsavels', function (Blueprint $table) {
+        Schema::create('responsavels', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('imovel_id');
+            $table->unsignedBigInteger('imovel_id')->nullable();
             $table->foreign('imovel_id')
                 ->references('id')
                 ->on('imoveis')
@@ -35,6 +35,6 @@ class CreateImovelResponsavelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('imovel_responsavels');
+        Schema::dropIfExists('responsavels');
     }
 }

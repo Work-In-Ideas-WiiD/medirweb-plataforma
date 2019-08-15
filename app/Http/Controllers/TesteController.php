@@ -13,8 +13,12 @@ use App\Models\Pais;
 use App\Models\Estado;
 use App\Models\Cidade;
 use App\Models\Endereco;
+use App\User;
 use App\Models\Fatura;
 use App\Models\FaturaUnidade;
+use App\Models\Prumada;
+use App\Models\Leitura;
+use App\Models\Timeline;
 
 
 class TesteController extends Controller
@@ -256,6 +260,62 @@ class TesteController extends Controller
         }
 
         
+        
+        //aqui migramos as prumadas
+        foreach (DB::connection('banco_antigo')->table('unidades')->get() as $unidade) {
+            Unidade::firstOrCreate([
+                'id' => $unidade->UNI_ID,
+                'agrupamento_id' => $unidade->UNI_IDAGRUPAMENTO,
+                'imovel_id' => $unidade->UNI_IDIMOVEL,
+                'nome' => $unidade->UNI_NOME,
+                'nome_responsavel' => $unidade->UNI_RESPONSAVEL,
+                'cpf_responsavel' => $unidade->UNI_CPFRESPONSAVEL,
+                'created_at' => $unidade->created_at,
+                'updated_at' => $unidade->updated_at
+            ])->telefone([
+                'etiqueta' => 'responsavel',
+                'numero' => $unidade->UNI_TELRESPONSAVEL
+            ]);
+        }
+        
+        
+        //aqui migramos os users
+        foreach (DB::connection('banco_antigo')->table('users')->get() as $user) {
+            User::firstOrCreate([
+                'id' => $user->id,
+                'imovel_id' => ($user->USER_IMOID !== 0) ? $user->USER_IMOID : null,
+                'unidade_id' => ($user->USER_UNIID !== 0) ? $user->USER_UNIID : null,
+                'foto' => $user->foto,
+                'name' => $user->name,
+                'email' => $user->email,
+                'password' => $user->password,
+                'remember_token' => $user->remember_token,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at
+            ]);
+        }
+
+
+        //aqui migramos as prumadas
+        foreach (DB::connection('banco_antigo')->table('prumadas')->get() as $prumada) {
+            Prumada::firstOrCreate([
+                'id' => $prumada->PRU_ID,
+                'unidade_id' => $prumada->PRU_IDUNIDADE,
+                'tipo' => $prumada->PRU_TIPO,
+                'nome' => $prumada->PRU_NOME,
+                'funcional_id' => $prumada->PRU_IDFUNCIONAL,
+                'serial' => $prumada->PRU_SERIAL,
+                'fabricante' => $prumada->PRU_FABRICANTE,
+                'modelo' => $prumada->PRU_MODELO,
+                'operadora' => $prumada->PRU_OPERADORA,
+                'status' => $prumada->PRU_STATUS,
+                'created_at' => $prumada->created_at,
+                'updated_at' => $prumada->updated_at
+            ]);
+        }
+            
+            
+        //aqui migramos as faturas de unidades
         foreach (DB::connection('banco_antigo')->table('faturas_unidades')->get() as $fatura_unidade) {
 
             $faturas_unidade_nova = json_decode('['.$fatura_unidade->FATUNI_PRUMADAS.']');
@@ -277,6 +337,33 @@ class TesteController extends Controller
 
             }
 
+        }
+
+
+        foreach (DB::connection('banco_antigo')->table('timelines')->get() as $timeline) {
+            Timeline::firstOrCreate([
+                'id' => $timeline->TIMELINE_ID,
+                'prumada_id' => $timeline->TIMELINE_IDPRUMADA,
+                'user' => $timeline->TIMELINE_USER,
+                'descricao' => $timeline->TIMELINE_DESCRICAO,
+                'icone' => $timeline->TIMELINE_ICON,
+                'created_at' => $timeline->created_at,
+                'updated_at' => $timeline->updated_at
+            ]);
+        }
+
+
+        foreach (DB::connection('banco_antigo')->table('leituras')->get() as $leitura) {
+            Leitura::firstOrCreate([
+                'id' => $leitura->LEI_ID,
+                'prumada_id' => $leitura->LEI_IDPRUMADA,
+                'metro' => $leitura->LEI_METRO,
+                'litro' => $leitura->LEI_LITRO,
+                'mililitro' => $leitura->LEI_MILILITRO,
+                'valor' => $leitura->LEI_VALOR,
+                'created_at' => $leitura->created_at,
+                'updated_at' => $leitura->updated_at
+            ]);
         }
 
 

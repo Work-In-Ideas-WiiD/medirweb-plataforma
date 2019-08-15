@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ImovelResponsavel extends Model
+class Responsavel extends Model
 {
     use SoftDeletes;
 
