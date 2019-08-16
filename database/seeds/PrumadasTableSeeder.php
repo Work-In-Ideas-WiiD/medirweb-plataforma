@@ -15,42 +15,42 @@ class PrumadasTableSeeder extends Seeder
     {
         Prumada::insert([
 			[
-				'PRU_ID' => 1,
-				'PRU_IDUNIDADE' => 1,
-				'PRU_IDFUNCIONAL' => 1452851,
-				'PRU_STATUS' => 1,
+				'id' => 1,
+				'unidade_id' => 1,
+				'funcional_id' => 1452851,
+				'status' => 1,
 				'created_at' => now(),
 				'updated_at' => now()
 			],
 			[
-				'PRU_ID' => 2,
-                'PRU_IDUNIDADE' => 2,
-                'PRU_IDFUNCIONAL' => 1452852,
-                'PRU_STATUS' => 1,
+				'id' => 2,
+                'unidade_id' => 2,
+                'funcional_id' => 1452852,
+                'status' => 1,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'PRU_ID' => 3,
-                'PRU_IDUNIDADE' => 3,
-                'PRU_IDFUNCIONAL' => 1452853,
-                'PRU_STATUS' => 1,
+				'id' => 3,
+                'unidade_id' => 3,
+                'funcional_id' => 1452853,
+                'status' => 1,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'PRU_ID' => 4,
-                'PRU_IDUNIDADE' => 4,
-                'PRU_IDFUNCIONAL' => 1452854,
-                'PRU_STATUS' => 1,
+				'id' => 4,
+                'unidade_id' => 4,
+                'funcional_id' => 1452854,
+                'status' => 1,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'PRU_ID' => 5,
-                'PRU_IDUNIDADE' => 5,
-                'PRU_IDFUNCIONAL' => 1452855,
-                'PRU_STATUS' => 1,
+				'id' => 5,
+                'unidade_id' => 5,
+                'funcional_id' => 1452855,
+                'status' => 1,
                 'created_at' => now(),
                 'updated_at' => now()
 			]
