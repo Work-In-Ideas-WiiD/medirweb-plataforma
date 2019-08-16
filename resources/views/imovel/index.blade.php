@@ -43,7 +43,7 @@
                                     <td>{{ $imovel->endereco->cidade->nome }}</td>
                                     <td>{{ $imovel->endereco->cidade->estado->codigo }}</td>
                                     
-                                    <td>{{ $imovel->status ? 'Ativo' : 'Inativo'}}Ativo</td>
+                                    <td>{{ $imovel->status ? 'Ativo' : 'Inativo'}}</td>
                                     
                                     <td>
 

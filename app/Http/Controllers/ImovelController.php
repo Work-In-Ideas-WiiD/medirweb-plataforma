@@ -160,23 +160,15 @@ class ImovelController extends Controller
 
     public function edit(Imovel $imovel)
     {
+        $imovel = $imovel->with('endereco.cidade.estado')->first();
 
-        $clientes = ['' => 'Selecionar Cliente'];
-        $_clientes = Cliente::where('CLI_STATUS', 1)->get();
-        foreach($_clientes as $cliente)
-            $clientes[$cliente->CLI_ID] = $cliente->CLI_NOMEJUR;
+        $clientes = Cliente::whereStatus(1)->pluck('nome_juridico', 'id');
 
-        $estados = ['' => 'Selecionar Estado'];
-        $_estados = Estado::all();
-        foreach($_estados as $estado)
-            $estados[$estado->EST_ID] = $estado->EST_NOME;
+        $estados = Estado::pluck('nome', 'id');
 
-        $cidades = ['' => 'Selecionar Estado'];
-        $_cidades = Cidade::where('CID_IDESTADO', $imovel->IMO_IDESTADO)->get();
-        foreach($_cidades as $cidade)
-            $cidades[$cidade->CID_ID] = $cidade->CID_NOME;
+        $cidades = Cidade::pluck('nome', 'id');
 
-        return view('imovel.edit', compact('imovel', 'clientes', 'estados', 'cidades'));
+        return view('imovel.edit', compact('clientes', 'imovel', 'estados', 'cidades'));
     }
 
 
