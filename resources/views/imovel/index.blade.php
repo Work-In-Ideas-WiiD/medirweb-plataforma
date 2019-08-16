@@ -35,29 +35,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($imoveis as $imo)
+                                @foreach ($imoveis as $imovel)
                                 <tr>
-                                    <td>{{ $imo->IMO_ID  }}</td>
-                                    <td>{{ $imo->IMO_NOME }}</td>
-                                    <td>{{ $imo->administrador->CLI_NOMEJUR }}</td>
-                                    <td>{{ $imo->cidade->CID_NOME }}</td>
-                                    <td>{{ $imo->estado->EST_ABREVIACAO }}</td>
-                                    @if ($imo->IMO_STATUS)
-                                    <td>Ativo</td>
-                                    @else
-                                    <td>Inativo</td>
-                                    @endif
+                                    <td>{{ $imovel->id  }}</td>
+                                    <td>{{ $imovel->nome }}</td>
+                                    <td>{{ $imovel->cliente->nome_juridico }}</td>
+                                    <td>{{ $imovel->endereco->cidade->nome }}</td>
+                                    <td>{{ $imovel->endereco->cidade->estado->codigo }}</td>
+                                    
+                                    <td>{{ $imovel->status ? 'Ativo' : 'Inativo'}}Ativo</td>
+                                    
                                     <td>
 
                                         <?php // Botão visualizar ?>
                                         <div class="btn-group">
-                                            <a href="{{ route('imovel.show', ['imo' => $imo->IMO_ID]) }}" type="button" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></a>
+                                            <a href="{{ route('imovel.show', $imovel->id) }}" type="button" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></a>
                                         </div>
 
                                         @is(['Administrador', 'Sindico'])
                                         <?php // Botão editar ?>
                                         <div class="btn-group">
-                                            <a href="{{ route('imovel.edit', ['imo' => $imo->IMO_ID]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
+                                            <a href="{{ route('imovel.edit', $imovel->id) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
                                         </div>
                                         @endis
 
@@ -65,21 +63,21 @@
                                         <?php // Botão deletar ?>
                                         <div class="btn-group">
                                             <?php $deleteForm = "delete-form-{$loop->index}"; ?>
-                                            <a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_imo_ID{{$imo->IMO_ID}}"><i class="fa fa-trash-o"></i></a>
+                                            <a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_imo_ID{{$imovel->id}}"><i class="fa fa-trash-o"></i></a>
 
                                             <?php // modal deletar ?>
-                                            <div class="modal fade" id="delete_imo_ID{{$imo->IMO_ID }}" tabindex="-1" role="dialog" aria-labelledby="delete_imo_ID{{$imo->IMO_ID}}Label" aria-hidden="true">
+                                            <div class="modal fade" id="delete_imo_ID{{$imovel->id }}" tabindex="-1" role="dialog" aria-labelledby="delete_imo_ID{{$imovel->id}}Label" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                            <h4 class="modal-title text-primary" id="delete_imo_ID{{$imo->IMO_ID}}Label"><i class="fa fa-trash-o"></i> Deletar Cliente</h4>
+                                                            <h4 class="modal-title text-primary" id="delete_imo_ID{{$imovel->id}}Label"><i class="fa fa-trash-o"></i> Deletar Cliente</h4>
                                                         </div>
                                                         <div class="modal-body">
 
-                                                            <p class="alert alert-danger">Tem certeza que deseja excluir imóvel "{{ $imo->IMO_NOME }}" ?</p>
+                                                            <p class="alert alert-danger">Tem certeza que deseja excluir imóvel "{{ $imovel->nome }}" ?</p>
                                                             <div class="form-actions">
-                                                                <a href="{{ route('imovel.destroy', ['imo' => $imo->IMO_ID]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteForm}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+                                                                <a href="{{ route('imovel.destroy', $imovel->id) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteForm}}').submit();" class="btn btn-danger btn-flat">SIM</a>
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
                                                             </div>
 
@@ -88,7 +86,7 @@
                                                 </div>
                                             </div>
 
-                                            {!! Form::open(['route' => ['imovel.destroy', 'imo' => $imo->IMO_ID], 'method' => 'DELETE', 'id' => $deleteForm, 'style' => 'display:none']) !!}
+                                            {!! Form::open(['route' => ['imovel.destroy', $imovel->id], 'method' => 'DELETE', 'id' => $deleteForm, 'style' => 'display:none']) !!}
                                             {!! Form::close() !!}
 
                                         </div>
@@ -96,10 +94,10 @@
 
                                         @is(['Administrador', 'Sindico'])
                                         <?php // Botão lançar consumo
-                                        $ciclo =  $imo->IMO_FATURACICLO - date("d");?>
+                                        $ciclo =  $imovel->fatura_ciclo - date("d");?>
                                         @if($ciclo >= -5 &&  $ciclo <= 5)
                                         <div class="btn-group">
-                                            <a href="{{ route('imovel.consumo', ['imo' => $imo->IMO_ID]) }}" type="button" class="btn btn-success btn-flat"><i class="fa fa-tachometer"></i> <i class="fa fa-dollar"></i></a>
+                                            <a href="{{ route('imovel.consumo', $imovel->id) }}" type="button" class="btn btn-success btn-flat"><i class="fa fa-tachometer"></i> <i class="fa fa-dollar"></i></a>
                                         </div>
                                         @endif
                                         @endis

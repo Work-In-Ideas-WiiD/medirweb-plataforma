@@ -39,7 +39,7 @@ class Imovel extends Model
         return $this->hasMany(Responsavel::class);
     }
 
-    public function users()
+    public function user()
     {
     	return $this->hasMany(User::class);
     }

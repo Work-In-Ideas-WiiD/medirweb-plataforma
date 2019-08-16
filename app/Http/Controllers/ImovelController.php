@@ -38,15 +38,13 @@ class ImovelController extends Controller
     public function index()
     {
 
-        $user = auth()->user()->USER_IMOID;
-
-        if(app('defender')->hasRoles('Administrador')){
-            $imoveis = Imovel::get();
-        }else if(app('defender')->hasRoles(['Sindico', 'Secretário'])){
-            $imoveis = Imovel::get()->where('IMO_ID', $user);
-        }else{
-            return view('error403');
-        }
+        if(app('defender')->hasRoles('Administrador')) {
+            $imoveis = Imovel::with('endereco.cidade.estado')->get();
+        } else if(app('defender')->hasRoles(['Sindico', 'Secretário'])) {
+            $imoveis = auth()->user()->imovel()->get();
+        }else
+            return abort(403, 'você não tem permissão para ver essa página');
+        
 
         return view('imovel.index', compact('imoveis'));
     }
@@ -65,9 +63,8 @@ class ImovelController extends Controller
     {
 
         $clientes = ['' => 'Selecionar Cliente'];
-        $_clientes = Cliente::where('CLI_STATUS', 1)->get();
-        foreach($_clientes as $cliente)
-            $clientes[$cliente->CLI_ID] = $cliente->CLI_NOMEJUR;
+        $clientes = Cliente::where('CLI_STATUS', 1)->get();
+      
 
         $estados = ['' => 'Selecionar Estado'];
         $_estados = Estado::all();
