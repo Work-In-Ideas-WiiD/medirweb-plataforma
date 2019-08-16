@@ -16,177 +16,177 @@ class LeiturasTableSeeder extends Seeder
     {
         Leitura::insert([
             [
-				'LEI_ID' => 1,
-                'LEI_IDPRUMADA' => 1,
-                'LEI_VALOR' => 0,
+				'id' => 1,
+                'prumada_id' => 1,
+                'valor' => 0,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 2,
-                'LEI_IDPRUMADA' => 1,
-                'LEI_VALOR' => 25,
+				'id' => 2,
+                'prumada_id' => 1,
+                'valor' => 25,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 3,
-                'LEI_IDPRUMADA' => 1,
-                'LEI_VALOR' => 125,
+				'id' => 3,
+                'prumada_id' => 1,
+                'valor' => 125,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 4,
-                'LEI_IDPRUMADA' => 1,
-                'LEI_VALOR' => 420,
+				'id' => 4,
+                'prumada_id' => 1,
+                'valor' => 420,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 5,
-                'LEI_IDPRUMADA' => 1,
-                'LEI_VALOR' => 1121,
+				'id' => 5,
+                'prumada_id' => 1,
+                'valor' => 1121,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 6,
-                'LEI_IDPRUMADA' => 2,
-                'LEI_VALOR' => 0,
+				'id' => 6,
+                'prumada_id' => 2,
+                'valor' => 0,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 7,
-                'LEI_IDPRUMADA' => 2,
-                'LEI_VALOR' => 101,
+				'id' => 7,
+                'prumada_id' => 2,
+                'valor' => 101,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 8,
-                'LEI_IDPRUMADA' => 2,
-                'LEI_VALOR' => 122,
+				'id' => 8,
+                'prumada_id' => 2,
+                'valor' => 122,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 9,
-                'LEI_IDPRUMADA' => 2,
-                'LEI_VALOR' => 305,
+				'id' => 9,
+                'prumada_id' => 2,
+                'valor' => 305,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 10,
-                'LEI_IDPRUMADA' => 2,
-                'LEI_VALOR' => 937,
+				'id' => 10,
+                'prumada_id' => 2,
+                'valor' => 937,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 11,
-                'LEI_IDPRUMADA' => 3,
-                'LEI_VALOR' => 0,
+				'id' => 11,
+                'prumada_id' => 3,
+                'valor' => 0,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 12,
-                'LEI_IDPRUMADA' => 3,
-                'LEI_VALOR' => 90,
+				'id' => 12,
+                'prumada_id' => 3,
+                'valor' => 90,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 13,
-                'LEI_IDPRUMADA' => 3,
-                'LEI_VALOR' => 210,
+				'id' => 13,
+                'prumada_id' => 3,
+                'valor' => 210,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 14,
-                'LEI_IDPRUMADA' => 3,
-                'LEI_VALOR' => 342,
+				'id' => 14,
+                'prumada_id' => 3,
+                'valor' => 342,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 15,
-                'LEI_IDPRUMADA' => 3,
-                'LEI_VALOR' => 411,
+				'id' => 15,
+                'prumada_id' => 3,
+                'valor' => 411,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 16,
-                'LEI_IDPRUMADA' => 4,
-                'LEI_VALOR' => 0,
+				'id' => 16,
+                'prumada_id' => 4,
+                'valor' => 0,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 17,
-                'LEI_IDPRUMADA' => 4,
-                'LEI_VALOR' => 77,
+				'id' => 17,
+                'prumada_id' => 4,
+                'valor' => 77,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 18,
-                'LEI_IDPRUMADA' => 4,
-                'LEI_VALOR' => 1478,
+				'id' => 18,
+                'prumada_id' => 4,
+                'valor' => 1478,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 19,
-                'LEI_IDPRUMADA' => 4,
-                'LEI_VALOR' => 1982,
+				'id' => 19,
+                'prumada_id' => 4,
+                'valor' => 1982,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 20,
-                'LEI_IDPRUMADA' => 4,
-                'LEI_VALOR' => 2125,
+				'id' => 20,
+                'prumada_id' => 4,
+                'valor' => 2125,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 21,
-                'LEI_IDPRUMADA' => 5,
-                'LEI_VALOR' => 0,
+				'id' => 21,
+                'prumada_id' => 5,
+                'valor' => 0,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 22,
-                'LEI_IDPRUMADA' => 5,
-                'LEI_VALOR' => 11,
+				'id' => 22,
+                'prumada_id' => 5,
+                'valor' => 11,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 23,
-                'LEI_IDPRUMADA' => 5,
-                'LEI_VALOR' => 22,
+				'id' => 23,
+                'prumada_id' => 5,
+                'valor' => 22,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 24,
-                'LEI_IDPRUMADA' => 5,
-                'LEI_VALOR' => 33,
+				'id' => 24,
+                'prumada_id' => 5,
+                'valor' => 33,
                 'created_at' => now(),
                 'updated_at' => now()
 			],
 			[
-				'LEI_ID' => 25,
-                'LEI_IDPRUMADA' => 5,
-                'LEI_VALOR' => 44,
+				'id' => 25,
+                'prumada_id' => 5,
+                'valor' => 44,
                 'created_at' => now(),
                 'updated_at' => now()
 			]
