@@ -32,22 +32,22 @@
 
                     <div class='col-md-6'>
                         <div class='form-group'>
-                            {{ Form::label('CLI_TIPO', 'Tipo') }}
-                            <select id='CLI_TIPO' name='CLI_TIPO' class='form-control' >
+                            {{ Form::label('tipo', 'Tipo') }}
+                            <select id='tipo' name='tipo' class='form-control' >
                                 <option value='' selected>Selecione uma opção</option>
                                 <option value='1'>CPF</option>
                                 <option value='2'>CNPJ</option>
                             </select>
 
-                            @if ($errors->has('CLI_TIPO'))
+                            @if ($errors->has('tipo'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_TIPO') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('tipo') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group cpf'>
                             {{ Form::label('cpf', 'Documento') }}
-                            {{ Form::text('cpf', '', ['class' => 'form-control mask-cpf classcpf', 'placeholder' => '']) }}
+                            {{ Form::text('cpf', '', ['class' => 'form-control mask-cpf classcpf']) }}
 
                             @if ($errors->has('cpf'))
                             <span class="help-block">
@@ -57,7 +57,7 @@
                         </div>
                         <div class='form-group cnpj' style="display: none;">
                             {{ Form::label('cnpj', 'Documento') }}
-                            {{ Form::text('cnpj', '', ['class' => 'form-control mask-cnpj classcnpj', 'placeholder' => '']) }}
+                            {{ Form::text('cnpj', '', ['class' => 'form-control mask-cnpj classcnpj']) }}
 
                             @if ($errors->has('cnpj'))
                             <span class="help-block">
@@ -66,45 +66,45 @@
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_NOMEJUR', 'Nome completo / Razão Social') }}
-                            {{ Form::text('CLI_NOMEJUR', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('nome_juridico', 'Nome completo / Razão Social') }}
+                            {{ Form::text('nome_juridico', '', ['class' => 'form-control']) }}
 
-                            @if ($errors->has('CLI_NOMEJUR'))
+                            @if ($errors->has('nome_juridico'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_NOMEJUR') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('nome_juridico') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_NOMEFAN', 'Nome no comprovante / Nome Fantasia') }}
-                            {{ Form::text('CLI_NOMEFAN', '', ['class' => 'form-control nome', 'placeholder' => '']) }}
+                            {{ Form::label('nome_fantasia', 'Nome no comprovante / Nome Fantasia') }}
+                            {{ Form::text('nome_fantasia', '', ['class' => 'form-control nome']) }}
 
-                            @if ($errors->has('CLI_NOMEFAN'))
+                            @if ($errors->has('nome_fantasia'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_NOMEFAN') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('nome_fantasia') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_DATANASC', 'Data de nascimento') }}
-                            {{ Form::date('CLI_DATANASC', '', ['class'=>'form-control']) }}
+                            {{ Form::label('data_nascimento', 'Data de nascimento') }}
+                            {{ Form::date('data_nascimento', '', ['class'=>'form-control']) }}
 
-                            @if ($errors->has('CLI_DATANASC'))
+                            @if ($errors->has('data_nascimento'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_DATANASC') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('data_nascimento') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_STATUS', 'Status') }}
+                            {{ Form::label('status', 'Status') }}
                             <select name='CLI_STATUS' class='form-control' >
                                 <option value='1'>Ativo</option>
                                 <option value='0'>Inativo</option>
                             </select>
 
-                            @if ($errors->has('CLI_STATUS'))
+                            @if ($errors->has('status'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_STATUS') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('status') }}</strong>
                             </span>
                             @endif
                         </div>
@@ -112,44 +112,44 @@
 
                     <div class='col-md-6'>
                         <div class='form-group'>
-                            {{ Form::label('CLI_LOGRADOURO', 'Logradouro') }}
-                            {{ Form::text('CLI_LOGRADOURO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('logradouro', 'Logradouro') }}
+                            {{ Form::text('logradouro', '', ['class' => 'form-control']) }}
 
-                            @if ($errors->has('CLI_LOGRADOURO'))
+                            @if ($errors->has('logradouro'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_LOGRADOURO') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('logradouro') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_COMPLEMENTO', 'Complemento') }}
-                            {{ Form::text('CLI_COMPLEMENTO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('complemento', 'Complemento') }}
+                            {{ Form::text('complemento', '', ['class' => 'form-control']) }}
 
-                            @if ($errors->has('CLI_COMPLEMENTO'))
+                            @if ($errors->has('complemento'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_COMPLEMENTO') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('complemento') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{ Form::label('CLI_NUMERO', 'Número') }}
-                                    {{ Form::text('CLI_NUMERO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                                    {{ Form::label('numero', 'Número') }}
+                                    {{ Form::text('numero', '', ['class' => 'form-control']) }}
 
-                                    @if ($errors->has('CLI_NUMERO'))
+                                    @if ($errors->has('numero'))
                                     <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('CLI_NUMERO') }}</strong>
+                                        <strong style="color: red;">{{ $errors->first('numero') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                                 <div class="col-md-6">
-                                    {{ Form::label('CLI_CEP', 'CEP') }}
-                                    {{ Form::text('CLI_CEP', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                                    {{ Form::label('cep', 'CEP') }}
+                                    {{ Form::text('cep', '', ['class' => 'form-control']) }}
 
-                                    @if ($errors->has('CLI_CEP'))
+                                    @if ($errors->has('cep'))
                                     <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('CLI_CEP') }}</strong>
+                                        <strong style="color: red;">{{ $errors->first('cep') }}</strong>
                                     </span>
                                     @endif
                                 </div>
@@ -157,34 +157,32 @@
 
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_BAIRRO', 'Bairro') }}
-                            {{ Form::text('CLI_BAIRRO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('bairro', 'Bairro') }}
+                            {{ Form::text('bairro', '', ['class' => 'form-control']) }}
 
-                            @if ($errors->has('CLI_BAIRRO'))
+                            @if ($errors->has('bairro'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_BAIRRO') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('bairro') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_ESTADO', 'Estado') }}
-                            {{--{{ Form::text('CLI_ESTADO', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                            {{ Form::select('CLI_ESTADO', $estados, null, ['class' => 'avalidate form-control chosen-select-CLI_ESTADO', 'autocomplete' => 'off']) }}
+                            {{ Form::label('estado_id', 'Estado') }}
+                            {{ Form::select('estado_id', $estados, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
 
-                            @if ($errors->has('CLI_ESTADO'))
+                            @if ($errors->has('estado_id'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_ESTADO') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('estado_id') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_CIDADE', 'Cidade') }}
-                            {{--{{ Form::text('CLI_CIDADE', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                            {{ Form::select('CLI_CIDADE', ['' => 'Selecionar Cidade'], null, ['class' => 'avalidate form-control chosen-select-CLI_CIDADE', 'autocomplete' => 'off']) }}
+                            {{ Form::label('cidade_id', 'Cidade') }}
+                            {{ Form::select('cidade_id', ['' => 'Selecionar Cidade'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
 
-                            @if ($errors->has('CLI_CIDADE'))
+                            @if ($errors->has('cidade_id'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_CIDADE') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('cidade_id') }}</strong>
                             </span>
                             @endif
                         </div>

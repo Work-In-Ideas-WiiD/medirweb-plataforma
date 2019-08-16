@@ -112,7 +112,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
 
     /* Clientes */
-    
+    Route::resource('cliente', 'ClienteController', [
+        'middleware' => [
+            'index' => 'permissao:administrador',
+            'create' => 'permissao:administrador',
+        ]
+    ]);
+    /*
     Route::get('/cliente', 'ClienteController@index')->name('Listar Clientes');
     Route::get('/cliente/adicionar', 'ClienteController@create')->name('Adicionar Cliente');
     Route::post('novo-cliente', array('uses' => 'ClienteController@store'));
@@ -120,7 +126,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/cliente/editar/{cliente}', 'ClienteController@edit')->name('clinete.edit');
     Route::put('/cliente/update/{cliente}', 'ClienteController@update')->name('clinete.update');
     Route::delete('cliente/{cliente}', array('as'=>'cliente.destroy', 'uses'=>'ClienteController@destroy'));
-    
+    */
     
     /* Equipamento */
     Route::get('/equipamento/adicionar', 'PrumadaController@create')->name('Adicionar Equipamento');

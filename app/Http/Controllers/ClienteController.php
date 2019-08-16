@@ -16,36 +16,20 @@ use Illuminate\Support\Facades\File;
 class ClienteController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
+        $clientes = Cliente::has('endereco.cidade.estado')
+            ->with('endereco.cidade.estado')->get();
 
-        $clientes = Cliente::with('estado', 'cidade')->get();
-
-        
-        return view('cliente.listar', ['clientes' => $clientes]);
+        return view('cliente.index', compact('clientes'));
     }
 
     public function create()
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
+        $estados = Estado::pluck('nome', 'id');
+        $cidades = Cidade::pluck('nome', 'id');
 
-        $estados = ['' => 'Selecionar Estado'];
-        $_estados = Estado::all();
-        foreach($_estados as $estado)
-            $estados[$estado->EST_ID] = $estado->EST_NOME;
-
-
-        return view('cliente.cadastrar', compact('estados'));
+        return view('cliente.create', compact('estados', 'cidades'));
     }
 
     public function store(ClienteSaveRequest $request)
