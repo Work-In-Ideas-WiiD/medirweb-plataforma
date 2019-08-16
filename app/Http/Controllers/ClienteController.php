@@ -63,42 +63,26 @@ class ClienteController extends Controller
 
     public function show(Cliente $cliente)
     {
-        if(!app('defender')->hasRoles('Administrador'))
-            return view('error403');
+        $cliente = $cliente->with('endereco.cidade.estado')->first();
 
-        $cliente['CLI_CIDADE'] = $cliente->cidade->CID_NOME;
-        $cliente['CLI_ESTADO'] = $cliente->estado->EST_ABREVIACAO;
-
-        return view('cliente.visualizar', compact('cliente'));
+        return view('cliente.show', compact('cliente'));
     }
 
     public function edit(Cliente $cliente)
     {
-        if(!app('defender')->hasRoles('Administrador'))
-            return view('error403');       
+        $cliente = $cliente->with('endereco.cidade.estado')->first();
 
+        $estados = Estado::pluck('nome', 'id');
 
-        $estados = ['' => 'Selecionar Estado'];
-        $_estados = Estado::all();
-        foreach($_estados as $estado)
-            $estados[$estado->EST_ID] = $estado->EST_NOME;
+        $cidades = Cidade::pluck('nome', 'id');
 
+        $imoveis = $cliente->imovel()->count();
 
-        $cidades = ['' => 'Selecionar Estado'];
-        $_cidades = Cidade::where('CID_IDESTADO', $cliente->CLI_ESTADO)->get();
-        foreach($_cidades as $cidade)
-            $cidades[$cidade->CID_ID] = $cidade->CID_NOME;
-
-        $imoveis = $cliente->getImoveis()->count();
-
-        return view('cliente.editar', compact('cliente', 'estados', 'imoveis', 'cidades'));
+        return view('cliente.edit', compact('cliente', 'estados', 'imoveis', 'cidades'));
     }
 
     public function update(ClienteEditRequest $request, Cliente $cliente)
     {
-        if(!app('defender')->hasRoles('Administrador'))
-            return view('error403');
-
         $dataForm = $request->all();
 
 
@@ -122,15 +106,11 @@ class ClienteController extends Controller
 
     public function destroy(Request $request, Cliente $cliente)
     {
-        if(!app('defender')->hasRoles('Administrador'))
-            return view('error403');
-
 
         $foto_path = public_path("upload/clientes/".$cliente->CLI_FOTO);
 
-        if (File::exists($foto_path)) {
+        if (File::exists($foto_path))
             File::delete($foto_path);
-        }
 
         $cliente->delete();
 

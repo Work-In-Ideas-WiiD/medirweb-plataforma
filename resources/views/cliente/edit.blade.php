@@ -16,7 +16,7 @@
 @section('content')
 <div class="row">
     <div class="col-md-8">
-        {!! Form::model($cliente, ['route' => ['clinete.update', $cliente->CLI_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
+        {!! Form::model($cliente, ['route' => ['cliente.update', $cliente->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 
         <!-- Informações Pessoais -->
         <div class="box box-warning">
@@ -32,102 +32,68 @@
 
                     <div class='col-md-6'>
                         <div class='form-group'>
-                            {{ Form::label('CLI_TIPO', 'Tipo') }}
-                            {{ Form::select('CLI_TIPO', ['' => 'Selecione uma opção', '1' => 'CPF', '2' => 'CNPJ'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::label('tipo', 'Tipo') }}
+                            {{ Form::select('tipo', ['' => 'Selecione uma opção', '1' => 'CPF', '2' => 'CNPJ'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
 
-                            @if ($errors->has('CLI_TIPO'))
+                            @if ($errors->has('tipo'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_TIPO') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('tipo') }}</strong>
                             </span>
                             @endif
                         </div>
-                        @if($cliente->CLI_TIPO == 1)
-                        <div class='form-group cpf'>
-                            {{ Form::label('cpf', 'Documento') }}
-                            {{ Form::text('cpf', $cliente->CLI_DOCUMENTO, ['class' => 'form-control mask-cpf classcpf', 'placeholder' => '']) }}
-
-                            @if ($errors->has('cpf'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('cpf') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-
-                        <div class='form-group cnpj' style="display: none;">
-                            {{ Form::label('cnpj', 'Documento') }}
-                            {{ Form::text('cnpj', '', ['class' => 'form-control mask-cnpj classcnpj', 'placeholder' => '']) }}
-
-                            @if ($errors->has('cnpj'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('cnpj') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        @else
-                        <div class='form-group cpf' style="display: none;">
-                            {{ Form::label('cpf', 'Documento') }}
-                            {{ Form::text('cpf', '', ['class' => 'form-control mask-cpf classcpf', 'placeholder' => '']) }}
-
-                            @if ($errors->has('cpf'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('cpf') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-
-                        <div class='form-group cnpj' >
-                            {{ Form::label('cnpj', 'Documento') }}
-                            {{ Form::text('cnpj', $cliente->CLI_DOCUMENTO, ['class' => 'form-control mask-cnpj classcnpj', 'placeholder' => '']) }}
-
-                            @if ($errors->has('cnpj'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('cnpj') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        @endif
-
 
                         <div class='form-group'>
-                            {{ Form::label('CLI_NOMEJUR', 'Nome completo / Razão Social') }}
-                            {{ Form::text('CLI_NOMEJUR', null, ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('documento', 'Documento') }}
+                            {{ Form::text('documento', $cliente->documento, ['class' => 'form-control']) }}
 
-                            @if ($errors->has('CLI_NOMEJUR'))
+                            @if ($errors->has('documento'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_NOMEJUR') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('documento') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+
+                      
+                        <div class='form-group'>
+                            {{ Form::label('nome_juridico', 'Nome completo / Razão Social') }}
+                            {{ Form::text('nome_juridico', $cliente->nome_juridico, ['class' => 'form-control']) }}
+
+                            @if ($errors->has('nome_juridico'))
+                            <span class="help-block">
+                                <strong style="color: red;">{{ $errors->first('nome_juridico') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_NOMEFAN', 'Nome no comprovante / Nome Fantasia') }}
-                            {{ Form::text('CLI_NOMEFAN', null, ['class' => 'form-control nome', 'placeholder' => '']) }}
+                            {{ Form::label('nome_fantasia', 'Nome no comprovante / Nome Fantasia') }}
+                            {{ Form::text('nome_fantasia', $cliente->nome_fantasia, ['class' => 'form-control nome']) }}
 
-                            @if ($errors->has('CLI_NOMEFAN'))
+                            @if ($errors->has('nome_fantasia'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_NOMEFAN') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('nome_fantasia') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_DATANASC', 'Data de nascimento') }}
-                            {{ Form::date('CLI_DATANASC', null, ['class'=>'form-control']) }}
+                            {{ Form::label('data_nascimento', 'Data de nascimento') }}
+                            {{ Form::date('data_nascimento', $cliente->data_nascimento, ['class'=>'form-control']) }}
 
-                            @if ($errors->has('CLI_DATANASC'))
+                            @if ($errors->has('data_nascimento'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_DATANASC') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('data_nascimento') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_STATUS', 'Status') }}
-                            <select name='CLI_STATUS' class='form-control' >
+                            {{ Form::label('status', 'Status') }}
+                            <select name='status' class='form-control' >
                                 <option value='1'>Ativo</option>
                                 <option value='0'>Inativo</option>
                             </select>
 
-                            @if ($errors->has('CLI_STATUS'))
+                            @if ($errors->has('status'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_STATUS') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('status') }}</strong>
                             </span>
                             @endif
                         </div>
@@ -135,78 +101,76 @@
 
                     <div class='col-md-6'>
                         <div class='form-group'>
-                            {{ Form::label('CLI_LOGRADOURO', 'Logradouro') }}
-                            {{ Form::text('CLI_LOGRADOURO', null, ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('logradouro', 'logradouro') }}
+                            {{ Form::text('logradouro', $cliente->endereco->logradouro, ['class' => 'form-control']) }}
 
-                            @if ($errors->has('CLI_LOGRADOURO'))
+                            @if ($errors->has('logradouro'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_LOGRADOURO') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('logradouro') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_COMPLEMENTO', 'Complemento') }}
-                            {{ Form::text('CLI_COMPLEMENTO', null, ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('complemento', 'Complemento') }}
+                            {{ Form::text('complemento', $cliente->endereco->complemento, ['class' => 'form-control']) }}
 
-                            @if ($errors->has('CLI_COMPLEMENTO'))
+                            @if ($errors->has('complemento'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_COMPLEMENTO') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('complemento') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{ Form::label('CLI_NUMERO', 'Número') }}
-                                    {{ Form::text('CLI_NUMERO', null, ['class' => 'form-control', 'placeholder' => '']) }}
+                                    {{ Form::label('numero', 'Número') }}
+                                    {{ Form::text('numero', $cliente->endereco->numero, ['class' => 'form-control']) }}
 
-                                    @if ($errors->has('CLI_NUMERO'))
+                                    @if ($errors->has('numero'))
                                     <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('CLI_NUMERO') }}</strong>
+                                        <strong style="color: red;">{{ $errors->first('numero') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                                 <div class="col-md-6">
-                                    {{ Form::label('CLI_CEP', 'CEP') }}
-                                    {{ Form::text('CLI_CEP', null, ['class' => 'form-control', 'placeholder' => '']) }}
+                                    {{ Form::label('cep', 'cep') }}
+                                    {{ Form::text('cep', $cliente->endereco->cep, ['class' => 'form-control']) }}
 
-                                    @if ($errors->has('CLI_CEP'))
+                                    @if ($errors->has('cep'))
                                     <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('CLI_CEP') }}</strong>
+                                        <strong style="color: red;">{{ $errors->first('cep') }}</strong>
                                     </span>
                                     @endif
                                 </div>
                             </div>
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_BAIRRO', 'Bairro') }}
-                            {{ Form::text('CLI_BAIRRO', null, ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('bairro', 'Bairro') }}
+                            {{ Form::text('bairro', $cliente->endereco->bairro, ['class' => 'form-control']) }}
 
-                            @if ($errors->has('CLI_BAIRRO'))
+                            @if ($errors->has('bairro'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_BAIRRO') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('bairro') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_ESTADO', 'Estado') }}
-                            {{--{{ Form::text('CLI_ESTADO', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                            {{ Form::select('CLI_ESTADO', $estados, null, ['class' => 'avalidate form-control chosen-select-CLI_ESTADO', 'autocomplete' => 'off']) }}
+                            {{ Form::label('cidade_id', 'Estado') }}
+                            {{ Form::select('cidade_id', $estados, $cliente->endereco->cidade->estado->id, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
 
-                            @if ($errors->has('CLI_ESTADO'))
+                            @if ($errors->has('cidade_id'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_ESTADO') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('cidade_id') }}</strong>
                             </span>
                             @endif
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('CLI_CIDADE', 'Cidade') }}
-                            {{--{{ Form::text('CLI_CIDADE', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                            {{ Form::select('CLI_CIDADE', $cidades, null, ['class' => 'avalidate form-control chosen-select-CLI_CIDADE', 'autocomplete' => 'off']) }}
+                            {{ Form::label('cidade_id', 'Cidade') }}
+                            {{ Form::select('cidade_id', $cidades, $cliente->endereco->cidade->id, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
 
-                            @if ($errors->has('CLI_CIDADE'))
+                            @if ($errors->has('cidade_id'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_CIDADE') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('cidade_id') }}</strong>
                             </span>
                             @endif
                         </div>
@@ -288,7 +252,7 @@
                 <h5 class="widget-user-desc"></h5>
             </div>
             <div class="widget-user-image">
-                <img class="img-circle" @if(isset($cliente->CLI_FOTO)) src="{{ url('/upload/clientes/'.$cliente->CLI_FOTO) }}" @else src="http://i64.tinypic.com/6gxxyo.png" @endif  id="preview-image-foto" alt="Avatar">
+                <img class="img-circle" @if($cliente->foto) src="{{ url('/upload/clientes/'.$cliente->foto) }}" @else src="http://i64.tinypic.com/6gxxyo.png" @endif  id="preview-image-foto" alt="Avatar">
             </div>
             <div class="box-footer">
                 <div class="row">

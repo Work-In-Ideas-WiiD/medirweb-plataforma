@@ -112,12 +112,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
 
     /* Clientes */
-    Route::resource('cliente', 'ClienteController', [
-        'middleware' => [
-            'index' => 'permissao:administrador',
-            'create' => 'permissao:administrador',
-        ]
-    ]);
+    Route::resource('cliente', 'ClienteController')->middleware('permissao:administrador');
     /*
     Route::get('/cliente', 'ClienteController@index')->name('Listar Clientes');
     Route::get('/cliente/adicionar', 'ClienteController@create')->name('Adicionar Cliente');

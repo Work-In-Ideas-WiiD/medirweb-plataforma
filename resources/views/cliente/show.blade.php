@@ -5,11 +5,11 @@
 {!! Html::style( asset('css/total.css')) !!}
 
 @section('content_header')
-<h1>Clientes <small>Vizualizar Cliente</small></h1>
+<h1>Clientes <small>Visualizar Cliente</small></h1>
 <ol class="breadcrumb">
 	<li><a href="/home"><i class="fa fa-dashboard"></i> Home</a></li>
 	<li><a href="/cliente">Cliente</a></li>
-	<li class="active">Vizualizar</li>
+	<li class="active">Visualizar</li>
 </ol>
 @stop
 
@@ -41,15 +41,11 @@
 						<div class="col-md-3">
 							<div class="bloco-imovel-info">
 								<p class="titulo"><b><i class="fa fa-user"></i> Dados do Usuário</b></p>
-								<p>{{$cliente->CLI_DOCUMENTO}}</p>
-								<p>{{date('d/m/Y', strtotime($cliente->CLI_DATANASC))}}</p>
-								<p>{{$cliente->CLI_NOMEJUR}}</p>
-								<p>{{$cliente->CLI_NOMEFAN}}</p>
-								@if ($cliente->CLI_STATUS)
-								<p>Status: Ativo</p>
-								@else
-								<p>Status: Inativo</p>
-								@endif
+								<p>{{ $cliente->documento }}</p>
+								<p>{{ $cliente->data_nascimento }}</p>
+								<p>{{ $cliente->nome_juridico }}</p>
+								<p>{{ $cliente->nome_fantasia }}</p>
+								<p>{{ $cliente->status ? 'Ativo' : 'Inativo' }}</p>
 							</div>
 						</div>
 						<!-- FIM - Dados do Usuário -->
@@ -58,11 +54,11 @@
 						<div class="col-md-3">
 							<div class="bloco-imovel-info">
 								<p class="titulo"><i class="fa fa-map"></i> <b>Localização</b></p>
-								<p>{{ $cliente->CLI_LOGRADOURO }}</p>
-								<p>{{ $cliente->CLI_COMPLEMENTO }}, Nº{{ $cliente->CLI_NUMERO }}</p>
-								<p>{{ $cliente->CLI_BAIRRO }}</p>
-								<p>{{ $cliente->CLI_CIDADE }} - {{ $cliente->CLI_ESTADO }}</p>
-								<p>{{ $cliente->CLI_CEP }}</p>
+								<p>{{ $cliente->endereco->logradouro }}</p>
+								<p>{{ $cliente->endereco->complemento }}, Nº{{ $cliente->endereco->numero }}</p>
+								<p>{{ $cliente->endereco->bairro }}</p>
+								<p>{{ $cliente->endereco->cidade->nome }} - {{ $cliente->endereco->cidade->estado->nome }}</p>
+								<p>{{ $cliente->endereco->cep }}</p>
 							</div>
 						</div>
 						<!-- FIM - Endereço -->

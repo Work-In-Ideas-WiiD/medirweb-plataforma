@@ -46,22 +46,12 @@
                             @endif
                         </div>
                         <div class='form-group cpf'>
-                            {{ Form::label('cpf', 'Documento') }}
-                            {{ Form::text('cpf', '', ['class' => 'form-control mask-cpf classcpf']) }}
+                            {{ Form::label('documento', 'Documento') }}
+                            {{ Form::text('documento', '', ['class' => 'form-control mask-cpf classcpf']) }}
 
-                            @if ($errors->has('cpf'))
+                            @if ($errors->has('documento'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('cpf') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        <div class='form-group cnpj' style="display: none;">
-                            {{ Form::label('cnpj', 'Documento') }}
-                            {{ Form::text('cnpj', '', ['class' => 'form-control mask-cnpj classcnpj']) }}
-
-                            @if ($errors->has('cnpj'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('cnpj') }}</strong>
+                                <strong style="color: red;">{{ $errors->first('documento') }}</strong>
                             </span>
                             @endif
                         </div>
