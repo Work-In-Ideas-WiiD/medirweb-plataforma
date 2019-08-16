@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Models\Imovel;
-
+use App\Models\Endereco;
 
 class ImoveisTableSeeder extends Seeder
 {
@@ -13,57 +13,161 @@ class ImoveisTableSeeder extends Seeder
      */
     public function run()
     {
-        Imovel::insert([
-			[
-				'id' => 1,
-				'cliente_id' => 1,
-				'cnpj' => '43.047.971/0001-08',
-				'nome' => 'Condomínio Residencial Maranata',
-				'logradouro' => 'Quadra 122 LT-14',
-				'complemento' => '',
-				'numero' => '',
-				'bairro' => 'Asa Sul',
-				'cidade' => 1,
-				'estado_id' => 9,
-				'cep' => '74000-000',
-				'IMO_RESPONSAVEIS' => 'Eduardo Hudson Josué (Síndico)<br/>Maria Jordana Gomes (Sub-síndico)<br/>Tulio Cairo Pereira (Zelador)',
-				'IMO_TELEFONES' => '(61) 98999-0055 (Eduardo)<br/>(61) 98866-4411 (Tulio)<br/>(61) 4555-0078 (Tulio)',
-				'status' => 1
-			],
-			[
-                'id' => 2,
-                'cliente_id' => 1,
-                'cnpj' => '40.373.748/0001-54',
-                'nome' => 'Edifício Leo Lince',
-                'logradouro' => 'Rua 450',
-                'complemento' => '',
-                'numero' => '788',
-                'bairro' => 'Setor Universitário',
-                'cidade' => 1,
-                'estado_id' => 9,
-                'cep' => '74000-000',
-                'IMO_RESPONSAVEIS' => 'Hudson Josué (Síndico)<br/>Jordana Gomes (Sub-síndico)<br/>Cairo Pereira (Zelador)',
-                'IMO_TELEFONES' => '(61) 98999-0055 (Hudson)<br/>(61) 98866-4411 (Jordana)<br/>(61) 4555-0078 (Cairo)',
-                'status' => 1
-			],
-			[
-                'id' => 3,
-                'cliente_id' => 1,
-                'cnpj' => '43.077.581/0001-72',
-                'nome' => 'Alphaville',
-                'logradouro' => 'BR 156',
-                'complemento' => 'Km 45',
-                'numero' => 'S/N',
-                'bairro' => 'Alphaville',
-                'cidade' => 1,
-                'estado_id' => 9,
-                'cep' => '74000-000',
-                'IMO_RESPONSAVEIS' => 'Josué (Síndico)<br/>Gomes (Sub-síndico)<br/>Pereira (Zelador)',
-                'IMO_TELEFONES' => '(61) 98999-0055 (Josué)<br/>(61) 98866-4411 (Gomes)<br/>(61) 4555-0078 (Pereira)',
-                'status' => 1
-     		]
 
+        $imovel = Endereco::create([
+            'logradouro' => 'Quadra 122 LT-14',
+            'complemento' => '',
+            'numero' => '',
+            'bairro' => 'Asa Sul',
+            'cidade_id' => 1,
+            'cep' => '74000-000',
+        ])->imovel()->create([
+            'id' => 1,
+            'cliente_id' => 1,
+            'cnpj' => '43.047.971/0001-08',
+            'nome' => 'Condomínio Residencial Maranata',
+            'status' => 1
         ]);
-       
+
+        $imovel->responsavel()->insert([
+            [
+                'imovel_id' => $imovel->id,
+                'nome' => 'Eduardo Hudson Josué',
+                'descricao' => 'Síndico'
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'nome' => 'Maria Jordana Gomes',
+                'descricao' => 'Sub-síndico'
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'nome' => 'Tulio Cairo Pereira',
+                'descricao' => 'Zelador'
+            ]
+        ]);
+
+        $imovel->telefone()->insert([
+            [
+                'imovel_id' => $imovel->id,
+                'numero' => '(61) 98999-0055',
+                'etiqueta' => 'Eduardo'
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'numero' => '(61) 98866-4411',
+                'etiqueta' => 'Tulio'
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'numero' => '(61) 4555-0078',
+                'etiqueta' => 'Tulio'
+            ]
+        ]);
+
+
+		$imovel = Endereco::create([
+            'logradouro' => 'Rua 450',
+            'complemento' => '',
+            'numero' => '788',
+            'bairro' => 'Setor Universitário',
+            'cidade_id' => 1,
+            'cep' => '74000-000'
+        ])->imovel()->create([
+            'id' => 2,
+            'cliente_id' => 1,
+            'cnpj' => '40.373.748/0001-54',
+            'nome' => 'Edifício Leo Lince',
+            'status' => 1
+        ]);
+
+        $imovel->responsavel()->insert([
+            [
+                'imovel_id' => $imovel->id,
+                'nome' => 'Hudson Josué',
+                'descricao' => 'Síndico'
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'nome' => 'Jordana Gomes',
+                'descricao' => 'Sub-síndico'
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'nome' => 'Cairo Pereira',
+                'descricao' => 'Zelador'
+            ]
+        ]);
+
+        $imovel->telefone()->insert([
+            [
+                'imovel_id' => $imovel->id,
+                'numero' => '(61) 98999-0055',
+                'etiqueta' => 'Hudson'
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'numero' => '(61) 98866-4411',
+                'descricao' => 'Jordana'
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'numero' => '(61) 4555-0078',
+                'descricao' => 'Cairo'
+            ]
+        ]);
+				
+        
+        $imovel = Endereco::create([            
+            'logradouro' => 'BR 156',
+            'complemento' => 'Km 45',
+            'numero' => 'S/N',
+            'bairro' => 'Alphaville',
+            'cidade_id' => 1,
+            'cep' => '74000-000',
+        ])->imovel()->create([
+            'id' => 3,
+            'cliente_id' => 1,
+            'cnpj' => '43.077.581/0001-72',
+            'nome' => 'Alphaville',
+            'status' => 1
+        ]);
+
+        $imovel->responsavel()->insert([
+            [
+                'imovel_id' => $imovel->id,
+                'nome' => 'Josué',
+                'descricao' => 'Síndico',
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'nome' => 'Gomes',
+                'descricao' => 'Sub-síndico',
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'nome' => 'Pereira',
+                'descricao' => 'Zelador'
+            ]
+        ]);
+
+        $imovel->telefone()->insert([
+            [
+                'imovel_id' => $imovel->id,
+                'numero' => '(61) 98999-0055',
+                'etiqueta' => 'Josué'
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'numero' => '(61) 98866-4411',
+                'etiqueta' => 'Gomes'
+            ],
+            [
+                'imovel_id' => $imovel->id,
+                'numero' => '(61) 4555-0078',
+                'etiqueta' => 'Pereira'
+            ]
+        ]);
+
     }
 }

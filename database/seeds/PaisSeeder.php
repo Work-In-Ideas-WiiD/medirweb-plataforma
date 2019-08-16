@@ -15,7 +15,7 @@ class PaisSeeder extends Seeder
     {
         Pais::insert([
             'nome' => 'Brasil',
-            'code' => 'BR'
+            'codigo' => 'BR'
         ]);
     }
 }
