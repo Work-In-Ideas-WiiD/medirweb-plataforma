@@ -18,7 +18,7 @@ Route::middleware('auth')->group(function () {
   
     
     
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home')->middleware('permissao:administrador');
     
     Route::post('importar/csv', 'TesteController@process')->middleware('permissao:administrador');
     

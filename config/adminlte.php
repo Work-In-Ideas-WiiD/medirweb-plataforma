@@ -121,7 +121,7 @@ return [
                 [
                     'text' => 'Novo cliente',
                     'icon' => 'plus',
-                    'url'  => 'cliente/adicionar',
+                    'url'  => 'cliente/create',
                 ],
                 [
                     'text' => 'Ver todos',

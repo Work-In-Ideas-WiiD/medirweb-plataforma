@@ -19,20 +19,16 @@ class HomeController extends Controller
 
     public function index()
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
         /* Dashboard */
         $datadehoje = Carbon::today();
 
         // Hidrometros ativos
         $pruAtivas = array();
 
-        $timelines = Timeline::where('TIMELINE_ICON', "fa fa-check bg-green")->get();
+        $timelines = Timeline::where('icone', "fa fa-check bg-green")->get();
 
         foreach ($timelines as $timeline) {
-            $prumadasAtivas = Prumada::get()->where('PRU_ID', $timeline->TIMELINE_IDPRUMADA);
+            $prumadasAtivas = Prumada::where('id', $timeline->TIMELINE_IDPRUMADA)->get();
             foreach ($prumadasAtivas as $prumadaAtiva) {
 
                 $leituraAtual = $prumadaAtiva->getLeituras()->orderBy('created_at', 'desc')->first();
@@ -52,7 +48,7 @@ class HomeController extends Controller
         }
 
         return view('dashboard.ver', ['datacalendario' => $datadehoje, 'total_clientes' => Cliente::count(), 'total_imovel' => Imovel::count(),
-        'ativos_hidrometros' => Prumada::where('PRU_STATUS', 1)->count(), 'total_timeline' => Timeline::count(), 'pruAtivas' => $pruAtivas]);
+        'ativos_hidrometros' => Prumada::where('status', 1)->count(), 'total_timeline' => Timeline::count(), 'pruAtivas' => $pruAtivas]);
     }
 
 }
