@@ -13,10 +13,6 @@
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('/', 'ImovelController@buscar')->name('inicio');
-  
-    
     
     Route::get('/home', 'HomeController@index')->name('home')->middleware('permissao:administrador');
     
@@ -34,13 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::get('usuario/tipo/{tipo}', 'UserController@index')->middleware('permissao:administrador');
     Route::get('/perfil', 'UserController@perfil');
     
-    /* Imóveis 
+    // Imóveis 
     Route::prefix('imovel')->group(function () {
         Route::get('buscar', 'ImovelController@buscar')->middleware('permissao:administrador');
         Route::get('buscar/ver/{imovel}', 'ImovelController@show_buscar')->middleware('permissao:administrador');
+        Route::get('/lista/{cidade}', 'ImovelController@lista');
         
     });
-*/
+
     Route::resource('/imovel', 'ImovelController', [
         'middleware' => [
             'index' => 'permissao:administrador,sindico',
@@ -56,7 +53,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/imovel/{id}/consumo', 'ImovelController@getLancarConsumo')->name('imovel.consumo')->middleware('permissao:administrador,sindico');
     
-    Route::post('/imovel/getImoveisLista', array('uses' => 'ImovelController@getImoveisLista'));
+    
     Route::get('/imovel/getCidadesLista/{id}', array('uses' => 'ImovelController@showCidades'));
 
     Route::post('lancar-consumo', array('uses' => 'ImovelController@postLancarConsumo'));

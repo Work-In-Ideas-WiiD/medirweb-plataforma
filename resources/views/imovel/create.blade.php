@@ -34,111 +34,109 @@
 
                     <div class='col-md-6'>
                         <div class='form-group'>
-                            {{ Form::label('IMO_IDCLIENTE', 'Cliente:', []) }}
-                            {{ Form::select('IMO_IDCLIENTE', $clientes, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::label('cliente_id', 'Cliente:', []) }}
+                            {{ Form::select('cliente_id', $clientes, null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecione um cliente']) }}
 
-                            @if ($errors->has('IMO_IDCLIENTE'))
+                            @error('cliente_id')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_IDCLIENTE') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('IMO_CNPJ', 'CNPJ') }}
-                            {{ Form::text('IMO_CNPJ', '', ['class' => 'form-control mask-cnpj']) }}
+                            {{ Form::label('cnpj', 'CNPJ') }}
+                            {{ Form::text('cnpj', '', ['class' => 'form-control mask-cnpj']) }}
 
-                            @if ($errors->has('IMO_CNPJ'))
+                            @error('cnpj')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_CNPJ') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('IMO_NOME', 'Nome') }}
-                            {{ Form::text('IMO_NOME', '', ['class' => 'form-control nome', 'placeholder' => '']) }}
+                            {{ Form::label('nome', 'Nome') }}
+                            {{ Form::text('nome', '', ['class' => 'form-control nome']) }}
 
-                            @if ($errors->has('IMO_NOME'))
+                            @error('nome')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_NOME') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('IMO_LOGRADOURO', 'Logradouro') }}
-                            {{ Form::text('IMO_LOGRADOURO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('logradouro', 'Logradouro') }}
+                            {{ Form::text('logradouro', '', ['class' => 'form-control']) }}
 
-                            @if ($errors->has('IMO_LOGRADOURO'))
+                            @error('logradouro')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_LOGRADOURO') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('IMO_COMPLEMENTO', 'Complemento') }}
-                            {{ Form::text('IMO_COMPLEMENTO', '', ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('complemento', 'Complemento') }}
+                            {{ Form::text('complemento', '', ['class' => 'form-control']) }}
 
-                            @if ($errors->has('IMO_COMPLEMENTO'))
+                            @error('complemento')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_COMPLEMENTO') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class='form-group'>
-                            {{ Form::label('IMO_BAIRRO', 'Bairro') }}
-                            {{ Form::text('IMO_BAIRRO', '', ['class' => 'form-control bairro', 'placeholder' => '']) }}
+                            {{ Form::label('bairro', 'Bairro') }}
+                            {{ Form::text('bairro', '', ['class' => 'form-control bairro']) }}
 
-                            @if ($errors->has('IMO_BAIRRO'))
+                            @error('bairro')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_BAIRRO') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('IMO_IDESTADO', 'Estado') }}
-                            {{--{{ Form::text('IMO_IDESTADO', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                            {{ Form::select('IMO_IDESTADO', $estados, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
+                            {{ Form::label('estado_id', 'Estado') }}
+                            {{ Form::select('estado_id', $estados, null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecionar estado']) }}
 
-                            @if ($errors->has('IMO_IDESTADO'))
+                            @error('estado_id')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_IDESTADO') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('IMO_IDCIDADE', 'Cidade') }}
-                            {{--{{ Form::text('IMO_IDCIDADE', '', ['class' => 'form-control', 'placeholder' => '']) }}--}}
-                            {{ Form::select('IMO_IDCIDADE', ['' => 'Selecionar Cidade'], null, ['class' => 'avalidate form-control chosen-select-IMO_IDCIDADE', 'autocomplete' => 'off']) }}
+                            {{ Form::label('cidade_id', 'Cidade') }}
+                            {{ Form::select('cidade_id', [], null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecionar cidade']) }}
 
-                            @if ($errors->has('IMO_IDCIDADE'))
+                            @error('cidade_id')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_IDCIDADE') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
                             <div class="row">
                                 <div class="col-md-6">
-                                    {{ Form::label('IMO_NUMERO', 'Número') }}
-                                    {{ Form::text('IMO_NUMERO', '', ['class' => 'form-control mask-num', 'placeholder' => '']) }}
+                                    {{ Form::label('numero', 'Número') }}
+                                    {{ Form::text('numero', '', ['class' => 'form-control mask-num']) }}
 
-                                    @if ($errors->has('IMO_NUMERO'))
+                                    @error('numero'))
                                     <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('IMO_NUMERO') }}</strong>
+                                        <strong style="color: red;">{{ $message }}</strong>
                                     </span>
-                                    @endif
+                                    @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    {{ Form::label('IMO_CEP', 'CEP') }}
-                                    {{ Form::text('IMO_CEP', '', ['class' => 'form-control mask-cep', 'placeholder' => '']) }}
+                                    {{ Form::label('cep', 'CEP') }}
+                                    {{ Form::text('cep', '', ['class' => 'form-control mask-cep']) }}
 
-                                    @if ($errors->has('IMO_CEP'))
+                                    @error('cep')
                                     <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('IMO_CEP') }}</strong>
+                                        <strong style="color: red;">{{ $message }}</strong>
                                     </span>
-                                    @endif
+                                    @enderror
                                 </div>
                             </div>
 
@@ -146,24 +144,24 @@
                         <div class='form-group'>
                             <div class='row'>
                                 <div class='col-md-6'>
-                                    {{ Form::label('IMO_FATURACICLO', 'Dia Fechamento Fatura') }}
-                                    {{ Form::select('IMO_FATURACICLO', $mes, null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                                    {{ Form::label('fatura_ciclo', 'Dia Fechamento Fatura') }}
+                                    {{ Form::select('fatura_ciclo', range(1, 31), null, ['class' => 'avalidate form-control']) }}
 
-                                    @if ($errors->has('IMO_FATURACICLO'))
+                                    @error('fatura_ciclo')
                                     <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('IMO_FATURACICLO') }}</strong>
+                                        <strong style="color: red;">{{ $message }}</strong>
                                     </span>
-                                    @endif
+                                    @enderror
                                 </div>
                                 <div class='col-md-6'>
-                                    {{ Form::label('IMO_STATUS', 'STATUS') }}
-                                    {{ Form::select('IMO_STATUS', ['' => 'Selecione', '1' => 'Ativo', '0' => 'Inativo'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                                    {{ Form::label('status', 'STATUS') }}
+                                    {{ Form::select('status', ['1' => 'Ativo', '0' => 'Inativo'], null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecione o status']) }}
 
-                                    @if ($errors->has('IMO_STATUS'))
+                                    @error('status')
                                     <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('IMO_STATUS') }}</strong>
+                                        <strong style="color: red;">{{ $message }}</strong>
                                     </span>
-                                    @endif
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -189,14 +187,14 @@
 
                     <div class='col-md-6'>
                         <div class='form-group'>
-                            {{ Form::label('IMO_IP', 'IP da Central') }}
-                            {{ Form::text('IMO_IP', '', ['class' => 'form-control mask-ip', 'placeholder' => 'Ex.: 000.000.000.000', 'data-error' => $errors->first('IMO_IP')]) }}
+                            {{ Form::label('ip', 'IP da Central') }}
+                            {{ Form::text('ip', '', ['class' => 'form-control mask-ip', 'placeholder' => 'Ex.: 000.000.000.000']) }}
 
-                            @if ($errors->has('IMO_IP'))
+                            @error('ip')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_IP') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 

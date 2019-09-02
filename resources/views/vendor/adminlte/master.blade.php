@@ -217,7 +217,7 @@
     // Por Favor aguarde
     var ponto = 'Por favor, aguarde.';
     var timeout = false;
-    var velocidade = 400;
+    var velocidade = 2000;
     function animaPonto() {
         timeout = setTimeout('animaPonto()', velocidade);
         document.getElementById('aguarde').innerHTML = ponto;
@@ -414,107 +414,75 @@
         });
     });
 
-    </script>
-
-    <script type="text/javascript">
     //BUSCAR IMOVEL
 
-    jQuery(document).ready(function(){
-        jQuery('#submitFiltro').click(function(e){
-            //alert(jQuery('#imo_idestado').val());
-            //alert(jQuery('#imo_idcidade').val());
+    $(document).ready(function(){
+        $('#submitFiltro').click(function(e){
+           
+            $.ajax({
+                url: '/imovel/lista/'+$('select[name="cidade_id"]').val(),
+                method: 'get',
+                success: function(data){
 
-            e.preventDefault();
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-                }
-            });
-            jQuery.ajax({
-                url: "{!! url('/imovel/getImoveisLista') !!}",
-                method: 'post',
-                data: {
-                    IMO_IDESTADO: jQuery('#IMO_IDESTADO').val(),
-                    IMO_IDCIDADE: jQuery('#IMO_IDCIDADE').val()
-                },
-                success: function(result){
-
-                    if(result.imoveis.length < 1)
-                    {
+                    if(data.length < 1) {
                         $('#resultadoPesquisa').html('');
                         $('#resultadoPesquisa').append('<p style="text-align: center;">Sem resultados para mostrar</p>');
                         return;
                     }
 
-                    //jQuery('.alert').show();
-                    //jQuery('.alert').html(result.success);
-
                     var $html = '';
                     $('#resultadoPesquisa').html($html);
 
-                    $.each(result.imoveis, function () {
-                        /*var $html  = '<div class="col-md-3 agrupamento imolista">';
-                        $html += '<a href="{!! url('imovel/ver/') !!}/' + this.IMO_ID + '" alt=\'"' + this.IMO_NOME + '"\' >' ;
-                        $html += '<div class="bloco-agrupamento-vis">';
-                        $html +=    '<i class="fa fa-building"></i>';
-                        $html +=    '<p class="imo">' + this.IMO_NOME + '</p>';
-                        $html +=    '<p class="imo imobairro">' + this.IMO_BAIRRO + '</p>';
-                        $html += '</div>';
-                        $html += '</a>';
-                        $html += '</div>';*/
-
+                    $.each(data, function () {
 
                         var $html  = '<div class="col-md-4">';
-                        $html += '<a onclick="loading()" href="{!! url('imovel/buscar/ver/') !!}/' + this.IMO_ID + '" alt="' + this.IMO_NOME + '" style="text-decoration: none; color: #111;" >';
+                        $html += '<a onclick="loading()" href="{!! url('imovel/buscar/ver/') !!}/' + this.id + '" alt="' + this.nome + '" style="text-decoration: none; color: #111;" >';
                         $html +=    '<div class="box box-widget widget-user">';
-                        if(this.IMO_CAPA == null)
+                        if(this.capa == null)
                         {
                             $html +=        '<div class="widget-user-header bg-black" style="background: url(\'http://www.condominiosc.com.br/media/k2/items/cache/2a7c5a55d24475c5674a6cabf9d5e3d4_XL.jpg\') center center;">';
 
                         }
                         else
                         {
-                            $html +=        '<div class="widget-user-header bg-black" style="background: url(\'http://localhost/medirweb/public/upload/capas/' + this.IMO_CAPA +'\') center center;">';
+                            $html +=        '<div class="widget-user-header bg-black" style="background: url(\'/upload/capas/' + this.capa +'\') center center;">';
                         }
-                        $html +=            '<h3 class="widget-user-username">' + this.IMO_NOME + '</h3>';
-                        $html +=            '<h5 class="widget-user-desc">' + this.IMO_BAIRRO + '</h5>';
+                        $html +=            '<h3 class="widget-user-username">' + this.nome + '</h3>';
+                        $html +=            '<h5 class="widget-user-desc">' + this.bairro + '</h5>';
                         $html +=        '</div>';
                         $html +=        '<div class="widget-user-image">';
-                        if(this.IMO_FOTO == null)
-                        {
+                        if(this.foto == null) {
                             $html +=   '<img class="img-circle" src="http://i63.tinypic.com/nex65y.png" alt="User Avatar">';
+                        } else {
+                            $html +=    '<img class="img-circle" src="/upload/fotos/'+this.foto+'" alt="User Avatar">';
                         }
-                        else
-                        {
-                            $html +=    '<img class="img-circle" src="http://localhost/medirweb/public/upload/fotos/'+this.IMO_FOTO+'" alt="User Avatar">';
-                        }
-                        // $html +=        '<img class="img-circle" src="http://i63.tinypic.com/nex65y.png" alt="User Avatar">';
-                        $html +=        '</div>';
-                        $html +=        '<div class="box-footer">';
-                        $html +=            '<div class="row">';
-                        $html +=                '<div class="col-sm-4 border-right">';
-                        $html +=                    '<div class="description-block">';
-                        $html +=                        '<h5 class="description-header">' + this.AGR + '</h5>';
-                        $html +=                        '<span class="description-text">Agrupamentos</span>';
-                        $html +=                    '</div>';
-                        $html +=                '</div>';
-                        $html +=                '<div class="col-sm-4 border-right">';
-                        $html +=                    '<div class="description-block">';
-                        $html +=                        '<h5 class="description-header">' + this.UNI + '</h5>';
-                        $html +=                        '<span class="description-text">Unidades</span>'
-                        $html +=                    '</div>';
-                        $html +=                '</div>';
-                        $html +=                '<div class="col-sm-4">';
-                        $html +=                    '<div class="description-block">';
-                        $html +=                        '<h5 class="description-header">0</h5>';
-                        $html +=                        '<span class="description-text">Equipamentos</span>';
-                        $html +=                    '</div>';
-                        $html +=                '</div>';
-                        $html +=            '</div>';
-                        $html +=        '</div>';
-                        $html +=    '</div>';
-                        $html += '</a>';
-                        $html += '</div>';
+
+                        $html += `</div>
+                                    <div class="box-footer">
+                                        <div class="row">
+                                            <div class="col-sm-4 border-right">
+                                                <div class="description-block">
+                                                    <h5 class="description-header">${this.agrupamentos}</h5>
+                                                    <span class="description-text">Agrupamentos</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 border-right">
+                                                <div class="description-block">
+                                                    <h5 class="description-header">${this.unidades}</h5>
+                                                    <span class="description-text">Unidades</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="description-block">
+                                                    <h5 class="description-header">${this.prumadas}</h5>
+                                                    <span class="description-text">Prumadas</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </a>
+                            </div>`
 
 
                         $('#resultadoPesquisa').append($html);
@@ -522,9 +490,8 @@
                 },
             });
         });
-    });</script>
+    });
 
-    <script type="text/javascript">
     //BUSCAR TIMELINE Equipamento
 
     jQuery(document).ready(function(){

@@ -21,8 +21,15 @@ class Prumada extends Model
         return $this->hasOne(Unidade::class);
     }
 
-    public function prumada()
+    public function fatura()
     {
         return $this->hasMany(PrumadaFatura::class);
+    }
+
+    public function scopeByImovel($query, $value)
+    {
+        return $query->join('unidades', 'unidades.id', '=', 'prumadas.unidade_id')
+            ->join('imoveis', 'imoveis.id', '=', 'unidades.imovel_id')
+            ->where('imoveis.id', $value)->get();
     }
 }

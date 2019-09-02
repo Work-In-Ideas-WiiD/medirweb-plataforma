@@ -41,7 +41,7 @@ class ImovelController extends Controller
         if(app('defender')->hasRoles('Administrador')) {
             $imoveis = Imovel::with('endereco.cidade.estado')->get();
         } else if(app('defender')->hasRoles(['Sindico', 'Secretário'])) {
-            $imoveis = auth()->user()->imovel()->get();
+            $imoveis = auth()->user()->imovel()->with('endereco.cidade.estado')->get();
         }else
             return abort(403, 'você não tem permissão para ver essa página');
         
@@ -53,28 +53,16 @@ class ImovelController extends Controller
     {      
         $estados = Estado::pluck('nome', 'id');
 
-        return view('imovel.buscar_listar', compact( 'estados'));
+        return view('imovel.buscar', compact( 'estados'));
     }
 
     public function create()
     {
+        $clientes = Cliente::whereStatus(1)->pluck('nome_juridico', 'id');
 
-        $clientes = ['' => 'Selecionar Cliente'];
-        $clientes = Cliente::where('CLI_STATUS', 1)->get();
-      
+        $estados = Estado::pluck('nome', 'id');
 
-        $estados = ['' => 'Selecionar Estado'];
-        $_estados = Estado::all();
-        foreach($_estados as $estado)
-            $estados[$estado->EST_ID] = $estado->EST_NOME;
-
-        $mes = array();
-        $mes = ['' => 'Selecione'];
-        for ($i = 1; $i <= 31; $i++){
-            array_push($mes, $i);
-        }
-
-        return view('imovel.cadastrar', compact('clientes', 'estados', 'mes'));
+        return view('imovel.create', compact('clientes', 'estados'));
     }
 
     public function showCidades($id)
@@ -654,44 +642,31 @@ class ImovelController extends Controller
         return $chartConsumoLine;
     }
 
-    public function getImoveisLista(Request $request)
+    public function lista(Cidade $cidade)
     {
 
-        if(app('defender')->hasRoles('Administrador')){
-            $imoveis =  Imovel::where('IMO_IDESTADO', $request->IMO_IDESTADO)
-            ->where('IMO_IDCIDADE', $request->IMO_IDCIDADE)
-            ->get();
-        }else{
-            $user = auth()->user()->USER_IMOID;
-            $imoveis =  Imovel::where('IMO_IDESTADO', $request->IMO_IDESTADO)
-            ->where('IMO_IDCIDADE', $request->IMO_IDCIDADE)
-            ->find($user);
-        }
+        if(app('defender')->hasRoles('Administrador'))
+            $imoveis =  Imovel::with('endereco:id,bairro')->byCidade($cidade->id);
+        else
+            $imoveis =  Imovel::find(auth()->user()->imovel_id);
 
-        $retorno = array();
-        foreach($imoveis as $imo)
-        {
-            if(!(app('defender')->hasRoles('Administrador'))){
-                $imo = $imoveis;
-            }
+
+        foreach($imoveis as $imovel) {
 
             $retorno[] = [
-                'IMO_ID'        => $imo->IMO_ID,
-                'IMO_FOTO'      => $imo->IMO_FOTO,
-                'IMO_CAPA'      => $imo->IMO_CAPA,
-                'IMO_NOME'      => $imo->IMO_NOME,
-                'IMO_BAIRRO'    => $imo->IMO_BAIRRO,
-                'AGR'           => $imo->getAgrupamentos->count(),
-                'UNI'           => $imo->getUnidades->count(),
-                //'PRU'           => $imo->getUnidades->getPrumadas->count(),
+                'id' => $imovel->id,
+                'foto' => $imovel->foto,
+                'capa' => $imovel->capa,
+                'nome' => $imovel->nome,
+                'bairro' => $imovel->endereco->bairro,
+                'agrupamentos' => $imovel->agrupamento()->count(),
+                'unidades' => $imovel->unidade()->count(),
+                'prumadas' => Prumada::byImovel($imovel->id)->count()
             ];
 
-            if(!(app('defender')->hasRoles('Administrador'))){
-                break;
-            }
         }
 
-        return response()->json(['imoveis'=>$retorno]);
+        return $retorno;
     }
 
     public function leituraUnidade($prumada)

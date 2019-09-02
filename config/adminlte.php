@@ -137,12 +137,12 @@ return [
                 [
                     'text' => 'Novo imóvel',
                     'icon' => 'plus',
-                    'url'  => 'imovel/adicionar',
+                    'url'  => 'imovel/create',
                 ],
                 [
                     'text' => 'Buscar',
                     'icon' => 'search',
-                    'url'  => 'imovel/buscar',
+                    'url'  => '/imovel/buscar',
                 ],
                 [
                     'text' => 'Ver todos',

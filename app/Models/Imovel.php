@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\User;
+use DB;
+
 
 class Imovel extends Model
 {
@@ -48,4 +50,13 @@ class Imovel extends Model
     {
         return $this->hasMany(Telefone::class);
     }
+
+    public function scopeByCidade($query, $value)
+    {
+        return $query->select('imoveis.*')
+            ->join('enderecos', 'enderecos.id', '=', 'imoveis.endereco_id')
+            ->where('enderecos.cidade_id', '=', $value)
+            ->get();
+    }
+
 }
