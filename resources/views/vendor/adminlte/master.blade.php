@@ -265,66 +265,29 @@
 
     $(document).ready(function() {
 
-        $(".chosen-select-IMO_IDESTADO").chosen({no_results_text: "Oops, nada encontrado!"});
+        $('select[name="estado_id"]').on('change', (data) => {
 
-        $('select[name="IMO_IDESTADO"]').on('change', function() {
-            var stateID = $(this).val();
-            if(stateID) {
-                $.ajax({
-                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: '/imovel/getCidadesLista/'+stateID,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
+            $.ajax({
+                url: '/cidades/'+data.target.value,
+                type: "GET",
+                dataType: "json",
+                success:function(data) {
 
-                        $('select[name="IMO_IDCIDADE"]').empty();
-                        $.each(data, function(key, value) {
-                            $('select[name="IMO_IDCIDADE"]').append('<option value="'+ value.CID_ID +'">'+ value.CID_NOME +'</option>');
-                        });
+                    $('select[name="cidade_id"]').empty();
+                    $.each(data, function(key, value) {
+                        $('select[name="cidade_id"]').append('<option value="'+ key +'">'+ value +'</option>');
+                    });
 
-                        $('select[name="IMO_IDCIDADE"]').trigger('chosen:updated');
-                        $(".chosen-select-IMO_IDCIDADE").chosen({no_results_text: "Oops, nada encontrado!"});
+                    $('select[name="cidade_id"]').trigger('chosen:updated');
+                    
 
-                    }
-                });
-            }else{
-                $('select[name="city"]').empty();
-            }
+                }
+            });
+
         });
+
     });
 
-    $(document).ready(function() {
-
-        $(".chosen-select-CLI_ESTADO").chosen({no_results_text: "Oops, nada encontrado!"});
-
-        $('select[name="CLI_ESTADO"]').on('change', function() {
-            var stateID = $(this).val();
-            if(stateID) {
-                $.ajax({
-                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: '/imovel/getCidadesLista/'+stateID,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
-
-                        $('select[name="CLI_CIDADE"]').empty();
-                        $.each(data, function(key, value) {
-                            $('select[name="CLI_CIDADE"]').append('<option value="'+ value.CID_ID +'">'+ value.CID_NOME +'</option>');
-                        });
-
-                        $('select[name="CLI_CIDADE"]').trigger('chosen:updated');
-                        $(".chosen-select-CLI_CIDADE").chosen({no_results_text: "Oops, nada encontrado!"});
-
-                    }
-                });
-            }else{
-                $('select[name="city"]').empty();
-            }
-        });
-    });
-    </script>
-
-    <script type="text/javascript">
 
     function previewUploadFoto(input, img) {
 

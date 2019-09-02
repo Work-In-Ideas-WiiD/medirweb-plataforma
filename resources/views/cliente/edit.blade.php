@@ -33,24 +33,24 @@
                     <div class='col-md-6'>
                         <div class='form-group'>
                             {{ Form::label('tipo', 'Tipo') }}
-                            {{ Form::select('tipo', ['' => 'Selecione uma opção', '1' => 'CPF', '2' => 'CNPJ'], null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('tipo', ['' => 'Selecione uma opção', '1' => 'CPF', '2' => 'CNPJ'], null, ['class' => 'avalidate form-control']) }}
 
-                            @if ($errors->has('tipo'))
+                            @error('tipo')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('tipo') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
                         <div class='form-group'>
                             {{ Form::label('documento', 'Documento') }}
                             {{ Form::text('documento', $cliente->documento, ['class' => 'form-control']) }}
 
-                            @if ($errors->has('documento'))
+                            @error('documento'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('documento') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
                       
@@ -58,31 +58,31 @@
                             {{ Form::label('nome_juridico', 'Nome completo / Razão Social') }}
                             {{ Form::text('nome_juridico', $cliente->nome_juridico, ['class' => 'form-control']) }}
 
-                            @if ($errors->has('nome_juridico'))
+                            @error('nome_juridico')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('nome_juridico') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
                             {{ Form::label('nome_fantasia', 'Nome no comprovante / Nome Fantasia') }}
                             {{ Form::text('nome_fantasia', $cliente->nome_fantasia, ['class' => 'form-control nome']) }}
 
-                            @if ($errors->has('nome_fantasia'))
+                            @error('nome_fantasia')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('nome_fantasia') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
                             {{ Form::label('data_nascimento', 'Data de nascimento') }}
                             {{ Form::date('data_nascimento', $cliente->data_nascimento, ['class'=>'form-control']) }}
 
-                            @if ($errors->has('data_nascimento'))
+                            @error('data_nascimento')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('data_nascimento') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
                             {{ Form::label('status', 'Status') }}
@@ -91,11 +91,11 @@
                                 <option value='0'>Inativo</option>
                             </select>
 
-                            @if ($errors->has('status'))
+                            @error('status')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('status') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 
@@ -104,21 +104,21 @@
                             {{ Form::label('logradouro', 'logradouro') }}
                             {{ Form::text('logradouro', $cliente->endereco->logradouro, ['class' => 'form-control']) }}
 
-                            @if ($errors->has('logradouro'))
+                            @error('logradouro')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('logradouro') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
                             {{ Form::label('complemento', 'Complemento') }}
                             {{ Form::text('complemento', $cliente->endereco->complemento, ['class' => 'form-control']) }}
 
-                            @if ($errors->has('complemento'))
+                            @error('complemento')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('complemento') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
                             <div class="row">
@@ -126,21 +126,21 @@
                                     {{ Form::label('numero', 'Número') }}
                                     {{ Form::text('numero', $cliente->endereco->numero, ['class' => 'form-control']) }}
 
-                                    @if ($errors->has('numero'))
+                                    @error('numero')
                                     <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('numero') }}</strong>
+                                        <strong style="color: red;">{{ $message }}</strong>
                                     </span>
-                                    @endif
+                                    @enderror
                                 </div>
                                 <div class="col-md-6">
                                     {{ Form::label('cep', 'cep') }}
                                     {{ Form::text('cep', $cliente->endereco->cep, ['class' => 'form-control']) }}
 
-                                    @if ($errors->has('cep'))
+                                    @error('cep')
                                     <span class="help-block">
-                                        <strong style="color: red;">{{ $errors->first('cep') }}</strong>
+                                        <strong style="color: red;">{{ $message }}</strong>
                                     </span>
-                                    @endif
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -148,31 +148,31 @@
                             {{ Form::label('bairro', 'Bairro') }}
                             {{ Form::text('bairro', $cliente->endereco->bairro, ['class' => 'form-control']) }}
 
-                            @if ($errors->has('bairro'))
+                            @error('bairro')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('bairro') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
-                            {{ Form::label('cidade_id', 'Estado') }}
-                            {{ Form::select('cidade_id', $estados, $cliente->endereco->cidade->estado->id, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::label('estado_id', 'Estado') }}
+                            {{ Form::select('estado_id', $estados, $cliente->endereco->cidade->estado->id, ['class' => 'avalidate form-control']) }}
 
-                            @if ($errors->has('cidade_id'))
+                            @error('estado_id')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('cidade_id') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                         <div class='form-group'>
                             {{ Form::label('cidade_id', 'Cidade') }}
-                            {{ Form::select('cidade_id', $cidades, $cliente->endereco->cidade->id, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::select('cidade_id', [], null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecione uma cidade']) }}
 
-                            @if ($errors->has('cidade_id'))
+                            @error('cidade_id')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('cidade_id') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 

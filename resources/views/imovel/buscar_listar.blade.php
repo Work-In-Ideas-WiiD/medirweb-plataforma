@@ -39,16 +39,16 @@
 					<div class="col-md-4">
 						<!-- Estado Imóvel -->
 						<div class="form-group">
-							{{ Form::label('IMO_IDESTADO', 'Estado') }}
-							{{ Form::select('IMO_IDESTADO', $estados, null, ['class' => 'form-control chosen-select-IMO_IDESTADO', 'placeholder' => 'Escolha um estado', 'id' => 'IMO_IDESTADO' ]) }}
+							{{ Form::label('estado_id', 'Estado') }}
+							{{ Form::select('estado_id', $estados, null, ['class' => 'form-control', 'placeholder' => 'Escolha um estado']) }}
 						</div><!-- /.form group -->
 					</div>
 
 					<div class="col-md-4">
 						<!-- Cidade Imóvel -->
 						<div class="form-group">
-							{{ Form::label('IMO_IDCIDADE', 'Cidade') }}
-							{{ Form::select('IMO_IDCIDADE', ['' => 'Selecionar Cidade'], null, ['class' => 'form-control chosen-select-IMO_IDCIDADE', 'placeholder' => 'Escolha uma cidade', 'id' => 'IMO_IDCIDADE']) }}
+							{{ Form::label('cidade_id', 'Cidade') }}
+							{{ Form::select('cidade_id', [], null, ['class' => 'form-control', 'placeholder' => 'Escolha uma cidade']) }}
 						</div><!-- /.form group -->
 					</div>
 

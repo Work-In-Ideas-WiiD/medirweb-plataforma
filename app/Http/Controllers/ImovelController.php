@@ -50,12 +50,9 @@ class ImovelController extends Controller
     }
 
     public function buscar()
-    {
-        $estados = ['' => 'Selecionar Estado'];
-        $_estados = Estado::all();
+    {      
+        $estados = Estado::pluck('nome', 'id');
 
-        foreach($_estados as $estado)
-        $estados[$estado->EST_ID] = $estado->EST_NOME;
         return view('imovel.buscar_listar', compact( 'estados'));
     }
 
@@ -154,7 +151,7 @@ class ImovelController extends Controller
             }
         }
 
-        $chartConsumoLine = ImovelController::graficoConsumoGeral($imovel->IMO_ID);
+        $chartConsumoLine = ImovelController::graficoConsumoGeral($imovel->id);
 
         return view('imovel.buscar_visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades, "chartConsumoLine" => $chartConsumoLine]);
     }

@@ -27,9 +27,8 @@ class ClienteController extends Controller
     public function create()
     {
         $estados = Estado::pluck('nome', 'id');
-        $cidades = Cidade::pluck('nome', 'id');
 
-        return view('cliente.create', compact('estados', 'cidades'));
+        return view('cliente.create', compact('estados'));
     }
 
     public function store(ClienteSaveRequest $request)

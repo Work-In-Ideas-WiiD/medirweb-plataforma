@@ -39,8 +39,8 @@ Route::middleware('auth')->group(function () {
         Route::get('buscar', 'ImovelController@buscar')->middleware('permissao:administrador');
         Route::get('buscar/ver/{imovel}', 'ImovelController@show_buscar')->middleware('permissao:administrador');
         
-    });*/
-
+    });
+*/
     Route::resource('/imovel', 'ImovelController', [
         'middleware' => [
             'index' => 'permissao:administrador,sindico',
@@ -162,5 +162,5 @@ Route::get('criar-duas-prumadas', 'PrumadaController@criarDuas');
 Route::any('teste', 'TesteController@teste')->middleware('guest') ;
 
 Route::get('cidades/{estado_id}', function($estado_id) {
-    return \App\Models\Cidade::where('estado_id', $estado_id)->get();
+    return \App\Models\Cidade::where('estado_id', $estado_id)->pluck('nome', 'id');
 });
