@@ -13,32 +13,19 @@ use App\Http\Requests\Prumada\PrumadaEditRequest;
 
 class PrumadaController extends Controller
 {
+	private $debug = true;
 
-	public function index()
-	{
-		//
-	}
+	private $raspberry_url = 'http://localhost:8000';
 
 	public function create()
 	{
-		if(!app('defender')->hasRoles('Administrador')){
-			return view('error403');
-		}
-
-		$imoveis = ['' => 'Selecionar Imovel'];
-		$_imoveis = Imovel::all();
-		foreach($_imoveis as $imovel){
-			$imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-		}
+		$imoveis = Imovel::pluck('nome', 'id');
 
 		return view('prumada.cadastrar', compact('imoveis'));
 	}
 
 	public function store(PrumadaSaveRequest $request)
 	{
-		if(!app('defender')->hasRoles('Administrador')){
-			return view('error403');
-		}
 
 		$dataForm = $request->all();
 		$prumada = Prumada::create($dataForm);
@@ -52,8 +39,12 @@ class PrumadaController extends Controller
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_URL, 'http://localhost:8000/equipamentos/');
-		//curl_setopt($curl, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/');
+		
+		if ($this->debug)
+			curl_setopt($curl, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/");
+		else
+			curl_setopt($curl, CURLOPT_URL, "http://{$prumada->unidade->imovel_id}/equipamentos/");
+		
 		curl_setopt($curl, CURLOPT_POST, 1);
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $dadosCentral);
 
@@ -61,28 +52,25 @@ class PrumadaController extends Controller
 		curl_close($curl);
 		// fim
 
+		$timelineData = [
+			"prumada_id" => $prumada->id,
+			"user" => auth()->user()->name,
+			"descricao" => "criou novo equipamento #".$prumada->id,
+			"icone" => "fa fa-plus bg-green"
+		];
 
-		$logado = auth()->user()->name;
-		$timelineData = ["TIMELINE_IDPRUMADA" => $prumada->PRU_ID,
-		"TIMELINE_USER" => $logado,
-		"TIMELINE_DESCRICAO" => "criou novo equipamento #".$prumada->PRU_ID,
-		"TIMELINE_ICON" => "fa fa-plus bg-green",];
+
 		$timeline = Timeline::create($timelineData);
-
 
 		// Sem comunicação com a central do imovel
 		if($resposta == NULL){
-				return redirect('/equipamento/editar/'.$prumada->PRU_ID)->with('error', 'Sem comunicação com a central do imovel! Tente novamente mais tarde no ATUALIZAR EQUIPAMENTO, para atualizar a base de dados!');
+				return redirect()->route('prumada.edit', $prumada->id)->withError(
+				'Sem comunicação com a central do imovel! Tente novamente mais tarde no ATUALIZAR EQUIPAMENTO, para atualizar a base de dados!'
+			);
 		}
 		//
 
-		return redirect('/imovel')->with('success', 'Equipamento cadastrada com sucesso.');
-	}
-
-	public function show($id)
-	{
-		return redirect()->route('404');
-
+		return redirect('/imovel')->withSuccess('Equipamento cadastrada com sucesso.');
 	}
 
 	public function showAgrupamento($id)
@@ -91,13 +79,13 @@ class PrumadaController extends Controller
 			return view('error403');
 		}
 
-		$agrupamentos = Agrupamento::where('AGR_IDIMOVEL', $id)->get();
+		$agrupamentos = Agrupamento::where('imovel_id', $id)->get();
 
 		if(is_null($agrupamentos)){
 			return redirect( URL::previous() );
 		}
 
-		return json_encode($agrupamentos);
+		return $agrupamentos;
 	}
 
 	public function showUnidade($id)
@@ -112,31 +100,24 @@ class PrumadaController extends Controller
 			return redirect( URL::previous() );
 		}
 
-		return json_encode($unidades);
+		return $unidades;
 	}
 
-	public function edit($id)
+	public function edit(Prumada $prumada)
 	{
-
-		$prumadas  = Prumada::find($id);
-
-		if(is_null($prumadas)){
-            return redirect()->route('404');
-        }
-
-		$_unidades = Unidade::where('UNI_ID', $prumadas->PRU_IDUNIDADE)->get();
+		$_unidades = Unidade::where('id', $prumadas->unidade_id)->get();
 		foreach($_unidades as $unidade){
 			$unidades[$unidade->UNI_ID] = $unidade->UNI_NOME;
 		}
 
-		$_agrupamentos = Agrupamento::where('AGR_ID', $unidade->UNI_IDAGRUPAMENTO)->get();
+		$_agrupamentos = Agrupamento::where('id', $unidade->agrupamento_id)->get();
 		foreach($_agrupamentos as $agrupamento){
-			$agrupamentos[$agrupamento->AGR_ID] = $agrupamento->AGR_NOME;
+			$agrupamentos[$agrupamento->AGR_ID] = $agrupamento->nome;
 		}
 
-		$_imoveis = Imovel::where('IMO_ID', $agrupamento->AGR_IDIMOVEL)->get();
+		$_imoveis = Imovel::where('id', $agrupamento->imovel_id)->get();
 		foreach($_imoveis as $imovel){
-			$imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+			$imoveis[$imovel->IMO_ID] = $imovel->nome;
 		}
 
 		// PERMISSÃO DE USUARIO
@@ -153,14 +134,8 @@ class PrumadaController extends Controller
 		return view('prumada.editar', compact( 'imoveis', 'unidades', 'agrupamentos', 'prumadas'));
 	}
 
-	public function update(PrumadaEditRequest $request, $id)
+	public function update(PrumadaEditRequest $request, Prumada $prumada)
 	{
-		$prumada = Prumada::find($id);
-
-		if(is_null($prumada)){
-            return redirect()->route('404');
-        }
-
 		$dataForm = $request->all();
 
 		$logado = auth()->user()->name;
@@ -184,70 +159,84 @@ class PrumadaController extends Controller
 
 			$TIMELINE_DESCRICAO1 = "atualizou o status do equipamento #".$id." de '<a>".$statusAntigo."</a>' para '<a>".$statusNovo."</a>'";
 
-			$timelineData1 = ["TIMELINE_IDPRUMADA" => $id,
-			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => $TIMELINE_DESCRICAO1,
-			"TIMELINE_ICON" => $TIMELINE_ICON1,];
+			$timelineData1 = [
+				"TIMELINE_IDPRUMADA" => $id,
+				"TIMELINE_USER" => $logado,
+				"TIMELINE_DESCRICAO" => $TIMELINE_DESCRICAO1,
+				"TIMELINE_ICON" => $TIMELINE_ICON1
+			];
 			Timeline::create($timelineData1);
 		}
 
 		// TIMELINE - Nº de SERIAL
 		if (!($dataForm["PRU_SERIAL"] == $prumada->PRU_SERIAL)){
 
-			$timelineData2 = ["TIMELINE_IDPRUMADA" => $id,
-			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'NÚMERO DE SERIAL' do equipamento #".$id." de '<a>".$prumada->PRU_SERIAL."</a>' para '<a>".$dataForm["PRU_SERIAL"]."</a>'",
-			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
+			$timelineData2 = [
+				"TIMELINE_IDPRUMADA" => $id,
+				"TIMELINE_USER" => $logado,
+				"TIMELINE_DESCRICAO" => "atualizou o 'NÚMERO DE SERIAL' do equipamento #".$id." de '<a>".$prumada->PRU_SERIAL."</a>' para '<a>".$dataForm["PRU_SERIAL"]."</a>'",
+				"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
+			];
 			Timeline::create($timelineData2);
 		}
 
 		// TIMELINE - ID FUNCIONAL
 		if (!($dataForm["PRU_IDFUNCIONAL"] == $prumada->PRU_IDFUNCIONAL)){
 
-			$timelineData3 = ["TIMELINE_IDPRUMADA" => $id,
-			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'ID FUNCIONAL' do equipamento #".$id." de '<a>".$prumada->PRU_IDFUNCIONAL."</a>' para '<a>".$dataForm["PRU_IDFUNCIONAL"]."</a>'",
-			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
+			$timelineData3 = [
+				"TIMELINE_IDPRUMADA" => $id,
+				"TIMELINE_USER" => $logado,
+				"TIMELINE_DESCRICAO" => "atualizou o 'ID FUNCIONAL' do equipamento #".$id." de '<a>".$prumada->PRU_IDFUNCIONAL."</a>' para '<a>".$dataForm["PRU_IDFUNCIONAL"]."</a>'",
+				"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
+			];
 			Timeline::create($timelineData3);
 		}
 
 		// TIMELINE - FABRICANTE
 		if (!($dataForm["PRU_FABRICANTE"] == $prumada->PRU_FABRICANTE)){
 
-			$timelineData4 = ["TIMELINE_IDPRUMADA" => $id,
-			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'FABRICANTE' do equipamento #".$id." de '<a>".$prumada->PRU_FABRICANTE."</a>' para '<a>".$dataForm["PRU_FABRICANTE"]."</a>'",
-			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
+			$timelineData4 = [
+				"TIMELINE_IDPRUMADA" => $id,
+				"TIMELINE_USER" => $logado,
+				"TIMELINE_DESCRICAO" => "atualizou o 'FABRICANTE' do equipamento #".$id." de '<a>".$prumada->PRU_FABRICANTE."</a>' para '<a>".$dataForm["PRU_FABRICANTE"]."</a>'",
+				"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
+			];
 			Timeline::create($timelineData4);
 		}
 
 		// TIMELINE - MODELO
 		if (!($dataForm["PRU_MODELO"] == $prumada->PRU_MODELO)){
 
-			$timelineData5 = ["TIMELINE_IDPRUMADA" => $id,
-			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'MODELO' do equipamento #".$id." de '<a>".$prumada->PRU_MODELO."</a>' para '<a>".$dataForm["PRU_MODELO"]."</a>'",
-			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
+			$timelineData5 = [
+				"TIMELINE_IDPRUMADA" => $id,
+				"TIMELINE_USER" => $logado,
+				"TIMELINE_DESCRICAO" => "atualizou o 'MODELO' do equipamento #".$id." de '<a>".$prumada->PRU_MODELO."</a>' para '<a>".$dataForm["PRU_MODELO"]."</a>'",
+				"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
+			];
 			Timeline::create($timelineData5);
 		}
 
 		// TIMELINE - OPERADORA
 		if (!($dataForm["PRU_OPERADORA"] == $prumada->PRU_OPERADORA)){
 
-			$timelineData6 = ["TIMELINE_IDPRUMADA" => $id,
-			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'OPERADORA' do equipamento #".$id." de '<a>".$prumada->PRU_OPERADORA."</a>' para '<a>".$dataForm["PRU_OPERADORA"]."</a>'",
-			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
+			$timelineData6 = [
+					"TIMELINE_IDPRUMADA" => $id,
+					"TIMELINE_USER" => $logado,
+					"TIMELINE_DESCRICAO" => "atualizou o 'OPERADORA' do equipamento #".$id." de '<a>".$prumada->PRU_OPERADORA."</a>' para '<a>".$dataForm["PRU_OPERADORA"]."</a>'",
+					"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
+			];
 			Timeline::create($timelineData6);
 		}
 
 		// TIMELINE - NOME
 		if (!($dataForm["PRU_NOME"] == $prumada->PRU_OPERADORA)){
 
-			$timelineData7 = ["TIMELINE_IDPRUMADA" => $id,
-			"TIMELINE_USER" => $logado,
-			"TIMELINE_DESCRICAO" => "atualizou o 'NOME' do equipamento #".$id." de '<a>".$prumada->PRU_NOME."</a>' para '<a>".$dataForm["PRU_NOME"]."</a>'",
-			"TIMELINE_ICON" => "fa fa-pencil bg-yellow",];
+			$timelineData7 = [
+				"TIMELINE_IDPRUMADA" => $id,
+				"TIMELINE_USER" => $logado,
+				"TIMELINE_DESCRICAO" => "atualizou o 'NOME' do equipamento #".$id." de '<a>".$prumada->PRU_NOME."</a>' para '<a>".$dataForm["PRU_NOME"]."</a>'",
+				"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
+			];
 			Timeline::create($timelineData7);
 		}
 
@@ -267,7 +256,9 @@ class PrumadaController extends Controller
 
 		// Sem comunicação com a central do imovel
 		if($getPruCentral_json == NULL){
-				return redirect('/equipamento/editar/'.$prumada->PRU_ID)->with('error', 'Sem comunicação com a central do imovel! Tente novamente mais tarde para atualizar a base de dados!');
+			return redirect()->route('prumada.edit', $prumada->id)->with('error',
+				'Sem comunicação com a central do imovel! Tente novamente mais tarde para atualizar a base de dados!'
+			);
 		}
 		//
 
@@ -286,8 +277,12 @@ class PrumadaController extends Controller
 
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_URL, 'http://localhost:8000/equipamentos/'.$idPruCentral.'/');
-		//curl_setopt($curl, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/'.$idPruCentral.'/');
+		
+		if ($this->debug)
+			curl_setopt($curl, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/{$idPruCentral}/");
+		else
+			curl_setopt($curl, CURLOPT_URL, "http://{$prumada->unidade->imovel->ip}/equipamentos/{$idPruCentral}/");
+
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $dadosCentral);
 		$resposta = curl_exec($curl);
@@ -295,26 +290,23 @@ class PrumadaController extends Controller
 		// fim
 
 
-		return redirect('/imovel')->with('success', 'Equipamento atualizado com sucesso.');
+		return redirect('/imovel')->withSuccess('Equipamento atualizado com sucesso.');
 	}
 
-	public function destroy(Request $request, $id)
+	public function destroy(Request $request, Prumada $prumada)
 	{
-		if(!app('defender')->hasRoles('Administrador')){
-			return view('error403');
-		}
+		$prumada->delete();
 
-		Prumada::destroy($id);
-
-		$logado = auth()->user()->name;
-		$timelineData = ["TIMELINE_IDPRUMADA" => $id,
-		"TIMELINE_USER" => $logado,
-		"TIMELINE_DESCRICAO" => "deletou equipamento #".$id,
-		"TIMELINE_ICON" => "fa fa-trash bg-red",];
+		$timelineData = [
+			"TIMELINE_IDPRUMADA" => $prumada->id,
+			"TIMELINE_USER" => auth()->user()->name,
+			"TIMELINE_DESCRICAO" => "deletou equipamento #".$prumada->id,
+			"TIMELINE_ICON" => "fa fa-trash bg-red"
+		];
 
 		$timeline = Timeline::create($timelineData);
 
-		return redirect('/imovel')->with('success', 'Equipamento deletado com sucesso.');
+		return redirect('/imovel')->withSuccess('Equipamento deletado com sucesso.');
 	}
 
 	public function criarDuas()

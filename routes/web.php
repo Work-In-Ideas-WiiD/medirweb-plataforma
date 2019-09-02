@@ -100,36 +100,27 @@ Route::middleware('auth')->group(function () {
     // Desvincular usuario à unidade
     Route::delete('/unidade/{id}/user/desvincular/{id_user}', array('as'=>'unidade.desvincular_user', 'uses'=>'UnidadeController@desvincular_user'));
     
-    /* Unidades */
-    
-    Route::get('/prumada/adicionar', 'PrumadaController@create')->name('Adicionar Prumada');
-    
-    //Route::get('/unidade/leitura/{unidade}', array('uses' => 'UnidadeController@leituraUnidade'));
     
     Route::get('/unidade/ligar/{unidade}', array('uses' => 'UnidadeController@ligarUnidade'));
     Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
 
     /* Clientes */
     Route::resource('cliente', 'ClienteController')->middleware('permissao:administrador');
-    /*
-    Route::get('/cliente', 'ClienteController@index')->name('Listar Clientes');
-    Route::get('/cliente/adicionar', 'ClienteController@create')->name('Adicionar Cliente');
-    Route::post('novo-cliente', array('uses' => 'ClienteController@store'));
-    Route::get('/cliente/ver/{cliente}', array('uses' => 'ClienteController@show'))->name('Ver Cliente');
-    Route::get('/cliente/editar/{cliente}', 'ClienteController@edit')->name('clinete.edit');
-    Route::put('/cliente/update/{cliente}', 'ClienteController@update')->name('clinete.update');
-    Route::delete('cliente/{cliente}', array('as'=>'cliente.destroy', 'uses'=>'ClienteController@destroy'));
-    */
+
     
     /* Equipamento */
-    Route::get('/equipamento/adicionar', 'PrumadaController@create')->name('Adicionar Equipamento');
+    /*Route::get('/equipamento/adicionar', 'PrumadaController@create')->name('Adicionar Equipamento');
     Route::post('novo-equipamento', array('uses' => 'PrumadaController@store'));
     Route::get('/equipamento/editar/{id}', array('as'=>'prumada.edit', 'uses' => 'PrumadaController@edit'));
     Route::put('/equipamento/update/{unidade}', array('as'=>'prumada.update', 'uses'=>'PrumadaController@update'));
     Route::delete('/equipamento/{unidade}', array('as'=>'prumada.destroy', 'uses'=>'PrumadaController@destroy'));
     Route::get('/equipamento/getAgrupamentoLista/{id}', array('uses' => 'PrumadaController@showAgrupamento'));
     Route::get('/equipamento/getUnidadeLista/{id}', array('uses' => 'PrumadaController@showUnidade'));
+    */
     
+    Route::resource('prumada', 'PrumadaController')->except('show', 'index')->middleware('permissao:administrador');
+
+
     /* TimeLine */
     
     Route::get('/timeline/equipamento/buscar', 'TimelineController@buscar')->name('Timeline Buscar Equipamento');
