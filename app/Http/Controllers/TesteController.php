@@ -367,6 +367,19 @@ class TesteController extends Controller
         }
 
 
+        $roles = DB::connection('banco_antigo')->table('roles')->get();
+
+        foreach ($roles as $role)
+            DB::table('roles')->insert((array) $role);
+
+
+
+        $roles_user = DB::connection('banco_antigo')->table('role_user')->get();
+
+        foreach ($roles_user as $role_user)
+            DB::table('role_user')->insert((array) $role_user);
+
+
     }
 
 }

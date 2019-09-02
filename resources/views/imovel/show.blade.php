@@ -178,12 +178,13 @@
 							</thead>
 							<tbody>
 								@foreach ($imovel->unidade as $uni)
+
 								<tr>
 									<td>{{ $uni->id }}</td>
 									<td>{{ $uni->nome }}</td>
-									<td>{{ $uni->imovel->responsavel->nome }}</td>
+									<td>{{ $uni->nome_responsavel }}</td>
 									<td>{{ $uni->cpf_responsavel }}</td>
-									<td>{{ $uni->telefone->numero ?? '' }}</td>
+									<td>{{ $uni->telefone[0]->numero ?? 'não informado' }}</td>
 									<td>
 
 										<?php // Botão editar ?>

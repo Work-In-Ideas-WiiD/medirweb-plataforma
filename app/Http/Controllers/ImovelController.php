@@ -117,7 +117,8 @@ class ImovelController extends Controller
     }
 
     public function show(Imovel $imovel)
-    {
+    {   
+        $imovel = $imovel->with('unidade.telefone')->first();
         $chartConsumoLine = $this->graficoConsumoGeral($imovel->id);
 
         return view('imovel.show', compact('imovel', 'chartConsumoLine'));
@@ -126,7 +127,7 @@ class ImovelController extends Controller
 
     public function show_buscar(Imovel $imovel)
     {
-        
+
         $imovel['IMO_IDCIDADE'] = $imovel->cidade->CID_NOME;
         $imovel['IMO_IDESTADO'] = $imovel->estado->EST_ABREVIACAO;
 

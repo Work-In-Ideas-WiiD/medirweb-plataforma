@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
             'index' => 'permissao:administrador,sindico',
             'create' => 'permissao:administrador',
             'store' => 'permissao:administrador',
+            'view' => 'permissao:administrador,sindico',
             'edit' => 'permissao:administrador,sindico',
             'update' => 'permissao:administrador',
             'destroy' => 'permissao:administrador'
