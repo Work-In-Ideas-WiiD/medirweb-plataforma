@@ -18,7 +18,7 @@ class Unidade extends Model
 
     public function imovel()
     {
-        return $this->hasOne(Imovel::class);
+        return $this->belongsTo(Imovel::class);
     }
 
     public function equipamento()

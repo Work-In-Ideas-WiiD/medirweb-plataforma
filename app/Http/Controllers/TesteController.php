@@ -272,7 +272,7 @@ class TesteController extends Controller
                 'cpf_responsavel' => $unidade->UNI_CPFRESPONSAVEL,
                 'created_at' => $unidade->created_at,
                 'updated_at' => $unidade->updated_at
-            ])->telefone([
+            ])->telefone()->firstOrCreate([
                 'etiqueta' => 'responsavel',
                 'numero' => $unidade->UNI_TELRESPONSAVEL
             ]);

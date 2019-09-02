@@ -21,7 +21,7 @@
 		<!-- Dados de Identificação -->
 		<div class="box box-success">
 			<div class="box-header with-border">
-				<h3 class="box-title"><i class="fa fa-building"></i> {{ $imovel->IMO_NOME }}</h3>
+				<h3 class="box-title"><i class="fa fa-building"></i> {{ $imovel->nome }}</h3>
 				<div class="box-tools pull-right">
 					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
 					</button>
@@ -35,10 +35,10 @@
 					<div class="col-md-4">
 						<div class="bloco-imovel-info">
 							<p class="titulo"><i class="fa fa-map"></i> <b>Localização</b></p>
-							<p>{{ $imovel->IMO_LOGRADOURO }}</p>
-							<p>{{ $imovel->IMO_COMPLEMENTO }}</p>
-							<p>{{ $imovel->cidade->CID_NOME }} - {{ $imovel->cidade->estado->EST_NOME }}</p>
-							<p>{{ $imovel->IMO_CEP }}</p>
+							<p>{{ $imovel->endereco->logradouro }}</p>
+							<p>{{ $imovel->complemento }}</p>
+							<p>{{ $imovel->endereco->cidade->nome }} - {{ $imovel->endereco->cidade->estado->nome }}</p>
+							<p>{{ $imovel->endereco->cep }}</p>
 						</div>
 					</div>
 					<!-- FIM Informação -->
@@ -91,38 +91,38 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($imovel->agrupamento()->get() as $agrup)
+								@foreach ($imovel->agrupamento as $agrup)
 								<tr>
-									<td>{{ $agrup->AGR_ID }}</td>
-									<td>{{ $agrup->AGR_NOME }}</td>
-									<td>{{ $agrup->AGR_TAXAFIXA }}</td>
-									<td>{{ $agrup->AGR_TAXAVARIAVEL }}</td>
+									<td>{{ $agrup->id }}</td>
+									<td>{{ $agrup->nome }}</td>
+									<td>{{ $agrup->taxa_fixa }}</td>
+									<td>{{ $agrup->taxa_variavel }}</td>
 									<td>
 
 										<?php // Botão editar ?>
 										<div class="btn-group">
-											<a href="{{ route('agrupamento.edit', ['agrup' => $agrup->AGR_ID]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
+											<a href="{{ route('agrupamento.edit', ['agrup' => $agrup->id]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
 										</div>
 
 										@is('Administrador')
 										<?php // Botão deletar ?>
 										<div class="btn-group">
 											<?php $deleteFormAGR = "delete-formAGR-{$loop->index}"; ?>
-											<a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_agrup_ID{{$agrup->AGR_ID}}"><i class="fa fa-trash-o"></i></a>
+											<a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_agrup_ID{{$agrup->id}}"><i class="fa fa-trash-o"></i></a>
 
 											<?php // modal deletar ?>
-											<div class="modal fade" id="delete_agrup_ID{{$agrup->AGR_ID }}" tabindex="-1" role="dialog" aria-labelledby="delete_agrup_ID{{$agrup->AGR_ID}}Label" aria-hidden="true">
+											<div class="modal fade" id="delete_agrup_ID{{$agrup->id }}" tabindex="-1" role="dialog" aria-labelledby="delete_agrup_ID{{$agrup->id}}Label" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
 														<div class="modal-header">
 															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-															<h4 class="modal-title text-primary" id="delete_agrup_ID{{$agrup->AGR_ID}}Label"><i class="fa fa-trash-o"></i> Deletar Cliente</h4>
+															<h4 class="modal-title text-primary" id="delete_agrup_ID{{$agrup->id}}Label"><i class="fa fa-trash-o"></i> Deletar Cliente</h4>
 														</div>
 														<div class="modal-body">
 
-															<p class="alert alert-danger">Tem certeza que deseja excluir agrupamento "{{ $agrup->AGR_NOME }}" ?</p>
+															<p class="alert alert-danger">Tem certeza que deseja excluir agrupamento "{{ $agrup->nome }}" ?</p>
 															<div class="form-actions">
-																<a href="{{ route('agrupamento.destroy', ['agrupamento' => $agrup->AGR_ID]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormAGR}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+																<a href="{{ route('agrupamento.destroy', ['agrupamento' => $agrup->id]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormAGR}}').submit();" class="btn btn-danger btn-flat">SIM</a>
 																<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
 															</div>
 
@@ -131,7 +131,7 @@
 												</div>
 											</div>
 
-											{!! Form::open(['route' => ['agrupamento.destroy', 'agrupamento' => $agrup->AGR_ID], 'method' => 'DELETE', 'id' => $deleteFormAGR, 'style' => 'display:none']) !!}
+											{!! Form::open(['route' => ['agrupamento.destroy', 'agrupamento' => $agrup->id], 'method' => 'DELETE', 'id' => $deleteFormAGR, 'style' => 'display:none']) !!}
 											{!! Form::close() !!}
 
 										</div>
@@ -177,39 +177,39 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach ($imovel->unidade()->get() as $uni)
+								@foreach ($imovel->unidade as $uni)
 								<tr>
-									<td>{{ $uni->UNI_ID }}</td>
-									<td>{{ $uni->UNI_NOME }}</td>
-									<td>{{ $uni->UNI_RESPONSAVEL }}</td>
-									<td>{{ $uni->UNI_CPFRESPONSAVEL }}</td>
-									<td>{{ $uni->UNI_TELRESPONSAVEL }}</td>
+									<td>{{ $uni->id }}</td>
+									<td>{{ $uni->nome }}</td>
+									<td>{{ $uni->imovel->responsavel->nome }}</td>
+									<td>{{ $uni->cpf_responsavel }}</td>
+									<td>{{ $uni->telefone->numero ?? '' }}</td>
 									<td>
 
 										<?php // Botão editar ?>
 										<div class="btn-group">
-											<a href="{{ route('unidade.edit', ['unidade' => $uni->UNI_ID]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
+											<a href="{{ route('unidade.edit', ['unidade' => $uni->id]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
 										</div>
 
 										@is('Administrador')
 										<?php // Botão deletar ?>
 										<div class="btn-group">
 											<?php $deleteFormUNI = "delete-formUNI-{$loop->index}"; ?>
-											<a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_uni_ID{{$uni->UNI_ID}}"><i class="fa fa-trash-o"></i></a>
+											<a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_uni_ID{{$uni->id}}"><i class="fa fa-trash-o"></i></a>
 
 											<?php // modal deletar ?>
-											<div class="modal fade" id="delete_uni_ID{{$uni->UNI_ID }}" tabindex="-1" role="dialog" aria-labelledby="delete_uni_ID{{$uni->UNI_ID}}Label" aria-hidden="true">
+											<div class="modal fade" id="delete_uni_ID{{$uni->id }}" tabindex="-1" role="dialog" aria-labelledby="delete_uni_ID{{$uni->id}}Label" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
 														<div class="modal-header">
 															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-															<h4 class="modal-title text-primary" id="delete_uni_ID{{$uni->UNI_ID}}Label"><i class="fa fa-trash-o"></i> Deletar Cliente</h4>
+															<h4 class="modal-title text-primary" id="delete_uni_ID{{$uni->id}}Label"><i class="fa fa-trash-o"></i> Deletar Cliente</h4>
 														</div>
 														<div class="modal-body">
 
-															<p class="alert alert-danger">Tem certeza que deseja excluir unidade "{{ $uni->UNI_NOME }}" ?</p>
+															<p class="alert alert-danger">Tem certeza que deseja excluir unidade "{{ $uni->nome }}" ?</p>
 															<div class="form-actions">
-																<a href="{{ route('unidade.destroy', ['unidade' => $uni->UNI_ID]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormUNI}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+																<a href="{{ route('unidade.destroy', ['unidade' => $uni->id]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormUNI}}').submit();" class="btn btn-danger btn-flat">SIM</a>
 																<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
 															</div>
 
@@ -218,7 +218,7 @@
 												</div>
 											</div>
 
-											{!! Form::open(['route' => ['unidade.destroy', 'unidade' => $uni->UNI_ID], 'method' => 'DELETE', 'id' => $deleteFormUNI, 'style' => 'display:none']) !!}
+											{!! Form::open(['route' => ['unidade.destroy', 'unidade' => $uni->id], 'method' => 'DELETE', 'id' => $deleteFormUNI, 'style' => 'display:none']) !!}
 											{!! Form::close() !!}
 
 										</div>

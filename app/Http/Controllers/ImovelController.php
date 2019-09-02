@@ -118,7 +118,7 @@ class ImovelController extends Controller
 
     public function show(Imovel $imovel)
     {
-        $chartConsumoLine = $this->graficoConsumoGeral($imovel->IMO_ID);
+        $chartConsumoLine = $this->graficoConsumoGeral($imovel->id);
 
         return view('imovel.show', compact('imovel', 'chartConsumoLine'));
     }
@@ -555,20 +555,22 @@ class ImovelController extends Controller
         // FIM - INICIALIZAÇÃO de variaveis
 
         // BUSCAS
-        $apartamentos = Imovel::find($id)->getUnidades;
-        foreach ($apartamentos as $unid) {
-            $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
+        $apartamentos = Imovel::with('unidade.prumada', 'endereco')->find($id);
+
+        foreach ($apartamentos->unidade as $unid) {
+            $prumadas = $unid->prumada;
             foreach ($prumadas as $prumada){
-            
 
                 // TODAS AS LEITURAS DE TODOS OS EQUIPAMENTOS SEPARADOS MENSALMENTE
                 for ($mes=1; $mes <= 12; $mes++) {
 
-                    $leituraAnoAnterior = $prumada->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAnterior."-".$mes."-31")).' 23:59:59')
-                    ->orderBy('created_at', 'desc')->first();
+                    $leituraAnoAnterior = $prumada->leitura()
+                        ->where('created_at', '<=', date("Y-m-d", strtotime($anoAnterior."-".$mes."-31")).' 23:59:59')
+                        ->orderBy('created_at', 'desc')->first();
 
-                    $leituraAnoAtual = $prumada->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
-                    ->orderBy('created_at', 'desc')->first();
+                    $leituraAnoAtual = $prumada->leitura()
+                        ->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
+                        ->orderBy('created_at', 'desc')->first();
 
                     $arrayLeiMensalAnoAnterior = array('mes' => array('mes'.$mes => $leituraAnoAnterior['LEI_METRO']));
                     $arrayLeiMensalAnoAtual = array('mes' => array('mes'.$mes => $leituraAnoAtual['LEI_METRO']));
