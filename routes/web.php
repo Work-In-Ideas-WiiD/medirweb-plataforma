@@ -118,20 +118,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/unidade/ligar/{unidade}', array('uses' => 'UnidadeController@ligarUnidade'));
     Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
 
-    /* Clientes */
+    // clientes 
     Route::resource('cliente', 'ClienteController')->middleware('permissao:administrador');
 
-    
-    /* Equipamento */
-    /*Route::get('/equipamento/adicionar', 'PrumadaController@create')->name('Adicionar Equipamento');
-    Route::post('novo-equipamento', array('uses' => 'PrumadaController@store'));
-    Route::get('/equipamento/editar/{id}', array('as'=>'prumada.edit', 'uses' => 'PrumadaController@edit'));
-    Route::put('/equipamento/update/{unidade}', array('as'=>'prumada.update', 'uses'=>'PrumadaController@update'));
-    Route::delete('/equipamento/{unidade}', array('as'=>'prumada.destroy', 'uses'=>'PrumadaController@destroy'));
-    Route::get('/equipamento/getAgrupamentoLista/{id}', array('uses' => 'PrumadaController@showAgrupamento'));
-    Route::get('/equipamento/getUnidadeLista/{id}', array('uses' => 'PrumadaController@showUnidade'));
-    */
-    
+   
+    // prumadas
     Route::resource('prumada', 'PrumadaController')->except('show', 'index')->middleware('permissao:administrador');
 
 

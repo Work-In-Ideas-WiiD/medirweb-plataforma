@@ -168,7 +168,7 @@ return [
                 [
                     'text' => 'Equipamentos',
                     'icon' => 'cog',
-                    'url'  => 'equipamento/adicionar',
+                    'url'  => 'prumada/create',
                 ]
             ],
         ],
