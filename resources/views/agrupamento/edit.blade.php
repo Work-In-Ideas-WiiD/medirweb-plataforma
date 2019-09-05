@@ -14,7 +14,7 @@
 @stop
 
 @section('content')
-{!! Form::model($agrupamento, ['route' => ['agrupamento.update', $agrupamento->AGR_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
+{!! Form::model($agrupamento, ['route' => ['agrupamento.update', $agrupamento->id], 'method' => 'PUT', 'autocomplete' => 'off']) !!}
 <div class="row">
     <div class="col-md-8">
         <div class="box box-primary">
@@ -30,50 +30,29 @@
 
                     <div class='col-md-6'>
                         <div class='form-group'>
-                            {{ Form::label('AGR_IDIMOVEL', 'Imóvel') }}
-                            {{ Form::select('AGR_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control', 'disabled' => 'disabled', 'autocomplete' => 'off']) }}
+                            {{ Form::label('imovel_id', 'Imóvel') }}
+                            {{ Form::select('imovel_id', $imoveis, $agrupamento->imovel_id, ['class' => 'avalidate form-control', 'disabled' => 'disabled']) }}
 
-                            @if ($errors->has('AGR_IDIMOVEL'))
+                            @error('imovel_id')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('AGR_IDIMOVEL') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
-                        </div>
-                        <div class='form-group'>
-                            {{ Form::label('AGR_NOME', 'Nome') }}
-                            {{ Form::text('AGR_NOME', null, ['class' => 'form-control', 'placeholder' => '']) }}
-
-                            @if ($errors->has('AGR_NOME'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('AGR_NOME') }}</strong>
-                            </span>
-                            @endif
-                        </div>
+                            @enderror
+                        </div>                        
                     </div>
 
                     <div class="col-md-6">
                         <div class='form-group'>
-                            {{ Form::label('AGR_TAXAFIXA', 'Taxa fixa (R$)') }}
-                            {{ Form::text('AGR_TAXAFIXA', null, ['class' => 'form-control', 'placeholder' => '']) }}
+                            {{ Form::label('nome', 'Nome') }}
+                            {{ Form::text('nome', null, ['class' => 'form-control']) }}
 
-                            @if ($errors->has('AGR_TAXAFIXA'))
+                            @error('nome')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('AGR_TAXAFIXA') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
-                        </div>
-                        <div class='form-group'>
-                            {{ Form::label('AGR_TAXAVARIAVEL', 'Taxa variável (R$/m³/Kw)') }}
-                            {{ Form::text('AGR_TAXAVARIAVEL', null, ['class' => 'form-control', 'placeholder' => '']) }}
-
-                            @if ($errors->has('AGR_TAXAVARIAVEL'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('AGR_TAXAVARIAVEL') }}</strong>
-                            </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
