@@ -13,6 +13,10 @@
 Auth::routes();
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/', function () {
+        return redirect('/imovel');
+    });
     
     Route::get('/home', 'HomeController@index')->name('home')->middleware('permissao:administrador');
     
@@ -70,12 +74,22 @@ Route::middleware('auth')->group(function () {
     
     /* Agrupamentos */
     
-    Route::get('/agrupamento/adicionar', 'AgrupamentoController@create')->name('Adicionar Agrupamento');
+  /*  Route::get('/agrupamento/adicionar', 'AgrupamentoController@create')->name('Adicionar Agrupamento');
     Route::post('novo-agrupamento', array('uses' => 'AgrupamentoController@store'));
     Route::get('/agrupamento/editar/{agrupamento}', array('as'=>'agrupamento.edit', 'uses' => 'AgrupamentoController@edit'))->middleware('permissao:administrador');
     Route::put('/agrupamento/update/{agrupamento}', array('as'=>'agrupamento.update', 'uses'=>'AgrupamentoController@update'));
     Route::delete('/agrupamento/{agrupamento}', array('as'=>'agrupamento.destroy', 'uses'=>'AgrupamentoController@destroy'));
-    
+    */
+    Route::resource('agrupamento', 'AgrupamentoController', [
+        'middleware' => [
+            'create' => 'permissao:administrador',
+            'store' => 'permissao:administrador',
+            'view' => 'permissao:administrador',
+            'edit' => 'permissao:administrador,sindico',
+            'update' => 'permissao:administrador,sindico',
+            'destroy' => 'permissao:administrador'
+        ]
+    ])->except(['index', 'show']);
     /* Unidades */
     
     Route::get('/unidade/adicionar', 'UnidadeController@create')->name('Adicionar Unidade');

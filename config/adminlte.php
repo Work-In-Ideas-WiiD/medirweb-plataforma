@@ -158,7 +158,7 @@ return [
                 [
                     'text' => 'Agrupamentos',
                     'icon' => 'plus',
-                    'url'  => 'agrupamento/adicionar',
+                    'url'  => 'agrupamento/create',
                 ],
                 [
                     'text' => 'Unidades',

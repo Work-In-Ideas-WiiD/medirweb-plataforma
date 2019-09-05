@@ -13,11 +13,11 @@ class Agrupamento extends Model
 
     public function imovel()
     {
-        return $this->hasOne('App\Models\Imovel');
+        return $this->hasOne(Imovel::class);
     }
 
-    public function getUnidades()
+    public function unidade()
     {
-        return $this->hasMany('App\Models\Unidade');
+        return $this->hasMany(Unidade::class);
     }
 }

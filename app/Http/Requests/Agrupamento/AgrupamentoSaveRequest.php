@@ -12,10 +12,8 @@ class AgrupamentoSaveRequest extends AgrupamentoRequest
     public function rules()
     {
         return [
-            'AGR_IDIMOVEL' => 'required|not_in:0',
-            'AGR_NOME' => 'required',
-            'AGR_TAXAFIXA' => 'nullable|numeric',
-            'AGR_TAXAVARIAVEL' => 'nullable|numeric',
+            'imovel_id' => ['required', 'exists:imoveis,id'],
+            'nome' => ['required', 'between:5,300']
         ];
     }
 }
