@@ -85,8 +85,6 @@
 								<tr>
 									<th>#</th>
 									<th>Agrupamento</th>
-									<th>Taxa Fixa</th>
-									<th>Taixa Variavel</th>
 									<th>Ações</th>
 								</tr>
 							</thead>
@@ -95,8 +93,6 @@
 								<tr>
 									<td>{{ $agrup->id }}</td>
 									<td>{{ $agrup->nome }}</td>
-									<td>{{ $agrup->taxa_fixa }}</td>
-									<td>{{ $agrup->taxa_variavel }}</td>
 									<td>
 
 										<?php // Botão editar ?>

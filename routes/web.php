@@ -74,7 +74,7 @@ Route::middleware('auth')->group(function () {
     
     /* Agrupamentos */
     
-  /*  Route::get('/agrupamento/adicionar', 'AgrupamentoController@create')->name('Adicionar Agrupamento');
+  /*  Route::get('/agrupamento/e', 'AgrupamentoController@create')->name('Adicionar Agrupamento');
     Route::post('novo-agrupamento', array('uses' => 'AgrupamentoController@store'));
     Route::get('/agrupamento/editar/{agrupamento}', array('as'=>'agrupamento.edit', 'uses' => 'AgrupamentoController@edit'))->middleware('permissao:administrador');
     Route::put('/agrupamento/update/{agrupamento}', array('as'=>'agrupamento.update', 'uses'=>'AgrupamentoController@update'));

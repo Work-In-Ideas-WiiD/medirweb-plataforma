@@ -203,50 +203,6 @@
         </div>
         <!-- [FIM] Configuração Central -->
 
-        <!-- Informações de contato -->
-        <div class="box box-warning collapsed-box">
-            <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-phone"></i> Informações de Contato</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class='box-body'>
-                <div class='row'>
-
-                    <div class='col-md-6'>
-                        <div class='form-group'>
-                            {{ Form::label('IMO_RESPONSAVEIS', 'Responsáveis') }}
-                            {{ Form::textarea('IMO_RESPONSAVEIS', '', ['class' => 'form-control', 'rows' => 4]) }}
-
-                            @if ($errors->has('IMO_RESPONSAVEIS'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_RESPONSAVEIS') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class='form-group'>
-                            {{ Form::label('IMO_TELEFONES', 'Telefones') }}
-                            {{ Form::textarea('IMO_TELEFONES', '', ['class' => 'form-control', 'rows' => 4]) }}
-
-                            @if ($errors->has('IMO_TELEFONES'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_TELEFONES') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- [FIM] Informações de contato -->
-
         <!-- Taxas de cobrança -->
         <div class="box box-danger collapsed-box">
             <div class="box-header with-border">
@@ -262,27 +218,27 @@
 
                     <div class='col-md-6'>
                         <div class='form-group'>
-                            {{ Form::label('IMO_TAXAFIXA', 'Taxa Fixa (R$)') }}
-                            {{ Form::text('IMO_TAXAFIXA', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 3,99', 'data-error' => $errors->first('IMO_TAXAFIXA')]) }}
+                            {{ Form::label('taxa_fixa', 'Taxa Fixa (R$)') }}
+                            {{ Form::text('taxa_fixa', null, ['class' => 'form-control', 'placeholder' => 'Ex.: 3,99', 'data-error' => $errors->first('taxa_fixa')]) }}
 
-                            @if ($errors->has('IMO_TAXAFIXA'))
+                            @error('taxa_fixa')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_TAXAFIXA') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class='form-group'>
-                            {{ Form::label('IMO_TAXAFIXA', 'Taxa Variável (R$/m³/Kw)') }}
-                            {{ Form::text('IMO_TAXAVARIAVEL', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89', 'data-error' => $errors->first('IMO_TAXAVARIAVEL')]) }}
+                            {{ Form::label('taxa_variavel', 'Taxa Variável (R$/m³/Kw)') }}
+                            {{ Form::text('taxa_variavel', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89', 'data-error' => $errors->first('taxa_variavel')]) }}
 
-                            @if ($errors->has('IMO_TAXAFIXA'))
+                            @error('IMO_TAXAFIXA')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_TAXAFIXA') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 
