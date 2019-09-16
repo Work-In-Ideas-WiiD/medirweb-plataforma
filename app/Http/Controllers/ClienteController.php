@@ -7,6 +7,9 @@ use App\Http\Controllers;
 use App\Models\Cliente;
 use App\Models\Estado;
 use App\Models\Cidade;
+use App\Models\Endereco;
+use Illuminate\Support\Str;
+
 use App\Http\Requests\Cliente\ClienteSaveRequest;
 use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
@@ -28,36 +31,35 @@ class ClienteController extends Controller
     {
         $estados = Estado::pluck('nome', 'id');
 
-        return view('cliente.create', compact('estados'));
+        $cidades = Cidade::whereEstadoId(1)->pluck('nome', 'id');
+
+        return view('cliente.create', compact('estados', 'cidades'));
     }
 
-    public function store(ClienteSaveRequest $request)
+    public function store(ClienteSaveRequest $data)
     {
-        if(!app('defender')->hasRoles('Administrador'))
-            return view('error403');
-        
-        $dataForm = $request->all();
+        $endereco = new Endereco;
+        $endereco->fill(
+            $data->only('logradouro', 'complemento', 'numero', 'bairro', 'cidade_id', 'cep')
+        );
 
-        if($request->cnpj != null) {
-            $dataForm['CLI_DOCUMENTO'] = $request->cnpj;
-        } else if($request->cpf != null) {
-            $dataForm['CLI_DOCUMENTO'] = $request->cpf;
-        } else {
-            return redirect('/cliente/adicionar')
-                ->withError('Por favor preencha o formulario com algum número de documento CNPJ ou CPF.');
+        $endereco = $endereco->save();
+
+        $cliente = new Cliente;
+
+        $cliente->fill(
+            $data->only('tipo', 'documento', 'nome_juridico', 'nome_fantasia', 'status')
+        );
+
+        if($data->hasFile('foto')) {
+            $cliente->foto = Str::random(32).'.'.$data->file('foto')->extension();
+            $data->file('foto')->storeAs('upload/clientes/', $cliente->foto);
         }
 
-        if($request->hasFile('foto')){
-            $fileName = md5(uniqid().str_random()).'.'.$request->file('foto')->extension();
-            $dataForm['CLI_FOTO'] = $request->file('foto')->move('upload/clientes', $fileName)->getFilename();
+        $cliente->endereco_id = $endereco->id;
+        $cliente->save();
 
-            ImageOptimizer::optimize('upload/clientes/'.$dataForm['CLI_FOTO']);
-        }
-
-
-        $cliente = Cliente::create($dataForm);
-
-        return redirect('cliente')->with('success', 'Cliente cadastrado com sucesso.');
+        return back()->withSuccess('Cliente cadastrado com sucesso.');
     }
 
     public function show(Cliente $cliente)
@@ -73,46 +75,41 @@ class ClienteController extends Controller
 
         $estados = Estado::pluck('nome', 'id');
 
-        $cidades = Cidade::pluck('nome', 'id');
+        $cidades = Cidade::where('estado_id', $cliente->endereco->cidade->estado->id)->pluck('nome', 'id');
 
         $imoveis = $cliente->imovel()->count();
 
-        return view('cliente.edit', compact('cliente', 'estados', 'imoveis', 'cidades'));
+        return view('cliente.edit', compact('cliente', 'cidades', 'estados', 'imoveis'));
     }
 
-    public function update(ClienteEditRequest $request, Cliente $cliente)
+    public function update(ClienteEditRequest $data, Cliente $cliente)
     {
-        $dataForm = $request->all();
+        $cliente->fill(
+            $data->only('tipo', 'documento', 'nome_juridico', 'nome_fantasia', 'status')
+        );
 
+        $cliente->endereco->fill(
+            $data->only('logradouro', 'complemento', 'numero', 'bairro', 'cidade_id', 'cep')
+        );
 
-        if($request->hasFile('foto')){
-            $foto_path = public_path("upload/clientes/".$cliente->CLI_FOTO);
-
-            if (File::exists($foto_path)) {
-                File::delete($foto_path);
-            }
-
-            $fileName = md5(uniqid().str_random()).'.'.$request->file('foto')->extension();
-            $dataForm['CLI_FOTO'] = $request->file('foto')->move('upload/clientes', $fileName)->getFilename();
-
-            ImageOptimizer::optimize('upload/clientes/'.$dataForm['CLI_FOTO']);
+        if($data->hasFile('foto')) {
+            $cliente->foto = Str::random(32).'.'.$data->file('foto')->extension();
+            $data->file('foto')->storeAs('upload/clientes/', $cliente->foto);
+            $cliente->save();
         }
 
-        $cliente->update($dataForm);
-
-        return redirect('cliente')->withSuccess('Cliente atualizado com sucesso.');
+        return back()->withSuccess('Cliente atualizado com sucesso.');
     }
 
-    public function destroy(Request $request, Cliente $cliente)
+    public function destroy(Cliente $cliente)
     {
-
-        $foto_path = public_path("upload/clientes/".$cliente->CLI_FOTO);
+        $foto_path = public_path('upload/clientes/'.$cliente->foto);
 
         if (File::exists($foto_path))
             File::delete($foto_path);
 
         $cliente->delete();
 
-        return redirect('cliente')->withSuccess('Cliente deletado com sucesso.');
+        return back()->withSuccess('Cliente deletado com sucesso.');
     }
 }

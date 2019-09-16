@@ -29,7 +29,7 @@ Route::middleware('auth')->group(function () {
             'edit' => 'permissao:administrador',
             'create' => 'permissao:administrador',
             'destroy' => 'permissao:administrador'
-            ]
+        ]
     ]);
     Route::get('usuario/tipo/{tipo}', 'UserController@index')->middleware('permissao:administrador');
     Route::get('/perfil', 'UserController@perfil');

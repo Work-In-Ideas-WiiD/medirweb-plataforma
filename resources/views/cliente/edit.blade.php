@@ -46,7 +46,7 @@
                             {{ Form::label('documento', 'Documento') }}
                             {{ Form::text('documento', $cliente->documento, ['class' => 'form-control']) }}
 
-                            @error('documento'))
+                            @error('documento')
                             <span class="help-block">
                                 <strong style="color: red;">{{ $message }}</strong>
                             </span>
@@ -166,7 +166,7 @@
                         </div>
                         <div class='form-group'>
                             {{ Form::label('cidade_id', 'Cidade') }}
-                            {{ Form::select('cidade_id', [], null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecione uma cidade']) }}
+                            {{ Form::select('cidade_id', $cidades, $cliente->endereco->cidade_id, ['class' => 'avalidate form-control', 'placeholder' => 'Selecione uma cidade']) }}
 
                             @error('cidade_id')
                             <span class="help-block">
@@ -181,46 +181,7 @@
         </div>
         <!-- [FIM] Informações Pessoais -->
 
-        <!-- Informações Bancárias -->
-        <div class="box box-success collapsed-box">
-            <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-credit-card"></i> Informações de cobrança</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class='box-body'>
-                <div class='row'>
-                    <div class='col-md-12'>
-                        <div class='form-group'>
-                            {{ Form::label('CLI_DADOSBANCARIOS', 'Dados Bancários') }}
-                            {{ Form::textarea('CLI_DADOSBANCARIOS', null, ['class' => 'form-control', 'rows' => 4]) }}
-
-                            @if ($errors->has('CLI_DADOSBANCARIOS'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_DADOSBANCARIOS') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                        <div class='form-group'>
-                            {{ Form::label('CLI_DADOSCONTATO', 'Dados de contato') }}
-                            {{ Form::textarea('CLI_DADOSCONTATO', null, ['class' => 'form-control', 'rows' => 4]) }}
-
-                            @if ($errors->has('CLI_DADOSCONTATO'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('CLI_DADOSCONTATO') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- [FIM] Informações Bancárias -->
-
+        
         <!-- Anexos -->
         <div class="box box-danger collapsed-box">
             <div class="box-header with-border">

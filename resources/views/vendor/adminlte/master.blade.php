@@ -219,13 +219,14 @@
     var timeout = false;
     var velocidade = 2000;
     function animaPonto() {
-        timeout = setTimeout('animaPonto()', velocidade);
+      /*  timeout = setTimeout('animaPonto()', velocidade);
         document.getElementById('aguarde').innerHTML = ponto;
         if( ponto == 'Por favor, aguarde...' ) {
             ponto = 'Por favor, aguarde.';
         } else {
             ponto += '.';
         }
+        */
     }
     animaPonto();
     </script>
