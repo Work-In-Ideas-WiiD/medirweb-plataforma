@@ -18,12 +18,6 @@ use Mail;
 
 class UnidadeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-
     public function create()
     {
         if(!app('defender')->hasRoles('Administrador')){
@@ -69,14 +63,8 @@ class UnidadeController extends Controller
         return redirect('/unidade/editar/'.$unidade->UNI_ID)->with('success', 'Unidade cadastrada com sucesso.');
     }
 
-    public function show($id)
+    public function show(Unidade $unidade)
     {
-        $unidade        = Unidade::find($id);
-
-        if(is_null($unidade)){
-            return redirect()->route('404');
-        }
-
         $prumadas       = Unidade::find($id)->getPrumadas;
         $agrupamento    = Unidade::find($id)->agrupamento;
         $imovel         = Unidade::find($id)->imovel;
@@ -140,39 +128,19 @@ class UnidadeController extends Controller
         return view('unidade.visualizar', compact('agrupamento', 'unidade', 'imovel', 'prumadas', 'leituras', 'ultimaleitura', 'duasUltimaLeituras', 'grafico', 'consumoAnoAnterior', 'consumoAnoAtual'));
     }
 
-    public function edit($id)
+    public function edit(Unidade $unidade)
     {
-        $unidade  = Unidade::find($id);
-
-        if(is_null($unidade)){
-            return redirect()->route('404');
-        }
-
-        $user = auth()->user()->USER_IMOID;
-        $ID_IMO = $unidade->agrupamento->imovel->IMO_ID;
-        if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
-            return view('error403');
-        }
-        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-            return view('error403');
-        }
-
-        $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel){
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
-
-        $_agrupamentos = Agrupamento::all();
-        foreach($_agrupamentos as $agrupamento){
-            $agrupamentos[$agrupamento->AGR_ID] = $agrupamento->AGR_NOME;
-        }
-
-        $prumadas = Prumada::where('PRU_IDUNIDADE', $unidade->UNI_ID)->get();
+        $prumadas = Prumada::where('unidade_id', $unidade->id)->get();
 
         // PESQUISAR TODOS OS USUARIOS VINCULADOS À UNIDADE
-        $userVinculado = User::where('USER_UNIID', $id)->get();
 
-        return view('unidade.editar', compact('unidade', 'imoveis', 'agrupamentos', 'prumadas', 'userVinculado'));
+        $users = $unidade->with('user:id,unidade_id,name,email')->find($unidade->id)->user ?? [];
+        
+        $imoveis = Imovel::pluck('nome', 'id');
+
+        $agrupamentos = Agrupamento::pluck('nome', 'id');
+
+        return view('unidade.editar', compact('unidade', 'agrupamentos', 'imoveis', 'prumadas', 'users'));
     }
 
     public function update(UnidadeEditRequest $request, $id)

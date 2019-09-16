@@ -35,4 +35,9 @@ class Unidade extends Model
     {
         return $this->hasMany(Telefone::class);
     }
+
+    public function user()
+    {
+        return $this->hasMany(\App\User::class);
+    }
 }

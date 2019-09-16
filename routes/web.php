@@ -91,6 +91,8 @@ Route::middleware('auth')->group(function () {
         ]
     ])->except(['index', 'show']);
     /* Unidades */
+
+    /*
     
     Route::get('/unidade/adicionar', 'UnidadeController@create')->name('Adicionar Unidade');
     Route::get('/unidade/getAgrupamentoLista/{id}', array('uses' => 'UnidadeController@showAgrupamento'));
@@ -99,7 +101,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/unidade/ver/{id}', array('uses' => 'UnidadeController@show'))->name('Ver Unidade');
     Route::put('/unidade/update/{unidade}', array('as'=>'unidade.update', 'uses'=>'UnidadeController@update'));
     Route::delete('/unidade/{unidade}', array('as'=>'unidade.destroy', 'uses'=>'UnidadeController@destroy'));
+    */
     
+    Route::resource('unidade', 'UnidadeController', [
+        'middleware' => [
+            'create' => 'permissao:administrador',
+            'store' => 'permissao:administrador',
+            'view' => 'permissao:administrador',
+            'edit' => 'permissao:administrador,sindico',
+            'update' => 'permissao:administrador,sindico',
+            'destroy' => 'permissao:administrador'
+        ]
+    ]);
+
+
     //Unidade_User
     Route::get('/unidade/editar/{id}/user/create', array('as'=>'unidade.create_user', 'uses' => 'UnidadeController@create_user'));
     Route::post('nova-unidade-user', array('uses' => 'UnidadeController@store_user'));
