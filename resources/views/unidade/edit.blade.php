@@ -163,7 +163,7 @@
 
 												<?php // Botão editar ?>
 												<div class="btn-group">
-													<a href="{{ route('unidade.edit_user', ['id' => $user->USER_UNIID, 'user_id' => $user->id]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
+													<a href="{{ route('unidade.edit_user', ['id' => $user->unidade_id, 'user_id' => $user->id]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
 												</div>
 
 												@is('Administrador')
@@ -184,7 +184,7 @@
 
 																	<p class="alert alert-danger">Tem certeza que deseja excluir usuário "{{ $user->name }}" ?</p>
 																	<div class="form-actions">
-																		<a href="{{ route('unidade.destroy_user', ['id' => $user->USER_UNIID, 'id_user' => $user->id]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormUSER}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+																		<a href="{{ route('unidade.destroy_user', ['id' => $user->unidade_id, 'id_user' => $user->id]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormUSER}}').submit();" class="btn btn-danger btn-flat">SIM</a>
 																		<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
 																	</div>
 
@@ -193,7 +193,7 @@
 														</div>
 													</div>
 
-													{!! Form::open(['route' => ['unidade.destroy_user', 'id' => $user->USER_UNIID, 'id_user' => $user->id], 'method' => 'DELETE', 'id' => $deleteFormUSER, 'style' => 'display:none']) !!}
+													{!! Form::open(['route' => ['unidade.destroy_user', 'id' => $user->unidade_id, 'id_user' => $user->id], 'method' => 'DELETE', 'id' => $deleteFormUSER, 'style' => 'display:none']) !!}
 													{!! Form::close() !!}
 
 												</div>
@@ -217,7 +217,7 @@
 
 																	<p class="alert alert-danger">Tem certeza que deseja desvincular usuário "{{ $user->name }}" dessa unidade ?</p>
 																	<div class="form-actions">
-																		<a href="{{ route('unidade.desvincular_user', ['id' => $user->USER_UNIID, 'id_user' => $user->id]) }}" onclick="event.preventDefault(); document.getElementById('{{$desvincularFormUSER}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+																		<a href="{{ route('unidade.desvincular_user', ['id' => $user->unidade_id, 'id_user' => $user->id]) }}" onclick="event.preventDefault(); document.getElementById('{{$desvincularFormUSER}}').submit();" class="btn btn-danger btn-flat">SIM</a>
 																		<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
 																	</div>
 
@@ -226,7 +226,7 @@
 														</div>
 													</div>
 
-													{!! Form::open(['route' => ['unidade.desvincular_user', 'id' => $user->USER_UNIID, 'id_user' => $user->id], 'method' => 'DELETE', 'id' => $desvincularFormUSER, 'style' => 'display:none']) !!}
+													{!! Form::open(['route' => ['unidade.desvincular_user', 'id' => $user->unidade_id, 'id_user' => $user->id], 'method' => 'DELETE', 'id' => $desvincularFormUSER, 'style' => 'display:none']) !!}
 													{!! Form::close() !!}
 
 												</div>
@@ -276,55 +276,53 @@
 							<tbody>
 								@foreach ($prumadas as $pru)
 								<tr>
-									<td>{{ $pru->PRU_ID }}</td>
+									<td>{{ $pru->id }}</td>
 									<td>
-										@if($pru->PRU_TIPO == 1)
+										@if($pru->tipo == 1)
 										<div class="col-md-1"><i class="text-primary fa fa-tint"></i></div>
-										@elseif($pru->PRU_TIPO == 2)
+										@elseif($pru->tipo == 2)
 										<div class="col-md-1"><i style="color: #f38212;" class="fa fa-fire"></i></div>
-										@elseif($pru->PRU_TIPO == 3)
+										@elseif($pru->tipo == 3)
 										<div class="col-md-1"><i class="text-danger fa fa-bolt"></i></div>
 										@endif
-										<div class="col-md-9">{{ $pru->PRU_NOME }}</div>
+										<div class="col-md-9">{{ $pru->nome }}</div>
 									</td>
-									<td>{{ $pru->PRU_IDFUNCIONAL }}</td>
-									<td>{{ $pru->PRU_SERIAL }}</td>
-									<td>{{ $pru->PRU_OPERADORA }}</td>
-									<td>{{ $pru->PRU_FABRICANTE }}</td>
-									<td>{{ $pru->PRU_MODELO }}</td>
+									<td>{{ $pru->funcional_id }}</td>
+									<td>{{ $pru->serial }}</td>
+									<td>{{ $pru->operadora }}</td>
+									<td>{{ $pru->fabricante }}</td>
+									<td>{{ $pru->modelo }}</td>
 									<td>
-										@if($pru->PRU_STATUS == 1)
+										@if($pru->status == 1)
 										Ativo
-										@elseif($pru->PRU_STATUS == 0)
+										@elseif($pru->status == 0)
 										Inativo
 										@endif
 									</td>
 									<td>
-
-										<?php // Botão editar ?>
 										<div class="btn-group">
-											<a href="{{ route('prumada.edit', ['pru' => $pru->PRU_ID]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
+											<a href="{{ route('prumada.edit', $pru->id) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
 										</div>
 
 										@is('Administrador')
 										<?php // Botão deletar ?>
 										<div class="btn-group">
 											<?php $deleteFormPRU = "delete-formPRU-{$loop->index}"; ?>
-											<a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_pru_ID{{$pru->PRU_ID}}"><i class="fa fa-trash-o"></i></a>
+											<a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_pru_ID{{$pru->id}}"><i class="fa fa-trash-o"></i></a>
 
 											<?php // modal deletar ?>
-											<div class="modal fade" id="delete_pru_ID{{$pru->PRU_ID }}" tabindex="-1" role="dialog" aria-labelledby="delete_pru_ID{{$pru->PRU_ID}}Label" aria-hidden="true">
+											<div class="modal fade" id="delete_pru_ID{{$pru->id }}" tabindex="-1" role="dialog" aria-labelledby="delete_pru_ID{{$pru->id}}Label" aria-hidden="true">
 												<div class="modal-dialog">
 													<div class="modal-content">
 														<div class="modal-header">
 															<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-															<h4 class="modal-title text-primary" id="delete_pru_ID{{$pru->PRU_ID}}Label"><i class="fa fa-trash-o"></i> Deletar Equipamento</h4>
+															<h4 class="modal-title text-primary" id="delete_pru_ID{{$pru->id}}Label"><i class="fa fa-trash-o"></i> Deletar Equipamento</h4>
 														</div>
 														<div class="modal-body">
 
-															<p class="alert alert-danger">Tem certeza que deseja excluir equipamento #{{ $pru->PRU_ID }} ?</p>
+															<p class="alert alert-danger">Tem certeza que deseja excluir equipamento #{{ $pru->id }} ?</p>
 															<div class="form-actions">
-																<a href="{{ route('prumada.destroy', ['prumadas' => $pru->PRU_ID]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormPRU}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+																<a href="{{ route('prumada.destroy', $pru->id) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormPRU}}').submit();" class="btn btn-danger btn-flat">SIM</a>
 																<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
 															</div>
 

@@ -127,7 +127,7 @@ class UnidadeController extends Controller
 
         $agrupamentos = Agrupamento::pluck('nome', 'id');
 
-        return view('unidade.editar', compact('unidade', 'agrupamentos', 'imoveis', 'prumadas', 'users'));
+        return view('unidade.edit', compact('unidade', 'agrupamentos', 'imoveis', 'prumadas', 'users'));
     }
 
     public function update(UnidadeEditRequest $data, Unidade $unidade)
