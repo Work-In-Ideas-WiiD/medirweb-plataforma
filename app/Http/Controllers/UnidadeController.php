@@ -19,27 +19,14 @@ use Mail;
 class UnidadeController extends Controller
 {
     public function create()
-    {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
+    {     
+        $imoveis = Imovel::pluck('nome', 'id');
 
-        $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel)
-        $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-
-        return view('unidade.cadastrar', ['imoveis' => $imoveis]);
+        return view('unidade.cadastrar', compact('imoveis'));
     }
 
     public function showAgrupamento($id)
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
-        //$agrupamentos = Agrupamento::where('AGR_IDIMOVEL', $id)->pluck('AGR_NOME','AGR_ID')->toArray();
-
         $agrupamentos = Agrupamento::where('AGR_IDIMOVEL', $id)->get();
 
         if(is_null($agrupamentos)){
@@ -60,7 +47,7 @@ class UnidadeController extends Controller
 
         $unidade = Unidade::create($dataForm);
 
-        return redirect('/unidade/editar/'.$unidade->UNI_ID)->with('success', 'Unidade cadastrada com sucesso.');
+        return redirect('/unidade/editar/'.$unidade->UNI_ID)->withSuccess('Unidade cadastrada com sucesso.');
     }
 
     public function show(Unidade $unidade)
@@ -143,41 +130,24 @@ class UnidadeController extends Controller
         return view('unidade.editar', compact('unidade', 'agrupamentos', 'imoveis', 'prumadas', 'users'));
     }
 
-    public function update(UnidadeEditRequest $request, $id)
+    public function update(UnidadeEditRequest $data, Unidade $unidade)
     {
-        $unidade  = Unidade::find($id);
+        $unidade->update(
+            $data->except('telefone')
+        );
 
-        if(is_null($unidade)){
-            return redirect()->route('404');
-        }
+        $unidade->telefone()->update([
+            'numero' => $data->telefone
+        ]);
 
-        $user = auth()->user()->USER_IMOID;
-        $ID_IMO = $unidade->agrupamento->imovel->IMO_ID;
-        if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
-            return view('error403');
-        }
-        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-            return view('error403');
-        }
-
-        $dataForm = $request->all();
-
-        $unidade->update($dataForm);
-
-        return redirect('/unidade/editar/'.$id)->with('success', 'Unidade atualizado com sucesso.');
+        return back()->withSuccess('Unidade atualizado com sucesso.');
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, Unidade $unidade)
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
+        $unidade->delete();
 
-        $unidade = Unidade::find($id);
-
-        Unidade::destroy($id);
-
-        return redirect('/imovel')->with('success', 'Unidade e Usuario "'.$unidade->UNI_RESPONSAVEL.'" deletado com sucesso.');
+        return redirect('/imovel')->withSuccess("Unidade e Usuario {$unidade->nome_responsavel} deletado com sucesso.");
     }
 
 

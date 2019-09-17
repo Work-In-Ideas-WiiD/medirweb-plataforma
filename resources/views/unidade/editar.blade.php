@@ -16,7 +16,7 @@
 @section('content')
 <div class="row">
 	<div class="col-md-12">
-		{!! Form::model($unidade, ['route' => ['unidade.update', $unidade->UNI_ID], 'method' => 'PUT', 'enctype' => 'multipart/form-data', 'autocomplete' => 'off']) !!}
+		{!! Form::model($unidade, ['route' => ['unidade.update', $unidade->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data', 'autocomplete' => 'off']) !!}
 
 		<!-- Dados de Identificação -->
 		<div class="box box-primary">
@@ -55,10 +55,10 @@
 								@enderror
 							</div>
 							<div class='form-group'>
-								{{ Form::label('cpf_reponsavel', 'CPF do Responsável') }}
-								{{ Form::text('cpf_reponsavel', null, ['class' => 'form-control mask-cpf']) }}
+								{{ Form::label('cpf_responsavel', 'CPF do Responsável') }}
+								{{ Form::text('cpf_responsavel', null, ['class' => 'form-control mask-cpf']) }}
 
-								@error('cpf_reponsavel')
+								@error('cpf_responsavel')
 								<span class="help-block">
 									<strong style="color: red;">{{ $message }}</strong>
 								</span>
@@ -79,30 +79,36 @@
 
 							</div>
 							<div class='form-group'>
-								{{ Form::label('UNI_RESPONSAVEL', 'Responsável') }}
-								{{ Form::text('UNI_RESPONSAVEL', null , ['class' => 'form-control', 'placeholder' => '']) }}
+								{{ Form::label('nome_responsavel', 'Responsável') }}
+								{{ Form::text('nome_responsavel', null , ['class' => 'form-control']) }}
 
-								@if ($errors->has('UNI_RESPONSAVEL'))
+								@error('nome_responsavel')
 								<span class="help-block">
-									<strong style="color: red;">{{ $errors->first('UNI_RESPONSAVEL') }}</strong>
+									<strong style="color: red;">{{ $message }}</strong>
 								</span>
-								@endif
+								@enderror
 							</div>
 							<div class='form-group'>
-								{{ Form::label('UNI_TELRESPONSAVEL', 'Telefone do Responsável') }}
-								{{ Form::text('UNI_TELRESPONSAVEL', null, ['class' => 'form-control mask-phone', 'placeholder' => '']) }}
+								{{ Form::label('telefone', 'Telefone do Responsável') }}
+								{{ Form::text('telefone', $unidade->telefone[0]->numero ?? null, ['class' => 'form-control mask-phone']) }}
 
-								@if ($errors->has('UNI_TELRESPONSAVEL'))
+								@error('telefone')
 								<span class="help-block">
-									<strong style="color: red;">{{ $errors->first('UNI_TELRESPONSAVEL') }}</strong>
+									<strong style="color: red;">{{ $message }}</strong>
 								</span>
-								@endif
+								@enderror
 							</div>
 
 						</div>
 
 					</div>
-
+					<div>
+						@if ($errors->any())
+							@foreach ($errors->all() as $error)
+								<li>{{ $error }}</li>
+							@endforeach
+						@endif
+					</div>
 					@if(!empty($unidade['email']))
 					<div class="alert alert-warning" role="alert">
 						<p>OBS.: Se alterar email, o responsável da unidade só conseguirar acessar o aplicativo com novo email inserido! Por favor, avise o mesmo!</p>
@@ -112,8 +118,8 @@
 				</div>
 
 				<div class="col-md-4">
-					<a href="{{ route('unidade.create_user', ['unidade' => $unidade['UNI_ID']]) }}" class="btn btn-block btn-primary"><i class="fa fa-user"></i> Criar Usuários à Unidade</a>
-					<a href="{{ route('unidade.add_user_existente', ['unidade' => $unidade['UNI_ID']]) }}" class="btn btn-block btn-default"><i class="fa fa-user"></i> Adicionar Usuário Existente à Unidade</a>
+					<a href="{{ route('unidade.create_user', $unidade->id) }}" class="btn btn-block btn-primary"><i class="fa fa-user"></i> Criar Usuários à Unidade</a>
+					<a href="{{ route('unidade.add_user_existente', $unidade->id) }}" class="btn btn-block btn-default"><i class="fa fa-user"></i> Adicionar Usuário Existente à Unidade</a>
 					<button type="submit" type="button" class="btn btn-block btn-warning"><i class="fa fa-pencil"></i> Atualizar cadastro</button>
 					<button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
 				</div>

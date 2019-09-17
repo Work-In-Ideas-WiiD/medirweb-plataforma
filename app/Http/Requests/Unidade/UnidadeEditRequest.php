@@ -12,10 +12,10 @@ class UnidadeEditRequest extends UnidadeRequest
     public function rules()
     {
         return [
-            'UNI_NOME' => 'required|max:255',
-            'UNI_RESPONSAVEL' => 'required|max:255',
-            'UNI_CPFRESPONSAVEL' => 'required|cpf|formato_cpf',
-            'UNI_TELRESPONSAVEL' => 'required',
+            'nome' => 'required|max:255',
+            'nome_responsavel' => 'required|max:255',
+            'cpf_responsavel' => 'required|cpf|formato_cpf',
+            'telefone' => 'required',
         ];
     }
 }
