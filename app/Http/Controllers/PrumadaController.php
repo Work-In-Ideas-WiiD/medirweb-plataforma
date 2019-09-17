@@ -105,101 +105,75 @@ class PrumadaController extends Controller
 
 	public function edit(Prumada $prumada)
 	{
-		$_unidades = Unidade::where('id', $prumadas->unidade_id)->get();
-		foreach($_unidades as $unidade){
-			$unidades[$unidade->UNI_ID] = $unidade->UNI_NOME;
-		}
+		$unidades = $prumada->unidade->pluck('nome', 'id');
+	
+		$agrupamentos = $prumada->unidade->imovel->pluck('nome', 'id');
 
-		$_agrupamentos = Agrupamento::where('id', $unidade->agrupamento_id)->get();
-		foreach($_agrupamentos as $agrupamento){
-			$agrupamentos[$agrupamento->AGR_ID] = $agrupamento->nome;
-		}
+		$imoveis = $prumada->unidade->imovel->pluck('nome', 'id');
 
-		$_imoveis = Imovel::where('id', $agrupamento->imovel_id)->get();
-		foreach($_imoveis as $imovel){
-			$imoveis[$imovel->IMO_ID] = $imovel->nome;
-		}
-
-		// PERMISSÃO DE USUARIO
-		$user = auth()->user()->USER_IMOID;
-		$ID_IMO = $imovel->IMO_ID;
-		if(app('defender')->hasRoles('Sindico') && !($user == $ID_IMO)){
-			return view('error403');
-		}
-		if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-			return view('error403');
-		}
-
-
-		return view('prumada.editar', compact( 'imoveis', 'unidades', 'agrupamentos', 'prumadas'));
+		return view('prumada.edit', compact( 'imoveis', 'unidades', 'agrupamentos', 'prumada'));
 	}
 
-	public function update(PrumadaEditRequest $request, Prumada $prumada)
+	public function update(PrumadaEditRequest $data, Prumada $prumada)
 	{
-		$dataForm = $request->all();
-
 		$logado = auth()->user()->name;
 
 		// TIMELINE - STATUS
-		if (!($dataForm["PRU_STATUS"] == $prumada->PRU_STATUS)){
+		if ($data->status != $prumada->status){
 
-			if ($prumada->PRU_STATUS == '0') {
-				$statusAntigo = 'Inativo';
-			}else{
-				$statusAntigo = "Ativo";
-			}
+			$statusAntigo = $prumada->status == 0 ? 'Inativo' : 'Ativo';
 
-			if ($dataForm["PRU_STATUS"] == '0') {
+			if ($data->status == '0') {
 				$statusNovo = 'Inativo';
 				$TIMELINE_ICON1 = "fa fa-close bg-red";
-			}else{
+			} else {
 				$statusNovo = "Ativo";
 				$TIMELINE_ICON1 = "fa fa-check bg-green";
 			}
 
-			$TIMELINE_DESCRICAO1 = "atualizou o status do equipamento #".$id." de '<a>".$statusAntigo."</a>' para '<a>".$statusNovo."</a>'";
+			$TIMELINE_DESCRICAO1 = "atualizou o 'STATUS' do equipamento #{$prumada->id} de '<a>{$statusAntigo}</a>' para '<a>{$statusNovo}</a>'";
 
 			$timelineData1 = [
-				"TIMELINE_IDPRUMADA" => $id,
-				"TIMELINE_USER" => $logado,
-				"TIMELINE_DESCRICAO" => $TIMELINE_DESCRICAO1,
-				"TIMELINE_ICON" => $TIMELINE_ICON1
+				"prumada_id" => $prumada->id,
+				"user" => $logado,
+				"descricao" => $TIMELINE_DESCRICAO1,
+				"icone" => $TIMELINE_ICON1
 			];
 			Timeline::create($timelineData1);
 		}
 
 		// TIMELINE - Nº de SERIAL
-		if (!($dataForm["PRU_SERIAL"] == $prumada->PRU_SERIAL)){
+		if ($data->serial != $prumada->serial) {
 
 			$timelineData2 = [
-				"TIMELINE_IDPRUMADA" => $id,
-				"TIMELINE_USER" => $logado,
-				"TIMELINE_DESCRICAO" => "atualizou o 'NÚMERO DE SERIAL' do equipamento #".$id." de '<a>".$prumada->PRU_SERIAL."</a>' para '<a>".$dataForm["PRU_SERIAL"]."</a>'",
-				"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
+				"prumada_id" => $prumada->id,
+				"user" => $logado,
+				"descricao" => "atualizou o 'NÚMERO DE SERIAL' do equipamento #{$prumada->id} de '<a>{$prumada->serial}</a>' para '<a>{$data->serial}</a>'",
+				"icone" => "fa fa-pencil bg-yellow"
 			];
 			Timeline::create($timelineData2);
 		}
 
 		// TIMELINE - ID FUNCIONAL
-		if (!($dataForm["PRU_IDFUNCIONAL"] == $prumada->PRU_IDFUNCIONAL)){
+		if ($data->funcional_id != $prumada->funcional_id) {
 
 			$timelineData3 = [
-				"TIMELINE_IDPRUMADA" => $id,
-				"TIMELINE_USER" => $logado,
-				"TIMELINE_DESCRICAO" => "atualizou o 'ID FUNCIONAL' do equipamento #".$id." de '<a>".$prumada->PRU_IDFUNCIONAL."</a>' para '<a>".$dataForm["PRU_IDFUNCIONAL"]."</a>'",
-				"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
+				"prumada_id" => $prumada->id,
+				"user" => $logado,
+				"descricao" => "atualizou o 'ID FUNCIONAL' do equipamento #{$prumada->id} de '<a>{$prumada->funcional_id}</a>' para '<a>{$data->funcional_id}</a>'",
+				"icone" => "fa fa-pencil bg-yellow"
 			];
 			Timeline::create($timelineData3);
 		}
 
 		// TIMELINE - FABRICANTE
-		if (!($dataForm["PRU_FABRICANTE"] == $prumada->PRU_FABRICANTE)){
+		if ($data->fabricante != $prumada->fabricante) {
 
 			$timelineData4 = [
-				"TIMELINE_IDPRUMADA" => $id,
-				"TIMELINE_USER" => $logado,
-				"TIMELINE_DESCRICAO" => "atualizou o 'FABRICANTE' do equipamento #".$id." de '<a>".$prumada->PRU_FABRICANTE."</a>' para '<a>".$dataForm["PRU_FABRICANTE"]."</a>'",
-				"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
+				"prumada_id" => $prumada->id,
+				"user" => $logado,
+				"descricao" => "atualizou o 'FABRICANTE' do equipamento #{$prumada->id} de '<a>{$prumada->fabricante}</a>' para '<a>{$data->fabricante}</a>'",
+				"icone" => "fa fa-pencil bg-yellow"
 			];
 			Timeline::create($timelineData4);
 		}
@@ -239,6 +213,7 @@ class PrumadaController extends Controller
 			];
 			Timeline::create($timelineData7);
 		}
+		//criar uma funcao para reutilizar todos esses codigos no lugar de ficar criando um a um
 
 		// PRUMADA - ATUALIZAR
 		$prumada->update($dataForm);

@@ -184,7 +184,7 @@
 
 																	<p class="alert alert-danger">Tem certeza que deseja excluir usuário "{{ $user->name }}" ?</p>
 																	<div class="form-actions">
-																		<a href="{{ route('unidade.destroy_user', ['id' => $user->unidade_id, 'id_user' => $user->id]) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormUSER}}').submit();" class="btn btn-danger btn-flat">SIM</a>
+																		<a href="{{ route('usuario.destroy', $user->id) }}" onclick="event.preventDefault(); document.getElementById('{{$deleteFormUSER}}').submit();" class="btn btn-danger btn-flat">SIM</a>
 																		<button type="button" class="btn btn-default" data-dismiss="modal">NÃO</button>
 																	</div>
 

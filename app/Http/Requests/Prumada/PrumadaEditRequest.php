@@ -12,13 +12,13 @@ class PrumadaEditRequest extends PrumadaRequest
     public function rules()
     {
         return [
-            'PRU_IDFUNCIONAL' => 'required|max:255',
-            'PRU_NOME' => 'required|max:255',
-            'PRU_SERIAL' => 'required|max:255',
-            'PRU_OPERADORA' => 'required|max:255',
-            'PRU_FABRICANTE' => 'required|max:255',
-            'PRU_MODELO' => 'required|max:255',
-            'PRU_TIPO' => 'required|integer',
+            'funcional_id' => 'required|max:255',
+            'nome' => 'required|max:255',
+            'serial' => 'required|max:255',
+            'operadora' => 'required|max:255',
+            'fabricante' => 'required|max:255',
+            'modelo' => 'required|max:255',
+            'tipo' => 'required|integer',
         ];
     }
 }

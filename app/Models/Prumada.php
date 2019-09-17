@@ -18,7 +18,7 @@ class Prumada extends Model
     
     public function unidade()
     {
-        return $this->hasOne(Unidade::class);
+        return $this->belongsTo(Unidade::class);
     }
 
     public function fatura()

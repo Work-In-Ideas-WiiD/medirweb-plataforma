@@ -303,18 +303,6 @@ class UnidadeController extends Controller
       return redirect('/unidade/editar/'.$id)->with('success', 'Usuario atualizado com sucesso!');
     }
 
-    public function destroy_user(Request $request, $id, $id_user)
-    {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
-        User::destroy($id_user);
-
-        return redirect('/unidade/editar/'.$id)->with('success', 'Usuário deletado com sucesso.');
-    }
-
-
 
     public function add_user_existente($id)
     {
@@ -365,7 +353,8 @@ class UnidadeController extends Controller
       $user->roles()->sync($rolesForm);
       // fim --
 
-      return redirect('/unidade/editar/'.$request->USER_UNIID)->with('success', 'Usuário vinculado à Unidade e à Usuário Comum com sucesso!');
+      return redirect()->route('unidade.edit', $request->USER_UNIID)
+        ->withSuccess('Usuário vinculado à Unidade e à Usuário Comum com sucesso!');
     }
 
 
@@ -392,7 +381,8 @@ class UnidadeController extends Controller
         }
         // fim --
 
-        return redirect('/unidade/editar/'.$id)->with('success', 'Usuário desvinculado à essa Unidade, com sucesso!');
+        return redirect()->route('unidade.edit', $id)
+            ->withSuccess('Usuário desvinculado à essa Unidade, com sucesso!');
     }
 
 }

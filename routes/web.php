@@ -120,7 +120,6 @@ Route::middleware('auth')->group(function () {
     Route::post('nova-unidade-user', array('uses' => 'UnidadeController@store_user'));
     Route::get('/unidade/editar/{id}/user/editar/{id_user}', array('as'=>'unidade.edit_user', 'uses' => 'UnidadeController@edit_user'));
     Route::put('/unidade/update/{id}/user/{id_user}', array('as'=>'unidade.update_user', 'uses'=>'UnidadeController@update_user'));
-    Route::delete('/unidade/{id}/user/{id_user}', array('as'=>'unidade.destroy_user', 'uses'=>'UnidadeController@destroy_user'));
     
     //Unidade_User_Existente
     Route::get('/unidade/editar/{id}/user/existente', array('as'=>'unidade.add_user_existente', 'uses' => 'UnidadeController@add_user_existente'));
@@ -138,7 +137,12 @@ Route::middleware('auth')->group(function () {
 
    
     // prumadas
-    Route::resource('prumada', 'PrumadaController')->except('show', 'index')->middleware('permissao:administrador');
+    Route::resource('prumada', 'PrumadaController', [
+        'middleware' => [
+            'edit' => 'permissao:administrador,sindico',
+            'update' => 'permissao:administrador,sindico',
+        ]
+    ])->except('show', 'index')->middleware('permissao:administrador');
 
 
     /* TimeLine */
