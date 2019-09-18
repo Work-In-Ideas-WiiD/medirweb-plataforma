@@ -21,7 +21,7 @@ class PrumadaController extends Controller
 	{
 		$imoveis = Imovel::pluck('nome', 'id');
 
-		return view('prumada.cadastrar', compact('imoveis'));
+		return view('prumada.create', compact('imoveis'));
 	}
 
 	public function store(PrumadaSaveRequest $request)
@@ -70,21 +70,6 @@ class PrumadaController extends Controller
 		//
 
 		return redirect('/imovel')->withSuccess('Equipamento cadastrada com sucesso.');
-	}
-
-	public function showAgrupamento($id)
-	{
-		if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-			return view('error403');
-		}
-
-		$agrupamentos = Agrupamento::where('imovel_id', $id)->get();
-
-		if(is_null($agrupamentos)){
-			return redirect( URL::previous() );
-		}
-
-		return $agrupamentos;
 	}
 
 	public function showUnidade($id)

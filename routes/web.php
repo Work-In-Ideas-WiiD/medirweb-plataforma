@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
         
     });
 
+    Route::get('imovel/agrupamento/{imovel}', 'ImovelController@agrupamento');
     Route::resource('/imovel', 'ImovelController', [
         'middleware' => [
             'index' => 'permissao:administrador,sindico',
@@ -91,6 +92,8 @@ Route::middleware('auth')->group(function () {
         ]
     ])->except(['index', 'show']);
     /* Unidades */
+
+
 
     /*
     

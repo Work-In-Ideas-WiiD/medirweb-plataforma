@@ -45,4 +45,9 @@ class AgrupamentoController extends Controller
 
 		return redirect('/imovel')->withSuccess('Agrupamento deletado com sucesso.');
 	}
+
+	public function agrupamento($imovel)
+	{
+		return Agrupamento::whereImovelId($imovel)->pluck('nome', 'id');
+	}
 }

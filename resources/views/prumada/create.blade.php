@@ -15,7 +15,7 @@
 
 @section('content')
 
-{!! Form::open(['action' => 'PrumadaController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+{!! Form::open(['action' => 'PrumadaController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'autocomplete' => 'off']) !!}
 <div class="row">
     <div class="col-md-8">
         <div class="box box-primary">
@@ -31,84 +31,77 @@
 
                     <div class='col-md-6'>
 
-                        <?php //Imovel ?>
                         <div class='form-group'>
-                            {{ Form::label('PRU_IDIMOVEL', 'Imóvel') }}
-                            {{ Form::select('PRU_IDIMOVEL', $imoveis, null, ['class' => 'avalidate form-control chosen-select-PRU_IDIMOVEL', 'autocomplete' => 'off']) }}
+                            {{ Form::label('imovel_id', 'Imóvel') }}
+                            {{ Form::select('imovel_id', $imoveis, null, ['class' => 'avalidate form-control']) }}
 
-                            @if ($errors->has('PRU_IDIMOVEL'))
+                            @error('PRU_IDIMOVEL')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('PRU_IDIMOVEL') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
-                        <?php // Unidade?>
                         <div class='form-group'>
-                            {{ Form::label('PRU_IDUNIDADE', 'Unidade') }}
-                            {{ Form::select('PRU_IDUNIDADE', ['' => 'Selecionar Unidade'], null, ['class' => 'avalidate form-control chosen-select-PRU_IDUNIDADE', 'autocomplete' => 'off']) }}
+                            {{ Form::label('unidade_id', 'Unidade') }}
+                            {{ Form::select('unidade_id', ['' => 'Selecionar Unidade'], null, ['class' => 'avalidate form-control']) }}
 
-                            @if ($errors->has('PRU_IDUNIDADE'))
+                            @error('unidade_id')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('PRU_IDUNIDADE') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
-                        <?php // ID FUNCIONAL ?>
                         <div class='form-group'>
-                            {{ Form::label('PRU_IDFUNCIONAL', 'ID Funcional') }}
-                            {{ Form::text('PRU_IDFUNCIONAL', null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::label('funcional_id', 'ID Funcional') }}
+                            {{ Form::text('funcional_id', null, ['class' => 'avalidate form-control']) }}
 
-                            @if ($errors->has('PRU_IDFUNCIONAL'))
+                            @error('funcional_id')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('PRU_IDFUNCIONAL') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
-                        <?php // FABRICANTE ?>
                         <div class='form-group'>
-                            {{ Form::label('PRU_FABRICANTE', 'Fabricante') }}
-                            {{ Form::text('PRU_FABRICANTE', null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::label('fabricante', 'Fabricante') }}
+                            {{ Form::text('fabricante', null, ['class' => 'avalidate form-control']) }}
 
 
-                            @if ($errors->has('PRU_FABRICANTE'))
+                            @error('fabricante')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('PRU_FABRICANTE') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
-                        <?php // Operadora ?>
                         <div class='form-group'>
-                            {{ Form::label('PRU_OPERADORA', 'Operadora') }}
-                            {{ Form::text('PRU_OPERADORA', null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::label('operadora', 'Operadora') }}
+                            {{ Form::text('operadora', null, ['class' => 'avalidate form-control']) }}
 
-                            @if ($errors->has('PRU_OPERADORA'))
+                            @error('operadora')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('PRU_OPERADORA') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
                     </div>
 
                     <div class="col-md-6">
 
-                        <?php //Agrupamento ?>
                         <div class='form-group'>
-                            {{ Form::label('PRU_IDAGRUPAMENTO', 'Agrupamento') }}
-                            {{ Form::select('PRU_IDAGRUPAMENTO', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control chosen-select-PRU_IDAGRUPAMENTO', 'autocomplete' => 'off']) }}
+                            {{ Form::label('agrupamento_id', 'Agrupamento') }}
+                            {{ Form::select('agrupamento_id', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control chosen-select-PRU_IDAGRUPAMENTO', 'autocomplete' => 'off']) }}
 
-                            @if ($errors->has('PRU_IDAGRUPAMENTO'))
+                            @error('agrupamento_id')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('PRU_IDAGRUPAMENTO') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
-                        <?php // NOME ?>
                         <div class='form-group'>
                             {{ Form::label('PRU_NOME', 'Nome') }}
                             {{ Form::text('PRU_NOME', null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
@@ -120,7 +113,6 @@
                             @endif
                         </div>
 
-                        <?php // N de Serial ?>
                         <div class='form-group'>
                             {{ Form::label('PRU_SERIAL', 'Nº de Serial') }}
                             {{ Form::text('PRU_SERIAL', null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
@@ -132,7 +124,6 @@
                             @endif
                         </div>
 
-                        <?php // MODELO ?>
                         <div class='form-group'>
                             {{ Form::label('PRU_MODELO', 'Modelo') }}
                             {{ Form::text('PRU_MODELO', null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
@@ -148,7 +139,6 @@
                             <div class="col-md-12">
                                 <div class="row">
 
-                                  <?php // TIPO ?>
                                   <div class="col-md-6">
                                       <div class='form-group'>
                                           {{ Form::label('PRU_TIPO', 'Tipo') }}
@@ -162,7 +152,6 @@
                                       </div>
                                   </div>
 
-                                  <?php // Status ?>
                                   <div class="col-md-6">
                                       <div class='form-group'>
                                           {{ Form::label('PRU_STATUS', 'Status') }}
