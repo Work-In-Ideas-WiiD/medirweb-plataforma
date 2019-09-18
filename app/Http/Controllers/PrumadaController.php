@@ -15,7 +15,7 @@ class PrumadaController extends Controller
 {
 	private $debug = true;
 
-	private $raspberry_url = 'http://localhost:8000';
+	private $raspberry_url = 'http://localhost:8081';
 
 	public function create()
 	{
@@ -30,7 +30,6 @@ class PrumadaController extends Controller
 		$dataForm = $request->all();
 		$prumada = Prumada::create($dataForm);
 
-
 		// Adicionar prumada no central raspberry
 		$dadosCentral['EQP_IDUNI'] = $prumada->PRU_IDUNIDADE;
 		$dadosCentral['EQP_IDPRU'] = $prumada->PRU_ID;
@@ -41,7 +40,7 @@ class PrumadaController extends Controller
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		
 		if ($this->debug)
-			curl_setopt($curl, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/");
+			curl_setopt($curl, CURLOPT_URL, "{$this->url}/equipamentos/");
 		else
 			curl_setopt($curl, CURLOPT_URL, "http://{$prumada->unidade->imovel_id}/equipamentos/");
 		
@@ -121,110 +120,50 @@ class PrumadaController extends Controller
 		// TIMELINE - STATUS
 		if ($data->status != $prumada->status){
 
-			$statusAntigo = $prumada->status == 0 ? 'Inativo' : 'Ativo';
-
 			if ($data->status == '0') {
-				$statusNovo = 'Inativo';
-				$TIMELINE_ICON1 = "fa fa-close bg-red";
+				$antigo = 'Ativo';
+				$novo = 'Inativo';
+				$icone = "fa fa-close bg-red";
 			} else {
-				$statusNovo = "Ativo";
-				$TIMELINE_ICON1 = "fa fa-check bg-green";
+				$antigo = 'Inativo';
+				$novo = "Ativo";
+				$icone = "fa fa-check bg-green";
 			}
-
-			$TIMELINE_DESCRICAO1 = "atualizou o 'STATUS' do equipamento #{$prumada->id} de '<a>{$statusAntigo}</a>' para '<a>{$statusNovo}</a>'";
-
-			$timelineData1 = [
-				"prumada_id" => $prumada->id,
-				"user" => $logado,
-				"descricao" => $TIMELINE_DESCRICAO1,
-				"icone" => $TIMELINE_ICON1
-			];
-			Timeline::create($timelineData1);
+			
+			$prumada->criarTimeline('STATUS', $antigo, $novo, $icone);
 		}
 
-		// TIMELINE - Nº de SERIAL
-		if ($data->serial != $prumada->serial) {
+		if ($data->serial != $prumada->serial) // TIMELINE - Nº de SERIAL
+			$prumada->criarTimeline('NÚMERO DE SERIAL', $prumada->serial, $data->serial, 'pencil bg-yellow');
 
-			$timelineData2 = [
-				"prumada_id" => $prumada->id,
-				"user" => $logado,
-				"descricao" => "atualizou o 'NÚMERO DE SERIAL' do equipamento #{$prumada->id} de '<a>{$prumada->serial}</a>' para '<a>{$data->serial}</a>'",
-				"icone" => "fa fa-pencil bg-yellow"
-			];
-			Timeline::create($timelineData2);
-		}
+		if ($data->funcional_id != $prumada->funcional_id) // TIMELINE - ID FUNCIONAL
+			$prumada->criarTimeline('ID FUNCIONAL', $prumada->funcional_id, $data->funcional_id, 'pencil bg-yellow');
+		
+		if ($data->fabricante != $prumada->fabricante) // TIMELINE - FABRICANTE
+			$prumada->criarTimeline('FABRICANTE', $prumada->fabricante, $data->fabricante, 'pencil bg-yellow');
+		
+		if ($data->modelo != $prumada->PRU_MODELO) // TIMELINE - MODELO
+			$prumada->criarTimeline('MODELO', $prumada->modelo, $data->modelo, 'pencil bg-yellow');
 
-		// TIMELINE - ID FUNCIONAL
-		if ($data->funcional_id != $prumada->funcional_id) {
+		if ($data->operadora != $prumada->operadora) // TIMELINE - OPERADORA
+			$prumada->criarTimeline('OPERADORA', $prumada->operadora, $data->operadora, 'pencil bg-yellow');
 
-			$timelineData3 = [
-				"prumada_id" => $prumada->id,
-				"user" => $logado,
-				"descricao" => "atualizou o 'ID FUNCIONAL' do equipamento #{$prumada->id} de '<a>{$prumada->funcional_id}</a>' para '<a>{$data->funcional_id}</a>'",
-				"icone" => "fa fa-pencil bg-yellow"
-			];
-			Timeline::create($timelineData3);
-		}
-
-		// TIMELINE - FABRICANTE
-		if ($data->fabricante != $prumada->fabricante) {
-
-			$timelineData4 = [
-				"prumada_id" => $prumada->id,
-				"user" => $logado,
-				"descricao" => "atualizou o 'FABRICANTE' do equipamento #{$prumada->id} de '<a>{$prumada->fabricante}</a>' para '<a>{$data->fabricante}</a>'",
-				"icone" => "fa fa-pencil bg-yellow"
-			];
-			Timeline::create($timelineData4);
-		}
-
-		// TIMELINE - MODELO
-		if (!($dataForm["PRU_MODELO"] == $prumada->PRU_MODELO)){
-
-			$timelineData5 = [
-				"TIMELINE_IDPRUMADA" => $id,
-				"TIMELINE_USER" => $logado,
-				"TIMELINE_DESCRICAO" => "atualizou o 'MODELO' do equipamento #".$id." de '<a>".$prumada->PRU_MODELO."</a>' para '<a>".$dataForm["PRU_MODELO"]."</a>'",
-				"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
-			];
-			Timeline::create($timelineData5);
-		}
-
-		// TIMELINE - OPERADORA
-		if (!($dataForm["PRU_OPERADORA"] == $prumada->PRU_OPERADORA)){
-
-			$timelineData6 = [
-					"TIMELINE_IDPRUMADA" => $id,
-					"TIMELINE_USER" => $logado,
-					"TIMELINE_DESCRICAO" => "atualizou o 'OPERADORA' do equipamento #".$id." de '<a>".$prumada->PRU_OPERADORA."</a>' para '<a>".$dataForm["PRU_OPERADORA"]."</a>'",
-					"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
-			];
-			Timeline::create($timelineData6);
-		}
-
-		// TIMELINE - NOME
-		if (!($dataForm["PRU_NOME"] == $prumada->PRU_OPERADORA)){
-
-			$timelineData7 = [
-				"TIMELINE_IDPRUMADA" => $id,
-				"TIMELINE_USER" => $logado,
-				"TIMELINE_DESCRICAO" => "atualizou o 'NOME' do equipamento #".$id." de '<a>".$prumada->PRU_NOME."</a>' para '<a>".$dataForm["PRU_NOME"]."</a>'",
-				"TIMELINE_ICON" => "fa fa-pencil bg-yellow"
-			];
-			Timeline::create($timelineData7);
-		}
-		//criar uma funcao para reutilizar todos esses codigos no lugar de ficar criando um a um
+		if ($data->nome != $prumada->nome) // TIMELINE - NOME
+			$prumada->criarTimeline('NOME', $prumada->nome, $data->nome, 'pencil bg-yellow');
 
 		// PRUMADA - ATUALIZAR
-		$prumada->update($dataForm);
+		$prumada->update($data->all());
 
 
 
 		// PRUCURANDO prumada na central raspberry para pegar o id da prumada da central
 		$chPruCentral = curl_init();
 		curl_setopt($chPruCentral, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($chPruCentral, CURLOPT_URL, 'http://localhost:8000/equipamentos/');
-		//curl_setopt($chPruCentral, CURLOPT_URL, 'http://'.$prumada->unidade->imovel->IMO_IP.'/equipamentos/');
+		if ($this->debug)
+			curl_setopt($chPruCentral, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/");
+		else
+			curl_setopt($chPruCentral, CURLOPT_URL, "http://{$prumada->unidade->imovel->ip}/equipamentos/");
+
 		$getPruCentral_json = curl_exec($chPruCentral);
 		curl_close($chPruCentral);
 
@@ -239,16 +178,16 @@ class PrumadaController extends Controller
 
 		$getPruCentral = json_decode($getPruCentral_json, true);
 		foreach ($getPruCentral as $key => $pruCentral) {
-			if($pruCentral['EQP_IDPRU'] == $prumada->PRU_ID){
+			if($pruCentral['EQP_IDPRU'] == $prumada->id)
 				$idPruCentral = $pruCentral['id'];
-			}
+
 		}
 		// fim
 
 		// Atualizar prumada no central raspberry
-		$dadosCentral['EQP_IDUNI'] = $prumada->PRU_IDUNIDADE;
-		$dadosCentral['EQP_IDPRU'] = $prumada->PRU_ID;
-		$dadosCentral['EQP_IDFUNCIONAL'] = $prumada->PRU_IDFUNCIONAL;
+		$dadosCentral['EQP_IDUNI'] = $prumada->unidade_id;
+		$dadosCentral['EQP_IDPRU'] = $prumada->id;
+		$dadosCentral['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
 
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
@@ -262,61 +201,55 @@ class PrumadaController extends Controller
 		curl_setopt($curl, CURLOPT_POSTFIELDS, $dadosCentral);
 		$resposta = curl_exec($curl);
 		curl_close($curl);
-		// fim
-
 
 		return redirect('/imovel')->withSuccess('Equipamento atualizado com sucesso.');
 	}
 
 	public function destroy(Request $request, Prumada $prumada)
 	{
+		$prumada->timeline()->create([
+			'user' => auth()->user()->name,
+			'descricao' => "deletou equipamento #".$prumada->id,
+			'icone' => "fa fa-trash bg-red"
+		]);
+	
 		$prumada->delete();
 
-		$timelineData = [
-			"TIMELINE_IDPRUMADA" => $prumada->id,
-			"TIMELINE_USER" => auth()->user()->name,
-			"TIMELINE_DESCRICAO" => "deletou equipamento #".$prumada->id,
-			"TIMELINE_ICON" => "fa fa-trash bg-red"
-		];
-
-		$timeline = Timeline::create($timelineData);
-
-		return redirect('/imovel')->withSuccess('Equipamento deletado com sucesso.');
+		return back()->withSuccess('Equipamento deletado com sucesso.');
 	}
 
 	public function criarDuas()
 	{
 		$unidades = Unidade::with('prumada')->get();
 
-		foreach ($unidades as $unidade) {
+		foreach ($unidades as $unidade)
 			$this->verificaDuplicidade($unidade);
-		}
 
 	}
 
 	private function verificaDuplicidade(Unidade $unidade)
 	{
 		if ($unidade->prumada->count() < 2) {
-			$ultima = Prumada::orderByDesc('PRU_ID')->first(['PRU_ID', 'PRU_IDFUNCIONAL']);
+			$ultima = Prumada::orderByDesc('PRU_ID')->first(['id', 'funcional_id']);
 			if (!$ultima)
 				$id_funcional = 1;
 			else
-				$id_funcional = $ultima->PRU_IDFUNCIONAL + 1;
+				$id_funcional = $ultima->funcional_id + 1;
 
 			$unidade->prumada()->insert([
 				[
-					'PRU_TIPO' => 1,
-					'PRU_IDUNIDADE' => $unidade->UNI_ID,
-					'PRU_NOME' => 'Área social / cozinha',
-					'PRU_IDFUNCIONAL' => $id_funcional,
+					'tipo' => 1,
+					'unidade_id' => $unidade->UNI_ID,
+					'nome' => 'Área social / cozinha',
+					'funcional_id' => $id_funcional,
 					'created_at' => now(),
 					'updated_at' => now()
 				],
 				[
-					'PRU_TIPO' => 1,
-					'PRU_IDUNIDADE' => $unidade->UNI_ID,
-					'PRU_NOME' => 'Banheiro',
-					'PRU_IDFUNCIONAL' => $id_funcional + 1,
+					'tipo' => 1,
+					'unidade_id' => $unidade->UNI_ID,
+					'nome' => 'Banheiro',
+					'funcional_id' => $id_funcional + 1,
 					'created_at' => now(),
 					'updated_at' => now()
 				]
