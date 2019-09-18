@@ -184,25 +184,27 @@ class PrumadaController extends Controller
 		}
 		// fim
 
-		// Atualizar prumada no central raspberry
-		$dadosCentral['EQP_IDUNI'] = $prumada->unidade_id;
-		$dadosCentral['EQP_IDPRU'] = $prumada->id;
-		$dadosCentral['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
+		if (!empty($idPruCentral)) {
+			// Atualizar prumada no central raspberry
+			$dadosCentral['EQP_IDUNI'] = $prumada->unidade_id;
+			$dadosCentral['EQP_IDPRU'] = $prumada->id;
+			$dadosCentral['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
 
-		$curl = curl_init();
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		
-		if ($this->debug)
-			curl_setopt($curl, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/{$idPruCentral}/");
-		else
-			curl_setopt($curl, CURLOPT_URL, "http://{$prumada->unidade->imovel->ip}/equipamentos/{$idPruCentral}/");
+			$curl = curl_init();
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+			
+			if ($this->debug)
+				curl_setopt($curl, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/{$idPruCentral}/");
+			else
+				curl_setopt($curl, CURLOPT_URL, "http://{$prumada->unidade->imovel->ip}/equipamentos/{$idPruCentral}/");
 
-		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $dadosCentral);
-		$resposta = curl_exec($curl);
-		curl_close($curl);
+			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $dadosCentral);
+			$resposta = curl_exec($curl);
+			curl_close($curl);
+		}
 
-		return redirect('/imovel')->withSuccess('Equipamento atualizado com sucesso.');
+		return back()->withSuccess('Equipamento atualizado com sucesso.');
 	}
 
 	public function destroy(Request $request, Prumada $prumada)
