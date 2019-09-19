@@ -48,7 +48,7 @@
 						<!-- Cidade Imóvel -->
 						<div class="form-group">
 							{{ Form::label('cidade_id', 'Cidade') }}
-							{{ Form::select('cidade_id', [], null, ['class' => 'form-control', 'placeholder' => 'Escolha uma cidade']) }}
+							{{ Form::select('cidade_id', $cidades, null, ['class' => 'form-control', 'placeholder' => 'Escolha uma cidade']) }}
 						</div><!-- /.form group -->
 					</div>
 

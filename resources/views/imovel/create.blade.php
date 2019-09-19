@@ -17,7 +17,7 @@
 
 <div class="row">
     <div class="col-md-8">
-        {!! Form::open(['action' => 'ImovelController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+        {!! Form::open(['route' => 'imovel.store', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 
         <!-- Dados de Identificação -->
         <div class="box box-primary">
@@ -108,7 +108,7 @@
                         </div>
                         <div class='form-group'>
                             {{ Form::label('cidade_id', 'Cidade') }}
-                            {{ Form::select('cidade_id', [], null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecionar cidade']) }}
+                            {{ Form::select('cidade_id', $cidades, null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecionar cidade']) }}
 
                             @error('cidade_id')
                             <span class="help-block">
@@ -234,7 +234,7 @@
                             {{ Form::label('taxa_variavel', 'Taxa Variável (R$/m³/Kw)') }}
                             {{ Form::text('taxa_variavel', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89', 'data-error' => $errors->first('taxa_variavel')]) }}
 
-                            @error('IMO_TAXAFIXA')
+                            @error('taxa_variavel')
                             <span class="help-block">
                                 <strong style="color: red;">{{ $message }}</strong>
                             </span>

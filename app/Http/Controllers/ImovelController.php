@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Support\Str;
+use Illuminate\Support\Str;
 use App\Models\Agrupamento;
 use App\Models\Cidade;
 use App\Models\Cliente;
+use App\Models\Endereco;
 use App\Models\Estado;
 use App\Models\Prumada;
 use Illuminate\Http\Request;
@@ -38,7 +39,6 @@ class ImovelController extends Controller
 
     public function index()
     {
-
         if(app('defender')->hasRoles('Administrador')) {
             $imoveis = Imovel::with('endereco.cidade.estado')->get();
         } else if(app('defender')->hasRoles(['Sindico', 'Secretário'])) {
@@ -54,7 +54,9 @@ class ImovelController extends Controller
     {      
         $estados = Estado::pluck('nome', 'id');
 
-        return view('imovel.buscar', compact( 'estados'));
+        $cidades = Cidade::whereEstadoId(1)->pluck('nome', 'id');
+
+        return view('imovel.buscar', compact( 'estados', 'cidades'));
     }
 
     public function create()
@@ -63,27 +65,28 @@ class ImovelController extends Controller
 
         $estados = Estado::pluck('nome', 'id');
 
-        return view('imovel.create', compact('clientes', 'estados'));
+        $cidades = Cidade::whereEstadoId(1)->pluck('nome', 'id');
+
+        return view('imovel.create', compact('clientes', 'estados', 'cidades'));
     }
 
-    public function showCidades($id)
+    public function store(ImovelSaveRequest $data)
     {
-        $cidades =  Cidade::where('CID_IDESTADO', $id)->get();
+        dd($data, $data->foto, $data->file('foto'));
+        $endereco = Endereco::create(
+            $data->only('logradouro', 'bairro', 'cidade_id', 'numero', 'cep', 'complemento')
+        );
 
-        if(!$cidades)
-            return redirect( URL::previous() );
+        $imovel = new Imovel;
 
+        $imovel->fill(
+            $data->only('cliente_id', 'cnpj', 'nome', 'status', 'fatura_ciclo', 'taxa_fixa', 'taxa_variavel', 'ip')
+        );
 
-        return $cidades;
-    }
-
-    public function store(ImovelSaveRequest $request)
-    {
-
-        $dataForm = $request->all();
-
-        if($request->hasFile('foto')){
-            $fileName = md5(uniqid().str_random()).'.'.$request->file('foto')->extension();
+        $imovel->endereco_id = $endereco->id;
+        dd($data, $data->file->foto, $data->file('foto'));
+        if($data->foto){
+            $imovel->foto = Str::random(32).'.'.$data->file('foto')->extension();
             $dataForm['IMO_FOTO'] = $request->file('foto')->move('upload/fotos', $fileName)->getFilename();
 
             ImageOptimizer::optimize('upload/fotos/'.$dataForm['IMO_FOTO']);
@@ -98,7 +101,7 @@ class ImovelController extends Controller
 
         $imovel = Imovel::create($dataForm);
 
-        return redirect('/imovel/ver/'.$imovel->IMO_ID)->with('success', 'Imóvel cadastrado com sucesso.');
+       // return redirect('/imovel/ver/'.$imovel->IMO_ID)->with('success', 'Imóvel cadastrado com sucesso.');
 
     }
 
