@@ -67,21 +67,6 @@ class PrumadaController extends Controller
 		return back()->withSuccess('Equipamento cadastrada com sucesso.');
 	}
 
-	public function showUnidade($id)
-	{
-		if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-			return view('error403');
-		}
-
-		$unidades = Unidade::where('UNI_IDAGRUPAMENTO', $id)->get();
-
-		if(is_null($unidades)){
-			return redirect( URL::previous() );
-		}
-
-		return $unidades;
-	}
-
 	public function edit(Prumada $prumada)
 	{
 		$unidades = $prumada->unidade->pluck('nome', 'id');

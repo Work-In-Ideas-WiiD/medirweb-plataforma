@@ -163,7 +163,7 @@ return [
                 [
                     'text' => 'Unidades',
                     'icon' => 'home',
-                    'url'  => 'unidade/adicionar',
+                    'url'  => 'unidade/create',
                 ],
                 [
                     'text' => 'Equipamentos',
