@@ -23,7 +23,7 @@ class AgrupamentoController extends Controller
 	{
 		Agrupamento::create($request->all());
 
-		return redirect('/imovel')->withSuccess('Agrupamento cadastrado com sucesso.');
+		return back()->withSuccess('Agrupamento cadastrado com sucesso.');
 	}
 
 	
@@ -38,14 +38,14 @@ class AgrupamentoController extends Controller
 	{
 		$agrupamento->update($request->all());
 
-		return redirect('/imovel')->withSuccess('Agrupamento atualizado com sucesso.');
+		return back()->withSuccess('Agrupamento atualizado com sucesso.');
 	}
 
 	public function destroy(Agrupamento $agrupamento)
 	{
 		$agrupamento->delete();
 
-		return redirect('/imovel')->withSuccess('Agrupamento deletado com sucesso.');
+		return back()->withSuccess('Agrupamento deletado com sucesso.');
 	}
 
 	public function unidade($agrupamento_id)
