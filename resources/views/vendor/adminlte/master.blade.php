@@ -77,37 +77,44 @@
     //UNIDADES - CAMPO AGRUPAMENTO
     $(document).ready(function() {
 
-        $(".chosen-select-UNI_IDIMOVEL").chosen({no_results_text: "Oops, nada encontrado!"});
+        $('select[name="imovel_id"]').on('change', function() {
 
-        $('select[name="UNI_IDIMOVEL"]').on('change', function() {
-            var stateID = $(this).val();
-            if(stateID) {
-                $.ajax({
-                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: '/unidade/getAgrupamentoLista/'+stateID,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
+            $.ajax({
+                url: `/imovel/agrupamento/${$(this).val()}`,
+                type: "GET",
+                dataType: "json",
+                success:function(data) {
+                    
+                    $('select[name="agrupamento_id"]').empty();
+                        
+                    $.each(data, function(key, value)  {                          
+                        $('select[name="agrupamento_id"]').append(`<option value="${key}">${value}</option>`);
+                    })
+                    
+                }
+            });
+            
+        });
 
-                        $('select[name="UNI_IDAGRUPAMENTO"]').empty();
-                        $.each(data, function(key, value) {
-                            $('select[name="UNI_IDAGRUPAMENTO"]').append('<option value="'+ value.AGR_ID +'">'+ value.AGR_NOME +'</option>');
-                        });
 
-                        $('select[name="UNI_IDAGRUPAMENTO"]').trigger('chosen:updated');
-                        $(".chosen-select-UNI_IDAGRUPAMENTO").chosen({no_results_text: "Oops, nada encontrado!"});
+        $('select[name="agrupamento_id"]').on('change', function() {
 
-                    }
-                });
-            }else{
-                $('select[name="city"]').empty();
-            }
+            $.ajax({
+                url: `/agrupamento/unidade/${$(this).val()}`,
+                type: "GET",
+                dataType: "json",
+                success:function(data) {
+                    $('select[name="unidade_id"]').empty();
+                        
+                    $.each(data, function(key, value)  {
+                        $('select[name="unidade_id"]').append(`<option value="${key}">${value}</option>`);
+                    })                   
+                }
+            });
+
         });
     });
-    </script>
-
-    <script type="text/javascript">
-    // Equipamento - CAMPO AGRUPAMENTO
+ 
 
     $(".chosen-select-PRU_IDIMOVEL").chosen({no_results_text: "Oops, nada encontrado!"});
 
@@ -279,8 +286,7 @@
                         $('select[name="cidade_id"]').append('<option value="'+ key +'">'+ value +'</option>');
                     });
 
-                    $('select[name="cidade_id"]').trigger('chosen:updated');
-                    
+                    $('select[name="cidade_id"]').trigger('chosen:updated');                   
 
                 }
             });

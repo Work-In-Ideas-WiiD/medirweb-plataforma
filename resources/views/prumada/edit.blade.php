@@ -31,7 +31,6 @@
 
                     <div class='col-md-6'>
 
-                        <?php //Imovel ?>
                         <div class='form-group'>
                             {{ Form::label('imovel_id', 'Imóvel') }}
                             {{ Form::select('imovel_id', $imoveis, null, ['class' => 'avalidate form-control', 'disabled']) }}
@@ -43,7 +42,6 @@
                             @enderror
                         </div>
 
-                        <?php // Unidade?>
                         <div class='form-group'>
                             {{ Form::label('unidade_id', 'Unidade') }}
                             {{ Form::select('unidade_id', $unidades, null, ['class' => 'avalidate form-control', 'disabled']) }}
@@ -55,7 +53,6 @@
                             @enderror
                         </div>
 
-                        <?php // ID FUNCIONAL ?>
                         <div class='form-group'>
                             {{ Form::label('funcional_id', 'ID Funcional') }}
                             {{ Form::text('funcional_id', null, ['class' => 'avalidate form-control']) }}
@@ -67,7 +64,6 @@
                             @enderror
                         </div>
 
-                        <?php // FABRICANTE ?>
                         <div class='form-group'>
                             {{ Form::label('fabricante', 'Fabricante') }}
                             {{ Form::text('fabricante', null, ['class' => 'avalidate form-control']) }}
@@ -80,7 +76,6 @@
                             @enderror
                         </div>
 
-                        <?php // Operadora ?>
                         <div class='form-group'>
                             {{ Form::label('operadora', 'Operadora') }}
                             {{ Form::text('operadora', null, ['class' => 'avalidate form-control']) }}
@@ -96,7 +91,6 @@
 
                     <div class="col-md-6">
 
-                        <?php //Agrupamento ?>
                         <div class='form-group'>
                             {{ Form::label('agrupamento_id', 'Agrupamento') }}
                             {{ Form::select('agrupamento_id', $agrupamentos, null, ['class' => 'avalidate form-control', 'disabled']) }}
@@ -108,7 +102,6 @@
                             @enderror
                         </div>
 
-                        <?php // NOME ?>
                         <div class='form-group'>
                             {{ Form::label('nome', 'Nome') }}
                             {{ Form::text('nome', null, ['class' => 'avalidate form-control']) }}
@@ -120,7 +113,6 @@
                             @enderror
                         </div>
 
-                        <?php // N de Serial ?>
                         <div class='form-group'>
                             {{ Form::label('serial', 'Nº de Serial') }}
                             {{ Form::text('serial', null, ['class' => 'avalidate form-control']) }}
@@ -132,7 +124,6 @@
                             @enderror
                         </div>
 
-                        <?php // MODELO ?>
                         <div class='form-group'>
                             {{ Form::label('modelo', 'Modelo') }}
                             {{ Form::text('modelo', null, ['class' => 'avalidate form-control']) }}
@@ -148,7 +139,6 @@
                             <div class="col-md-12">
                                 <div class="row">
 
-                                  <?php // TIPO ?>
                                   <div class="col-md-6">
                                       <div class='form-group'>
                                           {{ Form::label('tipo', 'Tipo') }}

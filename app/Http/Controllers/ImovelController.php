@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 //use Illuminate\Support\Str;
+use App\Models\Agrupamento;
 use App\Models\Cidade;
 use App\Models\Cliente;
 use App\Models\Estado;
@@ -938,5 +939,10 @@ class ImovelController extends Controller
         //        }
 
 
+    }
+
+    public function agrupamento($imovel_id)
+    {
+        return Agrupamento::whereImovelId($imovel_id)->pluck('nome', 'id');
     }
 }

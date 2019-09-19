@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Agrupamento;
 use App\Models\Imovel;
+use App\Models\Unidade;
 use App\Http\Requests\Agrupamento\AgrupamentoSaveRequest;
+
 
 class AgrupamentoController extends Controller
 {
@@ -46,8 +48,8 @@ class AgrupamentoController extends Controller
 		return redirect('/imovel')->withSuccess('Agrupamento deletado com sucesso.');
 	}
 
-	public function agrupamento($imovel)
-	{
-		return Agrupamento::whereImovelId($imovel)->pluck('nome', 'id');
-	}
+	public function unidade($agrupamento_id)
+    {
+        return Unidade::whereAgrupamentoId($agrupamento_id)->pluck('nome', 'id');
+    }
 }

@@ -81,6 +81,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/agrupamento/update/{agrupamento}', array('as'=>'agrupamento.update', 'uses'=>'AgrupamentoController@update'));
     Route::delete('/agrupamento/{agrupamento}', array('as'=>'agrupamento.destroy', 'uses'=>'AgrupamentoController@destroy'));
     */
+    Route::get('agrupamento/unidade/{agrupamento}', 'AgrupamentoController@unidade');
     Route::resource('agrupamento', 'AgrupamentoController', [
         'middleware' => [
             'create' => 'permissao:administrador',

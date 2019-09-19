@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Illuminate\Http\Request;
 use App\Models\Imovel;
 use App\Models\Agrupamento;
@@ -19,28 +20,30 @@ class PrumadaController extends Controller
 
 	public function create()
 	{
-		$imoveis = Imovel::pluck('nome', 'id');
+		$imoveis = Imovel::get(['nome', 'id']);
 
-		return view('prumada.create', compact('imoveis'));
+		$agrupamentos = $imoveis[0]->agrupamento->pluck('nome', 'id');
+
+		$imoveis = $imoveis->pluck('nome', 'id');
+
+		return view('prumada.create', compact('agrupamentos', 'imoveis'));
 	}
 
-	public function store(PrumadaSaveRequest $request)
+	public function store(PrumadaSaveRequest $data)
 	{
-
-		$dataForm = $request->all();
-		$prumada = Prumada::create($dataForm);
+		$prumada = Prumada::create($data->except('imovel_id', 'agrupamento_id'));
 
 		// Adicionar prumada no central raspberry
-		$dadosCentral['EQP_IDUNI'] = $prumada->PRU_IDUNIDADE;
-		$dadosCentral['EQP_IDPRU'] = $prumada->PRU_ID;
-		$dadosCentral['EQP_IDFUNCIONAL'] = $prumada->PRU_IDFUNCIONAL;
+		$dadosCentral['EQP_IDUNI'] = $prumada->unidade_id;
+		$dadosCentral['EQP_IDPRU'] = $prumada->id;
+		$dadosCentral['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
 
 		$curl = curl_init();
 
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 		
 		if ($this->debug)
-			curl_setopt($curl, CURLOPT_URL, "{$this->url}/equipamentos/");
+			curl_setopt($curl, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/");
 		else
 			curl_setopt($curl, CURLOPT_URL, "http://{$prumada->unidade->imovel_id}/equipamentos/");
 		
@@ -49,27 +52,19 @@ class PrumadaController extends Controller
 
 		$resposta = curl_exec($curl);
 		curl_close($curl);
-		// fim
 
-		$timelineData = [
+		Timeline::create([
 			"prumada_id" => $prumada->id,
 			"user" => auth()->user()->name,
 			"descricao" => "criou novo equipamento #".$prumada->id,
 			"icone" => "fa fa-plus bg-green"
-		];
-
-
-		$timeline = Timeline::create($timelineData);
+		]);
 
 		// Sem comunicação com a central do imovel
-		if($resposta == NULL){
-				return redirect()->route('prumada.edit', $prumada->id)->withError(
-				'Sem comunicação com a central do imovel! Tente novamente mais tarde no ATUALIZAR EQUIPAMENTO, para atualizar a base de dados!'
-			);
-		}
-		//
+		if(!$resposta)
+			return back()->withError('Sem comunicação com a central do imovel! Tente novamente mais tarde no ATUALIZAR EQUIPAMENTO, para atualizar a base de dados!');
 
-		return redirect('/imovel')->withSuccess('Equipamento cadastrada com sucesso.');
+		return back()->withSuccess('Equipamento cadastrada com sucesso.');
 	}
 
 	public function showUnidade($id)

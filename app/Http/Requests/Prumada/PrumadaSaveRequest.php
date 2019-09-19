@@ -12,16 +12,16 @@ class PrumadaSaveRequest extends PrumadaRequest
     public function rules()
     {
         return [
-            'PRU_IDIMOVEL' => 'required|integer',
-            'PRU_IDAGRUPAMENTO' => 'required|integer',
-            'PRU_IDUNIDADE' => 'required|integer',
-            'PRU_NOME' => 'required|max:255',
-            'PRU_IDFUNCIONAL' => 'required|max:255',
-            'PRU_SERIAL' => 'required|max:255',
-            'PRU_OPERADORA' => 'required|max:255',
-            'PRU_FABRICANTE' => 'required|max:255',
-            'PRU_MODELO' => 'required|max:255',
-            'PRU_TIPO' => 'required|integer',
+            'imovel_id' => 'required|integer',
+            'agrupamento_id' => 'required|integer',
+            'unidade_id' => 'required|integer',
+            'nome' => 'required|max:255',
+            'funcional_id' => 'required|max:255',
+            'serial' => 'required|max:255',
+            'operadora' => 'required|max:255',
+            'fabricante' => 'required|max:255',
+            'modelo' => 'required|max:255',
+            'tipo' => 'required|integer',
         ];
     }
 }

@@ -15,7 +15,7 @@
 
 @section('content')
 
-{!! Form::open(['action' => 'PrumadaController@store', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'autocomplete' => 'off']) !!}
+{!! Form::open(['route' => 'prumada.store', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'autocomplete' => 'off']) !!}
 <div class="row">
     <div class="col-md-8">
         <div class="box box-primary">
@@ -44,7 +44,7 @@
 
                         <div class='form-group'>
                             {{ Form::label('unidade_id', 'Unidade') }}
-                            {{ Form::select('unidade_id', ['' => 'Selecionar Unidade'], null, ['class' => 'avalidate form-control']) }}
+                            {{ Form::select('unidade_id', [], null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecione a unidade']) }}
 
                             @error('unidade_id')
                             <span class="help-block">
@@ -93,7 +93,7 @@
 
                         <div class='form-group'>
                             {{ Form::label('agrupamento_id', 'Agrupamento') }}
-                            {{ Form::select('agrupamento_id', ['' => 'Selecionar Agrupamento'], null, ['class' => 'avalidate form-control chosen-select-PRU_IDAGRUPAMENTO', 'autocomplete' => 'off']) }}
+                            {{ Form::select('agrupamento_id', $agrupamentos, null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecionar Agrupamento']) }}
 
                             @error('agrupamento_id')
                             <span class="help-block">
@@ -103,36 +103,36 @@
                         </div>
 
                         <div class='form-group'>
-                            {{ Form::label('PRU_NOME', 'Nome') }}
-                            {{ Form::text('PRU_NOME', null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::label('nome', 'Nome') }}
+                            {{ Form::text('nome', null, ['class' => 'avalidate form-control']) }}
 
-                            @if ($errors->has('PRU_NOME'))
+                            @error('nome')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('PRU_NOME') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
                         <div class='form-group'>
-                            {{ Form::label('PRU_SERIAL', 'Nº de Serial') }}
-                            {{ Form::text('PRU_SERIAL', null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::label('serial', 'Nº de Serial') }}
+                            {{ Form::text('serial', null, ['class' => 'avalidate form-control']) }}
 
-                            @if ($errors->has('PRU_SERIAL'))
+                            @error('serial')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('PRU_SERIAL') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
                         <div class='form-group'>
-                            {{ Form::label('PRU_MODELO', 'Modelo') }}
-                            {{ Form::text('PRU_MODELO', null, ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::label('modelo', 'Modelo') }}
+                            {{ Form::text('modelo', null, ['class' => 'avalidate form-control']) }}
 
-                            @if ($errors->has('PRU_MODELO'))
+                            @error('modelo')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('PRU_MODELO') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
 
                         <div class="row">
@@ -141,27 +141,27 @@
 
                                   <div class="col-md-6">
                                       <div class='form-group'>
-                                          {{ Form::label('PRU_TIPO', 'Tipo') }}
-                                          {{ Form::select('PRU_TIPO', ['' => 'Selecione... ', 1 => 'Água', 2 => 'Gás', 3 => 'Energia'], null, ['class' => 'form-control']) }}
+                                          {{ Form::label('tipo', 'Tipo') }}
+                                          {{ Form::select('tipo', [1 => 'Água', 2 => 'Gás', 3 => 'Energia'], null, ['class' => 'form-control', 'placeholder' => 'Selecione... ']) }}
 
-                                          @if ($errors->has('PRU_TIPO'))
+                                          @error('tipo')
                                           <span class="help-block">
-                                              <strong style="color: red;">{{ $errors->first('PRU_TIPO') }}</strong>
+                                              <strong style="color: red;">{{ $message }}</strong>
                                           </span>
-                                          @endif
+                                          @enderror
                                       </div>
                                   </div>
 
                                   <div class="col-md-6">
                                       <div class='form-group'>
-                                          {{ Form::label('PRU_STATUS', 'Status') }}
-                                          {{ Form::select('PRU_STATUS', [1 => 'Ativo', 0 => 'Inativo'], null, ['class' => 'form-control']) }}
+                                          {{ Form::label('status', 'Status') }}
+                                          {{ Form::select('status', [1 => 'Ativo', 0 => 'Inativo'], null, ['class' => 'form-control']) }}
 
-                                          @if ($errors->has('PRU_STATUS'))
+                                          @error('status')
                                           <span class="help-block">
-                                              <strong style="color: red;">{{ $errors->first('PRU_STATUS') }}</strong>
+                                              <strong style="color: red;">{{ $message }}</strong>
                                           </span>
-                                          @endif
+                                          @enderror
                                       </div>
                                   </div>
 
