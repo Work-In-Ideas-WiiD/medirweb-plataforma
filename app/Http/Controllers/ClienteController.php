@@ -86,17 +86,18 @@ class ClienteController extends Controller
     {
         $cliente->fill(
             $data->only('tipo', 'documento', 'nome_juridico', 'nome_fantasia', 'status')
-        );
-
-        $cliente->endereco->fill(
+        );       
+        
+        $cliente->endereco->update(
             $data->only('logradouro', 'complemento', 'numero', 'bairro', 'cidade_id', 'cep')
         );
 
         if($data->hasFile('foto')) {
             $cliente->foto = Str::random(32).'.'.$data->file('foto')->extension();
             $data->file('foto')->storeAs('upload/clientes/', $cliente->foto);
-            $cliente->save();
         }
+        
+        $cliente->save();
 
         return back()->withSuccess('Cliente atualizado com sucesso.');
     }

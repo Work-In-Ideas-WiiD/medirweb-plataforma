@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Agrupamento;
 use App\Models\Imovel;
 use App\Models\Unidade;
 use App\Http\Requests\Agrupamento\AgrupamentoSaveRequest;
 
-
 class AgrupamentoController extends Controller
 {
-
 	public function create()
 	{
 		$imoveis  = Imovel::pluck('nome', 'id');
@@ -25,7 +22,6 @@ class AgrupamentoController extends Controller
 
 		return back()->withSuccess('Agrupamento cadastrado com sucesso.');
 	}
-
 	
 	public function edit(Agrupamento $agrupamento)
 	{
