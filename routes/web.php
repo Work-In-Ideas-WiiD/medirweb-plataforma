@@ -167,8 +167,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/relatorio/consumo', 'RelatorioController@relatorioConsumo')->name('Relatorio Consumo');
     Route::post('relatorio/consumo', array('uses' => 'RelatorioController@getConsumoLista'));
     
-    Route::get('/relatorio/faturas', 'RelatorioController@relatorioFatura')->name('Relatorio Fatura');
-    Route::post('relatorio/faturas', array('uses' => 'RelatorioController@getFaturaLista'));
+    //Route::middleware(['permissao:administrador', 'permissao:sindico'])->group(function() {
+        Route::get('/relatorio/faturas', 'RelatorioController@relatorioFatura')->name('relatorio.fatura');
+
+        Route::post('relatorio/faturas', array('uses' => 'RelatorioController@getFaturaLista'));
+
+    //});
+
     Route::get('relatorio/faturas/getApartamentoLista/{id}', array('uses' => 'RelatorioController@showUnidade'));
 
 });

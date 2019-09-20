@@ -11,29 +11,13 @@ use App\Charts\ConsumoCharts;
 
 class RelatorioController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    public function index()
-    {
-        //
-    }
-
     public function tarifa($consumo){
 
-        if($consumo > 10 && $consumo <= 15)
-        {
+        if($consumo > 10 && $consumo <= 15) {
             $valor = (($consumo - 10) * 11.37) + 59;
-        }
-        elseif ($consumo > 15)
-        {
+        } elseif ($consumo > 15) {
             $valor = (($consumo - 10) * 13.98) + 59;
-        }
-        else
-        {
+        } else {
             $valor = 59;
         }
 
@@ -274,43 +258,28 @@ class RelatorioController extends Controller
     }
 
     public function relatorioFatura()
-    {
-        $user = auth()->user()->USER_IMOID;
-        $imoveis = ['' => 'Selecionar Imovel'];
+    {       
+        if(app('defender')->hasRoles('Administrador'))
+            $imoveis = Imovel::pluck('nome', 'id');
+        else if(app('defender')->hasRoles(['Sindico', 'Secretário']))
+            $imoveis = auth()->user()->imovel()->pluck('nome', 'id');
+        else
+            return abort(403, 'você não tem permissão');
 
-        if(app('defender')->hasRoles('Administrador')){
-            $_imoveis = Imovel::get();
-        }else if(app('defender')->hasRoles(['Sindico', 'Secretário'])){
-            $_imoveis = Imovel::get()->where('IMO_ID', $user);
-        }else{
-            return view('error403');
-        }
-
-        foreach($_imoveis as $imovel){
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
 
         return view('relatorio.fatura', compact('imoveis'));
     }
 
     public function getFaturaLista(Request $request)
     {
-        // FORMULARIO IMOVEL (GET)
-        $user = auth()->user()->USER_IMOID;
-        $imoveis = ['' => 'Selecionar Imovel'];
+        if(app('defender')->hasRoles('Administrador'))
+            $imoveis = Imovel::pluck('nome', 'id');
+        else if(app('defender')->hasRoles(['Sindico', 'Secretário']))
+            $imoveis = auth()->user()->imovel()->pluck('nome', 'id');
+        else
+            return abort(403, 'você não tem permissão');
 
-        if(app('defender')->hasRoles('Administrador')){
-            $_imoveis = Imovel::get();
-        }else if(app('defender')->hasRoles(['Sindico', 'Secretário'])){
-            $_imoveis = Imovel::get()->where('IMO_ID', $user);
-        }else{
-            return view('error403');
-        }
 
-        foreach($_imoveis as $imovel){
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
-        // FIM - FORMULARIO IMOVEL (GET)
 
         // SUBMIT "EXPORTAR PDF por Apartamento (individual)"
         if(!empty($request->pdf)){
@@ -473,32 +442,8 @@ class RelatorioController extends Controller
                 }
             }
         }
-
+ 
         return view('relatorio.fatura', compact('imoveis', 'faturas', 'faturaAvancados'));
-    }
-
-    public function showUnidade($id)
-    {
-        $user = auth()->user()->USER_IMOID;
-        if(app('defender')->hasRoles(['Sindico', 'Secretário']) && !($user == $id)){
-            return view('error403');
-        }
-
-        $retornoUnid = array();
-
-        $unidades = Imovel::find($id)->getUnidades;
-        foreach ($unidades as $unid) {
-            $unid = ['UNI_ID' => $unid->UNI_ID,
-            'UNI_NOME' => $unid->UNI_NOME,
-            'UNI_RESPONSAVEL' => $unid->UNI_RESPONSAVEL];
-            array_push($retornoUnid, $unid);
-
-            if(is_null($unid)){
-                return redirect( URL::previous() );
-            }
-        }
-
-        return json_encode($retornoUnid);
     }
 
 }
