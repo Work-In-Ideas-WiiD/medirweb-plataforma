@@ -13,8 +13,8 @@ class UserSaveRequest extends UserRequest
     {
         return [
             'name' => 'required|max:255',
-            'USER_IMOID' => 'nullable|max:255',
-            'email' =>'required|email|unique:users,email',
+            'imovel_id' => 'nullable|max:255',
+            'email' =>'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
             'roles' => 'required|max:255',
         ];

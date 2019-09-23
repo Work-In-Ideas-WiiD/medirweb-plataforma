@@ -33,20 +33,9 @@ class UserController extends Controller
 
     public function create()
     {
+        $roles = \Artesaos\Defender\Role::pluck('name', 'id');
 
-        $roles =[];
-        $_roles = \Artesaos\Defender\Role::all();
-        foreach($_roles as $role){
-            if(!($role->id == 4))
-                $roles[$role->id] = $role->name;
-
-        }
-
-        $imoveis = ['' => 'Selecionar Imovel'];
-
-        foreach(Imovel::all() as $imovel)
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-      
+        $imoveis = Imovel::pluck('nome', 'id');
 
         return view('usuario.create', compact('roles', 'imoveis'));
     }
