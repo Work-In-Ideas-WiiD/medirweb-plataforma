@@ -140,43 +140,33 @@ class UnidadeController extends Controller
         return redirect('/imovel')->withSuccess("Unidade e Usuario {$unidade->nome_responsavel} deletado com sucesso.");
     }
 
-    public function edit_user($id, $id_user)
+    public function edit_user(Unidade $unidade, User $user)
     {
-
-      if(!app('defender')->hasRoles('Administrador')){
-          return view('error403');
-      }
-
-      $unidade = Unidade::find($id);
-      $user = User::find($id_user);
-
       // VALIDAÇÃO SE USUARIO NÃO FOR USUARIO COMUM
       $valUserComum = false;
 
       foreach ($user->roles as $roleUser) {
-          if($roleUser->id == "4" ){
+          if($roleUser->id == "4" )
               $valUserComum = true;
-          }
       }
 
-      if(!$valUserComum){
-          return redirect('/unidade/editar/'.$id)->with('error', 'Este Usuário não é Usuário Comum!');
-      }
-      // FIM - VALIDAÇÃO SE USUARIO NÃO FOR USUARIO COMUM
+      if(!$valUserComum)
+          return back()->withError('Este Usuário não é Usuário Comum!');
+    
 
       // VALIDAÇÃO SE O USUARIO NÃO TIVER VINCULADO À UNIDADE
-      if($user->USER_UNIID != $unidade->UNI_ID){
-        return redirect('/unidade/editar/'.$id)->with('error', 'Este Usuário não esta vinculado a essa Unidade!');
-      }
+      if($user->unidade_id != $unidade->id)
+        return back()->withError('Este Usuário não esta vinculado a essa Unidade!');
+
       // FIM
 
       // PERFIL EXTRA
       $roles =[];
       $_roles = \Artesaos\Defender\Role::all();
       foreach($_roles as $role){
-          if(!($role->id == 4)){
+          if(!($role->id == 4))
               $roles[$role->id] = $role->name;
-          }
+
       }
       // FIM - PERFIL EXTRA
 
@@ -242,42 +232,21 @@ class UnidadeController extends Controller
       return redirect('/unidade/editar/'.$id)->with('success', 'Usuario atualizado com sucesso!');
     }
 
-
-    public function add_user_existente($id)
+    public function add_user_existente(Unidade $unidade)
     {
+        $users = User::whereNull('unidade_id')->pluck('name', 'id');
 
-      if(!app('defender')->hasRoles('Administrador')){
-          return view('error403');
-      }
-
-      $unidade = Unidade::find($id);
-
-      $users = ['' => 'Selecione Usuário'];
-      $_users = User:: whereNull('USER_UNIID')->get();
-      foreach($_users as $user){
-        $users[$user->id] = $user->name;
-      }
-
-      return view('unidade.add_user_existente', compact('unidade', 'users'));
+        return view('unidade.add_user_existente', compact('unidade', 'users'));
     }
 
-    public function store_user_existente(Request $request)
+    public function store_user_existente(Request $data)
     {
+        if(!$data->user == null)
+            return back()->with('error', 'Selecione um Usuário para ser vinculado a essa unidade!');
+      
+      $user = User::findOrFail($data->user_id);
 
-      if(!app('defender')->hasRoles('Administrador')){
-          return view('error403');
-      }
-
-      if($request->name == null){
-        return redirect('/unidade/editar/'.$request->USER_UNIID.'/user/existente')->with('error', 'Selecione um Usuário para ser vinculado a essa unidade!');
-      }
-
-      $user = User::find($request->name);
-
-      $dataFormUser['USER_IMOID'] = $request->USER_IMOID;
-      $dataFormUser['USER_UNIID'] = $request->USER_UNIID;
-
-      $user->update($dataFormUser);
+      $user->update($data->except('user_id'));
 
 
       // Adicionando como Usuário Comum
@@ -292,8 +261,7 @@ class UnidadeController extends Controller
       $user->roles()->sync($rolesForm);
       // fim --
 
-      return redirect()->route('unidade.edit', $request->USER_UNIID)
-        ->withSuccess('Usuário vinculado à Unidade e à Usuário Comum com sucesso!');
+      return back()->withSuccess('Usuário vinculado à Unidade e à Usuário Comum com sucesso!');
     }
 
 
