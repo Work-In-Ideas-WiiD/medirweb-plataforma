@@ -27,7 +27,7 @@ class TesteController extends Controller
 
     function uploadCsv()
     {
-        $imoveis = Imovel::pluck('IMO_NOME', 'IMO_ID');
+        $imoveis = Imovel::pluck('nome', 'id');
         return view('timeline.importar_unidades_csv', compact('imoveis'));
     }
 
@@ -58,21 +58,23 @@ class TesteController extends Controller
             $agrupamento = $this->criarAgrupamento($info[0][4].$info[0][5], $imovel);
     
             $array = [
-                'UNI_IDAGRUPAMENTO' => $agrupamento->AGR_ID,
-                'UNI_IDIMOVEL' => $imovel,
-                'UNI_NOME' => $info[0][0].$info[0][1].$info[0][2],
-                'UNI_RESPONSAVEL' => $info[1],
-                'UNI_CPFRESPONSAVEL' => $info[4],
-                'UNI_TELRESPONSAVEL' => $info[3]
+                'agrupamento_id' => $agrupamento->id,
+                'imovel_id' => $imovel,
+                'nome' => $info[0][0].$info[0][1].$info[0][2],
+                'nome_responsavel' => $info[1],
+                'cpf_responsavel' => $info[4],
             ];
 
             Unidade::updateOrCreate(
                 [
-                   'UNI_IDAGRUPAMENTO' => $agrupamento->AGR_ID,
-                   'UNI_NOME' => $info[0][0].$info[0][1].$info[0][2]
+                   'agrupamento_id' => $agrupamento->id,
+                   'nome' => $info[0][0].$info[0][1].$info[0][2]
                 ],
                 $array
-            );
+            )->telefone()->updateOrCreate([
+                'etiqueta' => 'responsável',
+                'numero' => $info[3]
+            ]);
 
             return $array;
         }
@@ -81,8 +83,8 @@ class TesteController extends Controller
     private function criarAgrupamento($nome, $imovel_id)
     {
         return Agrupamento::updateOrCreate([
-            'AGR_IDIMOVEL' => $imovel_id,
-            'AGR_NOME' => $nome
+            'imovel_id' => $imovel_id,
+            'nome' => $nome
         ]);
     }
 
