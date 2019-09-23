@@ -72,7 +72,6 @@ class ImovelController extends Controller
 
     public function store(ImovelSaveRequest $data)
     {
-        dd($data, $data->foto, $data->file('foto'));
         $endereco = Endereco::create(
             $data->only('logradouro', 'bairro', 'cidade_id', 'numero', 'cep', 'complemento')
         );
@@ -84,25 +83,18 @@ class ImovelController extends Controller
         );
 
         $imovel->endereco_id = $endereco->id;
-        dd($data, $data->file->foto, $data->file('foto'));
+
         if($data->foto){
             $imovel->foto = Str::random(32).'.'.$data->file('foto')->extension();
-            $dataForm['IMO_FOTO'] = $request->file('foto')->move('upload/fotos', $fileName)->getFilename();
-
-            ImageOptimizer::optimize('upload/fotos/'.$dataForm['IMO_FOTO']);
+            $data->file('foto')->move('upload/fotos', $imovel->foto)->getFilename();
         }
 
-        if($request->hasFile('capa')){
-            $fileName = md5(uniqid().str_random()).'.'.$request->file('capa')->extension();
-            $dataForm['IMO_CAPA'] = $request->file('capa')->move('upload/capas', $fileName)->getFilename();
-
-            ImageOptimizer::optimize('upload/capas/'.$dataForm['IMO_CAPA']);
+        if($data->hasFile('capa')){
+            $imovel->capa = Str::random(32).'.'.$request->file('capa')->extension();
+            $data->file('capa')->move('upload/capas', $imovel->capa)->getFilename();
         }
 
-        $imovel = Imovel::create($dataForm);
-
-       // return redirect('/imovel/ver/'.$imovel->IMO_ID)->with('success', 'Imóvel cadastrado com sucesso.');
-
+        return back()->withSuccess('Imóvel cadastrado com sucesso.');
     }
 
     public function show(Imovel $imovel)

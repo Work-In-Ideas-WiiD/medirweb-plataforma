@@ -47,7 +47,7 @@
                             {{ Form::label('cnpj', 'CNPJ') }}
                             {{ Form::text('cnpj', $imovel->cnpj, ['class' => 'form-control mask-cnpj']) }}
 
-                            @errors->has('cnpj')
+                            @error('cnpj')
                             <span class="help-block">
                                 <strong style="color: red;">{{ $message }}</strong>
                             </span>
@@ -209,50 +209,6 @@
         </div>
         @endis
         <!-- [FIM] Configuração Central -->
-
-        <!-- Informações de contato -->
-        <div class="box box-warning collapsed-box">
-            <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-phone"></i> Informações de Contato</h3>
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class='box-body'>
-                <div class='row'>
-
-                    <div class='col-md-6'>
-                        <div class='form-group'>
-                            {{ Form::label('IMO_RESPONSAVEIS', 'Responsáveis') }}
-                            {{ Form::textarea('IMO_RESPONSAVEIS', null, ['class' => 'form-control', 'rows' => 4]) }}
-
-                            @if ($errors->has('IMO_RESPONSAVEIS'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_RESPONSAVEIS') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class='form-group'>
-                            {{ Form::label('IMO_TELEFONES', 'Telefones') }}
-                            {{ Form::textarea('IMO_TELEFONES', null, ['class' => 'form-control', 'rows' => 4]) }}
-
-                            @if ($errors->has('IMO_TELEFONES'))
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_TELEFONES') }}</strong>
-                            </span>
-                            @endif
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- [FIM] Informações de contato -->
 
         <!-- Taxas de cobrança -->
         <div class="box box-danger collapsed-box">
