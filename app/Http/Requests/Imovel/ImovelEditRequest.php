@@ -13,7 +13,7 @@ class ImovelEditRequest extends ImovelRequest
     {
         return [
             'nome' => ['required', 'max:255'],
-            'cnpj' => ['required', 'cnpj', 'formato_cnpj', 'unique:imoveis'],
+            'cnpj' => ['required', 'cnpj', 'formato_cnpj'],
             'logradouro' => ['required'],
             'complemento' => ['required'],
             'numero' => ['required'],

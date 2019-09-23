@@ -86,12 +86,12 @@ class ImovelController extends Controller
 
         if($data->foto){
             $imovel->foto = Str::random(32).'.'.$data->file('foto')->extension();
-            $data->file('foto')->move('upload/fotos', $imovel->foto)->getFilename();
+            $data->file('foto')->move('upload/fotos', $imovel->foto);
         }
 
         if($data->hasFile('capa')){
             $imovel->capa = Str::random(32).'.'.$request->file('capa')->extension();
-            $data->file('capa')->move('upload/capas', $imovel->capa)->getFilename();
+            $data->file('capa')->move('upload/capas', $imovel->capa);
         }
 
         return back()->withSuccess('Imóvel cadastrado com sucesso.');
@@ -154,53 +154,46 @@ class ImovelController extends Controller
     }
 
 
-    public function update(ImovelEditRequest $request, Imovel $imovel)
+    public function update(ImovelEditRequest $data, Imovel $imovel)
     {
-        if($imovel->IMO_ID !== auth()->user()->USER_IMOID){
-            return redirect()->route('404');
-        }
-
-        if($request->IMO_IDCLIENTE){
-            return redirect()-route('imovel.edit', $imovel->IMO_ID)->withError('Não é permitido burlar o sistema!');
-        }
-
         // SOMENTE USUARIO "CONTATO WIID" PODE ALTERAR O FECHAMENTO DA FATURA
-        if(!(auth()->user()->id == 7)){
-            if($request->IMO_FATURACICLO){
-                return redirect()-route('imovel.edit', $imovel->IMO_ID)->withError('Não é permitido burlar o sistema!');
-            }
-        }
+        if(auth()->id() != 7 and $data->fatura_ciclo)
+            return back()->withError('Não é permitido burlar o sistema!');
 
-        $dataForm = $request->all();
 
-        if($request->hasFile('foto')){
-            $foto_path = public_path("upload/fotos/".$imovel->IMO_FOTO);
+        if($data->hasFile('foto')){
+            $foto_path = public_path("upload/fotos/".$imovel->foto);
 
-            if (File::exists($foto_path)) {
+            if (File::exists($foto_path))
                 File::delete($foto_path);
-            }
 
-            $fileName = md5(uniqid().str_random()).'.'.$request->file('foto')->extension();
-            $dataForm['IMO_FOTO'] = $request->file('foto')->move('upload/fotos', $fileName)->getFilename();
+            $imovel->foto = Str::random(32).'.'.$request->file('foto')->extension();
+            $data->file('foto')->move('upload/fotos', $imovel->foto);
 
-            ImageOptimizer::optimize('upload/fotos/'.$dataForm['IMO_FOTO']);
         }
-        if($request->hasFile('capa')){
-            $capa_path = public_path("upload/capas/".$imovel->IMO_FOTO);
 
-            if (File::exists($capa_path)) {
+        if($data->hasFile('capa')){
+            $capa_path = public_path("upload/capas/".$imovel->capa);
+
+            if (File::exists($capa_path))
                 File::delete($capa_path);
-            }
 
-            $fileName = md5(uniqid().str_random()).'.'.$request->file('capa')->extension();
-            $dataForm['IMO_CAPA'] = $request->file('capa')->move('upload/capas', $fileName)->getFilename();
+            $imovel->capa = Str::random(32).'.'.$request->file('capa')->extension();
+            $data->file('capa')->move('upload/capas', $imovel->capa);
 
-            ImageOptimizer::optimize('upload/capas/'.$dataForm['IMO_CAPA']);
         }
 
-        $imovel->update($dataForm);
+        $imovel->endereco->update(
+            $data->only('logradouro', 'bairro', 'cidade_id', 'numero', 'cep', 'complemento')
+        );
 
-        return redirect()->route('imovel.show', $imovel->IMO_ID)->withSuccess('Imóvel atualizado com sucesso.');
+        $imovel->fill(
+            $data->only('cliente_id', 'cnpj', 'nome', 'status', 'fatura_ciclo', 'taxa_fixa', 'taxa_variavel', 'ip')
+        );
+
+        $imovel->save();
+
+        return back()->withSuccess('Imóvel atualizado com sucesso.');
     }
 
     public function destroy(Request $request, Imovel $imovel)
@@ -229,41 +222,6 @@ class ImovelController extends Controller
                 $mesCiclo += [ date('Y-m-d', strtotime(date("Y-m")."-".$i))  => $i ];
             }
         }
-
-
-        //$teste = Fatura::all();
-        //foreach ($teste as  $value) {
-          //$opa = $value->FAT_ID;
-          //$value->destroy($opa);
-        //}
-        //die;
-
-
-        //Fatura::destroy(8);
-        //FaturaUnidade::destroy(1);
-
-
-
-        /*DB::insert("INSERT INTO `faturas_unidades` (`FATUNI_ID`, `FATUNI_DT`, `FATUNI_IDUNI`, `FATUNI_IDFATURA`, `FATUNI_VALORTOTAL`, `FATUNI_PRUMADAS`, `created_at`, `updated_at`) VALUES (NULL, 'Março 2019', '242', '7', '201,40', '{\"PRU_ID\":243,\"PRU_NOME\":\"\\u00c1rea de Servi\\u00e7o\\/ Lavabo\",\"PRU_CONSUMO\":3,\"PRU_LEIANTERIOR\":0,\"PRU_DTLEIANTERIOR\":\"2019-02-05\",\"PRU_LEIATUAL\":\"3\",\"PRU_DTLEIATUAL\":\"2019-03-06\",\"PRU_VALOR\":\"60,42\"},{\"PRU_ID\":244,\"PRU_NOME\":\"Banheiro Suite\",\"PRU_CONSUMO\":5,\"PRU_LEIANTERIOR\":0,\"PRU_DTLEIANTERIOR\":\"2019-02-05\",\"PRU_LEIATUAL\":\"5\",\"PRU_DTLEIATUAL\":\"2019-03-06\",\"PRU_VALOR\":\"100,70\"}, {\"PRU_ID\":245,\"PRU_NOME\":\"Banheiro Social\",\"PRU_CONSUMO\":2,\"PRU_LEIANTERIOR\":0,\"PRU_DTLEIANTERIOR\":\"2019-02-05\",\"PRU_LEIATUAL\":\"2\",\"PRU_DTLEIATUAL\":\"2019-03-06\",\"PRU_VALOR\":\"40,28\"}', '2019-03-06 12:29:56', '2019-03-06 12:29:56');");*/
-
-
-
-
-        /*setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.UTF-8', 'portuguese');
-        date_default_timezone_set('America/Sao_Paulo');
-
-        $teste = utf8_encode(ucwords(strftime('%B %Y', strtotime('2019-03-03'))));
-
-        var_dump($teste);
-
-
-        phpinfo();
-
-
-        die;*/
-
-
-
 
 
         $faturas = Fatura::where('FAT_IMOID', $id)->whereMonth('FAT_DTLEIFORNECEDOR', date("m"))->get();
@@ -501,7 +459,7 @@ class ImovelController extends Controller
 
               $value['FATUNI_VALORTOTAL'] = $valorPrumada;
               FaturaUnidade::create($value);
-          }else{
+          } else {
               foreach ($dadosFatUni as $fatUni) {
 
                   $value['FATUNI_PRUMADAS'] = $fatUni->FATUNI_PRUMADAS.', '.$value['FATUNI_PRUMADAS'];

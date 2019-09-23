@@ -194,7 +194,7 @@
                     <div class='col-md-6'>
                         <div class='form-group'>
                             {{ Form::label('ip', 'IP da Central') }}
-                            {{ Form::text('ip', null, ['class' => 'form-control', 'placeholder' => 'Ex.: 000.000.000.000', 'data-error' => $errors->first('ip')]) }}
+                            {{ Form::text('ip', null, ['class' => 'form-control', 'placeholder' => 'Ex.: 000.000.000.000']) }}
 
                             @error('ip')
                             <span class="help-block">
@@ -226,26 +226,26 @@
                     <div class='col-md-6'>
                         <div class='form-group'>
                             {{ Form::label('taxa_fixa', 'Taxa Fixa (R$)') }}
-                            {{ Form::text('taxa_fixa', $imovel->taxa_fixa, ['class' => 'form-control', 'placeholder' => 'Ex.: 3,99', 'data-error' => $errors->first('IMO_TAXAFIXA')]) }}
+                            {{ Form::text('taxa_fixa', $imovel->taxa_fixa, ['class' => 'form-control', 'placeholder' => 'Ex.: 3,99']) }}
 
-                            @if ($errors->has('taxa_fixa'))
+                            @error('taxa_fixa')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('taxa_fixa') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 
                     <div class="col-md-6">
                         <div class='form-group'>
                             {{ Form::label('taxa_variavel', 'Taxa Variável (R$/m³/Kw)') }}
-                            {{ Form::text('taxa_variavel', $imovel->taxa_variavel, ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89', 'data-error' => $errors->first('taxa_variavel')]) }}
+                            {{ Form::text('taxa_variavel', $imovel->taxa_variavel, ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89']) }}
 
-                            @if ($errors->has('taxa_variavel'))
+                            @error('taxa_variavel')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('taxa_variavel') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 
