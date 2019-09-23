@@ -41,25 +41,25 @@ class UserController extends Controller
     }
 
 
-    public function store(UserSaveRequest $request)
+    public function store(UserSaveRequest $data)
     {
+        $user = new User;
 
-        $dataForm = $request->all();
+        $user->fill($data->except('foto', 'password', 'roles', 'password_confirmation'));
 
-        if($request->hasFile('fotoUser')){
-            $fileName = md5(uniqid().str_random()).'.'.$request->file('fotoUser')->extension();
-            $dataForm['foto'] = $request->file('fotoUser')->move('upload/usuarios', $fileName)->getFilename();
+        if($data->hasFile('foto')){
+            $user->foto = Str::random(32).'.'.$data->file('foto')->extension();
 
-            ImageOptimizer::optimize('upload/usuarios/'.$dataForm['foto']);
+            $data->file('foto')->move('upload/usuarios', $user->foto);
         }
 
-        $dataForm['password'] = bcrypt($dataForm['password']);
+        $user->password = bcrypt($data->password);
 
-        $user = User::create($dataForm);
+        $user->save();
 
-        $user->roles()->attach($dataForm['roles']);
+        $user->roles()->attach($data->roles);
 
-        return redirect('/usuario')->with('success', 'Usuário cadastrado com sucesso.');
+        return redirect()->route('usuario.index')->with('success', 'Usuário cadastrado com sucesso.');
     }
 
     public function edit(User $usuario)

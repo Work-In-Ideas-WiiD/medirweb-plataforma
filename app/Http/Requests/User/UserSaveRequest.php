@@ -17,6 +17,7 @@ class UserSaveRequest extends UserRequest
             'email' =>'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
             'roles' => 'required|max:255',
+            'foto' => ['nullable', 'mimes:jpeg,jpg,png', 'max:10000']
         ];
     }
 }

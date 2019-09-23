@@ -93,9 +93,9 @@
                         
                         <div class='form-group'>
                             {{ Form::label('imovel_id', 'Imóvel') }}
-                            {{ Form::select('imovel_id', $imoveis, null, ['class' => 'avalidate form-control']) }}
+                            {{ Form::select('imovel_id', $imoveis, null, ['class' => 'avalidate form-control', 'placeholder' => 'Selecione um imóvel']) }}
 
-                            @error('USER_IMOID')
+                            @error('imovel_id')
                             <span class="help-block">
                                 <strong style="color: red;">{{ $message }}</strong>
                             </span>

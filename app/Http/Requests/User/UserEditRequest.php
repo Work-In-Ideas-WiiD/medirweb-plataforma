@@ -12,11 +12,12 @@ class UserEditRequest extends UserRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
-            'USER_IMOID' => 'required|max:255',
-            'email' => 'required|email|unique:users,id,' .$this->get('id'),
-            'password' => 'confirmed',
-            'roles' => 'required|max:255',
+            'name' => ['required', 'max:255'],
+            'imovel_id' => ['required', 'max:255'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['confirmed'],
+            'roles' => ['required', 'max:255'],
+            'foto' => ['nullable', 'mimes:jpeg,jpg,png', 'max:10000'],
         ];
     }
 }
