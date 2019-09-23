@@ -118,7 +118,7 @@
 				</div>
 
 				<div class="col-md-4">
-					<a href="{{ route('unidade.create_user', $unidade->id) }}" class="btn btn-block btn-primary"><i class="fa fa-user"></i> Criar Usuários à Unidade</a>
+					<a href="{{ route('usuario.unidade', $unidade->id) }}" class="btn btn-block btn-primary"><i class="fa fa-user"></i> Criar Usuários à Unidade</a>
 					<a href="{{ route('unidade.add_user_existente', $unidade->id) }}" class="btn btn-block btn-default"><i class="fa fa-user"></i> Adicionar Usuário Existente à Unidade</a>
 					<button type="submit" type="button" class="btn btn-block btn-warning"><i class="fa fa-pencil"></i> Atualizar cadastro</button>
 					<button onclick="history.back()" type="button" class="btn btn-block btn-danger"><i class="fa fa-close"></i> Cancelar</button>
@@ -331,7 +331,7 @@
 												</div>
 											</div>
 
-											{!! Form::open(['route' => ['prumada.destroy', 'pru' => $pru->PRU_ID], 'method' => 'DELETE', 'id' => $deleteFormPRU, 'style' => 'display:none']) !!}
+											{!! Form::open(['route' => ['prumada.destroy', 'pru' => $pru->id], 'method' => 'DELETE', 'id' => $deleteFormPRU, 'style' => 'display:none']) !!}
 											{!! Form::close() !!}
 
 										</div>
