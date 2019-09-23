@@ -13,7 +13,7 @@ class Unidade extends Model
 
     public function agrupamento()
     {
-        return $this->hasOne(Agrupamento::class);
+        return $this->belongsTo(Agrupamento::class);
     }
 
     public function imovel()

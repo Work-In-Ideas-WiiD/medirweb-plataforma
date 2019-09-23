@@ -13,7 +13,7 @@ class UnidadeUserSaveRequest extends UnidadeRequest
     {
         return [
             'name' => 'required|max:255',
-            'email' =>'required|email|unique:users,email',
+            'email' =>'required|email|unique:users',
         ];
     }
 }

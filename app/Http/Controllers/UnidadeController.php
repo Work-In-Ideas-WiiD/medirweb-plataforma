@@ -11,7 +11,6 @@ use App\Models\Prumada;
 use App\User;
 use App\Http\Requests\Unidade\UnidadeSaveRequest;
 use App\Http\Requests\Unidade\UnidadeEditRequest;
-use App\Http\Requests\Unidade\UnidadeUserSaveRequest;
 use App\Http\Requests\Unidade\UnidadeUserEditRequest;
 use App\Charts\ConsumoCharts;
 use Mail;
@@ -139,57 +138,6 @@ class UnidadeController extends Controller
         $unidade->delete();
 
         return redirect('/imovel')->withSuccess("Unidade e Usuario {$unidade->nome_responsavel} deletado com sucesso.");
-    }
-
-
-
-    // USUARIO COMUM VINCULADO À UNIDADE
-
-    public function create_user($id)
-    {
-
-      if(!app('defender')->hasRoles('Administrador')){
-          return view('error403');
-      }
-
-      $unidade = Unidade::find($id);
-
-      return view('unidade.create_user', compact('unidade'));
-    }
-
-    public function store_user(UnidadeUserSaveRequest $request)
-    {
-
-      if(!app('defender')->hasRoles('Administrador')){
-          return view('error403');
-      }
-
-      //ADICIONAR USUARIO COMUM
-      $password = rand(100000,9999999);
-      $dataFormUser['USER_IMOID'] = $request->USER_IMOID;
-      $dataFormUser['USER_UNIID'] = $request->USER_UNIID;
-      $dataFormUser['name'] = $request->name;
-      $dataFormUser['email'] = $request->email;
-      $dataFormUser['password'] = bcrypt($password);
-      $dataFormUser['roles'] = array("4"); //COMUM
-
-      $user = User::create($dataFormUser);
-
-      $user->roles()->attach($dataFormUser['roles']);
-      // fim - ADICIONAR USUARIO COMUM
-
-      $imovelAll = Imovel::find($user->USER_IMOID);
-
-      // ENVIAR EMAIL com a senha.
-      Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
-          $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
-          $message->to($user->email);
-          $message->subject('Senha de acesso ao app');
-      });
-      // fim - enviar email
-
-
-      return redirect('/unidade/editar/'.$request->USER_UNIID)->with('success', 'Usuário criado e Vinculado à essa unidade!');
     }
 
     public function edit_user($id, $id_user)

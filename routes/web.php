@@ -120,9 +120,11 @@ Route::middleware('auth')->group(function () {
 
 
     //Unidade_User
-    Route::get('/unidade/{id}/user/create', 'UnidadeController@create_user')
-        ->name('unidade.create_user')->middleware('permissao');
-    Route::post('nova-unidade-user', array('uses' => 'UnidadeController@store_user'));
+    Route::get('usuario/{unidade}/unidade', 'UserController@unidade')
+        ->name('usuario.unidade')->middleware('permissao');
+    Route::post('usuario/{unidade}/unidade/store', 'UserController@unidadeStore')
+        ->name('usuario.unidade.store')->middleware('permissao');
+    
     Route::get('/unidade/editar/{id}/user/editar/{id_user}', array('as'=>'unidade.edit_user', 'uses' => 'UnidadeController@edit_user'));
     Route::put('/unidade/update/{id}/user/{id_user}', array('as'=>'unidade.update_user', 'uses'=>'UnidadeController@update_user'));
     

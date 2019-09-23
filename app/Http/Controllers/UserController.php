@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Mail;
 use App\User;
 use Illuminate\Http\Request;
 use Artesaos\Defender\Facades\Defender;
@@ -9,9 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\User\UserSaveRequest;
 use App\Http\Requests\User\UserEditRequest;
+use App\Http\Requests\Unidade\UnidadeUserSaveRequest;
 use App\Models\Imovel;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\File;
+use App\Models\Unidade;
+
 
 class UserController extends Controller
 {
@@ -167,6 +171,38 @@ class UserController extends Controller
 
         $usuario->delete();
 
-        return redirect('/usuario')->with('success', 'Usuário deletado com sucesso.');
+        return redirect('/usuario')->withSuccess('Usuário deletado com sucesso.');
+    }
+
+    public function unidade(Unidade $unidade)
+    {
+        return view('usuario.unidade', compact('unidade'));
+    }
+
+    public function unidadeStore(UnidadeUserSaveRequest $data, Unidade $unidade)
+    {
+        //ADICIONAR USUARIO COMUM
+        $password = rand(100000,9999999);
+
+        $user = $unidade->user()->create([
+            'imovel_id' => $unidade->imovel_id,
+            'name' => $data->name,
+            'email' => $data->email,
+            'password' => bcrypt($password)
+        ]);
+
+        $user->roles()->attach([4]);
+        // fim - ADICIONAR USUARIO COMUM
+
+        
+        // ENVIAR EMAIL com a senha.
+        Mail::send('email.senhaUser', ['imovel'=> $unidade->imovel->nome, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
+            $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
+            $message->to($user->email);
+            $message->subject('Senha de acesso ao app');
+        });
+        // fim - enviar email
+
+        return back()->with('success', 'Usuário criado e Vinculado à essa unidade!');
     }
 }
