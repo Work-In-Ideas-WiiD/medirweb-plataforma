@@ -219,7 +219,7 @@
                     <div class='col-md-6'>
                         <div class='form-group'>
                             {{ Form::label('taxa_fixa', 'Taxa Fixa (R$)') }}
-                            {{ Form::text('taxa_fixa', null, ['class' => 'form-control', 'placeholder' => 'Ex.: 3,99', 'data-error' => $errors->first('taxa_fixa')]) }}
+                            {{ Form::text('taxa_fixa', null, ['class' => 'form-control', 'placeholder' => 'Ex.: 3,99']) }}
 
                             @error('taxa_fixa')
                             <span class="help-block">
@@ -232,7 +232,7 @@
                     <div class="col-md-6">
                         <div class='form-group'>
                             {{ Form::label('taxa_variavel', 'Taxa Variável (R$/m³/Kw)') }}
-                            {{ Form::text('taxa_variavel', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89', 'data-error' => $errors->first('taxa_variavel')]) }}
+                            {{ Form::text('taxa_variavel', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 1,89']) }}
 
                             @error('taxa_variavel')
                             <span class="help-block">

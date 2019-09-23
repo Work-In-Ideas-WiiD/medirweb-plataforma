@@ -20,34 +20,25 @@ class UnidadeController extends Controller
 {
     public function create()
     {     
-        $imoveis = Imovel::pluck('nome', 'id');
+        $imoveis = Imovel::get(['nome', 'id']);
 
-        return view('unidade.cadastrar', compact('imoveis'));
+        $agrupamentos = $imoveis[0]->agrupamento->pluck('nome', 'id');
+
+        $imoveis = $imoveis->pluck('nome', 'id');
+
+        return view('unidade.create', compact('agrupamentos', 'imoveis'));
     }
 
-    public function showAgrupamento($id)
+    public function store(UnidadeSaveRequest $data)
     {
-        $agrupamentos = Agrupamento::where('AGR_IDIMOVEL', $id)->get();
+        Unidade::create(
+            $data->except('telefone')
+        )->telefone()->create([
+            'etiqueta' => 'responsável',
+            'numero' => $data->telefone
+        ]);
 
-        if(is_null($agrupamentos)){
-            return redirect( URL::previous() );
-        }
-
-
-        return json_encode($agrupamentos);
-    }
-
-    public function store(UnidadeSaveRequest $request)
-    {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
-        $dataForm = $request->all();
-
-        $unidade = Unidade::create($dataForm);
-
-        return redirect('/unidade/editar/'.$unidade->UNI_ID)->withSuccess('Unidade cadastrada com sucesso.');
+        return back()->withSuccess('Unidade cadastrada com sucesso.');
     }
 
     public function show(Unidade $unidade)
