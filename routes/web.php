@@ -18,26 +18,26 @@ Route::middleware('auth')->group(function () {
         return redirect('/imovel');
     });
     
-    Route::get('/home', 'HomeController@index')->name('home')->middleware('permissao:administrador');
+    Route::get('/home', 'HomeController@index')->name('home')->middleware('permissao');
     
-    Route::post('importar/csv', 'TesteController@process')->middleware('permissao:administrador');
+    Route::post('importar/csv', 'TesteController@process')->middleware('permissao');
     
     /* Usuários */
     
     Route::resource('usuario', 'UserController', [
         'middleware' => [
-            'edit' => 'permissao:administrador',
-            'create' => 'permissao:administrador',
-            'destroy' => 'permissao:administrador'
+            'edit' => 'permissao',
+            'create' => 'permissao',
+            'destroy' => 'permissao'
         ]
     ]);
-    Route::get('usuario/tipo/{tipo}', 'UserController@index')->middleware('permissao:administrador');
+    Route::get('usuario/tipo/{tipo}', 'UserController@index')->middleware('permissao');
     Route::get('/perfil', 'UserController@perfil');
     
     // Imóveis 
     Route::prefix('imovel')->group(function () {
-        Route::get('buscar', 'ImovelController@buscar')->middleware('permissao:administrador');
-        Route::get('buscar/ver/{imovel}', 'ImovelController@show_buscar')->middleware('permissao:administrador');
+        Route::get('buscar', 'ImovelController@buscar')->middleware('permissao');
+        Route::get('buscar/ver/{imovel}', 'ImovelController@show_buscar')->middleware('permissao');
         Route::get('/lista/{cidade}', 'ImovelController@lista');
         
     });
@@ -46,12 +46,12 @@ Route::middleware('auth')->group(function () {
     Route::resource('/imovel', 'ImovelController', [
         'middleware' => [
             'index' => 'permissao:administrador,sindico',
-            'create' => 'permissao:administrador',
-            'store' => 'permissao:administrador',
+            'create' => 'permissao',
+            'store' => 'permissao',
             'view' => 'permissao:administrador,sindico',
             'edit' => 'permissao:administrador,sindico',
-            'update' => 'permissao:administrador',
-            'destroy' => 'permissao:administrador'
+            'update' => 'permissao',
+            'destroy' => 'permissao'
         ]
     ]);
     
@@ -84,12 +84,12 @@ Route::middleware('auth')->group(function () {
     Route::get('agrupamento/unidade/{agrupamento}', 'AgrupamentoController@unidade');
     Route::resource('agrupamento', 'AgrupamentoController', [
         'middleware' => [
-            'create' => 'permissao:administrador',
-            'store' => 'permissao:administrador',
-            'view' => 'permissao:administrador',
+            'create' => 'permissao',
+            'store' => 'permissao',
+            'view' => 'permissao',
             'edit' => 'permissao:administrador,sindico',
             'update' => 'permissao:administrador,sindico',
-            'destroy' => 'permissao:administrador'
+            'destroy' => 'permissao'
         ]
     ])->except(['index', 'show']);
     /* Unidades */
@@ -109,18 +109,19 @@ Route::middleware('auth')->group(function () {
     
     Route::resource('unidade', 'UnidadeController', [
         'middleware' => [
-            'create' => 'permissao:administrador',
-            'store' => 'permissao:administrador',
-            'view' => 'permissao:administrador',
+            'create' => 'permissao',
+            'store' => 'permissao',
+            'view' => 'permissao',
             'edit' => 'permissao:administrador,sindico',
             'update' => 'permissao:administrador,sindico',
-            'destroy' => 'permissao:administrador'
+            'destroy' => 'permissao'
         ]
     ]);
 
 
     //Unidade_User
-    Route::get('/unidade/editar/{id}/user/create', array('as'=>'unidade.create_user', 'uses' => 'UnidadeController@create_user'));
+    Route::get('/unidade/{id}/user/create', 'UnidadeController@create_user')
+        ->name('unidade.create_user')->middleware('permissao');
     Route::post('nova-unidade-user', array('uses' => 'UnidadeController@store_user'));
     Route::get('/unidade/editar/{id}/user/editar/{id_user}', array('as'=>'unidade.edit_user', 'uses' => 'UnidadeController@edit_user'));
     Route::put('/unidade/update/{id}/user/{id_user}', array('as'=>'unidade.update_user', 'uses'=>'UnidadeController@update_user'));
@@ -137,7 +138,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/unidade/desligar/{unidade}', array('uses' => 'UnidadeController@desligarUnidade'));
 
     // clientes 
-    Route::resource('cliente', 'ClienteController')->middleware('permissao:administrador');
+    Route::resource('cliente', 'ClienteController')->middleware('permissao');
 
    
     // prumadas
@@ -146,7 +147,7 @@ Route::middleware('auth')->group(function () {
             'edit' => 'permissao:administrador,sindico',
             'update' => 'permissao:administrador,sindico',
         ]
-    ])->except('show', 'index')->middleware('permissao:administrador');
+    ])->except('show', 'index')->middleware('permissao');
 
 
     /* TimeLine */
