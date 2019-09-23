@@ -161,18 +161,15 @@
 											<td>{{ $user->email }}</td>
 											<td>
 
-												<?php // Botão editar ?>
 												<div class="btn-group">
 													<a href="{{ route('unidade.edit_user', ['id' => $user->unidade_id, 'user_id' => $user->id]) }}" type="button" class="btn btn-warning btn-flat"><i class="fa fa-pencil"></i></a>
 												</div>
 
 												@is('Administrador')
-												<?php // Botão deletar ?>
 												<div class="btn-group">
 													<?php $deleteFormUSER = "delete-formUSER-{$loop->index}"; ?>
 													<a class="btn btn-danger btn-flat" data-toggle="modal" data-target="#delete_user_ID{{$user->id}}"><i class="fa fa-trash-o"></i></a>
 
-													<?php // modal deletar ?>
 													<div class="modal fade" id="delete_user_ID{{$user->id }}" tabindex="-1" role="dialog" aria-labelledby="delete_user_ID{{$user->id}}Label" aria-hidden="true">
 														<div class="modal-dialog">
 															<div class="modal-content">
@@ -192,20 +189,20 @@
 															</div>
 														</div>
 													</div>
-
-													{!! Form::open(['route' => ['unidade.destroy_user', 'id' => $user->unidade_id, 'id_user' => $user->id], 'method' => 'DELETE', 'id' => $deleteFormUSER, 'style' => 'display:none']) !!}
+													
+													{!! Form::open(['route' => ['usuario.destroy', $user->id], 'method' => 'DELETE', 'id' => $deleteFormUSER, 'style' => 'display:none']) !!}
 													{!! Form::close() !!}
 
 												</div>
 												@endis
 
 												@is('Administrador')
-												<?php // Botão Desvincular ?>
+
 												<div class="btn-group">
 													<?php $desvincularFormUSER = "desvincular-formUSER-{$loop->index}"; ?>
 													<a class="btn btn-primary btn-flat" data-toggle="modal" data-target="#desvincular_user_ID{{$user->id}}"><i class="fa fa-chain-broken"></i></a>
 
-													<?php // modal desvincular ?>
+
 													<div class="modal fade" id="desvincular_user_ID{{$user->id }}" tabindex="-1" role="dialog" aria-labelledby="desvincular_user_ID{{$user->id}}Label" aria-hidden="true">
 														<div class="modal-dialog">
 															<div class="modal-content">
