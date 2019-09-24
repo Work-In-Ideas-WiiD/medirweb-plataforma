@@ -13,9 +13,8 @@ class UserEditRequest extends UserRequest
     {
         return [
             'name' => ['required', 'max:255'],
-            'imovel_id' => ['required', 'max:255'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['confirmed'],
+            'email' => ['required', 'email'],
+            'password' => ['confirmed', 'min:6', 'nullable'],
             'roles' => ['required', 'max:255'],
             'foto' => ['nullable', 'mimes:jpeg,jpg,png', 'max:10000'],
         ];

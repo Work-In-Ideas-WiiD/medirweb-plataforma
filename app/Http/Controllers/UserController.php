@@ -15,6 +15,7 @@ use App\Models\Imovel;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\File;
 use App\Models\Unidade;
+use Hash;
 
 
 class UserController extends Controller
@@ -64,83 +65,47 @@ class UserController extends Controller
 
     public function edit(User $usuario)
     {
-        $user = $usuario;
+        $roles = \Artesaos\Defender\Role::pluck('name', 'id');
 
-        $roles =[];
-        $_roles = \Artesaos\Defender\Role::all();
-        foreach($_roles as $role){
-            if(!($role->id == 4))
-                $roles[$role->id] = $role->name;
+        $imoveis = Imovel::pluck('nome', 'id');
 
-        }
-
-        $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel)
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        
-
-        foreach ($user->roles as $roleUser) {
-            if($roleUser->id == "4" )
-                return redirect('/unidade/editar/'.$user->USER_UNIID)->with('error', 'Usuário COMUM é exclusivo do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
-
-        }
-
-        return view('usuario.edit', compact('user', 'roles', 'imoveis'));
+        return view('usuario.edit', compact('usuario', 'roles', 'imoveis'));
     }
 
     public function perfil()
     {
-    
-        $user = auth()->user();
+        $roles = \Artesaos\Defender\Role::pluck('name', 'id');
 
-        $roles =[];
-        $_roles = \Artesaos\Defender\Role::all();
-        foreach($_roles as $role){
-            if(!($role->id == 4))
-                $roles[$role->id] = $role->name;
+        $imoveis = Imovel::pluck('nome', 'id');
 
-        }
-
-        $imoveis = ['' => 'Selecionar Imovel'];
-
-        foreach(Imovel::all() as $imovel)
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        
-
-        foreach ($user->roles as $roleUser) {
-            if($roleUser->id == "4" )
-                return redirect('/unidade/editar/'.$user->USER_UNIID)->withError('Usuário COMUM é exclusivo do responsável da Unidade. Você só pode editar o seu NOME e E-mail!');
-
-        }
-
-        return view('usuario.perfil', compact('user', 'roles', 'imoveis'));
+        return view('usuario.perfil', compact('roles', 'imoveis'));
     }
 
-    public function update(UserEditRequest $request, User $usuario)
+    public function update(UserEditRequest $data, User $usuario)
     {
 
-        $dataForm = $request->all();
+        $usuario->fill(
+            $data->except('password', 'roles', 'password_confirmation')
+        );
 
-        if ($dataForm)
-            $dataForm['password'] = bcrypt($dataForm['password']);
-
-        if($request->hasFile('fotoUser')){
+        if($data->hasFile('foto')){
             $foto_path = public_path("upload/usuarios/".$usuario->foto);
 
             if (File::exists($foto_path))
                 File::delete($foto_path);
  
-            $fileName = md5(uniqid().str_random()).'.'.$request->file('fotoUser')->extension();
-            $dataForm['foto'] = $request->file('fotoUser')->move('upload/usuarios', $fileName)->getFilename();
+            $usuario->foto = Str::random(32).'.'.$data->file('foto')->extension();
+            $data->file('fotoUser')->move('upload/usuarios', $usuario->foto);
 
-            ImageOptimizer::optimize('upload/usuarios/'.$dataForm['foto']);
         }
 
-        $usuario->update($dataForm);
+        if ($data->password)
+            $usuario->password = Hash::make($data->password);
+        
+        $usuario->save();  
 
-        if(key_exists('roles', $dataForm))
-            $usuario->roles()->sync($dataForm['roles']);
+        if($data->roles)
+            $usuario->roles()->sync($data->roles);
 
        
         return back()->withSuccess('Usuário atualizado com sucesso.');
