@@ -79,108 +79,41 @@
 
         $('select[name="imovel_id"]').on('change', function() {
 
-            $.ajax({
-                url: `/imovel/agrupamento/${$(this).val()}`,
-                type: "GET",
-                dataType: "json",
-                success:function(data) {
+            $.get(`/imovel/${$(this).val()}/agrupamento`, function(data) {
                     
-                    $('select[name="agrupamento_id"]').empty();
-                        
-                    $.each(data, function(key, value)  {                          
-                        $('select[name="agrupamento_id"]').append(`<option value="${key}">${value}</option>`);
-                    })
+                $('select[name="agrupamento_id"]').empty();
                     
-                }
+                $.each(data, function(key, value)  {                          
+                    $('select[name="agrupamento_id"]').append(`<option value="${key}">${value}</option>`)
+                })
+               
             });
+
+
+            $.get(`/imovel/${$(this).val()}/unidade`, function(data) {
+                $('select[name="unidade_id"]').empty();
+                $.each(data, function(key, value) {
+                    $('select[name="unidade_id"]').append(`<option value="${key}">${value}</option>`)
+                })
+            })
             
         });
 
 
         $('select[name="agrupamento_id"]').on('change', function() {
 
-            $.ajax({
-                url: `/agrupamento/unidade/${$(this).val()}`,
-                type: "GET",
-                dataType: "json",
-                success:function(data) {
-                    $('select[name="unidade_id"]').empty();
-                        
-                    $.each(data, function(key, value)  {
-                        $('select[name="unidade_id"]').append(`<option value="${key}">${value}</option>`);
-                    })                   
-                }
+            $.get(`/agrupamento/unidade/${$(this).val()}`, function(data) {
+                $('select[name="unidade_id"]').empty();
+                    
+                $.each(data, function(key, value)  {
+                    $('select[name="unidade_id"]').append(`<option value="${key}">${value}</option>`);
+                })                   
+            
             });
-
         });
     });
  
-
-    $(".chosen-select-PRU_IDIMOVEL").chosen({no_results_text: "Oops, nada encontrado!"});
-
-    $(document).ready(function() {
-        $('select[name="PRU_IDIMOVEL"]').on('change', function() {
-            var stateID = $(this).val();
-            if(stateID) {
-                $.ajax({
-                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: '/equipamento/getAgrupamentoLista/'+stateID,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
-
-                        $('select[name="PRU_IDAGRUPAMENTO"]').empty();
-                        $('select[name="PRU_IDAGRUPAMENTO"]').append('<option>Selecione Agrupamento</option>');
-                        $.each(data, function(key, value) {
-                            $('select[name="PRU_IDAGRUPAMENTO"]').append('<option value="'+ value.AGR_ID +'">'+ value.AGR_NOME +'</option>');
-                        });
-
-                        $('select[name="PRU_IDAGRUPAMENTO"]').trigger('chosen:updated');
-                        $(".chosen-select-PRU_IDAGRUPAMENTO").chosen({no_results_text: "Oops, nada encontrado!"});
-
-                    }
-                });
-            }else{
-                $('select[name="city"]').empty();
-            }
-        });
-    });
-    </script>
-
-    <script type="text/javascript">
-    // Equipamento - CAMPO UNIDADE
-
-    $(document).ready(function() {
-        $('select[name="PRU_IDAGRUPAMENTO"]').on('change', function() {
-            var stateID = $(this).val();
-            if(stateID) {
-                $.ajax({
-                    //url: '/medirweb/public/imovel/getCidadesLista/'+stateID,
-                    url: '/equipamento/getUnidadeLista/'+stateID,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
-
-                        $('select[name="PRU_IDUNIDADE"]').empty();
-                        $('select[name="PRU_IDUNIDADE"]').append('<option>Selecione Unidade</option>');
-                        $.each(data, function(key, value) {
-                            $('select[name="PRU_IDUNIDADE"]').append('<option value="'+ value.UNI_ID +'">'+ value.UNI_NOME +'</option>');
-                        });
-
-                        $('select[name="PRU_IDUNIDADE"]').trigger('chosen:updated');
-                        $(".chosen-select-PRU_IDUNIDADE").chosen({no_results_text: "Oops, nada encontrado!"});
-
-                    }
-                });
-            }else{
-                $('select[name="city"]').empty();
-            }
-        });
-    });
-    </script>
-
-    <script type="text/javascript">
-    // Equipamento - CAMPO EQUIPAMENTO
+      
 
     $(document).ready(function() {
         $('select[name="PRU_IDUNIDADE"]').on('change', function() {
@@ -236,41 +169,7 @@
         */
     }
     animaPonto();
-    </script>
-
-    <script type="text/javascript">
-    // RELATORIO FATURA - CAMPO Apartamento
-
-    $(document).ready(function() {
-        $('select[name="RELATORIO_IMOVEL"]').on('change', function() {
-            var stateID = $(this).val();
-            if(stateID) {
-                $.ajax({
-                    url: '/relatorio/faturas/getApartamentoLista/'+stateID,
-                    type: "GET",
-                    dataType: "json",
-                    success:function(data) {
-
-                        $('select[name="UNI_ID"]').empty();
-                        $('select[name="UNI_ID"]').append('<option>Selecione Apartamento</option>');
-                        $.each(data, function(key, value) {
-                            $('select[name="UNI_ID"]').append('<option value="'+ value.UNI_ID +'">'+ '#' + value.UNI_ID + ' - Apartamento: ' + value.UNI_NOME + ' | ' + value.UNI_RESPONSAVEL +'</option>');
-                        });
-
-                        $('select[name="UNI_ID"]').trigger('chosen:updated');
-                        $(".chosen-select-apartamento").chosen({no_results_text: "Oops, nada encontrado!"});
-
-                    }
-                });
-            }else{
-                $('select[name="city"]').empty();
-            }
-        });
-    });
-    </script>
-
-    <script type="text/javascript">
-
+   
     $(document).ready(function() {
 
         $('select[name="estado_id"]').on('change', (data) => {

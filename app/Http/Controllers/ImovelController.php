@@ -898,4 +898,9 @@ class ImovelController extends Controller
     {
         return Agrupamento::whereImovelId($imovel_id)->pluck('nome', 'id');
     }
+
+    public function unidade($imovel_id)
+    {
+        return Unidade::whereImovelId($imovel_id)->pluck('nome', 'id');
+    }
 }

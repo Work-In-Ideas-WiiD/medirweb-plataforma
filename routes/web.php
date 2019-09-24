@@ -42,7 +42,8 @@ Route::middleware('auth')->group(function () {
         
     });
 
-    Route::get('imovel/agrupamento/{imovel}', 'ImovelController@agrupamento');
+    Route::get('imovel/{imovel}/unidade', 'ImovelController@unidade');
+    Route::get('imovel/{imovel}/agrupamento', 'ImovelController@agrupamento');
     Route::resource('/imovel', 'ImovelController', [
         'middleware' => [
             'index' => 'permissao:administrador,sindico',
@@ -179,8 +180,6 @@ Route::middleware('auth')->group(function () {
         Route::post('relatorio/faturas', array('uses' => 'RelatorioController@getFaturaLista'));
 
     //});
-
-    Route::get('relatorio/faturas/getApartamentoLista/{id}', array('uses' => 'RelatorioController@showUnidade'));
 
 });
 

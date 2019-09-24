@@ -16,9 +16,8 @@
 @section('content')
 
 <div class="row">
-    {!! Form::open(['action' => 'RelatorioController@getFaturaLista', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+    {!! Form::open(['action' => 'RelatorioController@getFaturaLista', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'autocomplete' => 'off']) !!}
 
-    <?php // Filtro de Pesquisa ?>
     <div class="col-md-12">
         <div class="row">
 
@@ -32,7 +31,6 @@
                         </div>
                     </div>
 
-                    <?php // Filtro de Pesquisa  COMPLETA?>
                     <div class='box-body'>
                         <div class='row'>
                             <div class="col-md-12">
@@ -41,21 +39,21 @@
                                     <div class='col-md-4'>
                                         <div class='form-group'>
                                             {{ Form::label('', 'Data Inicio (Anterior)') }}
-                                            {{ Form::date('FATURA_DATA_ANTERIOR', date("Y-m-d", strtotime('-1 month')), ['class'=>'form-control', 'placeholder' => '']) }}
+                                            {{ Form::date('FATURA_DATA_ANTERIOR', date("Y-m-d", strtotime('-1 month')), ['class'=>'form-control']) }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class='form-group'>
                                             {{ Form::label('', 'Data Final (Atual)') }}
-                                            {{ Form::date('FATURA_DATA_ATUAL', date("Y-m-d"), ['class'=>'form-control', 'placeholder' => '']) }}
+                                            {{ Form::date('FATURA_DATA_ATUAL', date("Y-m-d"), ['class'=>'form-control']) }}
                                         </div>
                                     </div>
 
                                     <div class='col-md-4'>
                                         <div class='form-group'>
-                                            {{ Form::label('', 'Imóvel') }}
-                                            {{ Form::select('RELATORIO_IMOVEL', $imoveis, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
+                                            {{ Form::label('imovel_id', 'Imóvel') }}
+                                            {{ Form::select('imovel_id', $imoveis, null, ['class' => 'avalidate form-control']) }}
                                         </div>
                                     </div>
 
@@ -63,9 +61,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php // FIM - Filtro de Pesquisa  COMPLETA?>
 
-                    <?php // Pesquisa avançada ?>
                     <div class="box box-warning">
                         <div class="box-header with-border">
                             <h3 class="box-title"><i class="fa fa-search-plus"></i> Pesquisa avançada</h3>
@@ -75,23 +71,20 @@
                                 <div class="col-md-12">
 
                                     <div class='form-group'>
-                                        {{ Form::label('UNI_ID', '# Apartamento') }}
-                                        {{ Form::select('UNI_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control chosen-select-apartamento', 'autocomplete' => 'off']) }}
+                                        {{ Form::label('unidade_id', '# Apartamento') }}
+                                        {{ Form::select('unidade_id', [], null, ['class' => 'avalidate form-control', 'placeholder' => 'SELECIONE O IMÓVEL PRIMEIRO']) }}
                                     </div>
 
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <?php // FIM - Pesquisa avançada ?>
 
                 </div>
             </div>
 
-            <?php // Botão opções ?>
             <div class="col-md-3">
 
-                <?php // Botão Filtrar ?>
                 <div class="form-group">
                     {{ Form::label('', '&nbsp;') }}
                     <button type="submit" type="button" name="filtrar" value="filtrar" style="width: 100% "class="btn btn-primary"><i class="fa fa-filter"></i> Filtrar</button>
@@ -101,12 +94,9 @@
 
         </div>
     </div>
-    <?php // FIM - Filtro de Pesquisa ?>
 
-    <?php // Resultados ?>
     <div class="col-md-12">
 
-        <?php // Resultados FATURA COMPLETO ?>
         @if(!empty($faturas))
 
         <div class="box box-primary">
@@ -155,9 +145,7 @@
             </div>
         </div>
         @endif
-        <?php // FIM Resultados FATURA COMPLETO ?>
 
-        <?php // Resultados FATURA AVAÇADO ?>
         @if(!empty($faturaAvancados))
 
         <div class="row" style="margin-top: 40px; margin-bottom: 40px;">
@@ -165,7 +153,6 @@
             <div class="col-md-12">
                 <div class="row">
 
-                    <?php // Leitura Anterior?>
                     <div class="col-md-3">
                         <div class="box box-success" style="margin-top: -15px;">
                             <div class="box-header with-border gray" style="background-color: #00a65a; color: white; text-align: center;">
@@ -188,9 +175,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php // FIM - Leitura Anterior?>
 
-                    <?php // Leitura Atual?>
                     <div class="col-md-3">
                         <div class="box box-warning" style="margin-top: -15px;">
                             <div class="box-header with-border gray" style="background-color: #f39c12; color: white; text-align: center;">
@@ -213,9 +198,7 @@
                             </div>
                         </div>
                     </div>
-                    <?php // FIM - Leitura Atual?>
 
-                    <?php // Valor Total e exportar PDF individual ?>
                     <div class="col-md-3">
                         <div class="box box-primary" style="margin-top: -15px;">
                             <div class="box-header with-border gray" style="background-color: #3c8dbc; color: white; text-align: center;">
@@ -232,29 +215,25 @@
                                 <hr style="margin-top: 5px;">
                                 <p style="text-align: center; font-weight: 600; font-size: 18px; margin-bottom: 20px;" > {{ $faturaAvancado['Consumo'] }}m³ - R$ {{ $faturaAvancado['Valor'] }}</p>
 
-                                <?php // Dados para exportar (ID, DATA ATUAL E ANTERIOR)
-                                $ID_AP =  $faturaAvancado['UNI_ID'];?>
+
                                 {{ Form::text('DataAnteriorForm', $faturaAvancado['DataAnteriorForm'], ['style' => 'display:none']) }}
                                 {{ Form::text('DataAtualForm', $faturaAvancado['DataAtualForm'], ['style' => 'display:none']) }}
                                 @endforeach
                                 <div style="text-align: center;">
                                     <hr>
-                                    <button type="submit" type="button" name="pdf" value="{{ $ID_AP }}" class="btn-danger btn" style="text-align: center; font-weight: 600; font-size: 16px;"><i class="fa fa-file-pdf-o"></i> Gerar Fatura</button>
+                                    <button type="submit" type="button" name="pdf" value="{{ $faturaAvancado['UNI_ID'] }}" class="btn-danger btn" style="text-align: center; font-weight: 600; font-size: 16px;"><i class="fa fa-file-pdf-o"></i> Gerar Fatura</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <?php // FIM - Valor Total e exportar PDF individual ?>
 
                 </div>
             </div>
 
         </div>
         @endif
-        <?php // FIM - Resultados FATURA AVANÇADO?>
 
     </div>
-    <?php // FIM - Resultados ?>
 
     {!! Form::close() !!}
 </div>

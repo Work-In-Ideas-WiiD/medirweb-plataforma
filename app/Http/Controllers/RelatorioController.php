@@ -57,19 +57,19 @@ class RelatorioController extends Controller
     {
 
         // FORMULARIO IMOVEL (GET)
-        $user = auth()->user()->USER_IMOID;
+        $user = auth()->user()->imovel_id;
         $imoveis = ['' => 'Selecionar Imovel'];
 
         if(app('defender')->hasRoles('Administrador')){
             $_imoveis = Imovel::get();
         }else if(app('defender')->hasRoles(['Sindico', 'Secretário'])){
-            $_imoveis = Imovel::get()->where('IMO_ID', $user);
+            $_imoveis = Imovel::get()->where('id', $user);
         }else{
             return view('error403');
         }
 
         foreach($_imoveis as $imovel){
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
+            $imoveis[$imovel->id] = $imovel->nome;
         }
         // FIM - FORMULARIO IMOVEL (GET)
 
@@ -98,14 +98,14 @@ class RelatorioController extends Controller
                 // FIM - INICIALIZAÇÃO de arrays
 
                 // RESULTADO DA PESQUISA CONSUMO COMPLETO
-                $unidades = Imovel::find($request->input('RELATORIO_IMOVEL'))->getUnidades;
+                $unidades = Imovel::find($request->input('imovel_id'))->unidade;
                 foreach ($unidades as $unid) {
-                    $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
+                    $prumadas = $unid->prumada;
                     foreach ($prumadas as $prumada)
                     {
-                        $leituraAnterior = $prumada->getLeituras()->where('created_at', '>=', date($request->input('CONSUMO_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                        $leituraAnterior = $prumada->leitura()->where('created_at', '>=', date($request->CONSUMO_DATA_ANTERIOR).' 00:00:00')->orderBy('created_at', 'asc')->first();
 
-                        $leituraAtual = $prumada->getLeituras()->where('created_at', '<=', date($request->input('CONSUMO_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                        $leituraAtual = $prumada->leitura()->where('created_at', '<=', date($request->CONSUMO_DATA_ATUAL).' 23:59:59')->orderBy('created_at', 'desc')->first();
 
                         // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
                         if(!(isset($leituraAnterior))){
@@ -119,13 +119,13 @@ class RelatorioController extends Controller
                             $valor = RelatorioController::tarifa($consumo);
 
                             $relatorio_consumos = array(
-                                'Imovel' => $unid->imovel->IMO_NOME,
-                                'PRU_ID' => $prumada->PRU_ID,
-                                'PRU_NOME' => $prumada->PRU_NOME,
-                                'Nomes' => $unid->UNI_RESPONSAVEL,
-                                'Apartamentos' => $unid->UNI_NOME,
-                                'LeituraAnterior' => $leituraAnterior->LEI_METRO,
-                                'LeituraAtual' => $leituraAtual->LEI_METRO,
+                                'Imovel' => $unid->imovel->nome,
+                                'PRU_ID' => $prumada->id,
+                                'PRU_NOME' => $prumada->nome,
+                                'Nomes' => $unid->nome_responsavel,
+                                'Apartamentos' => $unid->nome,
+                                'LeituraAnterior' => $leituraAnterior->metro,
+                                'LeituraAtual' => $leituraAtual->metro,
                                 'Consumo' => $consumo,
                                 'Valor' => number_format($valor, 2, ',', '.'),
                                 'DataLeituraAnterior' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
@@ -135,7 +135,7 @@ class RelatorioController extends Controller
                             array_push($consumos, $relatorio_consumos);
 
                             //ARRAY GRAFICO
-                            $arrayApartamentoGrafico = [$unid->UNI_NOME];
+                            $arrayApartamentoGrafico = [$unid->nome];
                             array_push($apartamentoGrafico, $arrayApartamentoGrafico);
                             $arrayConsumoGrafico = [$consumo];
                             array_push($consumoGrafico, $arrayConsumoGrafico);
@@ -185,7 +185,7 @@ class RelatorioController extends Controller
                 // FIM - INICIALIZAÇÃO de arrays
 
                 // RESULTADO DA PESQUISA CONSUMO AVANÇADO
-                $hidromentros = Unidade::find($request->input('UNI_ID'))->getPrumadas;
+                $hidromentros = Unidade::find($request->unidade_id)->prumada;
 
                 foreach ($hidromentros as $hidromentro)
                 {
@@ -286,7 +286,7 @@ class RelatorioController extends Controller
 
             $dadosFaturaIndividual = array();
 
-            $equipamentos = Unidade::find($request->pdf)->getPrumadas;
+            $equipamentos = Unidade::find($request->pdf)->prumada;
             foreach ($equipamentos as $equipamento)
             {
                 $leituraAnterior = $equipamento->getLeituras() ->where('created_at', '>=', date($request->DataAnteriorForm).' 00:00:00')->orderBy('created_at', 'asc')->first();
@@ -299,7 +299,7 @@ class RelatorioController extends Controller
 
                 if(isset($leituraAnterior) && isset($leituraAtual))
                 {
-                    $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
+                    $consumo =  $leituraAtual->metro - $leituraAnterior->metro;
                     $valor = RelatorioController::tarifa($consumo);
 
                     $arrayDadosFaturaIndividual = array(
@@ -345,21 +345,21 @@ class RelatorioController extends Controller
         $dias = $diff->format("%a");
 
         if($dias >= 32 ){
-            return redirect('/relatorio/faturas')->with('error', 'Não é permitido datas maiores que 31 dias!');
+            return back()->withError('Não é permitido datas maiores que 31 dias!');
         }
         // FIM - VALIDAÇÃO DATAS NÃO PASSAR DE 31 DIAS
 
         // VALIDAÇÃO CAMPO IMOVEL
-        if(empty($request->input('RELATORIO_IMOVEL'))){
-            return redirect('/relatorio/faturas')->with('error', 'Por Favor Selecione o Imóvel.');
-        }
+        if(!$request->imovel_id)
+            return back()->withError('Por Favor Selecione o Imóvel.');
+
         // FIM - VALIDAÇÃO CAMPO IMOVEL
 
         // SUBMIT "FILTRAR"
         if($request->filtrar == "filtrar"){
 
             //Validação se esta vazio campo hidrometro
-            if(empty($request->UNI_ID) || ($request->UNI_ID == "Selecione Apartamento")){
+            if(!$request->unidade_id){
 
                 // INICIALIZAÇÃO de arrays
                 $faturas = array();
@@ -367,13 +367,13 @@ class RelatorioController extends Controller
                 // FIM - INICIALIZAÇÃO de arrays
 
                 // RESULTADO DA PESQUISA FATURA COMPLETO
-                $unidades = Imovel::find($request->input('RELATORIO_IMOVEL'))->getUnidades;
+                $unidades = Imovel::find($request->imovel_id)->unidade;
                 foreach ($unidades as $unid) {
-                    $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
+                    $prumadas = $unid->prumada;
                     foreach ($prumadas as $prumada)
                     {
-                        $leituraAnterior = $prumada->getLeituras()->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
-                        $leituraAtual = $prumada->getLeituras()->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                        $leituraAnterior = $prumada->leitura()->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at')->first();
+                        $leituraAtual = $prumada->leitura()->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
 
                         // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
                         if(!(isset($leituraAnterior))){
@@ -386,16 +386,16 @@ class RelatorioController extends Controller
                             $valor = RelatorioController::tarifa($consumo);
 
                             $relatorio_faturas = array(
-                                'UNI_ID' => $unid->UNI_ID,
-                                'PRU_NOME' => $prumada->PRU_NOME,
-                                'nomeAp' => $unid->UNI_NOME,
-                                'responsavelAp' => $unid->UNI_RESPONSAVEL,
-                                'LeituraAnterior' => $leituraAnterior->LEI_METRO,
-                                'LeituraAtual' => $leituraAtual->LEI_METRO,
+                                'UNI_ID' => $unid->id,
+                                'PRU_NOME' => $prumada->nome,
+                                'nomeAp' => $unid->nome,
+                                'responsavelAp' => $unid->nome_responsavel,
+                                'LeituraAnterior' => $leituraAnterior->metro,
+                                'LeituraAtual' => $leituraAtual->metro,
                                 'Consumo' => $consumo,
                                 'Valor' => number_format($valor, 2, ',', '.'),
-                                'DataAnteriorForm' => $request->input('FATURA_DATA_ANTERIOR'),
-                                'DataAtualForm' => $request->input('FATURA_DATA_ATUAL'),
+                                'DataAnteriorForm' => $request->FATURA_DATA_ANTERIOR,
+                                'DataAtualForm' => $request->FATURA_DATA_ATUAL,
                             );
                             array_push($faturas, $relatorio_faturas);
                         }
@@ -408,11 +408,11 @@ class RelatorioController extends Controller
                 // FIM - INICIALIZAÇÃO de arrays
 
                 // RESULTADO DA PESQUISA FATURA AVANÇADO
-                $equipamentos = Unidade::find($request->input('UNI_ID'))->getPrumadas;
+                $equipamentos = Unidade::find($request->unidade_id)->prumada;
                 foreach ($equipamentos as $equipamento)
                 {
-                    $leituraAnterior = $equipamento->getLeituras()->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
-                    $leituraAtual = $equipamento->getLeituras()->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                    $leituraAnterior = $equipamento->leitura()->where('created_at', '>=', date($request->FATURA_DATA_ANTERIOR).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                    $leituraAtual = $equipamento->leitura()->where('created_at', '<=', date($request->FATURA_DATA_ATUAL).' 23:59:59')->orderBy('created_at', 'desc')->first();
 
                     // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
                     if(!(isset($leituraAnterior))){
@@ -421,15 +421,15 @@ class RelatorioController extends Controller
 
                     if(isset($leituraAnterior) && isset($leituraAtual))
                     {
-                        $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
+                        $consumo =  $leituraAtual->metro - $leituraAnterior->metro;
                         $valor = RelatorioController::tarifa($consumo);
 
                         $relatorio_faturaAvancados = array(
-                            'UNI_ID' => $equipamento->PRU_IDUNIDADE,
-                            'PRU_ID' => $equipamento->PRU_ID,
-                            'PRU_NOME' => $equipamento->PRU_NOME,
-                            'LeituraAnterior' => $leituraAnterior->LEI_METRO,
-                            'LeituraAtual' => $leituraAtual->LEI_METRO,
+                            'UNI_ID' => $equipamento->unidade_id,
+                            'PRU_ID' => $equipamento->id,
+                            'PRU_NOME' => $equipamento->nome,
+                            'LeituraAnterior' => $leituraAnterior->metro,
+                            'LeituraAtual' => $leituraAtual->metro,
                             'Consumo' => $consumo,
                             'Valor' => number_format($valor, 2, ',', '.'),
                             'DataLeituraAnterior' => date('d/m/Y', strtotime($leituraAnterior->created_at)),
