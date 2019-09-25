@@ -35,7 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/perfil', 'UserController@perfil');
     
     // Imóveis 
-    Route::prefix('imovel')->group(['middleware' => 'permissao:administrador,sindico'],function () {
+    Route::prefix('imovel')->middleware('permissao:administrador,sindico')->group(function () {
         Route::get('buscar', 'ImovelController@buscar');
         Route::get('buscar/ver/{imovel}', 'ImovelController@show_buscar');
         Route::get('/lista/{cidade}', 'ImovelController@lista');
