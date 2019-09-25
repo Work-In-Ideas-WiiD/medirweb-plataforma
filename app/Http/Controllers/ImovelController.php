@@ -111,11 +111,11 @@ class ImovelController extends Controller
     public function show_buscar(Imovel $imovel)
     {
 
-        $imovel['IMO_IDCIDADE'] = $imovel->cidade->CID_NOME;
-        $imovel['IMO_IDESTADO'] = $imovel->estado->EST_ABREVIACAO;
+        $imovel['IMO_IDCIDADE'] = $imovel->endereco->cidade->nome;
+        $imovel['IMO_IDESTADO'] = $imovel->endereco->cidade->estado->codigo;
 
-        $agrupamentos = $imovel->getAgrupamentos;
-        $unidades = $imovel->getUnidades;
+        $agrupamentos = $imovel->agrupamento;
+        $unidades = $imovel->unidade;
 
         // Ajuste para a criação de abas na view de forma correta
         //$agrupamentos = $agrupamentos->reverse();
@@ -124,7 +124,7 @@ class ImovelController extends Controller
 
         foreach ($agrupamentos as $key => $agrup) {
             foreach($unidades as $uni) {
-                if($uni->UNI_IDAGRUPAMENTO == $agrup->AGR_ID) {
+                if($uni->agrupamento_id == $agrup->id) {
                     array_push($unid, $uni);
                 }
             }
@@ -139,7 +139,7 @@ class ImovelController extends Controller
 
         $chartConsumoLine = ImovelController::graficoConsumoGeral($imovel->id);
 
-        return view('imovel.buscar_visualizar', ['imovel' => $imovel, 'agrupamentos' => $agrupamentos, 'unidades' => $unidades, "chartConsumoLine" => $chartConsumoLine]);
+        return view('imovel.buscar_visualizar', compact('imovel', 'agrupamentos', 'unidades', 'chartConsumoLine'));
     }
 
     public function edit(Imovel $imovel)

@@ -16,7 +16,7 @@
 				<a href="/imovel/buscar" class="btn btn-info"><i class="fa fa-reply"></i> Voltar</a>
 
 				<div style="margin-left: 90px; margin-top: -37px;">
-					<h4 ><i class="fa fa-building"></i> {{ $imovel->IMO_NOME }}</h4>
+					<h4 ><i class="fa fa-building"></i> {{ $imovel->nome }}</h4>
 				</div>
 
 
@@ -55,9 +55,7 @@
 				<div class="box1 box-primary">
 					<div class="box-header with-border">
 						<h3 style="margin-top: 7px;" class="box-title"><i class="fa fa-th-large"></i> Leituras</h3>
-						<div class="pull-right">
-							<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/atualizar') }}" id="ocultar" onclick="loading()" class="btn btn-default btn-sm ocultar"><i class="fa fa-retweet"></i> Atualizar todas</a>
-						</div>
+						
 					</div>
 					<div class="box-body" style="margin-top: 10px;">
 
@@ -66,7 +64,7 @@
 
 						<?php if(!empty($_GET['a'])){
 							$AGRID = $_GET['a'];
-							if($agrupamento->AGR_ID == $AGRID){
+							if($agrupamento->id == $AGRID){
 								$collapsed_box = "";
 							}else {
 								$collapsed_box = "collapsed-box";
@@ -81,9 +79,9 @@
 									<?php $iTotal = 0; $i1 = 0; $i0 = 0; ?>
 									@if ($agrupamento->UNIDADES !== null)
 									@foreach($agrupamento->UNIDADES as $unidade)
-									@foreach($unidade->getPrumadas as $prumada)
-									@if($unidade->getPrumadas()->count() > 0)
-									<?php if($prumada->PRU_STATUS == 1){$i1++;}else {$i0++;} $iTotal++;?>
+									@foreach($unidade->prumada as $prumada)
+									@if($unidade->prumada()->count() > 0)
+									<?php if($prumada->status == 1){$i1++;}else {$i0++;} $iTotal++;?>
 									@endif
 									@endforeach
 									@endforeach
@@ -105,12 +103,12 @@
 												<!-- Unidade -->
 												@if ($agrupamento->UNIDADES !== null)
 												@foreach($agrupamento->UNIDADES as $unidade)
-												@foreach($unidade->getPrumadas as $prumada)
+												@foreach($unidade->prumada as $prumada)
 
 												<div class="col-md-12">
 													<div class="row">
 														<div class="row">
-															@if($unidade->getPrumadas()->count() > 0 )
+															@if($unidade->prumada()->count() > 0 )
 
 															<!-- Nome Unidade -->
 															<div class="col-md-5">
@@ -119,18 +117,18 @@
 																	<!-- Tipo -->
 																	<div class="col-md-1">
 																		<h4>
-																			@if($prumada->PRU_TIPO == 1)
+																			@if($prumada->tipo == 1)
 																			<i class="text-primary fa fa-tint"></i>
-																			@elseif($prumada->PRU_TIPO == 2)
+																			@elseif($prumada->tipo == 2)
 																			<i style="color: #f38212;" class="fa fa-fire"></i>
-																			@elseif($prumada->PRU_TIPO == 3)
+																			@elseif($prumada->tipo == 3)
 																			<i class="text-danger fa fa-bolt"></i>
 																			@endif
 																		</h4>
 																	</div>
 
 																	<div class="col-md-10">
-																		<h4>{{ $unidade->UNI_NOME }} <small style="color: grey;">#{{ $prumada->PRU_IDFUNCIONAL }} - {{ $prumada->PRU_NOME }}</small></h4>
+																		<h4>{{ $unidade->nome }} <small style="color: grey;">#{{ $prumada->funcional_id }} - {{ $prumada->nome }}</small></h4>
 																	</div>
 
 																</div>
@@ -142,11 +140,11 @@
 																<div class="row">
 
 																	<div class="col-md-4">
-																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
-																			@if( $prumada->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_METRO }} @else 0 @endif
+																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->id) }}">
+																			@if( $prumada->leitura()->count() > 0){{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->metro }} @else 0 @endif
 																		</a>
 
-																		@if($prumada->PRU_TIPO == 3)
+																		@if($prumada->tipo == 3)
 																		<small style="color: grey;">Kw</small>
 																		@else
 																		<small style="color: grey;">m³</small>
@@ -155,11 +153,11 @@
 																	</div>
 
 																	<div class="col-md-4">
-																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
-																			@if( $prumada->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_LITRO }} @else 0 @endif
+																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->id) }}">
+																			@if( $prumada->leitura()->count() > 0){{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->litro }} @else 0 @endif
 																		</a>
 
-																		@if($prumada->PRU_TIPO == 3)
+																		@if($prumada->tipo == 3)
 																		<small style="color: grey;">W</small>
 																		@else
 																		<small style="color: grey;">L</small>
@@ -168,11 +166,11 @@
 																	</div>
 
 																	<div class="col-md-4">
-																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->UNI_ID) }}">
-																			@if( $prumada->getLeituras()->count() > 0){{ $prumada->getLeituras()->orderBy('created_at', 'DESC')->first()->LEI_MILILITRO }} @else 0 @endif
+																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->id) }}">
+																			@if( $prumada->leitura()->count() > 0){{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->mililitro }} @else 0 @endif
 																		</a>
 
-																		@if($prumada->PRU_TIPO == 3)
+																		@if($prumada->tipo == 3)
 																		<small style="color: grey;">mW</small>
 																		@else
 																		<small style="color: grey;">dL</small>
@@ -198,10 +196,10 @@
 																		<div style="margin-top: -28px; margin-right: -30px;">
 																			@is(['Administrador', 'Sindico'])
 
-																			@if($prumada->PRU_STATUS == 1)
-																			<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-danger ocultar" ><i class="fa fa-close"></i></a>
+																			@if($prumada->status == 1)
+																			<a href="{{ url('/imovel/'.$imovel->id.'/desligar/'.$prumada->id.'') }}" id="ocultar" onclick="loading()" class="btn btn-danger ocultar" ><i class="fa fa-close"></i></a>
 																			@else
-																			<a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-success ocultar" ><i class="fa fa-power-off"></i></a>
+																			<a href="{{ url('/imovel/'.$imovel->id.'/ligar/'.$prumada->id.'') }}" id="ocultar" onclick="loading()" class="btn btn-success ocultar" ><i class="fa fa-power-off"></i></a>
 																			@endif
 
 																			@endis
@@ -253,10 +251,10 @@
 								<!-- Localização -->
 								<div class="bloco-imovel-info">
 									<p class="titulo"><i class="fa fa-map"></i> <b>Localização</b></p>
-									<p>{{ $imovel->IMO_LOGRADOURO }}</p>
-									<p>{{ $imovel->IMO_COMPLEMENTO }}</p>
-									<p>{{ $imovel->IMO_IDCIDADE }} - {{ $imovel->IMO_IDESTADO }}</p>
-									<p>{{ $imovel->IMO_CEP }}</p>
+									<p>{{ $imovel->endereco->logradouro }}</p>
+									<p>{{ $imovel->endereco->complemento }}</p>
+									<p>{{ $imovel->endereco->cidade->nome }} - {{ $imovel->endereco->cidade->estado->nome }}</p>
+									<p>{{ $imovel->endereco->cep }}</p>
 								</div>
 								<!-- FIM - Localização -->
 
