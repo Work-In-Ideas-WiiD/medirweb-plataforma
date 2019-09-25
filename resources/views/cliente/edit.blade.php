@@ -33,7 +33,7 @@
                     <div class='col-md-6'>
                         <div class='form-group'>
                             {{ Form::label('tipo', 'Tipo') }}
-                            {{ Form::select('tipo', ['' => 'Selecione uma opção', '1' => 'CPF', '2' => 'CNPJ'], null, ['class' => 'avalidate form-control']) }}
+                            {{ Form::select('tipo', ['1' => 'CPF', '2' => 'CNPJ'], null, ['class' => 'avalidate form-control']) }}
 
                             @error('tipo')
                             <span class="help-block">
@@ -76,7 +76,7 @@
                         </div>
                         <div class='form-group'>
                             {{ Form::label('data_nascimento', 'Data de nascimento') }}
-                            {{ Form::date('data_nascimento', $cliente->data_nascimento, ['class'=>'form-control']) }}
+                            {{ Form::date('data_nascimento', $cliente->data_nascimento, ['class' => 'form-control']) }}
 
                             @error('data_nascimento')
                             <span class="help-block">
@@ -86,10 +86,7 @@
                         </div>
                         <div class='form-group'>
                             {{ Form::label('status', 'Status') }}
-                            <select name='status' class='form-control' >
-                                <option value='1'>Ativo</option>
-                                <option value='0'>Inativo</option>
-                            </select>
+                            {{ Form::select('status', ['1' => 'Ativo', '0' => 'Inativo'], null, ['class' => 'form-control']) }}
 
                             @error('status')
                             <span class="help-block">

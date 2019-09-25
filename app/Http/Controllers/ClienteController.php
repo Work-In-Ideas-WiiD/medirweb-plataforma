@@ -43,7 +43,7 @@ class ClienteController extends Controller
             $data->only('logradouro', 'complemento', 'numero', 'bairro', 'cidade_id', 'cep')
         );
 
-        $endereco = $endereco->save();
+        $endereco->save();
 
         $cliente = new Cliente;
 

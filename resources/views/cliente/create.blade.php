@@ -34,7 +34,6 @@
                         <div class='form-group'>
                             {{ Form::label('tipo', 'Tipo') }}
                             <select id='tipo' name='tipo' class='form-control' >
-                                <option value='' selected>Selecione uma opção</option>
                                 <option value='1'>CPF</option>
                                 <option value='2'>CNPJ</option>
                             </select>

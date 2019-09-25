@@ -250,17 +250,12 @@
                 autoclose: true,
             });
         }
-
+    
+    
         if($.fn.inputmask) {
             $('.mask-date').inputmask('99/99/9999');
             $('.mask-hour').inputmask('99:99');
-            $('.mask-cpf').inputmask('999.999.999-99');
-            $('.mask-cnpj').inputmask('99.999.999/9999-99');
-            $('.mask-ip').inputmask('[9][9][9].[9][9][9].[9][9][9].[9][9][9]');
             $('.mask-ano').inputmask('9999');
-            $('.mask-cep').inputmask('99999999');
-            $('.mask-num').inputmask('9[99999]');
-            $('.mask-phone').inputmask('(99) 9999-9999[9]');
             $('.mask-co').inputmask('Regex', {regex: "[a-zA-Z- ]*"});
             $('.mask-inteiro').inputmask('Regex', {regex: "[0-9]*"});
 
@@ -297,26 +292,29 @@
         rightAlign: true,
         unmaskAsNumber: true
     })});
-    </script>
 
-
-    <script type="text/javascript">
 
     $(document).ready(function() {
-        $('select[name="CLI_TIPO"]').on('change', function() {
-            var stateID = $(this).val();
-            if(stateID == 1) {
-                $('.cnpj').fadeOut();
-                $('.cpf').fadeIn();
-                $('.classcpf').attr('required', 'required');
-                $('.classcnpj').removeAttr('required');
-            }
-            if(stateID == 2) {
-                $('.cpf').fadeOut();
-                $('.cnpj').fadeIn();
-                $('.classcnpj').attr('required', 'required');
-                $('.classcpf').removeAttr('required');
-            }
+        $('input[name="ip"]').inputmask('[9][9][9].[9][9][9].[9][9][9].[9][9][9]')
+        $('input[name="cep"]').inputmask('99999-999')
+        $('input[name="cnpj"]').inputmask('99.999.999/9999-99')
+        $('input[name="cpf"]').inputmask('999.999.999-99')
+        $('input[name="telefone"]').inputmask('(99) 9999-9999[9]')
+        $('input[name="numero"]').inputmask('9[99999]')
+
+        function tipoDocumento(tipo) {
+            if(tipo == 1)
+                $('input[name="documento"]').inputmask('999.999.999-99')
+            else
+                $('input[name="documento"]').inputmask('99.999.999/9999-99')
+        }
+
+        tipoDocumento(
+            $('select[name="tipo"]').val()
+        )
+
+        $('select[name="tipo"]').on('change', function() {
+            tipoDocumento($(this).val())
         });
     });
 
