@@ -20,7 +20,7 @@
     <?php // Filtro de Pesquisa ?>
     <div class="col-md-12">
         <div class="row">
-            {!! Form::open(['action' => 'RelatorioController@getConsumoLista', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+            {!! Form::open(['action' => 'RelatorioController@getConsumoLista', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'autocomplete' => 'off']) !!}
 
             <div class="col-md-9">
                 <div class="box box-gray">
@@ -41,21 +41,21 @@
                                     <div class='col-md-4'>
                                         <div class='form-group'>
                                             {{ Form::label('', 'Data Inicio (Anterior)') }}
-                                            {{ Form::date('CONSUMO_DATA_ANTERIOR', date("Y-m-d", strtotime('-1 month')), ['class'=>'form-control', 'placeholder' => '']) }}
+                                            {{ Form::date('CONSUMO_DATA_ANTERIOR', date("Y-m-d", strtotime('-1 month')), ['class'=>'form-control']) }}
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class='form-group'>
                                             {{ Form::label('', 'Data Final (Atual)') }}
-                                            {{ Form::date('CONSUMO_DATA_ATUAL', date("Y-m-d"), ['class'=>'form-control', 'placeholder' => '']) }}
+                                            {{ Form::date('CONSUMO_DATA_ATUAL', date("Y-m-d"), ['class'=>'form-control']) }}
                                         </div>
                                     </div>
 
                                     <div class='col-md-4'>
                                         <div class='form-group'>
                                             {{ Form::label('', 'Imóvel') }}
-                                            {{ Form::select('RELATORIO_IMOVEL', $imoveis, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
+                                            {{ Form::select('imovel_id', $imoveis, null, ['class' => 'avalidate form-control']) }}
                                         </div>
                                     </div>
 
@@ -75,8 +75,8 @@
                                 <div class="col-md-12">
 
                                     <div class='form-group'>
-                                        {{ Form::label('UNI_ID', '# Apartamento') }}
-                                        {{ Form::select('UNI_ID', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control chosen-select-apartamento', 'autocomplete' => 'off']) }}
+                                        {{ Form::label('unidade_id', '# Apartamento') }}
+                                        {{ Form::select('unidade_id', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control']) }}
                                     </div>
 
                                 </div>
