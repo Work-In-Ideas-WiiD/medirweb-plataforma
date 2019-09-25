@@ -64,14 +64,14 @@ class ClienteController extends Controller
 
     public function show(Cliente $cliente)
     {
-        $cliente = Cliente::whereClienteId($cliente->id)->with('endereco.cidade.estado')->first();
+        $cliente = Cliente::with('endereco.cidade.estado')->find($cliente->id);
 
         return view('cliente.show', compact('cliente'));
     }
 
     public function edit(Cliente $cliente)
     {
-        $cliente = Cliente::whereClienteId($cliente->id)->with('endereco.cidade.estado')->first();
+        $cliente = Cliente::with('endereco.cidade.estado')->find($cliente->id);
 
         $estados = Estado::pluck('nome', 'id');
 
