@@ -137,7 +137,8 @@ Route::middleware('auth')->group(function () {
         ->middleware('permissao');
     
     // Desvincular usuario à unidade
-    Route::delete('/unidade/{id}/user/desvincular/{id_user}', array('as'=>'unidade.desvincular_user', 'uses'=>'UnidadeController@desvincular_user'));
+    Route::delete('/unidade/desvincular/{user}', 'UnidadeController@desvincular_user')
+        ->name('unidade.desvincular_user')->middleware('permissao');
     
     
     Route::get('/unidade/ligar/{unidade}', array('uses' => 'UnidadeController@ligarUnidade'));

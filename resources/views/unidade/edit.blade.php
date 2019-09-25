@@ -223,7 +223,7 @@
 														</div>
 													</div>
 
-													{!! Form::open(['route' => ['unidade.desvincular_user', 'id' => $user->unidade_id, 'id_user' => $user->id], 'method' => 'DELETE', 'id' => $desvincularFormUSER, 'style' => 'display:none']) !!}
+													{!! Form::open(['route' => ['unidade.desvincular_user', $user->id], 'method' => 'DELETE', 'id' => $desvincularFormUSER, 'style' => 'display:none']) !!}
 													{!! Form::close() !!}
 
 												</div>

@@ -266,15 +266,9 @@ class UnidadeController extends Controller
 
 
 
-    public function desvincular_user(Request $request, $id, $id_user)
+    public function desvincular_user(Request $request, User $user)
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
-        $user = User::find($id_user);
-        $form["USER_UNIID"] = null;
-        $user->update($form);
+        $user->update(['unidade_id' => null]);
 
         // Removendo Usuário Comum
         $dataFormUser['roles'] = [];
@@ -284,12 +278,11 @@ class UnidadeController extends Controller
         }
 
         if(key_exists('roles', $dataFormUser)){
-          $user->roles()->sync($dataFormUser['roles']);
+          $user->roles()->sync([]);
         }
         // fim --
 
-        return redirect()->route('unidade.edit', $id)
-            ->withSuccess('Usuário desvinculado à essa Unidade, com sucesso!');
+        return back()->withSuccess('Usuário desvinculado à essa Unidade, com sucesso!');
     }
 
 }
