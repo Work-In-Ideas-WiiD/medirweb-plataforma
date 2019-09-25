@@ -101,7 +101,7 @@ class ImovelController extends Controller
 
     public function show(Imovel $imovel)
     {   
-        $imovel = $imovel->with('unidade.telefone')->first();
+        $imovel = Imovel::with('unidade.telefone')->find($imovel->id);
         $chartConsumoLine = $this->graficoConsumoGeral($imovel->id);
 
         return view('imovel.show', compact('imovel', 'chartConsumoLine'));
@@ -144,7 +144,7 @@ class ImovelController extends Controller
 
     public function edit(Imovel $imovel)
     {
-        $imovel = $imovel->with('endereco.cidade.estado')->first();
+        $imovel = Imovel::with('unidade.telefone')->find($imovel->id);
 
         $clientes = Cliente::whereStatus(1)->pluck('nome_juridico', 'id');
 
