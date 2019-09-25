@@ -45,7 +45,7 @@
                         </div>
                         <div class='form-group'>
                             {{ Form::label('cnpj', 'CNPJ') }}
-                            {{ Form::text('cnpj', '', ['class' => 'form-control mask-cnpj']) }}
+                            {{ Form::text('cnpj', '', ['class' => 'form-control']) }}
 
                             @error('cnpj')
                             <span class="help-block">
@@ -120,7 +120,7 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     {{ Form::label('numero', 'Número') }}
-                                    {{ Form::text('numero', '', ['class' => 'form-control mask-num']) }}
+                                    {{ Form::text('numero', '', ['class' => 'form-control']) }}
 
                                     @error('numero'))
                                     <span class="help-block">
@@ -130,7 +130,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     {{ Form::label('cep', 'CEP') }}
-                                    {{ Form::text('cep', '', ['class' => 'form-control mask-cep']) }}
+                                    {{ Form::text('cep', '', ['class' => 'form-control']) }}
 
                                     @error('cep')
                                     <span class="help-block">
@@ -188,7 +188,7 @@
                     <div class='col-md-6'>
                         <div class='form-group'>
                             {{ Form::label('ip', 'IP da Central') }}
-                            {{ Form::text('ip', '', ['class' => 'form-control mask-ip', 'placeholder' => 'Ex.: 000.000.000.000']) }}
+                            {{ Form::text('ip', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 000.000.000.000']) }}
 
                             @error('ip')
                             <span class="help-block">

@@ -94,6 +94,8 @@ class ImovelController extends Controller
             $data->file('capa')->move('upload/capas', $imovel->capa);
         }
 
+        $imovel->save();
+
         return back()->withSuccess('Imóvel cadastrado com sucesso.');
     }
 
