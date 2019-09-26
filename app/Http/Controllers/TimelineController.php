@@ -112,49 +112,26 @@ class TimelineController extends Controller
 
     public function serverTest()
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
-        $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel){
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
+        $imoveis = Imovel::pluck('nome', 'id');
 
         return view('timeline.serverTest', compact('imoveis'));
     }
 
     public function getServerTest(Request $request)
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
+        $imoveis = Imovel::pluck('nome', 'id');
+ 
+        if(!$request->id)
+            return back()->withError('Por Favor Selecione o Imóvel.');
 
-        // FORMULARIO IMOVEL (GET)
-        $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel){
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
-        // FIM - FORMULARIO IMOVEL (GET)
+        $imovel = Imovel::whereNotNull('ip')->whereId($request->id)->first();
 
-        // VALIDAÇÃO CAMPO IMOVEL
-        if(empty($request->IMO_ID)){
-            return redirect('/server/test')->with('error', 'Por Favor Selecione o Imóvel.');
-        }
-        // FIM - VALIDAÇÃO CAMPO IMOVEL
+        if(!$imovel)
+            return back()->withError('Este Imovel não possui endereço de IP configurado!');
 
-        $imovel = Imovel::find($request->IMO_ID);
-        $url = $imovel->IMO_IP;
+        $codigoHTTP = Ping::check($imovel->ip);
 
-        // VALIDAÇÃO IP DO IMOVEL FOR VAZIO
-        if(empty($url)){
-            return redirect('/server/test')->with('error', 'Este Imovel não possui endereço de IP configurado!');
-        }
-        // FIM - VALIDAÇÃO IP DO IMOVEL FOR VAZIO
-
-        $codigoHTTP = Ping::check($url);
+        dd($imovel, $imoveis, $codigoHTTP);
 
         return view('timeline.serverTest', compact('imoveis', 'url', 'codigoHTTP'));
     }

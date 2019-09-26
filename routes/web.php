@@ -163,8 +163,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/timeline/equipamento/getEquipamentoLista/{id}', array('uses' => 'TimelineController@showPrumada'));
     Route::post('/timeline/equipamento/getTimelineLista', array('uses' => 'TimelineController@getTimelineLista'));
     
-    Route::get('/server/test', 'TimelineController@serverTest')->name('Teste de Conexão Servidor');
-    Route::post('/server/test', array('uses' => 'TimelineController@getServerTest'));
+    Route::get('/server/test', 'TimelineController@serverTest')->name('Teste de Conexão Servidor')->middleware('permissao');
+    Route::post('/server/test', 'TimelineController@getServerTest')->middleware('permissao');
     Route::get('importar/csv', 'TesteController@uploadCsv');
     
     /* Relatorios */

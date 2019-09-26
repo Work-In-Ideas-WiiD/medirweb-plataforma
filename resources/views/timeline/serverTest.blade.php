@@ -24,14 +24,14 @@
                 <div class="col-md-9">
                     <div class="row">
                         <div class='form-group'>
-                            {{ Form::label('IMO_ID', 'Imóvel') }}
-                            {{ Form::select('IMO_ID', $imoveis, null, ['class' => 'avalidate form-control chosen-select-IMO_IDESTADO', 'autocomplete' => 'off']) }}
+                            {{ Form::label('id', 'Imóvel') }}
+                            {{ Form::select('id', $imoveis, null, ['class' => 'avalidate form-control', 'required']) }}
 
-                            @if ($errors->has('IMO_ID'))
+                            @error('id'))
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('IMO_ID') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
                 </div>
