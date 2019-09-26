@@ -156,7 +156,7 @@ Route::middleware('auth')->group(function () {
 
     /* TimeLine */
     
-    Route::get('/timeline/equipamento/buscar', 'TimelineController@buscar')->name('Timeline Buscar Equipamento');
+    Route::get('/timeline/equipamento/buscar', 'TimelineController@buscar')->name('Timeline Buscar Equipamento')->middleware('permissao');
     Route::get('/timeline/equipamento', 'TimelineController@index')->name('Timeline Equipamento');
     Route::get('/timeline/equipamento/adicionar', 'TimelineController@create')->name('Adicionar TimeLine Equipamento');
     Route::post('novo-equipamento-timeline', array('uses' => 'TimelineController@store'));

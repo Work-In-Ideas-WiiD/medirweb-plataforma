@@ -32,15 +32,7 @@ class TimelineController extends Controller
 
     public function buscar()
     {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
-        $imoveis = ['' => 'Selecionar Imovel'];
-        $_imoveis = Imovel::all();
-        foreach($_imoveis as $imovel){
-            $imoveis[$imovel->IMO_ID] = $imovel->IMO_NOME;
-        }
+        $imoveis = Imovel::pluck('nome', 'id');
 
         return view('timeline.buscar_listar_prumada', compact('imoveis'));
     }
