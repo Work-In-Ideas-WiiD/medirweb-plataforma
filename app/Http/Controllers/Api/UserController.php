@@ -24,7 +24,7 @@ class UserController extends Controller
         $role = 'Comum';
         $role = Defender::findRole(ucfirst($role));
 
-        $user = $role->users()->where('email', '=',  $request->email)->whereNotNull('USER_UNIID')->first();
+        $user = $role->users()->where('email', '=',  $request->email)->whereNotNull('unidade_id')->first();
 
         if(!isset($user)){
             return response(['error' => 'Usuário não existe!'], 400);
