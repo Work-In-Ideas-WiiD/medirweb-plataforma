@@ -191,6 +191,11 @@ return [
                     'icon' => 'cloud',
                     'url'  => 'server/test',
                 ],
+                [
+                    'text' => 'Teste Avançado de Conexão',
+                    'icon' => 'cloud',
+                    'url' => '/server/test/local'
+                ]
             ],
         ],
         [
@@ -238,12 +243,7 @@ return [
             'text'    => 'Agenda Financeira',
             'icon'    => 'calendar',
             'url'     => '#',
-        ],
-//        [
-//            'text'    => 'Hidrômetro',
-//            'icon'    => 'microchip',
-//            'url'     => 'teste',
-//        ],
+        ]
     ],
 
 
