@@ -21,7 +21,7 @@ class PrumadaController extends Controller
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/leitura/'.dechex($prumada->PRU_IDFUNCIONAL),
+            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->ip.'/api/leitura/'.dechex($prumada->funcional_id),
             CURLOPT_CONNECTTIMEOUT => 15,
             CURLOPT_TIMEOUT        => 15,
             CURLOPT_USERAGENT => 'Codular Sample cURL Request',
@@ -35,22 +35,21 @@ class PrumadaController extends Controller
 
         if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
         {
-            $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
+            $metro_cubico = hexdec($jsons['5'].$jsons['6']);
 
-            $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
+            $litros = hexdec($jsons['9'].$jsons['10']);
 
-            $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
+            $mililitro = hexdec($jsons['13'].$jsons['14']);
 
             $subtotal = ($metro_cubico * 1000) + $litros;
-            $total = $subtotal.'.'.$mililitro.'';
-
+            $total = $subtotal.'.'.$mililitro;
 
             $leitura = [
-                'LEI_IDPRUMADA' => $prumada->PRU_ID,
-                'LEI_METRO' => $metro_cubico,
-                'LEI_LITRO' => $litros,
-                'LEI_MILILITRO' => $mililitro,
-                'LEI_VALOR' => $total,
+                'prumada_id' => $prumada->id,
+                'metro' => $metro_cubico,
+                'litro' => $litros,
+                'mililitro' => $mililitro,
+                'valor' => $total,
             ];
 
             Leitura::create($leitura);
@@ -74,7 +73,7 @@ class PrumadaController extends Controller
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/ativacao/'.dechex($prumada->PRU_IDFUNCIONAL),
+            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->ip.'/api/ativacao/'.dechex($prumada->funcional_id),
             CURLOPT_CONNECTTIMEOUT => 15,
             CURLOPT_TIMEOUT        => 15,
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
@@ -98,7 +97,7 @@ class PrumadaController extends Controller
             }
 
             $atualizacao = [
-                'PRU_STATUS' => $status,
+                'status' => $status,
             ];
 
             $prumada->update($atualizacao);
@@ -106,7 +105,7 @@ class PrumadaController extends Controller
         }
         else
         {
-            $prumada->PRU_STATUS = 0;
+            $prumada->status = 0;
             $prumada->save();
             return response()->json(['error' => 'Não foi possível ligar o equipamento. Por favor, verifique a conexão.'], 400);
         }
@@ -120,7 +119,7 @@ class PrumadaController extends Controller
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/corte/'.dechex($prumada->PRU_IDFUNCIONAL),
+            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->ip.'/api/corte/'.dechex($prumada->funcional_id),
             CURLOPT_CONNECTTIMEOUT => 15,
             CURLOPT_TIMEOUT        => 15,
             CURLOPT_USERAGENT => 'Codular Sample cURL Request'
@@ -145,7 +144,7 @@ class PrumadaController extends Controller
 
 
             $atualizacao = [
-                'PRU_STATUS' => $status,
+                'status' => $status,
             ];
 
             $prumada->update($atualizacao);

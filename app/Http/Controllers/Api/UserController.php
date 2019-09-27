@@ -55,10 +55,10 @@ class UserController extends Controller
         $dataFormUser['password'] = bcrypt($password);
         $user->update($dataFormUser);
 
-        $imovelAll = Imovel::find($user->USER_IMOID);
+        $imovel = $user->imovel;
 
         // ENVIAR EMAIL com a senha.
-        Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
+        Mail::send('email.senhaUser', ['imovel'=> $imovel->nome, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
             $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
             $message->to($user->email);
             $message->cc('linconaraujo@medirweb.com.br');
@@ -89,8 +89,7 @@ class UserController extends Controller
 
     public function updateUsers(Request $request)
     {
-        $id = $request->input('user_id');
-        $user = User::find($id);
+        $user = User::find($request->user_id);
 
         if(!isset($user)){
             return response()->json(['error' => 'Usuário não existe!'], 400);

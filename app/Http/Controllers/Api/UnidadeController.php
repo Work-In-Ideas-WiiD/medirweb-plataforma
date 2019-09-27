@@ -12,10 +12,10 @@ class UnidadeController extends Controller
 
     public function showImovel(Request $request)
     {
-        $imovel = Unidade::find($request->UNI_ID)->imovel;
+        $imovel = Unidade::with('endereco.cidade.estado')->find($request->UNI_ID)->imovel;
 
-        $imovel['IMO_IDCIDADE'] = Unidade::find($request->UNI_ID)->imovel->cidade->CID_NOME;
-        $imovel['IMO_IDESTADO'] = Unidade::find($request->UNI_ID)->imovel->estado->EST_ABREVIACAO;
+        $imovel['IMO_IDCIDADE'] = $imovel->endereco->cidade->nome;
+        $imovel['IMO_IDESTADO'] = $imovel->endereco->cidade->estado->codigo;
 
         return response()->json(response()->make($imovel), 200);
     }
@@ -32,7 +32,7 @@ class UnidadeController extends Controller
         //$unidade = Unidade::where('UNI_IDUSER', $request->UNI_IDUSER)->first();
 
         $user = User::find($request->UNI_IDUSER);
-        $unidade = Unidade::find($user->USER_UNIID);
+        $unidade = $user->unidade;
 
         return response()->json(response()->make($unidade), 200);
     }
