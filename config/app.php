@@ -166,6 +166,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         \Artesaos\Defender\Providers\DefenderServiceProvider::class,
+        Ixudra\Curl\CurlServiceProvider::class,
 
     ],
 
@@ -222,6 +223,7 @@ return [
         'Defender' => \Artesaos\Defender\Facades\Defender::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'Ping' => Karlmonson\Ping\Facades\Ping::class,
+        'Curl' => Ixudra\Curl\Facades\Curl::class,
 
     ],
 

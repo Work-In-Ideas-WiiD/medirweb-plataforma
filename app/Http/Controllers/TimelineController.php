@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Timeline;
 use App\Models\Imovel;
 use App\Models\Prumada;
-use Ping;
 use App\Http\Requests\Timeline\TimelineSaveRequest;
 
 class TimelineController extends Controller
@@ -110,29 +109,8 @@ class TimelineController extends Controller
         return json_encode($prumadas);
     }
 
-    public function serverTest()
-    {
-        $imoveis = Imovel::pluck('nome', 'id');
-
-        return view('timeline.serverTest', compact('imoveis'));
-    }
-
     public function getServerTest(Request $request)
     {
-        $imoveis = Imovel::pluck('nome', 'id');
- 
-        if(!$request->id)
-            return back()->withError('Por Favor Selecione o Imóvel.');
-
-        $imovel = Imovel::whereNotNull('ip')->whereId($request->id)->first();
-
-        if(!$imovel)
-            return back()->withError('Este Imovel não possui endereço de IP configurado!');
-
-        $codigoHTTP = Ping::check($imovel->ip);
-
-        dd($imovel, $imoveis, $codigoHTTP);
-
-        return view('timeline.serverTest', compact('imoveis', 'url', 'codigoHTTP'));
+       
     }
 }

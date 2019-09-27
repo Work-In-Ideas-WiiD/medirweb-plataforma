@@ -10,7 +10,7 @@
 
 @section('content')
 
-{!! Form::open(['action' => 'TimelineController@getServerTest', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+{!! Form::open(['action' => 'ServerController@processTest', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 <div class="col-md-12">
     <div class="row">
         <div class="box box-primary">
@@ -24,10 +24,10 @@
                 <div class="col-md-9">
                     <div class="row">
                         <div class='form-group'>
-                            {{ Form::label('id', 'Imóvel') }}
-                            {{ Form::select('id', $imoveis, null, ['class' => 'avalidate form-control', 'required']) }}
+                            {{ Form::label('imovel_id', 'Imóvel') }}
+                            {{ Form::select('imovel_id', $imoveis, null, ['class' => 'avalidate form-control', 'required']) }}
 
-                            @error('id'))
+                            @error('imovel_id')
                             <span class="help-block">
                                 <strong style="color: red;">{{ $message }}</strong>
                             </span>
@@ -48,8 +48,7 @@
 {!! Form::close() !!}
 
 
-<?php // RESULTADO ?>
-@if(!empty($url))
+@if(!empty($imovel->ip))
 <div class="col-md-12">
     <div class="row" style="margin-top: 40px; margin-bottom: 40px;">
         <div class="col-md-12">
@@ -66,7 +65,7 @@
                         </div>
 
                         <div class='box-body'>
-                            <p style="text-align: center; font-weight: 600; font-size: 18px;" >{{ $url }}</p>
+                            <p style="text-align: center; font-weight: 600; font-size: 18px;" >{{ $imovel->ip }}</p>
                         </div>
 
                     </div>

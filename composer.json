@@ -12,6 +12,7 @@
         "fideloper/proxy": "^4.0",
         "geekcom/validator-docs": "^1.3",
         "guzzlehttp/guzzle": "^6.3",
+        "ixudra/curl": "^6.17",
         "jeroennoten/laravel-adminlte": "^1.23",
         "karlmonson/laravel-ping": "^1.0",
         "laravel/framework": "5.8.*",
