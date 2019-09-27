@@ -152,8 +152,8 @@ class RelatorioController extends Controller
                         'Bairro' => $equipamento->unidade->imovel->endereco->bairro,
                         'CityUF' => $equipamento->unidade->imovel->endereco->cidade->nome." - ".$equipamento->unidade->imovel->endereco->cidade->estado->codigo,
                         'CEP' => $equipamento->unidade->imovel->endereco->cep,
-                        'responsaveisImovel' => $equipamento->unidade->imovel->IMO_RESPONSAVEIS ?? null,
-                        'responsaveisTelImovel' => $equipamento->unidade->imovel->IMO_TELEFONES ?? null,
+                        'responsaveisImovel' => $equipamento->unidade->imovel->responsavel ?? [],
+                        'responsaveisTelImovel' => $equipamento->unidade->imovel->telefone ?? [],
 
                         'nomeAp' => $equipamento->unidade->nome,
                         'responsavelAp' => $equipamento->unidade->nome_responsavel,
