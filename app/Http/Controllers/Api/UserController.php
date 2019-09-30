@@ -6,35 +6,40 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Artesaos\Defender\Facades\Defender;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\File;
 use App\Models\Imovel;
 use Hash;
 use Mail;
+use Str;
 use App\Traits\UploadFile;
+use App\Http\Requests\Api\User\LoginRequest;
+
 
 class UserController extends Controller
 {
     use UploadFile;
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $role = 'Comum';
-        $role = Defender::findRole(ucfirst($role));
+        $user = Defender::findRole('comum')
+                ->users()
+                ->where('email', '=',  $request->email)
+                ->whereNotNull('unidade_id')
+                ->first();
 
-        $user = $role->users()->where('email', '=',  $request->email)->whereNotNull('unidade_id')->first();
+        if ($user and Hash::check($request->password, $user->password)) {
+            
+            if (!$user->api_token) {
+                $user->api_token = Str::random(80);
+                $user->save();
+            }
 
-        if(!isset($user)){
-            return response(['error' => 'Usuário não existe!'], 400);
+            return ['token' => $user->api_token];
         }
+        
 
-        if ($user->count() <= 0 || !Hash::check($request->password, $user->password)) {
-            return response(['error' => 'Usuário ou senha inválidos'], 400);
-        }
-
-        return response()->make($user);
+        return ['error' => 'Usuário ou senha inválidos'];
     }
 
     public function esqueciSenha(Request $request)

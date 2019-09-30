@@ -17,11 +17,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::namespace('Api')->group(function () {
+    Route::post('login', 'UserController@login');
+});
 
 
 
 //Caminho /api/login
-Route::group(['prefix' => 'login'], function()
+/*Route::group(['prefix' => 'login'], function()
 {
     //Caminho /api/login
     Route::post('', ['uses' => 'Api\UserController@login']);
@@ -29,7 +32,7 @@ Route::group(['prefix' => 'login'], function()
     //Caminho /api/login/esqueciSenha
     Route::post('esqueciSenha', ['uses' => 'Api\UserController@esqueciSenha']);
 });
-
+*/
 
 //Caminho /api/user
 Route::group(['prefix' => 'user'], function()
