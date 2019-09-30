@@ -30,21 +30,11 @@ Route::namespace('Api')->group(function () {
     });
 });
 
-
-// ### UNIDADE CONTROLER ###
-//Caminho /api/unidade
-Route::group(['prefix' => 'unidade'], function()
-{
-    //Caminho /api/unidade/ver
-    Route::group(['prefix' => 'ver'], function()
-    {
-        Route::post('/imovel', ['uses' => 'Api\UnidadeController@showImovel']);
-        Route::post('/agrupamento', ['uses' => 'Api\UnidadeController@showAgrupamento']);
-        Route::post('/unidade', ['uses' => 'Api\UnidadeController@showUnidade']);
-        //Route::post('/prumadas', ['uses' => 'Api\UnidadeController@showPrumadas']);
-    });
+Route::group(['prefix' => 'unidade'], function() {
+    Route::post('/', 'UnidadeController@show');
+    Route::post('/imovel', 'UnidadeController@imovel');
+    Route::post('/agrupamento', 'UnidadeController@agrupamento');
 });
-// fim - ### UNIDADE CONTROLER ####
 
 
 // ### Prumada CONTROLER ###

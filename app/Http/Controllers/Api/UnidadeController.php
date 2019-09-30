@@ -27,21 +27,8 @@ class UnidadeController extends Controller
         return response()->json(response()->make($agrupamento), 200);
     }
 
-    public function showUnidade(Request $request)
+    public function show(Request $request)
     {
-        //$unidade = Unidade::where('UNI_IDUSER', $request->UNI_IDUSER)->first();
-
-        $user = User::find($request->UNI_IDUSER);
-        $unidade = $user->unidade;
-
-        return response()->json(response()->make($unidade), 200);
+        return $user->unidade;
     }
-
-    /*public function showPrumadas(Request $request)
-    {
-        $prumadas = Unidade::find($request->UNI_ID)->getPrumadas;
-
-        return response()->json(response()->make($prumadas), 200);
-    }*/
-
 }
