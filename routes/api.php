@@ -19,20 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::namespace('Api')->group(function () {
     Route::post('login', 'UserController@login');
+    Route::post('forgot', 'UserController@forgot');
 });
 
-
-
-//Caminho /api/login
-/*Route::group(['prefix' => 'login'], function()
-{
-    //Caminho /api/login
-    Route::post('', ['uses' => 'Api\UserController@login']);
-
-    //Caminho /api/login/esqueciSenha
-    Route::post('esqueciSenha', ['uses' => 'Api\UserController@esqueciSenha']);
-});
-*/
 
 //Caminho /api/user
 Route::group(['prefix' => 'user'], function()

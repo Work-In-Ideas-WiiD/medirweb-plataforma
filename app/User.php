@@ -37,6 +37,6 @@ class User extends Authenticatable
 
     public function imovel()
     {
-        return $this->hasOne(Imovel::class);
+        return $this->belongsTo(Imovel::class);
     }
 }

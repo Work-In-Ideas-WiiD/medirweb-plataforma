@@ -14,6 +14,7 @@ use Mail;
 use Str;
 use App\Traits\UploadFile;
 use App\Http\Requests\Api\User\LoginRequest;
+use App\Http\Requests\Api\User\ForgotRequest;
 
 
 class UserController extends Controller
@@ -42,7 +43,7 @@ class UserController extends Controller
         return ['error' => 'Usuário ou senha inválidos'];
     }
 
-    public function esqueciSenha(Request $request)
+    public function forgot(ForgotRequest $request)
     {
         $user = Defender::findRole('Comum')
                 ->users()
@@ -63,7 +64,7 @@ class UserController extends Controller
         $imovel = $user->imovel;
 
         // ENVIAR EMAIL com a senha.
-        Mail::send('email.senhaUser', ['imovel'=> $imovel->nome, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
+        Mail::send('email.senhaUser', ['imovel'=> $imovel->nome, 'nome' => $user->name, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
             $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
             $message->to($user->email);
             $message->cc('linconaraujo@medirweb.com.br');
@@ -71,7 +72,7 @@ class UserController extends Controller
             $message->subject('Senha de acesso ao app');
         });
 
-        return ['success' => 'Senha gerada com Sucesso!'];
+        return ['success' => 'Senha gerada com sucesso!'];
     }
 
     public function showUsers(Request $request)
