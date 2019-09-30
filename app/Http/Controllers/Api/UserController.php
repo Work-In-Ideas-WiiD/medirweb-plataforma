@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function login(LoginRequest $request)
     {
-        $user = Defender::findRole('comum')
+        $user = Defender::findRole('Comum')
                 ->users()
                 ->where('email', '=',  $request->email)
                 ->whereNotNull('unidade_id')
@@ -44,21 +44,21 @@ class UserController extends Controller
 
     public function esqueciSenha(Request $request)
     {
-        $role = 'Comum';
-        $role = Defender::findRole(ucfirst($role));
+        $user = Defender::findRole('Comum')
+                ->users()
+                ->where('email', '=',  $request->email)
+                ->whereNotNull('unidade_id')
+                ->first();
 
-        $user = $role->users()->where('email', $request->email)->first();
-
-        if(!isset($user)){
-            return response()->json(['error' => 'E-mail inválido!'], 400);
-        }
+        if(!$user)
+            return ['error' => 'E-mail inválido!'];
+        
 
         // GERANDO UMA SENHA ALETORIA
         $password = rand(100000,9999999);
 
         // ATUALIZANDO NO BANCO NOVA SENHA
-        $dataFormUser['password'] = bcrypt($password);
-        $user->update($dataFormUser);
+        $user->update(['password' => bcrypt($password)]);
 
         $imovel = $user->imovel;
 
