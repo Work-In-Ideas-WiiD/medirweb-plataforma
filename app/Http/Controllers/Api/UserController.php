@@ -15,6 +15,7 @@ use Str;
 use App\Traits\UploadFile;
 use App\Http\Requests\Api\User\LoginRequest;
 use App\Http\Requests\Api\User\ForgotRequest;
+use App\Http\Requests\Api\User\UpdateRequest;
 
 
 class UserController extends Controller
@@ -75,7 +76,7 @@ class UserController extends Controller
         return ['success' => 'Senha gerada com sucesso!'];
     }
 
-    public function showUsers(Request $request)
+    public function show(Request $request)
     {
         // PESQUISANDO USUARIO COMUM
         $roleComum = Defender::findRole(ucfirst('Comum'));
@@ -93,31 +94,17 @@ class UserController extends Controller
         return response()->make($user);
     }
 
-    public function updateUsers(Request $request)
+    public function update(UpdateRequest $request)
     {
-        $user = User::find($request->user_id);
+        if($request->password)
+            $request->user()->password = Hash::make($request->password);
 
-        if(!isset($user)){
-            return response()->json(['error' => 'Usuário não existe!'], 400);
-        }
+        if($request->foto)
+            $request->user()->foto = $this->cropImage($request->foto, 'upload/usuarios/');
 
-        $dataForm = $request->all();
+        $request->user()->save();
 
-        if($dataForm['password'] == '')
-            unset($dataForm['password'] );
-        else
-            $dataForm['password'] = bcrypt($dataForm['password']);
-
-        if($request->foto) {
-            $dataForm['foto'] = $this->cropImage($request->foto, 'upload/usuarios/');
-
-            ImageOptimizer::optimize('upload/usuarios/'.$dataForm['foto']);
-        }
-
-        $user->update($dataForm);
-
-        return response()->make($user);
+        return $request->user();
     }
-
 
 }

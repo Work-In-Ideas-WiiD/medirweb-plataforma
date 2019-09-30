@@ -20,24 +20,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::namespace('Api')->group(function () {
     Route::post('login', 'UserController@login');
     Route::post('forgot', 'UserController@forgot');
-});
 
 
-//Caminho /api/user
-Route::group(['prefix' => 'user'], function()
-{
-    //Caminho /api/user/show
-    Route::group(['prefix' => 'show'], function()
-    {
-        Route::post('', ['uses' => 'Api\UserController@showUsers']);
+    Route::middleware('auth:api')->group(function () {
+        Route::group(['prefix' => 'user'], function () {
+            Route::post('show', 'UserController@show');
+            Route::post('update', 'UserController@update');
+        });
     });
-
-    //Caminho /api/user/update
-    Route::group(['prefix' => 'update'], function()
-    {
-        Route::post('', ['uses' => 'Api\UserController@updateUsers']);
-    });
-
 });
 
 
