@@ -16,6 +16,7 @@ function converter_leitura($funcional, $hex, $hex_original) {
 
 function converter_leitura_default($funcional) {
     return (object) [
+        'erro' => true,
         'funcional' => $funcional,
         'hexadecimal' => 'nenhuma informação',
         'm3' => 'N/A',
