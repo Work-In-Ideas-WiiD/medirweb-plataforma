@@ -196,10 +196,10 @@
 																		<div style="margin-top: -28px; margin-right: -30px;">
 																			@is(['Administrador', 'Sindico'])
 
-																			@if($prumada->status == 1)
-																			<a href="{{ url('/imovel/'.$imovel->id.'/desligar/'.$prumada->id.'') }}" id="ocultar" onclick="loading()" class="btn btn-danger ocultar" ><i class="fa fa-close"></i></a>
+																			@if($prumada->status)
+																			<a href="{{ url('/imovel/'.$prumada->id.'/corte') }}" id="ocultar" onclick="loading()" class="btn btn-danger ocultar" ><i class="fa fa-close"></i></a>
 																			@else
-																			<a href="{{ url('/imovel/'.$imovel->id.'/ligar/'.$prumada->id.'') }}" id="ocultar" onclick="loading()" class="btn btn-success ocultar" ><i class="fa fa-power-off"></i></a>
+																			<a href="{{ url('/imovel/'.$prumada->id.'/ativacao') }}" id="ocultar" onclick="loading()" class="btn btn-success ocultar" ><i class="fa fa-power-off"></i></a>
 																			@endif
 
 																			@endis

@@ -629,7 +629,7 @@ class ImovelController extends Controller
 
         $leitura = converter_leitura($prumada->funcional_id, $response ?? [], $response ?? []);
 
-        if(empty($leitura->erro)) {
+        if(empty($leitura->erro) and $leitura) {
 
             Leitura::create([
                 'prumada_id' => $prumada->id,
@@ -726,138 +726,34 @@ class ImovelController extends Controller
         return redirect('imovel/buscar/ver/'.$id);
     }
 
-    public function ligarUnidade($imovel, $unidade)
+    public function ligarDesligarPrumada(Prumada $prumada, $comando)
     {
-        $user = auth()->user()->USER_IMOID;
-        if(app('defender')->hasRoles('Sindico') && !($user == $imovel)){
+        if(app('defender')->hasRoles('Sindico') && auth()->user()->imovel_id !== $prumada->unidade->imovel_id)
             return view('error403');
-        }
-        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-            return view('error403');
-        }
 
+        $response = json_decode(
+            Curl::to("http://{$prumada->unidade->imovel->ip}/api/{$comando}/".dechex($prumada->funcional_id))->get()
+        );
 
-        $imovel = Imovel::find($imovel);
-
-        //        $unidade = Unidade::find($unidade);
-
-        $prumada = Prumada::find($unidade);
-        //var_dump($unidade->getPrumadas); die();
-        //        foreach ($unidade->getPrumadas as $prumada)
-        //        {
-        $curl = curl_init();
-        // Set some options - we are passing in a useragent too here
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/ativacao/'.dechex($prumada->PRU_IDFUNCIONAL),
-            CURLOPT_CONNECTTIMEOUT => 15,
-            CURLOPT_TIMEOUT        => 15,
-            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-        ));
-        // Send the request & save response to $resp
-        $resp = curl_exec($curl);
-        // Close request to clear up some resources
-        curl_close($curl);
-
-        $jsons = json_decode($resp);
-
-        if($jsons !== NULL)
-        {
-            if($jsons[4] == '00')
-            {
-                $status = 1;
-            }
+        if($response) {
+            if (prumada_status($response) == '00')
+                $prumada->status = 1;
+                
             else
-            {
-                $status = 0;
-            }
+                $prumada->status = 0;
 
-
-            $atualizacao = [
-                'PRU_STATUS' => $status,
-            ];
-
-            $prumada->update($atualizacao);
-
-            Session::flash('success', 'Equipamento ligado com sucesso.' );
-            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
-        }
-        else
-        {
-            $prumada->PRU_STATUS = 0;
             $prumada->save();
-            Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
-            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
+
+            $string = $comando == 'ativacao' ? 'ligado' : 'desligado';
+
+            return redirect("imovel/buscar/ver/{$prumada->unidade->imovel_id}?a={$prumada->unidade->agrupamento_id}")
+                ->withSuccess("Equipamento {$string} com sucesso.");
+        } else {
+            $prumada->update(['status' => '0']);
+
+            return redirect("imovel/buscar/ver/{$prumada->unidade->imovel_id}?a={$prumada->unidade->agrupamento_id}")
+                ->withError('Ação não pode ser realizada. Por favor, verifique a conexão.');
         }
-
-
-        //        }
-
-
-    }
-
-    public function desligarUnidade($imovel, $unidade)
-    {
-        if(!app('defender')->hasRoles('Administrador')){
-            return view('error403');
-        }
-
-        $imovel = Imovel::find($imovel);
-
-        //$unidade = Unidade::find($unidade);
-
-        $prumada = Prumada::find($unidade);
-
-        //var_dump($unidade->getPrumadas); die();
-        //        foreach ($unidade->getPrumadas as $prumada)
-        //        {
-        $curl = curl_init();
-        // Set some options - we are passing in a useragent too here
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/corte/'.dechex($prumada->PRU_IDFUNCIONAL),
-            CURLOPT_CONNECTTIMEOUT => 15,
-            CURLOPT_TIMEOUT        => 15,
-            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-        ));
-        // Send the request & save response to $resp
-        $resp = curl_exec($curl);
-        // Close request to clear up some resources
-        curl_close($curl);
-
-        $jsons = json_decode($resp);
-
-        if($jsons !== NULL)
-        {
-            if($jsons[4] == '00')
-            {
-                $status = '1';
-            }
-            else
-            {
-                $status = '0';
-            }
-
-
-            $atualizacao = [
-                'PRU_STATUS' => $status,
-            ];
-
-            $prumada->update($atualizacao);
-
-            Session::flash('success', 'Equipamento desligado com sucesso.' );
-            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
-        }
-        else
-        {
-            $prumada->PRU_STATUS = 1;
-            $prumada->save();
-            Session::flash('error', 'Ação não pode ser realizada. Por favor, verifique a conexão.' );
-            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
-        }
-
-        //        }
-
 
     }
 
