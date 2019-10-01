@@ -627,8 +627,9 @@ class ImovelController extends Controller
 
         $response = Curl::to("http://{$prumada->unidade->imovel->ip}/api/leitura/".dechex($prumada->funcional_id))->get();
 
-        if($response) {
-            $leitura = converter_leitura($prumada->funcional_id, $response, $response);
+        $leitura = converter_leitura($prumada->funcional_id, $response ?? [], $response ?? []);
+
+        if(empty($leitura->erro)) {
 
             Leitura::create([
                 'prumada_id' => $prumada->id,
