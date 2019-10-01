@@ -73,12 +73,12 @@
 
 						<div class="box {{$collapsed_box}}" style="border-top: 2px solid #f4f4f4; margin-top: -10px;">
 							<div class="box-header" data-widget="collapse" style="border-left: 4px solid #f38212">
-								<h3 class="box-title" >{{ $agrupamento->AGR_NOME }}</h3>
+								<h3 class="box-title" >{{ $agrupamento->nome }}</h3>
 								<div style="margin-top: 3px;" class="box-tools pull-right">
 
 									<?php $iTotal = 0; $i1 = 0; $i0 = 0; ?>
-									@if ($agrupamento->UNIDADES !== null)
-									@foreach($agrupamento->UNIDADES as $unidade)
+									@if ($agrupamento->unidade !== null)
+									@foreach($agrupamento->unidade as $unidade)
 									@foreach($unidade->prumada as $prumada)
 									@if($unidade->prumada()->count() > 0)
 									<?php if($prumada->status == 1){$i1++;}else {$i0++;} $iTotal++;?>
@@ -101,8 +101,8 @@
 											<div class="col-md-12">
 
 												<!-- Unidade -->
-												@if ($agrupamento->UNIDADES !== null)
-												@foreach($agrupamento->UNIDADES as $unidade)
+												@if ($agrupamento->unidade !== null)
+												@foreach($agrupamento->unidade as $unidade)
 												@foreach($unidade->prumada as $prumada)
 
 												<div class="col-md-12">
@@ -188,7 +188,7 @@
 
 																		<!-- Botao Leitura -->
 																		<div style="margin-left: -50px;">
-																			<a  href="{{ url('/leitura/prumada/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-default ocultar"><i class="fa fa-retweet"></i></a>
+																			<a  href="{{ url('/leitura/prumada/'.$prumada->id.'') }}" id="ocultar" onclick="loading()" class="btn btn-default ocultar"><i class="fa fa-retweet"></i></a>
 																		</div>
 																		<!-- fim - Botao Leitura -->
 

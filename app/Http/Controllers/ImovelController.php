@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Str;
 use App\Models\Agrupamento;
 use App\Models\Cidade;
 use App\Models\Cliente;
@@ -19,11 +18,11 @@ use App\Models\Unidade;
 use App\Models\Leitura;
 use App\Models\Fatura;
 use App\Models\FaturaUnidade;
-use Session;
 use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 use Illuminate\Support\Facades\File;
 use App\Charts\ConsumoCharts;
-use DB;
+use Session, DB, Curl, Str;
+
 
 class ImovelController extends Controller
 {
@@ -208,79 +207,72 @@ class ImovelController extends Controller
 
     public function getLancarConsumo(Imovel $imovel)
     {
-        $user = auth()->user()->USER_IMOID;
-        if(app('defender')->hasRoles('Sindico') && !($user == $id)){
-            return view('error403');
+        if(app('defender')->hasRoles('Sindico') && auth()->user()->imovel_id !== $imovel->id){
+            return abort(403, 'Você não tem permissão');
         }
-        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-            return view('error403');
-        }
-
-        $imovel = Imovel::findOrFail($id);
 
         $mesCiclo = array();
-        for ($i = ($imovel->IMO_FATURACICLO - 5); $i <= ($imovel->IMO_FATURACICLO + 5); $i++){
+        for ($i = ($imovel->fatura_ciclo - 5); $i <= ($imovel->fatura_ciclo + 5); $i++){
             if($i <= date("d")){
                 $mesCiclo += [ date('Y-m-d', strtotime(date("Y-m")."-".$i))  => $i ];
             }
         }
 
 
-        $faturas = Fatura::where('FAT_IMOID', $id)->whereMonth('FAT_DTLEIFORNECEDOR', date("m"))->get();
-        $ciclo =  $imovel->IMO_FATURACICLO - date("d");
+        $faturas = $imovel->fatura()->whereMonth('data_leitura_fornecedor', now())->get();
+
+        $ciclo =  $imovel->fatura_ciclo - date("d");
 
         if($ciclo >= -5 &&  $ciclo <= 5){
 
             foreach ($faturas as $fatura) {
-                $mesLeiFornecedor = date('Y-m', strtotime($fatura->FAT_DTLEIFORNECEDOR));
+                $mesLeiFornecedor = date('Y-m', strtotime($fatura->data_leitura_fornecedor));
 
                 if($mesLeiFornecedor == date("Y-m")){
                     return view('imovel.lancarConsumo', compact('faturas', 'imovel'));
                 }
             }
 
-            return view('imovel.lancarConsumo', compact('mesCiclo', 'imovel', 'id'));
+            return view('imovel.lancarConsumo', compact('mesCiclo', 'imovel'));
         }else {
-            return redirect('imovel')->with('error', 'Imovel "'.$imovel->IMO_NOME.'", esta fora do ciclo para lançamento do Consumo Mensal!');
+            return back()->withError("Imovel {$imovel->nome}, esta fora do ciclo para lançamento do Consumo Mensal!");
         }
 
-        return redirect('imovel')->with('error', 'error desconhecido!');
+        return back()->withError('error desconhecido!');
     }
 
 
     public function postLancarConsumo(LancarConsumoRequest $request)
     {
-        $user = auth()->user()->USER_IMOID;
-        if(app('defender')->hasRoles('Sindico') && !($user == $id)){
-            return view('error403');
-        }
-        if(!app('defender')->hasRoles(['Administrador', 'Sindico'])){
-            return view('error403');
+        if(app('defender')->hasRoles('Sindico') && auth()->user()->imovel_id !== $request->imovel_id){
+            return abort(403, 'Você não tem permissão');
         }
 
         // validação se o usuario tentar burlar o sistema
         // (DATA DA LEITURA)
-        if (!(date('Y-m', strtotime($request->FAT_DTLEIFORNECEDOR)) == date('Y-m'))) {
-            return redirect('/imovel')->with('error', 'Não é permitido burlar o sistema!');
+        if (!(date('Y-m', strtotime($request->data_leitura_fornecedor)) == date('Y-m'))) {
+            return back()->withError('Não é permitido burlar o sistema!');
         }
 
         // FORA DO CICLO
-        $ciclo = date('d', strtotime($request->FAT_DTLEIFORNECEDOR)) - date('d');
+        $ciclo = date('d', strtotime($request->data_leitura_fornecedor)) - date('d');
         if(!($ciclo >= -5 &&  $ciclo <= 5)){
-            return redirect('/imovel')->with('error', 'Não é permitido burlar o sistema!');
+            return back()->with('error', 'Não é permitido burlar o sistema!');
         }
 
         // ENVIAR INFORMAÇÕES MAIS DE UMA VEZ
-        $faturasValidation = Fatura::where('FAT_IMOID', $request->FAT_IMOID)->whereMonth('FAT_DTLEIFORNECEDOR', date("m"))->get();
+        $faturasValidation = Fatura::where('imovel_id', $request->imovel_id)->whereMonth('data_leitura_fornecedor', date("m"))->get();
         foreach ($faturasValidation as $value) {
-            $result = date('Y-m', strtotime($value->FAT_DTLEIFORNECEDOR));
+            $result = date('Y-m', strtotime($value->data_leitura_fornecedor));
             if($result  == date("Y-m")){
-                return redirect('/imovel')->with('error', 'ATENÇÃO! Este mês já foi coletado o consumo mensal do fornecedor! Não é permitido adicionar novamente!');
+                return back()->withError('ATENÇÃO! Este mês já foi coletado o consumo mensal do fornecedor! Não é permitido adicionar novamente!');
             }
         }
         // FIM VALIDAÇÃO
 
         $dataForm = $request->all();
+
+        dd($dataForm);
 
         // Formatação ponto e virgula do valor que veio no formulario
         $formatarLeiMetroValorFor1 = str_replace(".", "", $dataForm['FAT_LEIMETRO_VALORFORNECEDOR']);
@@ -625,63 +617,35 @@ class ImovelController extends Controller
         return $retorno;
     }
 
-    public function leituraUnidade($prumada)
+    public function leituraUnidade(Prumada $prumada)
     {
-        $prumada = Prumada::find($prumada);
+        $prumada = Prumada::with('unidade.imovel')->find($prumada->id);
 
-        $user = auth()->user()->USER_IMOID;
-        if(app('defender')->hasRoles(['Sindico', 'Secretário']) && !($user == $prumada->unidade->imovel->IMO_ID)){
-            return view('error403');
+        if(app('defender')->hasRoles(['Sindico', 'Secretário']) && auth()->user()->imovel_id !== $prumada->unidade->imovel_id){
+            return abort(403, 'Você não tem permissão');
         }
 
-        $curl = curl_init();
+        $response = Curl::to("http://{$prumada->unidade->imovel->ip}/api/leitura/".dechex($prumada->funcional_id))->get();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->IMO_IP.'/api/leitura/'.dechex($prumada->PRU_IDFUNCIONAL),
-            CURLOPT_CONNECTTIMEOUT => 15,
-            CURLOPT_TIMEOUT        => 15,
-            CURLOPT_USERAGENT => 'Codular Sample cURL Request',
-        ));
-        // Send the request & save response to $resp
-        $resp = curl_exec($curl);
-        // Close request to clear up some resources
-        curl_close($curl);
+        if($response) {
+            $leitura = converter_leitura($prumada->funcional_id, $response, $response);
 
-        $jsons = json_decode($resp);
-
-        if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
-        {
-            $metro_cubico = hexdec(''.$jsons['5'].''.$jsons['6'].'');
-
-            $litros = hexdec(''.$jsons['9'].''.$jsons['10'].'');
-
-            $mililitro = hexdec(''.$jsons['13'].''.$jsons['14'].'');
-
-            $subtotal = ($metro_cubico * 1000) + $litros;
-            $total = $subtotal.'.'.$mililitro.'';
-
-
-            $leitura = [
-                'LEI_IDPRUMADA' => $prumada->PRU_ID,
-                'LEI_METRO' => $metro_cubico,
-                'LEI_LITRO' => $litros,
-                'LEI_MILILITRO' => $mililitro,
-                'LEI_VALOR' => $total,
-            ];
-
-            Leitura::create($leitura);
+            Leitura::create([
+                'prumada_id' => $prumada->id,
+                'metro' => $leitura->m3,
+                'litro' => $leitura->litros,
+                'mililitro' => $leitura->decilitros,
+                'valor' => $leitura->valor,
+            ]);
 
             Session::flash('success', 'Leitura realizada com sucesso.' );
-            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
-        }
-        else
-        {
-            $prumada->PRU_STATUS = 0;
+            return redirect("imovel/buscar/ver/{$prumada->unidade->imovel->id}?a={$prumada->unidade->agrupamento->id}");
+        } else {
+            $prumada->status = 0;
             $prumada->save();
             Session::flash('error', 'Leitura não pode ser realizada. Por favor, verifique a conexão.' );
 
-            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->IMO_ID.'?a='.$prumada->unidade->agrupamento->AGR_ID);
+            return redirect('imovel/buscar/ver/'.$prumada->unidade->imovel->id.'?a='.$prumada->unidade->agrupamento->id);
 
         }
 

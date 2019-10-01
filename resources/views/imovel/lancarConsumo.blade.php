@@ -12,7 +12,7 @@
 		<div class="row">
 
 			<div class="col-md-5">
-        <h4 ><i class="fa fa-building"></i> {{ $imovel->IMO_NOME }}</h4>
+        <h4 ><i class="fa fa-building"></i> {{ $imovel->nome }}</h4>
 			</div>
 
 			<div class="col-md-7">
@@ -38,7 +38,7 @@
 
 @if(!empty($mesCiclo))
 
-{!! Form::open(['action' => 'ImovelController@postLancarConsumo', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+{!! Form::model($imovel, ['action' => 'ImovelController@postLancarConsumo', 'method' => 'POST', 'enctype' => 'multipart/form-data', 'autocomplete' => 'off']) !!}
 <div class="row">
     <div class="col-md-8">
         <div class="box box-primary">
@@ -54,41 +54,41 @@
 
                     <div class='col-md-4'>
                         <div class='form-group'>
-                            {{ Form::label('FAT_DTLEIFORNECEDOR', 'Dia da Leitura') }}
-                            {{ Form::text('FAT_IMOID', $id, ['class' => 'avalidate form-control', 'style' => 'display:none']) }}
-                            {{ Form::select('FAT_DTLEIFORNECEDOR', $mesCiclo, date("Y-m-d"), ['class' => 'avalidate form-control', 'autocomplete' => 'off']) }}
+                            {{ Form::label('data_leitura_fornecedor', 'Dia da Leitura') }}
+                            {{ Form::hidden('imovel_id', null, ['class' => 'avalidate form-control']) }}
+                            {{ Form::select('data_leitura_fornecedor', $mesCiclo, date("Y-m-d"), ['class' => 'avalidate form-control']) }}
 
-                            @if ($errors->has('FAT_DTLEIFORNECEDOR'))
+                            @error('data_leitura_fornecedor')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('FAT_DTLEIFORNECEDOR') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 
                     <div class='col-md-4'>
                         <div class='form-group'>
-                            {{ Form::label('FAT_LEIMETRO_FORNECEDOR', 'Leitura m³') }}
-                            {{ Form::text('FAT_LEIMETRO_FORNECEDOR', '', ['class' => 'avalidate form-control mask-inteiro', 'placeholder' => '']) }}
+                            {{ Form::label('metro_fornecedor', 'Leitura m³') }}
+                            {{ Form::text('metro_fornecedor', '', ['class' => 'avalidate form-control mask-inteiro']) }}
 
-                            @if ($errors->has('FAT_LEIMETRO_FORNECEDOR'))
+                            @error('metro_fornecedor')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('FAT_LEIMETRO_FORNECEDOR') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class='form-group'>
-                            {{ Form::label('FAT_LEIMETRO_VALORFORNECEDOR', 'Valor (R$)') }}
-                            {{ Form::text('FAT_LEIMETRO_VALORFORNECEDOR', '', ['class' => 'avalidate form-control mask-dinheiro', 'placeholder' => '']) }}
+                            {{ Form::label('metro_valor_fornecedor', 'Valor (R$)') }}
+                            {{ Form::text('metro_valor_fornecedor', '', ['class' => 'avalidate form-control mask-dinheiro']) }}
 
-                            @if ($errors->has('FAT_LEIMETRO_VALORFORNECEDOR'))
+                            @error('metro_valor_fornecedor')
                             <span class="help-block">
-                                <strong style="color: red;">{{ $errors->first('FAT_LEIMETRO_VALORFORNECEDOR') }}</strong>
+                                <strong style="color: red;">{{ $message }}</strong>
                             </span>
-                            @endif
+                            @enderror
                         </div>
                     </div>
 
@@ -122,7 +122,6 @@
         </div>
     </div>
 
-    <?php // Fornecedor ?>
     <div class="col-md-12">
         <div class="row">
 
@@ -138,9 +137,9 @@
                     <div class='box-body'>
                         @foreach($faturas as $fatura)
                         <div style=" bottom:15px; position: relative;">
-                            <small><i class="fa fa-calendar"></i> {{ date('d/m/Y', strtotime($fatura->FAT_DTLEIFORNECEDOR)) }}</small>
+                            <small><i class="fa fa-calendar"></i> {{ date('d/m/Y', strtotime($fatura->data_leitura_fornecedor)) }}</small>
                         </div>
-                        <p style="text-align: center; font-weight: 600; font-size: 18px;" >{{ $fatura->FAT_CONSUMO_FORNECEDOR }}m³</p>
+                        <p style="text-align: center; font-weight: 600; font-size: 18px;" >{{ $fatura->consumo_fornecedor }}m³</p>
                         @endforeach
                     </div>
                 </div>
@@ -158,9 +157,9 @@
                     <div class='box-body'>
                         @foreach($faturas as $fatura)
                         <div style=" bottom:15px; position: relative;">
-                            <small><i class="fa fa-calendar"></i> {{ date('d/m/Y', strtotime($fatura->FAT_DTLEIFORNECEDOR)) }}</small>
+                            <small><i class="fa fa-calendar"></i> {{ date('d/m/Y', strtotime($fatura->data_leitura_fornecedor)) }}</small>
                         </div>
-                        <p style="text-align: center; font-weight: 600; font-size: 18px;" >R$ {{ $fatura->FAT_LEIMETRO_VALORFORNECEDOR }}</p>
+                        <p style="text-align: center; font-weight: 600; font-size: 18px;" >R$ {{ $fatura->metro_valor_fornecedor }}</p>
                         @endforeach
                     </div>
                 </div>
@@ -178,9 +177,9 @@
                     <div class='box-body'>
                         @foreach($faturas as $fatura)
                         <div style=" bottom:15px; position: relative;">
-                            <small><i class="fa fa-calendar"></i> {{ date('m-Y', strtotime($fatura->FAT_DTLEIFORNECEDOR)) }}</small>
+                            <small><i class="fa fa-calendar"></i> {{ date('m-Y', strtotime($fatura->data_leitura_fornecedor)) }}</small>
                         </div>
-                        <p style="text-align: center; font-weight: 600; font-size: 18px;" >{{ $fatura->FAT_CONSUMO_IMOVEL }}m³ - R$ {{ $fatura->FAT_CONSUMO_VALORIMOVEL }}</p>
+                        <p style="text-align: center; font-weight: 600; font-size: 18px;" >{{ $fatura->consumo_imovel }}m³ - R$ {{ $fatura->consumo_valor_imovel }}</p>
                         @endforeach
                     </div>
                 </div>
@@ -189,7 +188,6 @@
         </div>
     </div>
 
-    <?php // UNIDADES ?>
     <div class="col-md-12">
         <div class="row">
 
@@ -205,9 +203,9 @@
                     <div class='box-body'>
                         @foreach($faturas as $fatura)
                         <div style=" bottom:15px; position: relative;">
-                            <small><i class="fa fa-calendar"></i> {{ date('m-Y', strtotime($fatura->FAT_DTLEIFORNECEDOR)) }}</small>
+                            <small><i class="fa fa-calendar"></i> {{ date('m-Y', strtotime($fatura->data_leitura_fornecedor)) }}</small>
                         </div>
-                        <p style="text-align: center; font-weight: 600; font-size: 18px;" >{{ $fatura->FAT_CONSUMO_UNI }}m³</p>
+                        <p style="text-align: center; font-weight: 600; font-size: 18px;" >{{ $fatura->consumo_unidade }}m³</p>
                         @endforeach
                     </div>
                 </div>
@@ -225,9 +223,9 @@
                     <div class='box-body'>
                         @foreach($faturas as $fatura)
                         <div style=" bottom:15px; position: relative;">
-                            <small><i class="fa fa-calendar"></i> {{ date('m-Y', strtotime($fatura->FAT_DTLEIFORNECEDOR)) }}</small>
+                            <small><i class="fa fa-calendar"></i> {{ date('m-Y', strtotime($fatura->data_leitura_fornecedor)) }}</small>
                         </div>
-                        <p style="text-align: center; font-weight: 600; font-size: 18px;" > R$ {{ $fatura->FAT_CONSUMO_VALORUNI }}</p>
+                        <p style="text-align: center; font-weight: 600; font-size: 18px;" > R$ {{ $fatura->consumo_valor_unidade }}</p>
                         @endforeach
                     </div>
                 </div>

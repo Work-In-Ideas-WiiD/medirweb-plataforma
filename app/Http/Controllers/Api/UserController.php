@@ -37,7 +37,7 @@ class UserController extends Controller
                 $user->save();
             }
 
-            return ['token' => $user->api_token];
+            return $user;
         }
         
 
@@ -78,20 +78,10 @@ class UserController extends Controller
 
     public function show(Request $request)
     {
-        // PESQUISANDO USUARIO COMUM
-        $roleComum = Defender::findRole(ucfirst('Comum'));
-        $userComum = $roleComum->users()->find($request->user_id);
-
-        if(!isset($userComum)){
-            return response()->json(['error' => 'Usuário não existe!'], 400);
-        }
-        // fim
-
-        //Exibir todos os perfil vinculado ao usuario comum encontrado
-        $user = User::find($userComum->id);
+        $user = User::find(auth()->id());
         $user->roles;
 
-        return response()->make($user);
+        return $user;
     }
 
     public function update(UpdateRequest $request)

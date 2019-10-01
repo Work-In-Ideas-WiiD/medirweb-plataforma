@@ -32,6 +32,11 @@ class Imovel extends Model
         return $this->belongsTo(Cliente::class);
     }
 
+    public function fatura()
+    {
+        return $this->hasMany(Fatura::class);
+    }
+
     public function unidade(){
         return $this->hasMany(Unidade::class);
     }

@@ -68,54 +68,11 @@ class ServerController extends Controller
 
         foreach ($funcionais as $funcional) {
             $response = Curl::to("{$imovel->ip}/api/leitura/{$funcional}")->get();
-            $testes[] = $this->converter($funcional, $response, $response);
+            $testes[] = converter_leitura($funcional, $response, $response);
         }
         
         $codigoHTTP = Ping::check($imovel->ip);
 
         return view('server.local_test', compact('imoveis', 'imovel', 'testes', 'codigoHTTP'));
-    }
-
-
-    private function converter($funcional, $hex, $hex_original)
-    {
-        if ($hex) {
-            $hex = json_decode($hex);
-
-            if (count($hex) > 15)
-                return $this->novo($funcional, $hex, $hex_original);
-            
-            return $this->antigo($funcional, $hex, $hex_original);
-        }
-
-        return (object) [
-            'funcional' => $funcional,
-            'hexadecimal' => 'nenhuma informação',
-            'm3' => 'N/A',
-            'litros' => 'N/A',
-            'decilitros' => 'N/A'
-        ];
-    }
-
-    private function antigo($funcional, $hex, $hex_original)
-    {
-        return (object) [
-            'funcional' => $funcional,
-            'hexadecimal' => $hex_original,
-            'm3' => hexdec($hex['5'].$hex['6']),
-            'litros' => hexdec($hex['9'].$hex['10']),
-            'decilitros' => hexdec($hex['13'].$hex['14'])
-        ];
-    }
-
-    private function novo($funcional, $hex, $hex_original)
-    {
-        return (object) [
-            'funcional' => $funcional,
-            'hexadecimal' => $hex_original,
-            'm3' => hexdec($hex['5'].$hex['6'].$hex['7']),
-            'litros' => hexdec($hex['10'].$hex['11']),
-            'decilitros' => hexdec($jsons['15'])
-        ];
     }
 }

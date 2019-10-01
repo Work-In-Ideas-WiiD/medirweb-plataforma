@@ -1,7 +1,10 @@
 {
     "name": "laravel/laravel",
     "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "keywords": [
+        "framework",
+        "laravel"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -39,7 +42,8 @@
             "App\\": "app/"
         },
         "files": [
-            "app/Helpers/excel.php"
+            "app/Helpers/excel.php",
+            "app/Helpers/converter_leitura.php"
         ]
     },
     "autoload-dev": {
@@ -49,8 +53,7 @@
     },
     "extra": {
         "laravel": {
-            "dont-discover": [
-            ]
+            "dont-discover": []
         }
     },
     "scripts": {

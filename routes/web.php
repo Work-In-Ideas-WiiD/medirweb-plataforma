@@ -57,7 +57,7 @@ Route::middleware('auth')->group(function () {
     ]);
     
 
-    Route::get('/imovel/{id}/consumo', 'ImovelController@getLancarConsumo')->name('imovel.consumo')->middleware('permissao:administrador,sindico');
+    Route::get('/imovel/{imovel}/consumo', 'ImovelController@getLancarConsumo')->name('imovel.consumo')->middleware('permissao:administrador,sindico');
     
     
     Route::get('/imovel/getCidadesLista/{id}', array('uses' => 'ImovelController@showCidades'));
