@@ -9,12 +9,12 @@ function converter_leitura($funcional, $hex, $hex_original) {
         elseif (count($hex) == 15)
             return leitura_antiga($funcional, $hex, $hex_original);
         else
-            return converter_leitura_default();
+            return converter_leitura_default($funcional);
     }
     
 }
 
-function converter_leitura_default() {
+function converter_leitura_default($funcional) {
     return (object) [
         'funcional' => $funcional,
         'hexadecimal' => 'nenhuma informação',
