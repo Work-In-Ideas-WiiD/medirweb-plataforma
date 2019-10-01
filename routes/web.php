@@ -67,8 +67,7 @@ Route::middleware('auth')->group(function () {
     /* imóveis */
     Route::get('/leitura/prumada/{prumada}', array('uses' => 'ImovelController@leituraUnidade'));
     
-    Route::get('/imovel/{imovel}/ligar/{unidade}', array('uses' => 'ImovelController@ligarUnidade'));
-    Route::get('/imovel/{imovel}/desligar/{unidade}', array('uses' => 'ImovelController@desligarUnidade'));
+    Route::get('/imovel/{prumada}/{comando}','ImovelController@ligarDesligarPrumada')->middleware('permissao');
     
     
     /* Agrupamentos */
