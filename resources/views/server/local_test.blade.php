@@ -147,7 +147,7 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>ID Unidade</th>
+                                <th>ID Funcional</th>
                                 <th>Hexadecimal</th>
                                 <th>Metros³</th>
                                 <th>Litros</th>
@@ -157,7 +157,7 @@
                         <tbody>
                             @forelse ($testes as $teste)
                             <tr>
-                                <td>{{ $teste->funcional }}</td>
+                                <td>{{ $teste->funcional }} / {{ dechex($teste->funcional) }}</td>
                                 <td>{{ $teste->hexadecimal }}</td>
                                 <td>{{ $teste->m3 }}</td>
                                 <td>{{ $teste->litros }}</td>

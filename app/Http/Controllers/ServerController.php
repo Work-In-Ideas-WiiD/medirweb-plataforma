@@ -68,7 +68,7 @@ class ServerController extends Controller
 
         foreach ($funcionais as $funcional) {
             $response = Curl::to("{$imovel->ip}/api/leitura/{$funcional}")->get();
-            $testes[] = converter_leitura($funcional, $response, $response);
+            $testes[] = converter_leitura(hexdec($funcional), $response, $response);
         }
         
         $codigoHTTP = Ping::check($imovel->ip);
