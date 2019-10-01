@@ -59,10 +59,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/imovel/{imovel}/consumo', 'ImovelController@getLancarConsumo')->name('imovel.consumo')->middleware('permissao:administrador,sindico');
     
+    Route::post('lancar-consumo', array('uses' => 'ImovelController@postLancarConsumo'));
     
     Route::get('/imovel/getCidadesLista/{id}', array('uses' => 'ImovelController@showCidades'));
 
-    Route::post('lancar-consumo', array('uses' => 'ImovelController@postLancarConsumo'));
     
     /* imóveis */
     Route::get('/leitura/prumada/{prumada}', array('uses' => 'ImovelController@leituraUnidade'));
