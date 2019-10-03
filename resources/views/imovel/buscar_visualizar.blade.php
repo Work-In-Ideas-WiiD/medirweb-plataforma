@@ -140,7 +140,7 @@
 																<div class="row">
 
 																	<div class="col-md-4">
-																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->id) }}">
+																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ route('unidade.show', $unidade->id) }}">
 																			@if( $prumada->leitura()->count() > 0){{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->metro }} @else 0 @endif
 																		</a>
 
@@ -153,7 +153,7 @@
 																	</div>
 
 																	<div class="col-md-4">
-																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->id) }}">
+																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ route('unidade.show', $unidade->id) }}">
 																			@if( $prumada->leitura()->count() > 0){{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->litro }} @else 0 @endif
 																		</a>
 
@@ -166,7 +166,7 @@
 																	</div>
 
 																	<div class="col-md-4">
-																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ url('/unidade/ver/'.$unidade->id) }}">
+																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ route('unidade.show', $unidade->id) }}">
 																			@if( $prumada->leitura()->count() > 0){{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->mililitro }} @else 0 @endif
 																		</a>
 

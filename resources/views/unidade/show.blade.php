@@ -14,7 +14,7 @@
                 <a onclick="history.back()" class="btn btn-info"><i class="fa fa-reply"></i> Voltar</a>
             </div>
             <div class="col-md-4">
-                <h4 ><i class="fa fa-home"></i> {{ $unidade->UNI_NOME }}</h4>
+                <h4 ><i class="fa fa-home"></i> {{ $unidade->nome }}</h4>
             </div>
             <div class="col-md-7">
                 <div id="loading" class="loading oculto">
@@ -50,9 +50,9 @@
             <div class="box-body">
                 <dl>
                     <dt>Proprietário</dt>
-                    <dd class="infoprop" >{{ $unidade->UNI_RESPONSAVEL }} - {{ $unidade->UNI_CPFRESPONSAVEL }} - {{ $unidade->UNI_TELRESPONSAVEL }}</dd>
+                    <dd class="infoprop" >{{ $unidade->nome_responsavel }} - {{ $unidade->cpf_responsavel }} - {{ $unidade->telefone[0]->numero ?? '' }}</dd>
                     <dt>Idenficação do Apartamento</dt>
-                    <dd class="infoprop" ><a class="linkbread" href="{{  url('/imovel/ver/'.$imovel->IMO_ID) }}">{{ $unidade->UNI_NOME }} - {{ $agrupamento->AGR_NOME }} - {{ $imovel->IMO_NOME }}</a></dd>
+                    <dd class="infoprop" ><a class="linkbread" href="{{  route('imovel.show', $unidade->imovel_id) }}">{{ $unidade->nome }} - {{ $unidade->agrupamento->nome }} - {{ $unidade->imovel->nome }}</a></dd>
                 </dl>
             </div>
         </div>
@@ -84,10 +84,10 @@
                     </div>
                 </div>
 
-                @foreach($prumadas as $prumada)
+                @foreach($unidade->prumada as $prumada)
                 <!-- Botao Leitura -->
                 <div class="col-md-3 text-center">
-                    <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/leitura/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-default ocultar"><i class="fa fa-retweet"></i> Leitura</a>
+                    <a href="{{ url('/leitura/prumada/'.$prumada->id) }}" id="ocultar" onclick="loading()" class="btn btn-default ocultar"><i class="fa fa-retweet"></i> Leitura</a>
                 </div>
 
                 <!-- fim - Botao Leitura -->
@@ -96,10 +96,10 @@
                 <div class="col-md-3 text-center">
                     @is(['Administrador', 'Sindico'])
 
-                    @if($prumada->PRU_STATUS == 1)
-                    <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/desligar/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-danger ocultar" ><i class="fa fa-close"></i> Efetuar corte</a>
+                    @if($prumada->status)
+                    <a href="{{ url('/imovel/'.$prumada->id.'/corte') }}" id="ocultar" onclick="loading()" class="btn btn-danger ocultar" ><i class="fa fa-close"></i> Efetuar corte</a>
                     @else
-                    <a href="{{ url('/imovel/'.$imovel->IMO_ID.'/ligar/'.$prumada->PRU_ID.'') }}" id="ocultar" onclick="loading()" class="btn btn-success ocultar" ><i class="fa fa-power-off"></i> Ativação</a>
+                    <a href="{{ url('/imovel/'.$prumada->id.'/ativacao') }}" id="ocultar" onclick="loading()" class="btn btn-success ocultar" ><i class="fa fa-power-off"></i> Ativação</a>
                     @endif
 
                     @endis
@@ -118,15 +118,15 @@
         <!-- Consumo Atual -->
         <div class="box box-warning">
             <div class="box-header with-border">
-                <h3 class="box-title"><i class="fa fa-tachometer"></i> Leitura atual (m³) @if($unidade->getPrumadas()->count() > 0 ) @if($unidade->getPrumadas()->first()->PRU_STATUS == 1) <i class="fa fa-circle" style="color: #009900;"></i> @else <i class="fa fa-circle" style="color: #d73925;"></i> @endif @endif</h3>
+                <h3 class="box-title"><i class="fa fa-tachometer"></i> Leitura atual (m³) @if(count($unidade->prumada) > 0 ) @if($unidade->prumada()->first()->status) <i class="fa fa-circle" style="color: #009900;"></i> @else <i class="fa fa-circle" style="color: #d73925;"></i> @endif @endif</h3>
             </div>
             <div class="box-body">
                 <div class="bloco-medicao row">
 
                     <div class="col-md-5">
                         <div class="medicao-num">
-                            @if(isset($ultimaleitura->LEI_METRO))
-                            <p class="registronum" >{{ sprintf("%04d", $ultimaleitura->LEI_METRO) }} <span class="unidade" >m³</span></p>
+                            @if(isset($ultimaleitura->metro))
+                            <p class="registronum" >{{ sprintf("%04d", $ultimaleitura->metro) }} <span class="unidade" >m³</span></p>
                             @else
                             <p class="registronum" >0000 <span class="unidade" >m³</span></p>
                             @endif
@@ -139,7 +139,7 @@
                             <table class="table table-responsive" >
                                 <tbody>
                                     <tr>
-                                        <th>LEITURA ANTERIOR: <b>{{ $leitura->LEI_METRO }} m³</b></th>
+                                        <th>LEITURA ANTERIOR: <b>{{ $leitura->metro }} m³</b></th>
                                         <th>DATA: <b>{{ date('d/m/Y', strtotime($leitura->created_at)) }}</b></th>
                                     </tr>
                                 </tbody>
@@ -171,10 +171,10 @@
                     <tbody>
                         @foreach ($leituras as $lei)
                         <tr>
-                            <td>{{ $lei->LEI_ID }}</td>
-                            <td>{{ $lei->LEI_METRO }}</td>
-                            <td>{{ $lei->LEI_LITRO }}</td>
-                            <td>{{ $lei->LEI_MILILITRO }}</td>
+                            <td>{{ $lei->id }}</td>
+                            <td>{{ $lei->metro }}</td>
+                            <td>{{ $lei->litro }}</td>
+                            <td>{{ $lei->mililitro }}</td>
                             {{--<td>{{ $lei->LEI_VALOR }}</td>--}}
                             <td>{{ $lei->created_at->format('d/m/Y H:i') }}</td>
                         </tr>
@@ -210,15 +210,15 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
-                            @if(count($prumadas) > 0)
-                            @foreach ($prumadas as $pru)
+                            @if(count($unidade->prumada) > 0)
+                            @foreach ($unidade->prumada as $pru)
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <div class="info-box bg-aqua pru-box">
                                     <span class="info-box-icon"><i class="fa fa-tachometer"></i></span>
                                     <div class="info-box-content">
                                         <span class="info-box-text">Medidor #1</span>
-                                        @if(isset($ultimaleitura->LEI_METRO))
-                                        <span class="info-box-number">{{ sprintf("%04d", $ultimaleitura->LEI_METRO) }}</span>
+                                        @if(isset($ultimaleitura->metro))
+                                        <span class="info-box-number">{{ sprintf("%04d", $ultimaleitura->metro) }}</span>
                                         @else
                                         <span class="info-box-number">0000</span>
                                         @endif

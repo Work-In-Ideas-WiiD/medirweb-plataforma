@@ -32,7 +32,7 @@
 
 					<div class="col-md-1">
 						<p class="titulo"></p>
-						<img style="width: 100px; height: 100px; border: 3px solid #fff;" class="img-circle" @if(isset($cliente->CLI_FOTO)) src="{{ url('/upload/clientes/'.$cliente->CLI_FOTO) }}" @else src="http://i64.tinypic.com/6gxxyo.png" @endif  id="preview-image-foto" alt="Avatar">
+						<img style="width: 100px; height: 100px; border: 3px solid #fff;" class="img-circle" @if(isset($cliente->CLI_FOTO)) src="{{ url('/upload/clientes/'.$cliente->CLI_FOTO) }}" @else src="https://via.placeholder.com/100" @endif  id="preview-image-foto" alt="Avatar">
 					</div>
 
 					<div class="col-md-10">
