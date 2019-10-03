@@ -25,6 +25,7 @@ class ImovelSaveRequest extends ImovelRequest
             'fatura_ciclo' => ['required', 'integer'],
             'taxa_fixa' => ['nullable', 'numeric'],
             'ip' => ['required', 'ip'],
+            'porta' => ['nullable', 'int', 'max:9999', 'min:0'],
             'taxa_variavel' => ['nullable', 'numeric'],
             'foto' => ['mimes:jpeg,jpg,png,gif', 'max:10000'],
             'capa' => ['mimes:jpeg,jpg,png,gif', 'max:10000'],
