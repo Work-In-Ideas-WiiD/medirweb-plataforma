@@ -42,22 +42,13 @@ class UnidadeController extends Controller
 
     public function show(Unidade $unidade)
     {
-        $prumadas       = Unidade::find($id)->getPrumadas;
-        $agrupamento    = Unidade::find($id)->agrupamento;
-        $imovel         = Unidade::find($id)->imovel;
-        $leituras       = Leitura::where('LEI_IDPRUMADA',$id)
-        ->orderBy('LEI_ID', 'desc')
-        ->get();
+        $unidade = Unidade::with('telefone', 'prumada', 'agrupamento', 'imovel')->find($unidade->id);
 
-        $ultimaleitura =  Leitura::where('LEI_IDPRUMADA',$id)
-        ->orderBy('LEI_ID', 'desc')
-        ->first();
+        $leituras = $unidade->prumada[0]->leitura()->orderByDesc('id')->get();
 
-        $duasUltimaLeituras =  Leitura::where('LEI_IDPRUMADA',$id)
-        ->orderBy('LEI_ID', 'desc')
-        ->skip(1)
-        ->take(2)
-        ->get();
+        $ultimaleitura =  $leituras->first();
+
+        $duasUltimaLeituras =  Leitura::where('prumada_id',$ultimaleitura->id)->orderBy('id', 'desc')->skip(1)->take(2)->get();
 
         //Grafico
 
@@ -67,7 +58,7 @@ class UnidadeController extends Controller
         // FIM - INICIALIZAÇÃO de arrays
 
         // RESULTADO DA PESQUISA CONSUMO AVANÇADO
-        $hidromentros = Unidade::find($id)->getPrumadas;
+        $hidromentros = $unidade->prumada;
 
         foreach ($hidromentros as $hidromentro)
         {
@@ -76,14 +67,14 @@ class UnidadeController extends Controller
             $anoAtual = date("Y");
 
             for ($mes=1; $mes <= 12; $mes++) {
-                $leituraAnoAnterior = $hidromentro->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAnterior."-".$mes."-31")).' 23:59:59')
-                ->orderBy('created_at', 'desc')->first();
+                $leituraAnoAnterior = $hidromentro->leitura() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAnterior."-".$mes."-31")).' 23:59:59')
+                ->orderByDesc('created_at')->first();
 
-                $leituraAnoAtual = $hidromentro->getLeituras() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
-                ->orderBy('created_at', 'desc')->first();
+                $leituraAnoAtual = $hidromentro->leitura() ->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
+                ->orderByDesc('created_at')->first();
 
-                $arrayConsumoAnoAnterior = array($leituraAnoAnterior['LEI_METRO']);
-                $arrayConsumoAnoAtual = array($leituraAnoAtual['LEI_METRO']);
+                $arrayConsumoAnoAnterior = array($leituraAnoAnterior['metro']);
+                $arrayConsumoAnoAtual = array($leituraAnoAtual['metro']);
 
                 array_push($consumoAnoAnterior, $arrayConsumoAnoAnterior);
                 array_push($consumoAnoAtual, $arrayConsumoAnoAtual);
@@ -102,7 +93,7 @@ class UnidadeController extends Controller
 
         // fim - Grafico
 
-        return view('unidade.visualizar', compact('agrupamento', 'unidade', 'imovel', 'prumadas', 'leituras', 'ultimaleitura', 'duasUltimaLeituras', 'grafico', 'consumoAnoAnterior', 'consumoAnoAtual'));
+        return view('unidade.show', compact('unidade', 'leituras', 'ultimaleitura', 'duasUltimaLeituras', 'grafico', 'consumoAnoAnterior', 'consumoAnoAtual'));
     }
 
     public function edit(Unidade $unidade)
