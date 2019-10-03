@@ -212,7 +212,7 @@
                 <h5 class="widget-user-desc"></h5>
             </div>
             <div class="widget-user-image">
-                <img class="img-circle" src="http://i64.tinypic.com/6gxxyo.png" id="preview-image-foto" alt="Avatar">
+                <img class="img-circle" src="https://via.placeholder.com/100" id="preview-image-foto" alt="Avatar">
             </div>
             <div class="box-footer">
                 <div class="row">

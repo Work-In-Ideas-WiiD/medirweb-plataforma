@@ -210,7 +210,7 @@
                 <h5 class="widget-user-desc"></h5>
             </div>
             <div class="widget-user-image">
-                <img class="img-circle" @if($cliente->foto) src="{{ url('/upload/clientes/'.$cliente->foto) }}" @else src="http://i64.tinypic.com/6gxxyo.png" @endif  id="preview-image-foto" alt="Avatar">
+                <img class="img-circle" @if($cliente->foto) src="{{ url('/upload/clientes/'.$cliente->foto) }}" @else src="https://via.placeholder.com/100" @endif  id="preview-image-foto" alt="Avatar">
             </div>
             <div class="box-footer">
                 <div class="row">

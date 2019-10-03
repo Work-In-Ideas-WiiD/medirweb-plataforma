@@ -342,23 +342,20 @@
                         var $html  = '<div class="col-md-4">';
                         $html += '<a onclick="loading()" href="{!! url('imovel/buscar/ver/') !!}/' + this.id + '" alt="' + this.nome + '" style="text-decoration: none; color: #111;" >';
                         $html +=    '<div class="box box-widget widget-user">';
-                        if(this.capa == null)
-                        {
-                            $html +=        '<div class="widget-user-header bg-black" style="background: url(\'http://www.condominiosc.com.br/media/k2/items/cache/2a7c5a55d24475c5674a6cabf9d5e3d4_XL.jpg\') center center;">';
+                        if(!this.capa) {
+                            $html += '<div class="widget-user-header bg-black" style="background: url(\'http://www.condominiosc.com.br/media/k2/items/cache/2a7c5a55d24475c5674a6cabf9d5e3d4_XL.jpg\') center center;">';
 
-                        }
-                        else
-                        {
-                            $html +=        '<div class="widget-user-header bg-black" style="background: url(\'/upload/capas/' + this.capa +'\') center center;">';
-                        }
-                        $html +=            '<h3 class="widget-user-username">' + this.nome + '</h3>';
-                        $html +=            '<h5 class="widget-user-desc">' + this.bairro + '</h5>';
-                        $html +=        '</div>';
-                        $html +=        '<div class="widget-user-image">';
-                        if(this.foto == null) {
-                            $html +=   '<img class="img-circle" src="http://i63.tinypic.com/nex65y.png" alt="User Avatar">';
                         } else {
-                            $html +=    '<img class="img-circle" src="/upload/fotos/'+this.foto+'" alt="User Avatar">';
+                            $html += `<div class="widget-user-header bg-black" style="background: url('/upload/capas/${this.capa}') center center;">`;
+                        }
+                        $html += `<h3 class="widget-user-username">${this.nome}</h3>;
+                                    <h5 class="widget-user-desc">${this.bairro}</h5>
+                                </div>
+                            <div class="widget-user-image">`;
+                        if(!this.foto) {
+                            $html += `<img class="img-circle" src="https://via.placeholder.com/100" alt="User Avatar">`;
+                        } else {
+                            $html += `<img class="img-circle" src="/upload/fotos/${this.foto}" alt="User Avatar">`;
                         }
 
                         $html += `</div>
