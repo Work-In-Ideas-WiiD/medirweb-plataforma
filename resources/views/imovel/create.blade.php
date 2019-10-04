@@ -188,7 +188,7 @@
                     <div class='col-md-6'>
                         <div class='form-group'>
                             {{ Form::label('ip', 'IP da Central') }}
-                            {{ Form::text('ip', '', ['class' => 'form-control', 'placeholder' => 'Ex.: 000.000.000.000']) }}
+                            {{ Form::text('ip', null, ['class' => 'form-control', 'placeholder' => 'Ex.: 000.000.000.000']) }}
 
                             @error('ip')
                             <span class="help-block">
@@ -196,6 +196,20 @@
                             </span>
                             @enderror
                         </div>
+                        
+                    </div>
+                    <div class='col-md-6'>
+                        <div class='form-group'>
+                            {{ Form::label('porta', 'Porta da Central') }}
+                            {{ Form::text('porta', null, ['class' => 'form-control', 'placeholder' => 'Ex.: 0000']) }}
+
+                            @error('porta')
+                            <span class="help-block">
+                                <strong style="color: red;">{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                        
                     </div>
 
                 </div>

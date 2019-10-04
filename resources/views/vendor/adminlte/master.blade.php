@@ -296,6 +296,7 @@
 
     $(document).ready(function() {
         $('input[name="ip"]').inputmask('[9][9][9].[9][9][9].[9][9][9].[9][9][9]')
+        $('input[name="porta"]').inputmask('[9][9][9][9]')
         $('input[name="cep"]').inputmask('99999-999')
         $('input[name="cnpj"]').inputmask('99.999.999/9999-99')
         $('input[name="cpf"]').inputmask('999.999.999-99')

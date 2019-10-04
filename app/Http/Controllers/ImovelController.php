@@ -78,7 +78,7 @@ class ImovelController extends Controller
         $imovel = new Imovel;
 
         $imovel->fill(
-            $data->only('cliente_id', 'cnpj', 'nome', 'status', 'fatura_ciclo', 'taxa_fixa', 'taxa_variavel', 'ip')
+            $data->only('cliente_id', 'cnpj', 'nome', 'status', 'fatura_ciclo', 'taxa_fixa', 'taxa_variavel', 'ip', 'porta')
         );
 
         $imovel->endereco_id = $endereco->id;
@@ -189,7 +189,7 @@ class ImovelController extends Controller
         );
 
         $imovel->fill(
-            $data->only('cliente_id', 'cnpj', 'nome', 'status', 'fatura_ciclo', 'taxa_fixa', 'taxa_variavel', 'ip')
+            $data->only('cliente_id', 'cnpj', 'nome', 'status', 'fatura_ciclo', 'taxa_fixa', 'taxa_variavel', 'ip', 'porta')
         );
 
         $imovel->save();

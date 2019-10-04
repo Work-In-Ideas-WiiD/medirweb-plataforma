@@ -36,6 +36,7 @@ class CreateImoveisTable extends Migration
             $table->float('taxa_fixa')->nullable();
             $table->float('taxa_variavel')->nullable();
             $table->string('ip', 60)->nullable();
+            $table->string('porta', 4)->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
         });
