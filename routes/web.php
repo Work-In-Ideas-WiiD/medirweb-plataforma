@@ -168,3 +168,8 @@ Route::any('teste', 'TesteController@teste')->middleware('guest') ;
 Route::get('cidades/{estado_id}', function($estado_id) {
     return \App\Models\Cidade::where('estado_id', $estado_id)->pluck('nome', 'id');
 });
+
+
+Route::get('downloads/central-updated', function() {
+    return Response()->download(storage_path('app/downloads/central-medirweb.zip'));
+});
