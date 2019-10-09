@@ -170,6 +170,6 @@ Route::get('cidades/{estado_id}', function($estado_id) {
 });
 
 
-Route::get('downloads/central-updated', function() {
+Route::get('downloads/central-medirweb', function() {
     return Response()->download(storage_path('app/downloads/central-medirweb.zip'));
 });
