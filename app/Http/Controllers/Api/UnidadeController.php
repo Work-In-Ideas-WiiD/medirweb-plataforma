@@ -10,13 +10,12 @@ use App\User;
 
 class UnidadeController extends Controller
 {
-
-    public function showImovel(Request $request)
+    public function imovel(Request $request)
     {
         return Imovel::with('endereco.cidade.estado')->find($request->imovel_id);
     }
 
-    public function showAgrupamento(Request $request)
+    public function agrupamento(Request $request)
     {
         return Unidade::with('agrupamento')->find($request->unidade_id)->agrupamento;
     }
