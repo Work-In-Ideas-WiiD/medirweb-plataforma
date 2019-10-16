@@ -5,26 +5,19 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Unidade;
+use App\Models\Imovel;
 use App\User;
 
 class UnidadeController extends Controller
 {
-
-    public function showImovel(Request $request)
+    public function imovel(Request $request)
     {
-        $imovel = Unidade::with('endereco.cidade.estado')->find($request->UNI_ID)->imovel;
-
-        $imovel['IMO_IDCIDADE'] = $imovel->endereco->cidade->nome;
-        $imovel['IMO_IDESTADO'] = $imovel->endereco->cidade->estado->codigo;
-
-        return response()->json(response()->make($imovel), 200);
+        return Imovel::with('endereco.cidade.estado')->find($request->imovel_id);
     }
 
-    public function showAgrupamento(Request $request)
+    public function agrupamento(Request $request)
     {
-        $agrupamento = Unidade::find($request->UNI_ID)->agrupamento;
-
-        return response()->json(response()->make($agrupamento), 200);
+        return Unidade::with('agrupamento')->find($request->unidade_id)->agrupamento;
     }
 
     public function show(Request $request)
