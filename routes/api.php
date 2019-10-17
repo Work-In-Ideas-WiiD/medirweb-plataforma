@@ -45,6 +45,7 @@ Route::middleware('auth:api')->namespace('Api')->group(function () {
     //inicio prumada
     Route::group(['prefix' => 'prumada'], function () {
         Route::post('leitura', 'PrumadaController@leitura');
+        Route::post('ligar', 'PrumadaController@ligar');
     });
 
     //fim prumada
@@ -53,7 +54,7 @@ Route::middleware('auth:api')->namespace('Api')->group(function () {
     //Route::post('/leitura/prumada', array('uses' => 'Api\PrumadaController@leituraPrumada'));
 
     // Ligar Hidrômetro
-    Route::post('/ligar/prumada', array('uses' => 'Api\PrumadaController@ligarPrumada'));
+    //Route::post('/ligar/prumada', array('uses' => 'Api\PrumadaController@ligarPrumada'));
 
     // Desligar Hidrômetro
     Route::post('/desligar/prumada', array('uses' => 'Api\PrumadaController@desligarPrumada'));
