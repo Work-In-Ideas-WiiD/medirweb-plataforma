@@ -16,9 +16,9 @@ class RelatorioController extends Controller
 
     public function historicoFaturas(Request $request)
     {
-        $dadosFatura = array();
+        $dadosFatura = [];
 
-        $faturaImovel = Fatura::where('imovel_id', $request->IMO_ID)->orderBy('data_leitura_fornecedor', 'desc')->take(3)->get();
+        $faturaImovel = Fatura::where('imovel_id', $request->imovel_id)->orderBy('data_leitura_fornecedor', 'desc')->take(3)->get();
 
         if ($faturaImovel->count() == 0) {
             return response()->json(['error' => 'Não existe fatura(s) cadastradas no sistema!'], 400);
@@ -42,16 +42,11 @@ class RelatorioController extends Controller
 
     public function tarifa($consumo){
 
-        if($consumo > 10 && $consumo <= 15)
-        {
+        if($consumo > 10 && $consumo <= 15) {
             $valor = (($consumo - 10) * 11.37) + 59;
-        }
-        elseif ($consumo > 15)
-        {
+        } elseif ($consumo > 15) {
             $valor = (($consumo - 10) * 13.98) + 59;
-        }
-        else
-        {
+        } else {
             $valor = 59;
         }
 
@@ -60,51 +55,49 @@ class RelatorioController extends Controller
 
     public function consumo(Request $request)
     {
-        $consumoAvancados = array();
+        $consumoAvancados = [];
 
-        $imovel = Unidade::find($request->input('UNI_ID'))->imovel;
+        $imovel = Imovel::find($request->imovel_id);
 
-        if($imovel->id == $request->input('IMO_ID')){
+        if($imovel) {
 
-            $hidromentros = Unidade::find($request->input('UNI_ID'))->prumada;
+            $hidromentros = Prumada::where('unidade_id', $request->unidade_id)->get();
 
-            foreach ($hidromentros as $hidromentro)
-            {
-                $leituraAnterior = $hidromentro->leitura()->where('created_at', '>=', date($request->input('consumo_data_anterior')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+            foreach ($hidromentros as $hidromentro) {
+                $leituraAnterior = $hidromentro->leitura()->where('created_at', '>=', $request->data_anterior)->orderBy('created_at')->first();
 
-                $leituraAtual = $hidromentro->leitura()->where('created_at', '<=', date($request->input('consumo_data_atal')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                $leituraAtual = $hidromentro->leitura()->where('created_at', '<=', $request->data_atual)->orderByDesc('created_at')->first();
 
                 // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
-                if(!(isset($leituraAnterior))){
+                if(!isset($leituraAnterior)) {
                   $leituraAnterior = $leituraAtual;
                 }
 
-                if(isset($leituraAnterior) && isset($leituraAtual))
-                {
-                    $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
+                if(isset($leituraAnterior) && isset($leituraAtual)) {
+                    $consumo =  $leituraAtual->leitura_metro - $leituraAnterior->leitura_metro;
 
-                    $valor = RelatorioController::tarifa($consumo);
+                    $valor = SELF::tarifa($consumo);
 
                     $relatorio_consumoAvancados = array(
-                        'PRU_ID' => $hidromentro->id,
-                        'PRU_NOME' => $hidromentro->nome,
-                        'PRU_TIPO' => $hidromentro->tipo,
-                        'PRU_STATUS' => $hidromentro->status,
-                        'LeituraAnterior' => $leituraAnterior->metro,
-                        'LeituraAtual' => $leituraAtual->metro,
-                        'Consumo' => $consumo,
-                        'Valor' => number_format($valor, 2, ',', '.'),
-                        'DataLeituraAnterior' => date('d/m/Y', strtotime($leituraAnterior->created_at)),
-                        'DataLeituraAtual' => date('d/m/Y', strtotime($leituraAtual->created_at)),
+                        'id' => $hidromentro->id,
+                        'nome' => $hidromentro->nome,
+                        'tipo' => $hidromentro->tipo,
+                        'status' => $hidromentro->status,
+                        'leitura_anterior' => $leituraAnterior->metro,
+                        'leitura_atual' => $leituraAtual->metro,
+                        'consumo' => $consumo,
+                        'valor' => number_format($valor, 2, ',', '.'),
+                        'data_leitura_anterior' => $leituraAnterior->created_at,
+                        'data_leitura_atual' => $leituraAtual->created_at,
                     );
                     array_push($consumoAvancados, $relatorio_consumoAvancados);
                 }
             }
-        }else{
-            return response()->json(['error' => 'Unidade não existe!'], 400);
+        } else {
+            return ['error' => 'Imóvel não existe!'];
         }
 
-        return response()->json(response()->make($consumoAvancados), 200);
+        return $consumoAvancados;
     }
 
     public function fatura(Request $request)
