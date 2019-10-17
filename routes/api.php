@@ -20,14 +20,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::namespace('Api')->group(function () {
     Route::post('login', 'UserController@login');
     Route::post('forgot', 'UserController@forgot');
+});
 
+
+Route::middleware('auth:api')->namespace('Api')->group(function () {
 
     //inicio usuário
-    Route::middleware('auth:api')->group(function () {
-        Route::group(['prefix' => 'user'], function () {
-            Route::post('show', 'UserController@show');
-            Route::post('update', 'UserController@update');
-        });
+    Route::group(['prefix' => 'user'], function () {
+        Route::post('show', 'UserController@show');
+        Route::post('update', 'UserController@update');
     });
     //fim usuario
 
@@ -45,6 +46,7 @@ Route::namespace('Api')->group(function () {
     Route::group(['prefix' => 'prumada'], function () {
         //
     });
+
     //fim prumada
     // ### Prumada CONTROLER ###
     // Realizar Leitura do Hidrômetro

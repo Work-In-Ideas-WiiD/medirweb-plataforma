@@ -12,12 +12,12 @@ class UnidadeController extends Controller
 {
     public function imovel(Request $request)
     {
-        return Imovel::with('endereco.cidade.estado')->find($request->imovel_id);
+        return $request->user()->imovel;
     }
 
     public function agrupamento(Request $request)
     {
-        return Unidade::with('agrupamento')->find($request->unidade_id)->agrupamento;
+        return $request->user()->unidade->agrupamento;
     }
 
     public function show(Request $request)
