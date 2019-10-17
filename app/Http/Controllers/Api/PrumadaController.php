@@ -42,53 +42,34 @@ class PrumadaController extends Controller
         }
 
         return ['error' => 'Prumada não encontrada!'];
-
     }
 
-    public function ligarPrumada(Request $request)
+    public function ligar(Request $request)
     {
-        $prumada = Prumada::find($request->PRU_ID);
+        $prumada = Prumada::has('unidade.imovel')->with('unidade:id,imovel_id', 'unidade.imovel:id,ip,porta')->find($request->prumada_id);
 
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->ip.'/api/ativacao/'.dechex($prumada->funcional_id),
-            CURLOPT_CONNECTTIMEOUT => 15,
-            CURLOPT_TIMEOUT        => 15,
-            CURLOPT_USERAGENT => 'Codular Sample cURL Request'
-        ));
+        if ($prumada) {
+            $response = Curl::to("{$prumada->unidade->imovel->host}/api/ativacao/".dechex($prumada->funcional_id))->get();
+            
+            $response = json_decode($response);
 
-        $resp = curl_exec($curl);
+            if($response) {
+                if($jsons[4] == '00')
+                    $prumada->status = 1;
+                else
+                    $prumada->status = 0;
 
-        curl_close($curl);
+                $prumada->save();
 
-        $jsons = json_decode($resp);
+                return ['success' => 'Equipamento ligado com sucesso.'];
+            } else {
+                $prumada->update(['status' => 0]);
 
-        if($jsons !== NULL)
-        {
-            if($jsons[4] == '00')
-            {
-                $status = 1;
+                return ['error' => 'Não foi possível ligar o equipamento. Por favor, verifique a conexão.'];
             }
-            else
-            {
-                $status = 0;
-            }
-
-            $atualizacao = [
-                'status' => $status,
-            ];
-
-            $prumada->update($atualizacao);
-            return response()->json(['success' => 'Equipamento ligado com sucesso.'], 200);
-        }
-        else
-        {
-            $prumada->status = 0;
-            $prumada->save();
-            return response()->json(['error' => 'Não foi possível ligar o equipamento. Por favor, verifique a conexão.'], 400);
         }
 
+        return ['error' => 'Prumada não encontrada!'];
     }
 
     public function desligarPrumada(Request $request)
