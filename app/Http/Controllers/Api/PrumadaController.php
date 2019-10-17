@@ -10,58 +10,33 @@ use App\Models\Unidade;
 use App\Models\Prumada;
 use App\Models\Leitura;
 use Session;
+use Curl;
 
 class PrumadaController extends Controller
 {
 
-    public function leituraPrumada(Request $request)
+    public function leitura(Request $request)
     {
-        $prumada = Prumada::find($request->PRU_ID);
+        $prumada = Prumada::with('unidade:id,imovel_id', 'unidade.imovel:id,ip,porta')->find($request->prumada_id);
 
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://'.$prumada->unidade->imovel->ip.'/api/leitura/'.dechex($prumada->funcional_id),
-            CURLOPT_CONNECTTIMEOUT => 15,
-            CURLOPT_TIMEOUT        => 15,
-            CURLOPT_USERAGENT => 'Codular Sample cURL Request',
-        ));
+        $response = Curl::to("{$prumada->unidade->imovel->host}/api/leitura/".dechex($prumada->funcional_id))->get();
 
-        $resp = curl_exec($curl);
+        $leitura = converter_leitura(hexdec($prumada->funcional_id), $response, $response);
 
-        curl_close($curl);
+        if(empty($leitura->erro) and $leitura) {
 
-        $jsons = json_decode($resp);
-
-        if(($jsons !== NULL ) && (count($jsons) > 13) && ($jsons['0'] !== '!'))
-        {
-            $metro_cubico = hexdec($jsons['5'].$jsons['6']);
-
-            $litros = hexdec($jsons['9'].$jsons['10']);
-
-            $mililitro = hexdec($jsons['13'].$jsons['14']);
-
-            $subtotal = ($metro_cubico * 1000) + $litros;
-            $total = $subtotal.'.'.$mililitro;
-
-            $leitura = [
+            return Leitura::create([
                 'prumada_id' => $prumada->id,
-                'metro' => $metro_cubico,
-                'litro' => $litros,
-                'mililitro' => $mililitro,
-                'valor' => $total,
-            ];
+                'metro' => $leitura->m3,
+                'litro' => $leitura->litros,
+                'mililitro' => $leitura->decilitros,
+                'valor' => $leitura->valor,
+            ]);
 
-            Leitura::create($leitura);
-            //return response()->json(['success' => 'Leitura realizada com sucesso.'], 200);
+        } else {
+            $prumada->update(['status' => 0]);
 
-            return response()->json(response()->make($leitura), 200);
-        }
-        else
-        {
-            $prumada->PRU_STATUS = 0;
-            $prumada->save();
-            return response()->json(['error' => 'Leitura não pode ser realizada. Por favor, verifique a conexão'], 400);
+            return ['error' => 'Leitura não pode ser realizada. Por favor, verifique a conexão'];
         }
 
     }

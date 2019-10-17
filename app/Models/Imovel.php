@@ -64,4 +64,9 @@ class Imovel extends Model
             ->get();
     }
 
+    public function getHostAttribute()
+    {
+        return $this->ip . ($this->porta ? ':' . $this->porta : '');
+    }
+
 }

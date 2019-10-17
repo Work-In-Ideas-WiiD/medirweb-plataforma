@@ -70,7 +70,7 @@ class ServerController extends Controller
             $response = Curl::to("{$imovel->ip}/api/leitura/{$funcional}")->get();
             $teste = converter_leitura(hexdec($funcional), $response, $response);
 
-            if (!empty($teste->funcional))
+            if (empty($teste->erro))
                 $testes[] = $teste;
             else
                 $testes[] = converter_leitura_default($funcional);
