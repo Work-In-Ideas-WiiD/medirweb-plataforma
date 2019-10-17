@@ -17,27 +17,31 @@ class PrumadaController extends Controller
 
     public function leitura(Request $request)
     {
-        $prumada = Prumada::with('unidade:id,imovel_id', 'unidade.imovel:id,ip,porta')->find($request->prumada_id);
+        $prumada = Prumada::has('unidade.imovel')->with('unidade:id,imovel_id', 'unidade.imovel:id,ip,porta')->find($request->prumada_id);
 
-        $response = Curl::to("{$prumada->unidade->imovel->host}/api/leitura/".dechex($prumada->funcional_id))->get();
+        if ($prumada) {
+            $response = Curl::to("{$prumada->unidade->imovel->host}/api/leitura/".dechex($prumada->funcional_id))->get();
 
-        $leitura = converter_leitura(hexdec($prumada->funcional_id), $response, $response);
+            $leitura = converter_leitura(hexdec($prumada->funcional_id), $response, $response);
 
-        if(empty($leitura->erro) and $leitura) {
+            if(empty($leitura->erro) and $leitura) {
 
-            return Leitura::create([
-                'prumada_id' => $prumada->id,
-                'metro' => $leitura->m3,
-                'litro' => $leitura->litros,
-                'mililitro' => $leitura->decilitros,
-                'valor' => $leitura->valor,
-            ]);
+                return Leitura::create([
+                    'prumada_id' => $prumada->id,
+                    'metro' => $leitura->m3,
+                    'litro' => $leitura->litros,
+                    'mililitro' => $leitura->decilitros,
+                    'valor' => $leitura->valor,
+                ]);
 
-        } else {
-            $prumada->update(['status' => 0]);
+            } else {
+                $prumada->update(['status' => 0]);
 
-            return ['error' => 'Leitura não pode ser realizada. Por favor, verifique a conexão'];
+                return ['error' => 'Leitura não pode ser realizada. Por favor, verifique a conexão'];
+            }
         }
+
+        return ['error' => 'Prumada não encontrada!'];
 
     }
 
