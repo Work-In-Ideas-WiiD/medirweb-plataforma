@@ -1,12 +1,12 @@
 <?php
 
 function converter_leitura($funcional, $hex, $hex_original) {
-    if (is_array($hex) and !empty($hex)) {
+    if (!empty($hex)) {
         $hex = json_decode($hex);
 
-        if (count($hex) > 15)
+        if (is_array($hex) and count($hex) > 15)
             return leitura_nova($funcional, $hex, $hex_original);
-        elseif (count($hex) == 15)
+        elseif (is_array($hex) and count($hex) == 15)
             return leitura_antiga($funcional, $hex, $hex_original);
     }
 
