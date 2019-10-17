@@ -44,13 +44,13 @@ Route::middleware('auth:api')->namespace('Api')->group(function () {
 
     //inicio prumada
     Route::group(['prefix' => 'prumada'], function () {
-        //
+        Route::post('leitura', 'PrumadaController@leitura');
     });
 
     //fim prumada
     // ### Prumada CONTROLER ###
     // Realizar Leitura do Hidrômetro
-    Route::post('/leitura/prumada', array('uses' => 'Api\PrumadaController@leituraPrumada'));
+    //Route::post('/leitura/prumada', array('uses' => 'Api\PrumadaController@leituraPrumada'));
 
     // Ligar Hidrômetro
     Route::post('/ligar/prumada', array('uses' => 'Api\PrumadaController@ligarPrumada'));
@@ -79,7 +79,6 @@ Route::middleware('auth:api')->namespace('Api')->group(function () {
 //Caminho /api/relatorio
 Route::group(['prefix' => 'relatorio'], function()
 {
-    //Route::post('/consumo', array('uses' => 'Api\RelatorioController@consumo'));
     Route::post('/fatura', array('uses' => 'Api\RelatorioController@fatura'));
     Route::post('/historicoFaturas', array('uses' => 'Api\RelatorioController@historicoFaturas'));
 });
