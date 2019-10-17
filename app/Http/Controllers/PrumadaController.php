@@ -14,7 +14,7 @@ use App\Http\Requests\Prumada\PrumadaEditRequest;
 
 class PrumadaController extends Controller
 {
-	private $debug = true;
+	private $debug = null;
 
 	private $raspberry_url = 'http://localhost:8081';
 
