@@ -1,16 +1,16 @@
 <?php
 
 function converter_leitura($funcional, $hex, $hex_original) {
-    if ($hex) {
+    if (is_array($hex) and !empty($hex)) {
         $hex = json_decode($hex);
 
         if (count($hex) > 15)
             return leitura_nova($funcional, $hex, $hex_original);
         elseif (count($hex) == 15)
             return leitura_antiga($funcional, $hex, $hex_original);
-        else
-            return converter_leitura_default($funcional);
     }
+
+    return converter_leitura_default($funcional);
     
 }
 
