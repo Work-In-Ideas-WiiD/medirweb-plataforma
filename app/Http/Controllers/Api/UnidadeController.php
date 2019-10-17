@@ -12,7 +12,7 @@ class UnidadeController extends Controller
 {
     public function imovel(Request $request)
     {
-        return $request->user()->imovel()->with('endereco', 'telefone')->first();
+        return $request->user()->imovel()->with('endereco.cidade.estado', 'telefone')->first();
     }
 
     public function agrupamento(Request $request)
