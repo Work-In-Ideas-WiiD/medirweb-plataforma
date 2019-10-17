@@ -30,7 +30,7 @@ Route::namespace('Api')->group(function () {
     });
 });
 
-Route::group(['prefix' => 'unidade', 'namespace' => 'Api'], function() {
+Route::group(['prefix' => 'unidade', 'namespace' => 'Api', 'middleware' => 'auth:api'], function() {
     Route::post('/', 'UnidadeController@show');
     Route::post('/imovel', 'UnidadeController@imovel');
     Route::post('/agrupamento', 'UnidadeController@agrupamento');
