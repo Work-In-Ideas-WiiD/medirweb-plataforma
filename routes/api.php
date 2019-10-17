@@ -22,41 +22,62 @@ Route::namespace('Api')->group(function () {
     Route::post('forgot', 'UserController@forgot');
 
 
+    //inicio usuário
     Route::middleware('auth:api')->group(function () {
         Route::group(['prefix' => 'user'], function () {
             Route::post('show', 'UserController@show');
             Route::post('update', 'UserController@update');
         });
     });
+    //fim usuario
+
+
+    //inicio unidade
+    Route::group(['prefix' => 'unidade'], function () {
+        Route::post('/', 'UnidadeController@show');
+        Route::post('/imovel', 'UnidadeController@imovel');
+        Route::post('/agrupamento', 'UnidadeController@agrupamento');
+    });
+    //fim unidade
+
+
+    //inicio prumada
+    Route::group(['prefix' => 'prumada'], function () {
+        //
+    });
+    //fim prumada
+    // ### Prumada CONTROLER ###
+    // Realizar Leitura do Hidrômetro
+    Route::post('/leitura/prumada', array('uses' => 'Api\PrumadaController@leituraPrumada'));
+
+    // Ligar Hidrômetro
+    Route::post('/ligar/prumada', array('uses' => 'Api\PrumadaController@ligarPrumada'));
+
+    // Desligar Hidrômetro
+    Route::post('/desligar/prumada', array('uses' => 'Api\PrumadaController@desligarPrumada'));
+
+    // Ultima Leitura do Hidrômetro
+    //Route::post('/prumada/ultimaLeitura', array('uses' => 'Api\PrumadaController@ultimaLeitura'));
+    // fim - ### Prumada CONTROLER ###
+
+
+    //inicio relatorio
+    Route::group(['prefix' => 'relatorio'], function () {
+        Route::post('consumo', 'RelatorioController@consumo');
+    });
+    //fim relatorio
 });
 
-Route::group(['prefix' => 'unidade', 'namespace' => 'Api', 'middleware' => 'auth:api'], function() {
-    Route::post('/', 'UnidadeController@show');
-    Route::post('/imovel', 'UnidadeController@imovel');
-    Route::post('/agrupamento', 'UnidadeController@agrupamento');
-});
 
 
-// ### Prumada CONTROLER ###
-// Realizar Leitura do Hidrômetro
-Route::post('/leitura/prumada', array('uses' => 'Api\PrumadaController@leituraPrumada'));
 
-// Ligar Hidrômetro
-Route::post('/ligar/prumada', array('uses' => 'Api\PrumadaController@ligarPrumada'));
-
-// Desligar Hidrômetro
-Route::post('/desligar/prumada', array('uses' => 'Api\PrumadaController@desligarPrumada'));
-
-// Ultima Leitura do Hidrômetro
-//Route::post('/prumada/ultimaLeitura', array('uses' => 'Api\PrumadaController@ultimaLeitura'));
-// fim - ### Prumada CONTROLER ###
 
 
 // ### Relatorio CONTROLER ###
 //Caminho /api/relatorio
 Route::group(['prefix' => 'relatorio'], function()
 {
-    Route::post('/consumo', array('uses' => 'Api\RelatorioController@consumo'));
+    //Route::post('/consumo', array('uses' => 'Api\RelatorioController@consumo'));
     Route::post('/fatura', array('uses' => 'Api\RelatorioController@fatura'));
     Route::post('/historicoFaturas', array('uses' => 'Api\RelatorioController@historicoFaturas'));
 });
