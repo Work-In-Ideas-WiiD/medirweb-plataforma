@@ -86,15 +86,18 @@ class UserController extends Controller
 
     public function update(UpdateRequest $request)
     {
+        $user = $request->user();
+        $user->fill($request->except('password', 'foto'));
+
         if($request->password)
-            $request->user()->password = Hash::make($request->password);
+            $user->password = Hash::make($request->password);
 
         if($request->foto)
-            $request->user()->foto = $this->cropImage($request->foto, 'upload/usuarios/');
+            $user->foto = $this->cropImage($request->foto, 'upload/usuarios/');
 
-        $request->user()->save();
+        $user->save();
 
-        return $request->user();
+        return $user;
     }
 
 }
