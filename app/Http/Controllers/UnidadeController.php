@@ -133,35 +133,26 @@ class UnidadeController extends Controller
 
     public function edit_user(Unidade $unidade, User $user)
     {
-      // VALIDAÇÃO SE USUARIO NÃO FOR USUARIO COMUM
-      $valUserComum = false;
 
-      foreach ($user->roles as $roleUser) {
-          if($roleUser->id == "4" )
-              $valUserComum = true;
-      }
+        foreach ($user->roles as $roleUser) {
+            if($roleUser->id == "4" )
+                return back()->withError('Este Usuário não é Usuário Comum!');
+        }
 
       if(!$valUserComum)
-          return back()->withError('Este Usuário não é Usuário Comum!');
+          
     
 
-      // VALIDAÇÃO SE O USUARIO NÃO TIVER VINCULADO À UNIDADE
-      if($user->unidade_id != $unidade->id)
-        return back()->withError('Este Usuário não esta vinculado a essa Unidade!');
+        // VALIDAÇÃO SE O USUARIO NÃO TIVER VINCULADO À UNIDADE
+        if($user->unidade_id != $unidade->id)
+            return back()->withError('Este Usuário não esta vinculado a essa Unidade!');
 
-      // FIM
+        // FIM
 
-      // PERFIL EXTRA
-      $roles =[];
-      $_roles = \Artesaos\Defender\Role::all();
-      foreach($_roles as $role){
-          if(!($role->id == 4))
-              $roles[$role->id] = $role->name;
+        // PERFIL EXTRA
+        $roles = \Artesaos\Defender\Role::pluck('name', 'id');
 
-      }
-      // FIM - PERFIL EXTRA
-
-      return view('unidade.edit_user', compact('unidade', 'user', 'roles'));
+        return view('unidade.edit_user', compact('unidade', 'user', 'roles'));
     }
 
     public function update_user(UnidadeUserEditRequest $request, $id, $id_user)

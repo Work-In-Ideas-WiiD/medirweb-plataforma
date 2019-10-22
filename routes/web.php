@@ -103,15 +103,21 @@ Route::middleware('auth')->group(function () {
     Route::post('usuario/{unidade}/unidade/store', 'UserController@unidadeStore')
         ->name('usuario.unidade.store')->middleware('permissao');
     
-    Route::get('/unidade/editar/{id}/user/editar/{id_user}', 'UnidadeController@edit_user')
-        ->name('unidade.edit_user')->middleware('permissao');
-    Route::put('/unidade/update/{id}/user/{id_user}', array('as'=>'unidade.update_user', 'uses'=>'UnidadeController@update_user'));
     
-    //Unidade_User_Existente
-    Route::get('/unidade/{unidade}/user/existente', 'UnidadeController@add_user_existente')
-        ->name('unidade.add_user_existente')->middleware('permissao');
-    Route::post('/unidade/{unidade}/user/existente', 'UnidadeController@store_user_existente')
-        ->middleware('permissao');
+    Route::prefix('unidade')->group(function () {
+        Route::get('/editar/{unidade}/user/editar/{user}', 'UnidadeController@edit_user')
+            ->name('unidade.edit_user')->middleware('permissao');
+
+        Route::put('/update/{unidade}/user/{user}', 'UnidadeController@update_user')
+            ->name('unidade.update_user')->middleware('permissao');
+
+        //Unidade_User_Existente
+        Route::get('/{unidade}/user/existente', 'UnidadeController@add_user_existente')
+            ->name('unidade.add_user_existente')->middleware('permissao');
+        Route::post('/{unidade}/user/existente', 'UnidadeController@store_user_existente')
+            ->middleware('permissao');
+    });
+    
     
     // Desvincular usuario à unidade
     Route::delete('/unidade/desvincular/{user}', 'UnidadeController@desvincular_user')

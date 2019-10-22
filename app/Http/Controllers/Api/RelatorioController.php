@@ -17,12 +17,16 @@ class RelatorioController extends Controller
     public function historicoFaturas(Request $request)
     {
         $dadosFatura = [];
+        $faturaImovel = Fatura::where('imovel_id', $request->user()->imovel_id)->with('unidade')->orderBy('data_leitura_fornecedor', 'desc')->take(3)->get();
 
-        $faturaImovel = Fatura::where('imovel_id', $request->imovel_id)->orderBy('data_leitura_fornecedor', 'desc')->take(3)->get();
+        //dd($faturaImovel);
+    
+        if (!$faturaImovel->count())
+            return ['error' => 'Não existe fatura(s) cadastradas no sistema!'];
 
-        if ($faturaImovel->count() == 0) {
-            return response()->json(['error' => 'Não existe fatura(s) cadastradas no sistema!'], 400);
-        }
+        return $faturaImovel;
+
+        
 
         foreach ($faturaImovel as $fatImo) {
             $faturaUnidade = FaturaUnidade::where('unidade_id', $request->UNI_ID)->where('fatura_id', $fatImo->id)->get();
@@ -37,7 +41,7 @@ class RelatorioController extends Controller
 
         }
 
-        return response()->json(response()->make($dadosFatura), 200);
+        return $dadosFatura;
     }
 
     public function tarifa($consumo){
