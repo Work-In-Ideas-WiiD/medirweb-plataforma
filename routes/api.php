@@ -58,21 +58,21 @@ Route::middleware('auth:api')->namespace('Api')->group(function () {
         Route::post('consumo', 'RelatorioController@consumo');
     });
     //fim relatorio
+
+    // ### Relatorio CONTROLER ###
+
+    //Caminho /api/relatorio
+    Route::group(['prefix' => 'relatorio'], function() {
+        Route::post('fatura', 'RelatorioController@fatura');
+        Route::post('historico-fatura', 'RelatorioController@historicoFaturas');
+    });
+    // fim - ### Relatorio CONTROLER ###
 });
 
 
 
 
 
-
-// ### Relatorio CONTROLER ###
-//Caminho /api/relatorio
-Route::group(['prefix' => 'relatorio'], function()
-{
-    Route::post('/fatura', array('uses' => 'Api\RelatorioController@fatura'));
-    Route::post('/historicoFaturas', array('uses' => 'Api\RelatorioController@historicoFaturas'));
-});
-// fim - ### Relatorio CONTROLER ###
 
 
 
