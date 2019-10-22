@@ -22,6 +22,6 @@ class UnidadeController extends Controller
 
     public function show(Request $request)
     {
-        return $request->user()->unidade;
+        return $request->user()->unidade()->with('telefone')->first();
     }
 }
