@@ -13,7 +13,7 @@ class UnidadeUserEditRequest extends UnidadeRequest
     {
         return [
             'name' => ['required', 'max:255'],
-            'email' => ['required', 'email', 'unique:users,email'.$this->id],
+            'email' => ['required', 'email'],
         ];
     }
 }

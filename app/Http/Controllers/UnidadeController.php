@@ -150,22 +150,17 @@ class UnidadeController extends Controller
         return view('unidade.edit_user', compact('unidade', 'user', 'roles'));
     }
 
-    public function update_user(UnidadeUserEditRequest $request, $unidade, $user)
+    public function update_user(UnidadeUserEditRequest $request, Unidade $unidade, User $user)
     {
-        //user name atualizar
-        $dataFormUser['name'] = $request->name;
-        $user->update($dataFormUser);
-        //fim - name atualizar
+        $user->name = $request->name;
 
         // se mudar email
-        if(!($request->email == $user->email)){
+        if ($request->email !== $user->email) {
             $password = rand(100000,9999999);
-            $dataFormUser['email'] = $request->email;
-            $dataFormUser['password'] = bcrypt($password);
+            $user->email = $request->email;
+            $user->password = bcrypt($password);
 
-            $user->update($dataFormUser);
-
-            $imovelAll = Imovel::find($user->USER_IMOID);
+            $imovelAll = Imovel::find($user->id);
 
             // ENVIAR EMAIL com a senha.
             Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
@@ -178,6 +173,9 @@ class UnidadeController extends Controller
       // fim - se mudar email
 
       // Se tiver perfil extra
+
+      $user->save();
+
       $rolesForm = $request->roles;
 
       if($rolesForm == null){
