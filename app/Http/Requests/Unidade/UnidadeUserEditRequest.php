@@ -12,8 +12,8 @@ class UnidadeUserEditRequest extends UnidadeRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:255',
-            'email' =>'required|email',
+            'name' => ['required', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email'.$this->id],
         ];
     }
 }

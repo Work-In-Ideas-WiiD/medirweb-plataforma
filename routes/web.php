@@ -105,7 +105,7 @@ Route::middleware('auth')->group(function () {
     
     
     Route::prefix('unidade')->group(function () {
-        Route::get('/editar/{unidade}/user/editar/{user}', 'UnidadeController@edit_user')
+        Route::get('/update/{unidade}/user/{user}', 'UnidadeController@edit_user')
             ->name('unidade.edit_user')->middleware('permissao');
 
         Route::put('/update/{unidade}/user/{user}', 'UnidadeController@update_user')
@@ -123,9 +123,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/unidade/desvincular/{user}', 'UnidadeController@desvincular_user')
         ->name('unidade.desvincular_user')->middleware('permissao');
     
-    
-    Route::get('/unidade/ligar/{unidade}', 'UnidadeController@ligarUnidade');
-    Route::get('/unidade/desligar/{unidade}', 'UnidadeController@desligarUnidade');
 
     // clientes 
     Route::resource('cliente', 'ClienteController')->middleware('permissao');
