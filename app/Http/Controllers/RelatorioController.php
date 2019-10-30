@@ -309,7 +309,7 @@ class RelatorioController extends Controller
                         'nomeAp' => $equipamento->unidade->nome,
                         'responsavelAp' => $equipamento->unidade->nome_responsavel,
                         'responsavelCpfAp' => $equipamento->unidade->cpf_responsavel,
-                        'responsavelTelAp' => $equipamento->unidade->telefone->numero,
+                        'responsavelTelAp' => $equipamento->unidade->telefone[0]->numero ?? '',
 
                         'PRU_ID' => $equipamento->id,
                         'PRU_NOME' => $equipamento->nome,
