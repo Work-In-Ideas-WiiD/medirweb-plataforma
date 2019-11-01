@@ -67,7 +67,15 @@ class ServerController extends Controller
         }
 
         foreach ($funcionais as $funcional) {
-            $response = Curl::to("{$imovel->ip}/api/leitura/{$funcional}")->get();
+            if($imovel->porta != NULL)
+            {
+                $response = Curl::to("{$imovel->ip}:8000/api/leitura/{$funcional}")->get();
+            }
+            else
+            {
+                $response = Curl::to("{$imovel->ip}/api/leitura/{$funcional}")->get();
+            }
+            
             $teste = converter_leitura(hexdec($funcional), $response, $response);
 
             if (empty($teste->erro))
