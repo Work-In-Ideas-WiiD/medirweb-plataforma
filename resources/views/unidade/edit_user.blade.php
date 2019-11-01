@@ -9,14 +9,14 @@
 <ol class="breadcrumb">
 	<li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
 	<li><a href="/unidade/">Unidades</a></li>
-	<li><a href="/unidade/editar/{{$unidade['UNI_ID']}}">Atualizar #{{$unidade["UNI_ID"]}}</a></li>
+	<li><a href="#">Atualizar #{{$unidade->id}}</a></li>
 	<li><a href="#">Usuario Comum</a></li>
-	<li class="active">Atualizar/li>
+	<li class="active">Atualizar</li>
 </ol>
 @stop
 
 @section('content')
-{!! Form::model($user, ['route' => ['unidade.update_user', $user->USER_UNIID, $user->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
+{!! Form::model($user, ['route' => ['unidade.update_user', $user->unidade_id, $user->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data']) !!}
 
 <div class="row">
 	<div class="col-md-8">
@@ -34,38 +34,38 @@
 					<div class='col-md-6'>
 
 						<div class='form-group'>
-							{{ Form::label('NomeImovel', 'Imóvel') }}
-							{{ Form::text('NomeImovel', $unidade->Imovel->IMO_NOME, ['class' => 'form-control', 'disabled' => 'disabled', 'placeholder' => '']) }}
-							{{ Form::select('USER_IMOID', [$unidade->Imovel->IMO_ID => $unidade->Imovel->IMO_ID], $unidade->Imovel->IMO_ID, ['style' => 'display:none']) }}
+							{{ Form::label('nome_imovel', 'Imóvel') }}
+							{{ Form::text('nome_imovel', $unidade->imovel->nome, ['class' => 'form-control', 'disabled']) }}
+							{{ Form::hidden('imovel_id', $unidade->imovel_id) }}
 
-							@if ($errors->has('NomeImovel'))
+							@error('imovel')
 							<span class="help-block">
-								<strong style="color: red;">{{ $errors->first('NomeImovel') }}</strong>
+								<strong style="color: red;">{{ $message }}</strong>
 							</span>
-							@endif
+							@enderror
 						</div>
 
 						<div class='form-group'>
-							{{ Form::label('NomeUnidade', 'Unidade') }}
-							{{ Form::text('NomeUnidade', $unidade->UNI_NOME, ['class' => 'form-control', 'disabled' => 'disabled', 'placeholder' => '']) }}
-							{{ Form::select('USER_UNIID', [$unidade->UNI_ID => $unidade->UNI_ID], $unidade->UNI_ID, ['style' => 'display:none']) }}
+							{{ Form::label('nome_unidade', 'Unidade') }}
+							{{ Form::text('nome_unidade', $unidade->nome, ['class' => 'form-control', 'disabled']) }}
+							{{ Form::hidden('unidade_id', $unidade->id) }}
 
-							@if ($errors->has('NomeUnidade'))
+							@error('nome_unidade')
 							<span class="help-block">
-								<strong style="color: red;">{{ $errors->first('NomeUnidade') }}</strong>
+								<strong style="color: red;">{{ $message }}</strong>
 							</span>
-							@endif
+							@enderror
 						</div>
 
 						<div class='form-group'>
 							{{ Form::label('email', 'E-mail') }}
-							{{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => '']) }}
+							{{ Form::text('email', null, ['class' => 'form-control']) }}
 
-							@if ($errors->has('email'))
+							@error('email')
 							<span class="help-block">
-								<strong style="color: red;">{{ $errors->first('email') }}</strong>
+								<strong style="color: red;">{{ $message }}</strong>
 							</span>
-							@endif
+							@enderror
 						</div>
 
 					</div>
@@ -73,38 +73,37 @@
 					<div class="col-md-6">
 
 						<div class='form-group'>
-							{{ Form::label('NomeAgrupamento', 'Agrupamento') }}
-							{{ Form::text('NomeAgrupamento', $unidade->Agrupamento->AGR_NOME, ['class' => 'form-control', 'disabled' => 'disabled', 'placeholder' => '']) }}
+							{{ Form::label('nome_agrupamento', 'Agrupamento') }}
+							{{ Form::text('nome_agrupamento', $unidade->agrupamento->nome, ['class' => 'form-control', 'disabled']) }}
 
-							@if ($errors->has('NomeAgrupamento'))
+							@error('nome_agrupamento')
 							<span class="help-block">
-								<strong style="color: red;">{{ $errors->first('NomeAgrupamento') }}</strong>
+								<strong style="color: red;">{{ $message }}</strong>
 							</span>
-							@endif
+							@enderror
 						</div>
 
 						<div class='form-group'>
 							{{ Form::label('name', 'Nome Completo') }}
-							{{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => '']) }}
+							{{ Form::text('name', null, ['class' => 'form-control']) }}
 
-							@if ($errors->has('name'))
+							@error('name')
 							<span class="help-block">
-								<strong style="color: red;">{{ $errors->first('name') }}</strong>
+								<strong style="color: red;">{{ $message }}</strong>
 							</span>
-							@endif
+							@enderror
 						</div>
 
 						@is('Administrador')
-						<?php // Perfil extra?>
 						<div class='form-group'>
-								{!! Form::label('roles', 'Perfil Extra', ['class' => 'control-label']) !!}
-								{!! Form::select('roles[]', $roles, null, ['class' => 'form-control', 'multiple' => true]) !!}
+							{!! Form::label('roles', 'Perfil Extra', ['class' => 'control-label']) !!}
+							{!! Form::select('roles[]', $roles, null, ['class' => 'form-control', 'multiple' => true]) !!}
 
-								@if ($errors->has('roles'))
-								<span class="help-block">
-										<strong style="color: red;">{{ $errors->first('roles') }}</strong>
-								</span>
-								@endif
+							@error('roles')
+							<span class="help-block">
+								<strong style="color: red;">{{ $message }}</strong>
+							</span>
+							@enderror
 						</div>
 						@endis
 

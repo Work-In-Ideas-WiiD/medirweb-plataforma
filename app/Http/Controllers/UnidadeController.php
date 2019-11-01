@@ -128,20 +128,15 @@ class UnidadeController extends Controller
     {
         $unidade->delete();
 
-        return redirect('/imovel')->withSuccess("Unidade e Usuario {$unidade->nome_responsavel} deletado com sucesso.");
+        return back()->withSuccess("Unidade e Usuario {$unidade->nome_responsavel} deletado com sucesso.");
     }
 
     public function edit_user(Unidade $unidade, User $user)
     {
-
         foreach ($user->roles as $roleUser) {
-            if($roleUser->id == "4" )
+            if(!$roleUser->id == "4" )
                 return back()->withError('Este Usuário não é Usuário Comum!');
         }
-
-      if(!$valUserComum)
-          
-    
 
         // VALIDAÇÃO SE O USUARIO NÃO TIVER VINCULADO À UNIDADE
         if($user->unidade_id != $unidade->id)
@@ -155,50 +150,32 @@ class UnidadeController extends Controller
         return view('unidade.edit_user', compact('unidade', 'user', 'roles'));
     }
 
-    public function update_user(UnidadeUserEditRequest $request, $id, $id_user)
+    public function update_user(UnidadeUserEditRequest $request, Unidade $unidade, User $user)
     {
+        $user->name = $request->name;
 
-      if(!app('defender')->hasRoles('Administrador')){
-          return view('error403');
-      }
+        // se mudar email
+        if ($request->email !== $user->email) {
+            $password = rand(100000,9999999);
+            $user->email = $request->email;
+            $user->password = bcrypt($password);
 
-      $user = User::find($id_user);
+            $imovelAll = Imovel::find($user->id);
 
-      // VALIDAÇÃO SE EMAIL JA EXISTE
-      $userALL = User::where('email', $request->email)->get();
-      foreach ($userALL as $userALL1) {
-          if(!($userALL1->id == $user['id'])){
-              return redirect('/unidade/editar/'.$id.'/user/editar/'.$id_user)->with('error', 'Email já cadastrado em outro usuário do sistema!');
-          }
-      }
-      // fim - VALIDAÇÃO SE EMAIL JA EXISTE
-
-      //user name atualizar
-      $dataFormUser['name'] = $request->name;
-      $user->update($dataFormUser);
-      //fim - name atualizar
-
-      // se mudar email
-      if(!($request->email == $user->email)){
-          $password = rand(100000,9999999);
-          $dataFormUser['email'] = $request->email;
-          $dataFormUser['password'] = bcrypt($password);
-
-          $user->update($dataFormUser);
-
-          $imovelAll = Imovel::find($user->USER_IMOID);
-
-          // ENVIAR EMAIL com a senha.
-          Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
-              $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
-              $message->to($user->email);
-              $message->subject('Senha de acesso ao app');
-          });
-          // fim - enviar email
-      }
+            // ENVIAR EMAIL com a senha.
+            Mail::send('email.senhaUser', ['imovel'=> $imovelAll->IMO_NOME, 'nome' => $user->nome, 'email' => $user->email, 'senha' => $password], function($message) use ($user) {
+                $message->from('suporte@medirweb.com.br', 'MedirWeb - Plataforma individualizadora');
+                $message->to($user->email);
+                $message->subject('Senha de acesso ao app');
+            });
+            // fim - enviar email
+        }
       // fim - se mudar email
 
       // Se tiver perfil extra
+
+      $user->save();
+
       $rolesForm = $request->roles;
 
       if($rolesForm == null){
@@ -211,7 +188,7 @@ class UnidadeController extends Controller
       // fim --
 
 
-      return redirect('/unidade/editar/'.$id)->with('success', 'Usuario atualizado com sucesso!');
+      return back()->with('success', 'Usuario atualizado com sucesso!');
     }
 
     public function add_user_existente(Unidade $unidade)
