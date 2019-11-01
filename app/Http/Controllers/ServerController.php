@@ -26,8 +26,15 @@ class ServerController extends Controller
         if(!$imovel)
             return back()->withError('Este Imovel não possui endereço de IP configurado!');
 
-        $codigoHTTP = Ping::check($imovel->ip);
-
+        if($imovel->porta != null)
+        {
+            $codigoHTTP = Ping::check($imovel->ip.':'.$imovel->porta);
+        }
+        else
+        {
+            $codigoHTTP = Ping::check($imovel->ip);
+        }
+        
         return view('server.test', compact('imoveis', 'imovel', 'codigoHTTP'));
     }
 
