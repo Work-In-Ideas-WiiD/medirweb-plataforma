@@ -49,7 +49,7 @@ Route::middleware('auth:api')->namespace('Api')->group(function () {
     });
 
     // Ultima Leitura do Hidrômetro
-    //Route::post('/prumada/ultimaLeitura', array('uses' => 'Api\PrumadaController@ultimaLeitura'));
+    // Route::post('/prumada/ultimaLeitura', array('uses' => 'Api\PrumadaController@ultimaLeitura'));
     // fim - ### Prumada CONTROLER ###
 
 

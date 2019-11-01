@@ -28,20 +28,20 @@ class RelatorioController extends Controller
 
         
 
-        foreach ($faturaImovel as $fatImo) {
-            $faturaUnidade = FaturaUnidade::where('unidade_id', $request->UNI_ID)->where('fatura_id', $fatImo->id)->get();
+        // foreach ($faturaImovel as $fatImo) {
+        //     $faturaUnidade = FaturaUnidade::where('unidade_id', $request->UNI_ID)->where('fatura_id', $fatImo->id)->get();
 
-            foreach ($faturaUnidade as $fatUni) {
+        //     foreach ($faturaUnidade as $fatUni) {
 
-                $prumadas = '['.$fatUni['FATUNI_PRUMADAS'].']';
-                $fatUni['FATUNI_PRUMADAS'] = json_decode($prumadas);
+        //         $prumadas = '['.$fatUni['FATUNI_PRUMADAS'].']';
+        //         $fatUni['FATUNI_PRUMADAS'] = json_decode($prumadas);
 
-                array_push($dadosFatura, $fatUni);
-            }
+        //         array_push($dadosFatura, $fatUni);
+        //     }
 
-        }
+        // }
 
-        return $dadosFatura;
+        // return $dadosFatura;
     }
 
     public function tarifa($consumo){
@@ -107,8 +107,8 @@ class RelatorioController extends Controller
     public function fatura(Request $request)
     {
         // VALIDAÇÃO DATAS NÃO PASSAR DE 31 DIAS
-        $date1=date_create($request->input('FATURA_DATA_ANTERIOR'));
-        $date2=date_create($request->input('FATURA_DATA_ATUAL'));
+        $date1=date_create($request->input('fatura_data_anterior'));
+        $date2=date_create($request->input('fatura_data_atual'));
         $diff=date_diff($date1,$date2);
         $dias = $diff->format("%a");
 
@@ -118,17 +118,17 @@ class RelatorioController extends Controller
         // FIM - VALIDAÇÃO DATAS NÃO PASSAR DE 31 DIAS
 
 
-        $imovel = Unidade::find($request->input('UNI_ID'))->imovel;
+        $imovel = Unidade::find($request->input('unidade_id'))->imovel;
 
-        if($imovel->IMO_ID == $request->input('IMO_ID')){
+        if($imovel->id == $request->input('imovel_id')){
 
             $dadosFaturaIndividual = array();
 
-            $equipamentos = Unidade::find($request->input('UNI_ID'))->prumada;
+            $equipamentos = Unidade::find($request->input('unidade_id'))->prumada;
             foreach ($equipamentos as $equipamento)
             {
-                $leituraAnterior = $equipamento->leitura()->where('created_at', '>=', date($request->input('FATURA_DATA_ANTERIOR')).' 00:00:00')->orderBy('created_at', 'asc')->first();
-                $leituraAtual = $equipamento->leitura()->where('created_at', '<=', date($request->input('FATURA_DATA_ATUAL')).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                $leituraAnterior = $equipamento->leitura()->where('created_at', '>=', date($request->input('fatura_data_anterior')).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                $leituraAtual = $equipamento->leitura()->where('created_at', '<=', date($request->input('fatura_data_atual')).' 23:59:59')->orderBy('created_at', 'desc')->first();
 
                 // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
                 if(!(isset($leituraAnterior))){
@@ -137,11 +137,13 @@ class RelatorioController extends Controller
 
                 if(isset($leituraAnterior) && isset($leituraAtual))
                 {
+                    // dd($equipamento->unidade->telefone);
+                    
                     $consumo =  $leituraAtual->metro - $leituraAnterior->metro;
                     $valor = RelatorioController::tarifa($consumo);
 
                     $arrayDadosFaturaIndividual = array(
-                        'UNI_ID' => $equipamento->PRU_IDUNIDADE,
+                        'UNI_ID' => $equipamento->unidade_id,
 
                         'Imovel' => $equipamento->unidade->imovel->nome,
                         'cnpjImovel' => $equipamento->unidade->imovel->cnpj,
@@ -155,7 +157,7 @@ class RelatorioController extends Controller
                         'nomeAp' => $equipamento->unidade->nome,
                         'responsavelAp' => $equipamento->unidade->nome_responsavel,
                         'responsavelCpfAp' => $equipamento->unidade->cpf_responsavel,
-                        'responsavelTelAp' => $equipamento->unidade->telefone->numero,
+                        'responsavelTelAp' => '(62) 3123-2312',
 
                         'PRU_ID' => $equipamento->id,
                         'PRU_NOME' => $equipamento->nome,

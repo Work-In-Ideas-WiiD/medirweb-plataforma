@@ -85,13 +85,13 @@ class PrumadaController extends Controller
 
 
 
-    /*public function ultimaLeitura(Request $request)
-    {
-        $ultimaleitura =  Leitura::where('LEI_IDPRUMADA',$request->PRU_ID)
-        ->orderBy('LEI_ID', 'desc')
-        ->first();
+    // public function ultimaLeitura(Request $request)
+    // {
+    //     $ultimaleitura =  Leitura::where('prumada_id',$request->prumada_id)
+    //     ->orderBy('id', 'desc')
+    //     ->first();
 
-        return response()->json(response()->make($ultimaleitura), 200);
-    }*/
+    //     return $ultimaleitura;
+    // }
 
 }
