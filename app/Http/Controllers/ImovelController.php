@@ -732,7 +732,7 @@ class ImovelController extends Controller
             return view('error403');
 
         $response = json_decode(
-            Curl::to("http://{$prumada->unidade->imovel->ip}/api/{$comando}/".dechex($prumada->funcional_id))->get()
+            Curl::to("http://{$prumada->unidade->imovel->host}/api/{$comando}/".dechex($prumada->funcional_id))->get()
         );
 
         if($response) {

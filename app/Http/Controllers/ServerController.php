@@ -26,16 +26,9 @@ class ServerController extends Controller
         if(!$imovel)
             return back()->withError('Este Imovel não possui endereço de IP configurado!');
 
-            dd($imovel->host);
-
-        if($imovel->porta != null)
-        {
-            $codigoHTTP = Ping::check($imovel->ip.':8000');
-        }
-        else
-        {
-            $codigoHTTP = Ping::check($imovel->ip);
-        }
+            
+        $codigoHTTP = Ping::check($imovel->host);
+        
         
         return view('server.test', compact('imoveis', 'imovel', 'codigoHTTP'));
     }
@@ -76,14 +69,8 @@ class ServerController extends Controller
         }
 
         foreach ($funcionais as $funcional) {
-            if($imovel->porta != NULL)
-            {
-                $response = Curl::to("{$imovel->ip}:8000/api/leitura/{$funcional}")->get();
-            }
-            else
-            {
-                $response = Curl::to("{$imovel->ip}/api/leitura/{$funcional}")->get();
-            }
+            $response = Curl::to("{$imovel->host}/api/leitura/{$funcional}")->get();
+            
             
             $teste = converter_leitura(hexdec($funcional), $response, $response);
 
@@ -93,14 +80,9 @@ class ServerController extends Controller
                 $testes[] = converter_leitura_default($funcional);
         }
 
-        if($imovel->porta != null)
-        {
-            $codigoHTTP = Ping::check($imovel->ip.':8000');
-        }
-        else
-        {
-            $codigoHTTP = Ping::check($imovel->ip);
-        }
+       
+        $codigoHTTP = Ping::check($imovel->host);
+        
         
         // $codigoHTTP = Ping::check($imovel->ip);
 
