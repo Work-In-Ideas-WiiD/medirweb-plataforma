@@ -625,7 +625,7 @@ class ImovelController extends Controller
             return abort(403, 'Você não tem permissão');
         }
 
-        $response = Curl::to("http://{$prumada->unidade->imovel->ip}/api/leitura/".dechex($prumada->funcional_id))->get();
+        $response = Curl::to("http://{$prumada->unidade->imovel->host}/api/leitura/".dechex($prumada->funcional_id))->get();
 
         $leitura = converter_leitura($prumada->funcional_id, $response ?? [], $response ?? []);
 
