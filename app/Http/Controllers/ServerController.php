@@ -93,7 +93,7 @@ class ServerController extends Controller
 
         if($imovel->porta != null)
         {
-            Ping::check($imovel->ip.':'.$imovel->porta);
+            $codigoHTTP = Ping::check($imovel->ip.':'.$imovel->porta);
         }
         else
         {
