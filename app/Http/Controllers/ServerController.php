@@ -90,8 +90,15 @@ class ServerController extends Controller
             else
                 $testes[] = converter_leitura_default($funcional);
         }
-        
-        $codigoHTTP = Ping::check($imovel->ip);
+
+        if($imovel->porta != null)
+        {
+            Ping::check($imovel->ip.':'.$imovel->porta);
+        }
+        else
+        {
+            $codigoHTTP = Ping::check($imovel->ip);
+        }
 
         return view('server.local_test', compact('imoveis', 'imovel', 'testes', 'codigoHTTP'));
     }
