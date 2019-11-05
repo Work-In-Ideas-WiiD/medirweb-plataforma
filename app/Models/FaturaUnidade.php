@@ -10,4 +10,9 @@ class FaturaUnidade extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+
+    public function unidade()
+    {
+        return $this->belongsTo(Unidade::class);
+    }
 }
