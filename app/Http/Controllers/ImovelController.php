@@ -596,9 +596,9 @@ class ImovelController extends Controller
         if(app('defender')->hasRoles('Administrador'))
             $imoveis =  Imovel::with('endereco:id,bairro')->byCidade($cidade->id);
         else
-            $imoveis =  Imovel::find(auth()->user()->imovel_id);
-
-
+            $imoveis =  Imovel::where('id', auth()->user()->imovel_id)->get();
+            
+            
         foreach($imoveis as $imovel) {
 
             $retorno[] = [
