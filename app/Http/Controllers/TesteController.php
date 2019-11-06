@@ -384,4 +384,107 @@ class TesteController extends Controller
 
     }
 
+
+    public function felicittaAtualizarEquipamentos()
+    {
+        $file = storage_path('app/csv/conferencia_equipamentos_felicitta.csv');
+        
+        $csv = file_get_contents($file);
+
+        $title = false;
+
+        foreach (file($file) as $line)
+            if ($title)
+                $this->felicittaAtualizarEquipamentos2($line);
+            else
+                $title = true;
+
+    }
+
+    public function felicittaAtualizarEquipamentos2($line)
+    {
+        $line = str_replace("\n", "", $line);
+        $line = explode(',"', $line);
+        $line = array_map(function($string) {
+            return str_replace('"', '', $string);
+        }, $line);
+       // dd($line);
+
+        //imovel_id ==  15
+
+        $agrupamento = Agrupamento::where(function($query) use ($line) {
+            $query->where('imovel_id', 15)->where(DB::raw("abs(nome)"), abs($line[1]));
+        })->orWhere(function($query) use ($line) {
+            $query->where('imovel_id', 15)->where('nome', "Bloco 0{$line[1]}");
+        })->first();
+
+
+        if ($agrupamento) {
+            $unidade = Unidade::with('prumada')->where('agrupamento_id', $agrupamento->id)->where('nome', $line[2])->first();
+            if ($unidade) {
+                $this->felicittaAtualizarEquipamentos3($agrupamento, $unidade, $line);
+            } else {
+                file_put_contents(storage_path('app/csv/erros_felicitta.json'), json_encode($line).',', FILE_APPEND);
+            }
+        } else {
+            file_put_contents(storage_path('app/csv/erros_felicitta.json'), json_encode($line).',', FILE_APPEND);
+        }
+    }
+
+
+    public function felicittaAtualizarEquipamentos3($agrupamento, $unidade, $line)
+    {
+        DB::beginTransaction();
+
+        $prumada1 = Prumada::updateOrCreate([
+            'unidade_id' => $unidade->id,
+            'nome' => 'Área social / cozinha'
+        ], [
+            'tipo' => 1,
+            'unidade_id' => $unidade->id,
+            'nome' => 'Área social / cozinha',
+            'funcional_id' => $line[4]
+        ]);
+
+        $prumada2 = Prumada::updateOrCreate([
+            'unidade_id' => $unidade->id,
+            'nome' => 'Banheiro'
+        ], [
+            'tipo' => 1,
+            'unidade_id' => $unidade->id,
+            'nome' => 'Banheiro',
+            'funcional_id' => $line[7]
+        ]);
+
+        $login = $this->felicittaCriarLogins($unidade->imovel_id, $agrupamento->nome, $unidade);
+
+        if ($prumada1 and $prumada2 and $login) {
+            DB::commit();
+            return true;
+        }
+
+        DB::rollback();
+    }
+
+
+    public function felicittaCriarLogins($imovel_id, $bloco, $unidade)
+    {
+        $user = User::firstOrCreate([
+            'unidade_id' => $unidade->id,
+            'imovel_id' => $unidade->imovel_id,
+            'name' => "{$bloco} {$unidade->nome}"
+        ], [
+            'unidade_id' => $unidade->id,
+            'imovel_id' => $unidade->imovel_id,
+            'name' => "{$bloco} {$unidade->nome}",
+            'email' => "{$bloco}{$unidade->nome}@medirweb.com.br",
+            'password' => bcrypt($bloco.$unidade)
+        ]);
+
+        $user->roles()->attach([4]);
+
+        return $user;
+    
+    }
+
 }
