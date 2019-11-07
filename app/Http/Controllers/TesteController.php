@@ -469,6 +469,8 @@ class TesteController extends Controller
 
     public function felicittaCriarLogins($imovel_id, $bloco, $unidade)
     {
+        $emailbloco = str_replace(' ', '', $bloco);
+
         $user = User::firstOrCreate([
             'unidade_id' => $unidade->id,
             'imovel_id' => $unidade->imovel_id,
@@ -477,7 +479,7 @@ class TesteController extends Controller
             'unidade_id' => $unidade->id,
             'imovel_id' => $unidade->imovel_id,
             'name' => "{$bloco} {$unidade->nome}",
-            'email' => "{$bloco}{$unidade->nome}@medirweb.com.br",
+            'email' => "{$emailbloco}{$unidade->nome}@medirweb.com.br",
             'password' => bcrypt($bloco.$unidade)
         ]);
 
