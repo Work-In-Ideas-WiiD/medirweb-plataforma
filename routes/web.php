@@ -168,11 +168,14 @@ Route::middleware('auth')->group(function () {
 Route::get('criar-duas-prumadas', 'PrumadaController@criarDuas');
 Route::any('teste', 'TesteController@teste')->middleware('guest') ;
 
-Route::get('cidades/{estado_id}', function($estado_id) {
+Route::get('cidades/{estado_id}', function ($estado_id) {
     return \App\Models\Cidade::where('estado_id', $estado_id)->pluck('nome', 'id');
 });
 
 
-Route::get('downloads/central-medirweb', function() {
-    return Response()->download(storage_path('app/downloads/central-medirweb.zip'));
+Route::get('downloads/central-medirweb', function () {
+    return response()->download(storage_path('app/downloads/central-medirweb.zip'));
 });
+
+
+Route::get('felicitta', 'TesteController@felicittaAtualizarEquipamentos');
