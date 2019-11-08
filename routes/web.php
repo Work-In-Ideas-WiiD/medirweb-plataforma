@@ -18,9 +18,9 @@ Route::middleware('auth')->group(function () {
         return redirect('/imovel');
     });
     
-    Route::get('/home', 'HomeController@index')->name('home')->middleware('permissao:administrador,sindico,secretario');
+    Route::get('/home', 'HomeController@index')->name('home')->middleware('permissao:administrador|sindico|secretario');
     
-    Route::post('importar/csv', 'TesteController@process')->middleware('permissao:administrador,sindico');
+    Route::post('importar/csv', 'TesteController@process')->middleware('permissao:administrador|sindico');
     
     /* Usuários */
     
@@ -36,7 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/perfil', 'UserController@perfil');
     
     // Imóveis 
-    Route::prefix('imovel')->middleware('permissao:administrador,sindico')->group(function () {
+    Route::prefix('imovel')->middleware('permissao:administrador|sindico')->group(function () {
         Route::get('buscar', 'ImovelController@buscar');
         Route::get('buscar/ver/{imovel}', 'ImovelController@show_buscar');
         Route::get('/lista/{cidade}', 'ImovelController@lista');
@@ -47,18 +47,19 @@ Route::middleware('auth')->group(function () {
     Route::get('imovel/{imovel}/agrupamento', 'ImovelController@agrupamento');
     Route::resource('/imovel', 'ImovelController', [
         'middleware' => [
-            'index' => 'permissao:administrador,sindico',
+            'index' => 'permissao:administrador|sindico',
             'create' => 'permissao',
             'store' => 'permissao',
-            'view' => 'permissao:administrador,sindico',
-            'edit' => 'permissao:administrador,sindico',
-            'update' => 'permissao:administrador,sindico',
+            'view' => 'permissao:administrador|sindico',
+            'edit' => 'permissao:administrador|sindico',
+            'update' => 'permissao:administrador|sindico',
             'destroy' => 'permissao'
         ]
     ]);
     
 
-    Route::get('/imovel/{imovel}/consumo', 'ImovelController@getLancarConsumo')->name('imovel.consumo')->middleware('permissao:administrador,sindico');
+    Route::get('/imovel/{imovel}/consumo', 'ImovelController@getLancarConsumo')->name('imovel.consumo')
+        ->middleware('permissao:administrador|sindico');
     
     Route::post('lancar-consumo', 'ImovelController@postLancarConsumo');
 
@@ -77,8 +78,8 @@ Route::middleware('auth')->group(function () {
             'create' => 'permissao',
             'store' => 'permissao',
             'view' => 'permissao',
-            'edit' => 'permissao:administrador,sindico',
-            'update' => 'permissao:administrador,sindico',
+            'edit' => 'permissao:administrador|sindico',
+            'update' => 'permissao:administrador|sindico',
             'destroy' => 'permissao'
         ]
     ])->except(['index', 'show']);
@@ -90,8 +91,8 @@ Route::middleware('auth')->group(function () {
             'create' => 'permissao',
             'store' => 'permissao',
             'view' => 'permissao',
-            'edit' => 'permissao:administrador,sindico',
-            'update' => 'permissao:administrador,sindico',
+            'edit' => 'permissao:administrador|sindico',
+            'update' => 'permissao:administrador|sindico',
             'destroy' => 'permissao'
         ]
     ]);
@@ -131,8 +132,8 @@ Route::middleware('auth')->group(function () {
     // prumadas
     Route::resource('prumada', 'PrumadaController', [
         'middleware' => [
-            'edit' => 'permissao:administrador,sindico',
-            'update' => 'permissao:administrador,sindico',
+            'edit' => 'permissao:administrador|sindico',
+            'update' => 'permissao:administrador|sindico',
         ]
     ])->except('show', 'index')->middleware('permissao');
 
