@@ -52,7 +52,18 @@
                             @enderror
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class='form-group'>
+                            {{ Form::label('repetidor_id', 'Repetidor') }}
+                            {{ Form::text('repetidor_id', null, ['class' => 'form-control']) }}
 
+                            @error('repetidor_id')
+                            <span class="help-block">
+                                <strong style="color: red;">{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -22,6 +22,7 @@ class CreateAgrupamentosTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
             $table->string('nome', 300)->nullable();
+            $table->integer('repetidor_id')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
 
