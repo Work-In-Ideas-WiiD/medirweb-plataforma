@@ -621,14 +621,16 @@ class ImovelController extends Controller
 
     public function leituraUnidade(Prumada $prumada)
     {
-        $prumada = Prumada::with('unidade.imovel')->find($prumada->id);
+        $prumada = Prumada::with('unidade.imovel', 'unidade.agrupamento')->find($prumada->id);
 
         if(app('defender')->hasRoles(['Sindico', 'Secretário']) && auth()->user()->imovel_id !== $prumada->unidade->imovel_id){
             return abort(403, 'Você não tem permissão');
         }
 
-        $response = Curl::to("http://{$prumada->unidade->imovel->host}/api/leitura/".dechex($prumada->funcional_id))->get();
-
+        $response = Curl::to(
+            "http://{$prumada->unidade->imovel->host}/api/leitura/".dechex($prumada->funcional_id).$prumada->unidade->agrupamento->repetidor
+        )->get();
+        
         $leitura = converter_leitura($prumada->funcional_id, $response ?? [], $response ?? []);
 
         if(empty($leitura->erro) and $leitura) {
