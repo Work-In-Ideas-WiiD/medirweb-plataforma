@@ -31,17 +31,17 @@ class LeituraExport implements FromArray
     {
         $imovel =  Imovel::find($this->imovel);
 
-        $sheets = array(0 => array('Imovel' => $imovel->IMO_NOME,), 1 => array(''), 2 => array('Nomes', 'Apartamentos', '# Hidrômetro',
+        $sheets = array(0 => array('Imovel' => $imovel->nome,), 1 => array(''), 2 => array('Nomes', 'Apartamentos', '# Hidrômetro',
         'Leitura Anterior', 'Leitura Atual', 'Consumo M³', 'Valor','Data leitura Anterior', 'Data leitura Atual'),3 => array(''));
 
-        $unidades = Imovel::find($this->imovel)->getUnidades;
+        $unidades = Imovel::find($this->imovel)->unidade;
         foreach ($unidades as $unid) {
-            $prumadas = Unidade::find($unid->UNI_ID)->getPrumadas;
+            $prumadas = Unidade::find($unid->id)->prumada;
             foreach ($prumadas as $prumada)
             {
-                $leituraAnterior = $prumada->getLeituras() ->where('created_at', '>=', date($this->dataAnterior).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                $leituraAnterior = $prumada->leitura() ->where('created_at', '>=', date($this->dataAnterior).' 00:00:00')->orderBy('created_at', 'asc')->first();
 
-                $leituraAtual = $prumada->getLeituras() ->where('created_at', '<=', date($this->dataAtual).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                $leituraAtual = $prumada->leitura() ->where('created_at', '<=', date($this->dataAtual).' 23:59:59')->orderBy('created_at', 'desc')->first();
 
                 if(isset($leituraAnterior) && isset($leituraAtual))
                 {
@@ -66,13 +66,13 @@ class LeituraExport implements FromArray
 
 
                     $relatorio = array(
-                        'Nomes' => $unid->UNI_RESPONSAVEL,
-                        'Apartamentos' => $unid->UNI_NOME,
-                        '# Hidrômetro' => '#'.$prumada->PRU_ID,
-                        'Leitura Anterior' => $leituraAnterior->LEI_METRO.' m³',
-                        'Leitura Atual' => $leituraAtual->LEI_METRO.' m³',
+                        'Nomes' => $unid->nome_responsavel,
+                        'Apartamentos' => $unid->nome,
+                        '# Hidrômetro' => '#'.$prumada->id,
+                        'Leitura Anterior' => $leituraAnterior->metro.' m³',
+                        'Leitura Atual' => $leituraAtual->metro.' m³',
                         'Consumo M³' => $consumo.' m³',
-                        'Valor' => 'R$ '.number_format($valor, 2, ',', '.'),
+                        'Valor' => 'R$ '.number_format(0, 2, ',', '.'),
                         'Data leitura Anterior' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
                         'Data leitura Atual' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
                     );

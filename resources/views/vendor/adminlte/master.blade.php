@@ -92,6 +92,7 @@
 
             $.get(`/imovel/${$(this).val()}/unidade`, function(data) {
                 $('select[name="unidade_id"]').empty();
+                $('[name="unidade_id"]').append(`<option value="">SELECIONE O APARTAMENTO</option>`)
                 $.each(data, function(key, value) {
                     $('select[name="unidade_id"]').append(`<option value="${key}">${value}</option>`)
                 })
