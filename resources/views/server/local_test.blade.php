@@ -33,19 +33,31 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-4">
-                        <div class='form-group'>
-                            {{ Form::label('funcional_id', 'ID funcional') }}
-                            {{ Form::text('funcional_id', old('funcional_id', $data->funcional_id ?? null), ['class' => 'avalidate form-control', 'required']) }}
-    
-                            @error('funcional_id')
-                            <span class="help-block">
-                                <strong style="color: red;">{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
+                <div class="col-md-7">
+                    <div class='form-group'>
+                        {{ Form::label('funcional_id', 'ID funcional') }}
+                        {{ Form::text('funcional_id', old('funcional_id', $data->funcional_id ?? null), ['class' => 'avalidate form-control', 'required']) }}
+
+                        @error('funcional_id')
+                        <span class="help-block">
+                            <strong style="color: red;">{{ $message }}</strong>
+                        </span>
+                        @enderror
                     </div>
-                <div class="col-md-3">
+                </div>
+                <div class="col-md-6">
+                    <div class='form-group'>
+                        {{ Form::label('repetidor_id', 'ID Repetidor') }}
+                        {{ Form::text('repetidor_id', old('repetidor_id', $data->repetidor_id ?? null), ['class' => 'avalidate form-control']) }}
+
+                        @error('repetidor_id')
+                        <span class="help-block">
+                            <strong style="color: red;">{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
                         {{ Form::label('', '&nbsp;') }}
                         <button type="submit" type="button" style="width: 100% "class="btn btn-primary"><i class="fa fa-check"></i> Checar</button>
