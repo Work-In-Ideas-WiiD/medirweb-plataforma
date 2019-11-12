@@ -163,8 +163,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/relatorio/faturas', 'RelatorioController@relatorioFatura')->name('relatorio.fatura');
     Route::post('relatorio/faturas', 'RelatorioController@getFaturaLista');
     
-    Route::get('relatorio/falha', 'FalhaController@index');
-    Route::post('relatorio/falha', 'FalhaController@retorno');
+    Route::match(['get', 'post'], 'relatorio/falha', 'FalhaController@index');
 });
 
 
