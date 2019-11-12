@@ -85,5 +85,6 @@ Route::group(['prefix' => 'central'], function()
     Route::get('{ip}/getprumadas/', array('uses' => 'Api\CentralController@getPrumadas'));
     Route::post('addleituras', array('uses' => 'Api\CentralController@addLeituras'));
     Route::get('{ip}/sicronizar/leituras', array('uses' => 'Api\CentralController@sicronizarLeituras'));
+    Route::get('{ip}/sicronizar/falhas', array('uses' => 'Api\CentralController@sicronizarFalhas'));
 });
 // fim - ### CentralResp CONTROLER ###

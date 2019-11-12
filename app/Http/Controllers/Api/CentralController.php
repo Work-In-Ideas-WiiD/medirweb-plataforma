@@ -9,7 +9,8 @@ use App\Models\Imovel;
 use App\Models\Unidade;
 use App\Models\Prumada;
 use App\Models\Leitura;
-USE App\Models\Fechamento;
+use App\Models\Fechamento;
+use App\Models\Falha;
 use Session, Curl;
 
 class CentralController extends Controller
@@ -66,6 +67,30 @@ class CentralController extends Controller
 
         return ['success' => "Scronização Realizada"];
 
+    }
+
+    public function sicronizarFalhas($ip)
+    {
+        $imovel = Imovel::where('ip', $ip)->first();
+        
+        $response = Curl::to('http://'.$imovel->host.'/falhas/')
+        // $response = Curl::to('http://735e95d5.ngrok.io/falhas/')
+        ->get();
+
+        $retornos = json_decode($response, TRUE);
+
+        foreach($retornos as $resp)
+        {
+            Falha::firstOrCreate([
+                "prumada_id" => $resp['FLH_IDPRU'],
+                "status" => $resp['FLH_STATUS'],
+                "created_at" => date('Y-m-d', strtotime($resp['created_at']) ),
+                "updated_at" => date('Y-m-d', strtotime($resp['updated_at']) ),
+            ]);
+
+        }
+
+        return ['success' => "Scronização Realizada"];
     }
 
 

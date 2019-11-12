@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Exports;
+
+use App\Models\Imovel;
+use App\Models\Falha;
+use Maatwebsite\Excel\Concerns\FromCollection;
+
+use Maatwebsite\Excel\Concerns\FromQuery;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\FromArray;
+
+class FalhaExport  implements FromArray
+{
+
+    use Exportable;
+
+    protected $imovel;
+    protected $falhas;
+
+    public function __construct($imovel, $falhas)
+    {
+        $this->imovel = $imovel;
+        $this->falhas = $falhas;
+    }
+
+    public function array(): array
+    {
+        $imovel =  Imovel::find($this->imovel);
+
+        $sheets = array(0 => array('Imovel' => $imovel->nome,), 1 => array(''), 2 => array('EQP', 'Nome EQP', 'Imóvel',
+        'Nome Responsável', 'Apartemento', 'ID Funcional', 'Status','Data'),3 => array(''));
+
+        foreach ($this->falhas as $falha) {
+        
+                    $relatorio = array(
+                        'EQP' => $falha->id,
+                        'Nome EQP' => $falha->prumada->nome,
+                        'Imóvel' => $falha->prumada->unidade->imovel->nome,
+                        'Nome Responsável' => $falha->prumada->unidade->nome_responsavel,
+                        'Apartemento' => $falha->prumada->unidade->nome,
+                        'ID Funcional' => $falha->prumada->funcional_id,
+                        'Status' => $falha->status,
+                        'Data' => date('d/m/Y - H:i', strtotime($falha->created_at)),
+                    );
+
+                    array_push($sheets, $relatorio);
+        }
+        
+
+        return $sheets;
+    }
+
+
+}

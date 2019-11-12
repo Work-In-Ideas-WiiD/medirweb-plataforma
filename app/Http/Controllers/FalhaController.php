@@ -5,12 +5,16 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Falha;
 use App\Models\Imovel;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\FalhaExport;
 
 class FalhaController extends Controller
 {
     public function index(Request $request)
     {
         $falhas = [];
+
+        
 
         if(app('defender')->hasRoles('Administrador'))
             $imoveis = Imovel::pluck('nome', 'id');
@@ -23,6 +27,11 @@ class FalhaController extends Controller
             $falhas = Falha::with('prumada.unidade.imovel')
                 ->whereDate('created_at', '>=', $request->data_anterior)
                 ->whereDate('created_at', '<=', $request->data_atual)->get();
+
+            // SUBMIT "EXPORTAR EXCEL"
+            if($request->export == "excel"){
+                return Excel::download(new FalhaExport($request->imovel_id, $falhas), 'relatorio_falhas.xlsx');
+            }
         }
 
 
