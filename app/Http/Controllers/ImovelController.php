@@ -732,11 +732,13 @@ class ImovelController extends Controller
 
     public function ligarDesligarPrumada(Prumada $prumada, $comando)
     {
+        $prumada = Prumada::with('unidade.imovel', 'unidade.agrupamento')->find($prumada->id);
+
         if(app('defender')->hasRoles('Sindico') && auth()->user()->imovel_id !== $prumada->unidade->imovel_id)
             return view('error403');
 
         $response = json_decode(
-            Curl::to("http://{$prumada->unidade->imovel->host}/api/{$comando}/".dechex($prumada->funcional_id))->get()
+            Curl::to("http://{$prumada->unidade->imovel->host}/api/{$comando}/".dechex($prumada->funcional_id).$prumada->unidade->agrupamento->repetidor)->get()
         );
 
         if($response) {
