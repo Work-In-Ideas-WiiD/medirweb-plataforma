@@ -593,6 +593,8 @@ class ImovelController extends Controller
     public function lista(Cidade $cidade)
     {
 
+        $retorno = [];
+
         if(app('defender')->hasRoles('Administrador'))
             $imoveis =  Imovel::with('endereco:id,bairro')->byCidade($cidade->id);
         else

@@ -17,21 +17,23 @@ class CentralController extends Controller
 
     public function getPrumadas($ip)
     {
-
-        $imovel = Imovel::where('IMO_IP', $ip)->first();
-        $unidades = $imovel->getUnidades;
+        $imovel = Imovel::with('unidade.prumada', 'unidade.agrupamento')->where('ip', $ip)->first();
+        
         $arrayPrumadas = array();
 
-        foreach ($unidades as $unidade) {
-            $prumadas = $unidade->getPrumadas;
+        if ($imovel) {
+            foreach ($imovel->unidade as $unidade) {
+        
+                foreach ($unidade->prumada as $prumada) {
 
-            foreach ($prumadas as $prumada) {
+                    $dados['EQP_IDUNI'] = $unidade->id;
+                    $dados['EQP_IDPRU'] = $prumada->id;
+                    $dados['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
+                    $dados['EQP_BLOCO'] = $unidade->agrupamento->nome;
+                    $dados['EQP_IDREPETIDOR'] = $unidade->agrupamento->repetidor_id;
 
-                $dados['EQP_IDUNI'] = $unidade->UNI_ID;
-                $dados['EQP_IDPRU'] = $prumada->PRU_ID;
-                $dados['EQP_IDFUNCIONAL'] = $prumada->PRU_IDFUNCIONAL;
-
-                array_push($arrayPrumadas, $dados);
+                    array_push($arrayPrumadas, $dados);
+                }
             }
         }
 
