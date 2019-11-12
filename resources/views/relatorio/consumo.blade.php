@@ -76,7 +76,7 @@
 
                                     <div class='form-group'>
                                         {{ Form::label('unidade_id', '# Apartamento') }}
-                                        {{ Form::select('unidade_id', ['' => 'SELECIONE O IMÓVEL PRIMEIRO'], null, ['class' => 'avalidate form-control']) }}
+                                        {{ Form::select('unidade_id', ['' => 'SELECIONE O APARTAMENTO PRIMEIRO'], null, ['class' => 'avalidate form-control']) }}
                                     </div>
 
                                 </div>

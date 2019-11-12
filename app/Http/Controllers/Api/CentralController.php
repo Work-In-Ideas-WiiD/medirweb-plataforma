@@ -10,7 +10,7 @@ use App\Models\Unidade;
 use App\Models\Prumada;
 use App\Models\Leitura;
 USE App\Models\Fechamento;
-use Session;
+use Session, Curl;
 
 class CentralController extends Controller
 {
@@ -40,6 +40,33 @@ class CentralController extends Controller
         return response()->json(response()->make($arrayPrumadas), 200);
     }
 
+    public function sicronizarLeituras($ip)
+    {
+        $imovel = Imovel::where('ip', $ip)->first();
+        
+        $response = Curl::to('http://'.$imovel->host.'/leituras/')
+        // $response = Curl::to('http://e80b8f2a.ngrok.io/leituras/')
+        ->get();
+
+        $retornos = json_decode($response, TRUE);
+
+        foreach($retornos as $resp)
+        {
+            Leitura::firstOrCreate([
+                "prumada_id" => $resp['LEI_IDPRUMADA'],
+                "metro" => $resp['LEI_METRO'],
+                "litro" => $resp['LEI_LITRO'],
+                "mililitro" => $resp['LEI_MILILITRO'],
+                "valor" => $resp['LEI_VALOR'],
+                "created_at" => date('Y-m-d H:i:s', strtotime($resp['created_at']) ),
+                "updated_at" => date('Y-m-d H:i:s', strtotime($resp['updated_at']) ),
+            ]);
+
+        }
+
+        return ['success' => "Scronização Realizada"];
+
+    }
 
 
     public function addLeituras(Request $request)

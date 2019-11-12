@@ -119,7 +119,7 @@ class RelatorioController extends Controller
                                 'LeituraAnterior' => $leituraAnterior->metro,
                                 'LeituraAtual' => $leituraAtual->metro,
                                 'Consumo' => $consumo,
-                                'Valor' => number_format($valor, 2, ',', '.'),
+                                'Valor' => number_format(0, 2, ',', '.'),
                                 'DataLeituraAnterior' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
                                 'DataLeituraAtual' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
                             );
@@ -204,7 +204,7 @@ class RelatorioController extends Controller
                             'LeituraAnterior' => $leituraAnterior->metro,
                             'LeituraAtual' => $leituraAtual->metro,
                             'Consumo' => $consumo,
-                            'Valor' => number_format($valor, 2, ',', '.'),
+                            'Valor' => number_format(0, 2, ',', '.'),
                             'DataLeituraAnterior' => date('d/m/Y', strtotime($leituraAnterior->created_at)),
                             'DataLeituraAtual' => date('d/m/Y', strtotime($leituraAtual->created_at)),
                         );
