@@ -58,7 +58,7 @@ class ServerController extends Controller
             $funcionais = [];
 
             if (!empty($data->repetidor_id))
-                Curl::to("http://{$prumada->unidade->imovel->host}/api/ativacao/".dechex($data->repetidor_id))->get();
+                Curl::to("http://{$imovel->host}/api/ativacao/".dechex($data->repetidor_id))->get();
 
             foreach (explode(';', $data->funcional_id) as $info) {
                 if (strstr($info, '-')) {
@@ -87,14 +87,14 @@ class ServerController extends Controller
             $codigoHTTP = Ping::check($imovel->host);
 
             if (!empty($data->repetidor_id))
-                Curl::to("http://{$prumada->unidade->imovel->host}/api/corte/".dechex($data->repetidor_id))->get();
+                Curl::to("http://{$imovel->host}/api/corte/".dechex($data->repetidor_id))->get();
 
             return view('server.local_test', compact('imoveis', 'imovel', 'testes', 'codigoHTTP'));
 
         } catch (Exception $e) {
 
             if (!empty($data->repetidor_id))
-                Curl::to("http://{$prumada->unidade->imovel->host}/api/corte/".dechex($data->repetidor_id))->get();
+                Curl::to("http://{$imovel->host}/api/corte/".dechex($data->repetidor_id))->get();
 
             return back()->withError('Ocorreu um erro inesperado!');
         }
