@@ -31,7 +31,7 @@
                     <div class='col-md-6'>
                         <div class='form-group'>
                             {{ Form::label('imovel_id', 'Imóvel') }}
-                            {{ Form::select('imovel_id', $imoveis, $agrupamento->imovel_id, ['class' => 'avalidate form-control', 'disabled' => 'disabled']) }}
+                            {{ Form::select('imovel_id', $imoveis, $agrupamento->imovel_id, ['class' => 'avalidate form-control', 'readonly']) }}
 
                             @error('imovel_id')
                             <span class="help-block">
@@ -47,6 +47,18 @@
                             {{ Form::text('nome', null, ['class' => 'form-control']) }}
 
                             @error('nome')
+                            <span class="help-block">
+                                <strong style="color: red;">{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class='form-group'>
+                            {{ Form::label('repetidor_id', 'Repetidor') }}
+                            {{ Form::text('repetidor_id', null, ['class' => 'form-control']) }}
+
+                            @error('repetidor_id')
                             <span class="help-block">
                                 <strong style="color: red;">{{ $message }}</strong>
                             </span>

@@ -25,7 +25,8 @@ class ProcessLocalTestRequest extends FormRequest
     {
         return [
             'imovel_id' => ['exists:imoveis,id', 'required'],
-            'funcional_id' => ['string', 'min:1']
+            'funcional_id' => ['string', 'min:1'],
+            'repetidor_id' => ['integer', 'nullable'],
         ];
     }
 }

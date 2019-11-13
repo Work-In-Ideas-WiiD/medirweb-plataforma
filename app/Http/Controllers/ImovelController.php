@@ -593,6 +593,8 @@ class ImovelController extends Controller
     public function lista(Cidade $cidade)
     {
 
+        $retorno = [];
+
         if(app('defender')->hasRoles('Administrador'))
             $imoveis =  Imovel::with('endereco:id,bairro')->byCidade($cidade->id);
         else
@@ -619,14 +621,16 @@ class ImovelController extends Controller
 
     public function leituraUnidade(Prumada $prumada)
     {
-        $prumada = Prumada::with('unidade.imovel')->find($prumada->id);
+        $prumada = Prumada::with('unidade.imovel', 'unidade.agrupamento')->find($prumada->id);
 
         if(app('defender')->hasRoles(['Sindico', 'Secretário']) && auth()->user()->imovel_id !== $prumada->unidade->imovel_id){
             return abort(403, 'Você não tem permissão');
         }
 
-        $response = Curl::to("http://{$prumada->unidade->imovel->host}/api/leitura/".dechex($prumada->funcional_id))->get();
-
+        $response = Curl::to(
+            "http://{$prumada->unidade->imovel->host}/api/leitura/".dechex($prumada->funcional_id).$prumada->unidade->agrupamento->repetidor
+        )->get();
+        
         $leitura = converter_leitura($prumada->funcional_id, $response ?? [], $response ?? []);
 
         if(empty($leitura->erro) and $leitura) {
@@ -728,11 +732,13 @@ class ImovelController extends Controller
 
     public function ligarDesligarPrumada(Prumada $prumada, $comando)
     {
+        $prumada = Prumada::with('unidade.imovel', 'unidade.agrupamento')->find($prumada->id);
+
         if(app('defender')->hasRoles('Sindico') && auth()->user()->imovel_id !== $prumada->unidade->imovel_id)
             return view('error403');
 
         $response = json_decode(
-            Curl::to("http://{$prumada->unidade->imovel->host}/api/{$comando}/".dechex($prumada->funcional_id))->get()
+            Curl::to("http://{$prumada->unidade->imovel->host}/api/{$comando}/".dechex($prumada->funcional_id).$prumada->unidade->agrupamento->repetidor)->get()
         );
 
         if($response) {

@@ -233,6 +233,18 @@ return [
             'text'    => 'Relatórios',
             'icon'    => 'file-o ',
             'url'     => '#',
+            'submenu' => [
+                [
+                    'text' => 'Consulta Consumo',
+                    'icon' => 'tachometer',
+                    'url'  => 'relatorio/consumo',
+                ],
+                [
+                    'text' => 'Consulta Falhas',
+                    'icon' => 'close',
+                    'url'  => 'relatorio/falha',
+                ],
+            ],
         ],
         [
             'text'    => 'Liquidação de Faturas',

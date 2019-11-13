@@ -13,13 +13,18 @@ class Kernel extends ConsoleKernel
 {
 
     protected $commands = [
-        //
+        Commands\ConsumirLeitura::class,
+        Commands\ConsumirFalha::class,
     ];
 
     protected function schedule(Schedule $schedule)
     {
 
         // Cron - Todas as leituras
+        $schedule->command(ConsumirLeitura::class)->daily();
+        $schedule->command(ConsumirFalha::class)->daily()->withoutOverlapping();
+
+        /*
         $schedule->call(function () {
 
             $imovel = Imovel::get();
@@ -164,7 +169,7 @@ class Kernel extends ConsoleKernel
             }
 
         })->dailyAt('6:00');
-
+*/
 
     }
 

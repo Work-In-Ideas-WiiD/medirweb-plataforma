@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAgrupamentosTable extends Migration
+class CreateFalhasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,17 @@ class CreateAgrupamentosTable extends Migration
      */
     public function up()
     {
-        Schema::create('agrupamentos', function (Blueprint $table) {
+        Schema::create('falhas', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('imovel_id');
-            $table->foreign('imovel_id')
+            $table->unsignedBigInteger('prumada_id');
+            $table->foreign('prumada_id')
                 ->references('id')
-                ->on('imoveis')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->string('nome', 300)->nullable();
-            $table->integer('repetidor_id')->nullable();
+                ->on('prumadas')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+            $table->string('status', 50);
             $table->softDeletesTz();
             $table->timestampsTz();
-
         });
     }
 
@@ -36,6 +34,6 @@ class CreateAgrupamentosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('agrupamentos');
+        Schema::dropIfExists('falhas');
     }
 }

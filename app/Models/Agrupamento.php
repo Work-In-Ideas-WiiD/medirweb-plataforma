@@ -11,6 +11,14 @@ class Agrupamento extends Model
 
     protected $guarded = [];
 
+    public function getRepetidorAttribute()
+    {
+        if (!empty($this->repetidor_id))
+            $repetidor = "/".dechex($this->repetidor_id);
+
+        return $repetidor ?? '';
+    }
+
     public function imovel()
     {
         return $this->hasOne(Imovel::class);

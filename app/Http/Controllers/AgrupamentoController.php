@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Agrupamento;
 use App\Models\Imovel;
 use App\Models\Unidade;
+use Illuminate\Http\Request;
 use App\Http\Requests\Agrupamento\AgrupamentoSaveRequest;
 
 class AgrupamentoController extends Controller
@@ -30,7 +31,7 @@ class AgrupamentoController extends Controller
 		return view('agrupamento.edit', compact('agrupamento', 'imoveis'));
 	}
 
-	public function update(Request $request, Agrupamento $agrupamento)
+	public function update(AgrupamentoSaveRequest $request, Agrupamento $agrupamento)
 	{
 		$agrupamento->update($request->all());
 
