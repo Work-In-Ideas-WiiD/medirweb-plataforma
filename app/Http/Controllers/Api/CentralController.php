@@ -41,9 +41,10 @@ class CentralController extends Controller
         return response()->json(response()->make($arrayPrumadas), 200);
     }
 
-    public function sicronizarLeituras($ip)
+    public function sicronizarLeituras($ip, $imovel = null)
     {
-        $imovel = Imovel::where('ip', $ip)->first();
+        if (!$imovel)
+            $imovel = Imovel::where('ip', $ip)->first();
         
         $response = Curl::to('http://'.$imovel->host.'/leituras/')
         // $response = Curl::to('http://e80b8f2a.ngrok.io/leituras/')
@@ -51,7 +52,7 @@ class CentralController extends Controller
 
         $retornos = json_decode($response, TRUE);
 
-        foreach($retornos as $resp)
+        foreach($retornos ?? [] as $resp)
         {
             Leitura::firstOrCreate([
                 "prumada_id" => $resp['LEI_IDPRUMADA'],
@@ -69,9 +70,10 @@ class CentralController extends Controller
 
     }
 
-    public function sicronizarFalhas($ip)
+    public function sicronizarFalhas($ip, $imovel = null)
     {
-        $imovel = Imovel::where('ip', $ip)->first();
+        if (!$imovel)
+            $imovel = Imovel::where('ip', $ip)->first();
         
         $response = Curl::to('http://'.$imovel->host.'/falhas/')
         // $response = Curl::to('http://735e95d5.ngrok.io/falhas/')
