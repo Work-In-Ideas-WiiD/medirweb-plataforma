@@ -27,13 +27,16 @@ class CentralController extends Controller
         
                 foreach ($unidade->prumada as $prumada) {
 
-                    $dados['EQP_IDUNI'] = $unidade->id;
-                    $dados['EQP_IDPRU'] = $prumada->id;
-                    $dados['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
-                    $dados['EQP_BLOCO'] = $unidade->agrupamento->nome;
-                    $dados['EQP_IDREPETIDOR'] = $unidade->agrupamento->repetidor_id;
+                    if($prumada->funcional_id != ""){
 
-                    array_push($arrayPrumadas, $dados);
+                        $dados['EQP_IDUNI'] = $unidade->id;
+                        $dados['EQP_IDPRU'] = $prumada->id;
+                        $dados['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
+                        $dados['EQP_BLOCO'] = $unidade->agrupamento->nome;
+                        $dados['EQP_IDREPETIDOR'] = $unidade->agrupamento->repetidor_id;
+
+                        array_push($arrayPrumadas, $dados);
+                    }
                 }
             }
         }
