@@ -41,7 +41,7 @@ function leitura_nova($funcional, $hex, $hex_original) {
     return (object) [
         'funcional' => $funcional,
         'hexadecimal' => $hex_original,
-        'm3' => hexdec($hex['5'].$hex['6'].$hex['7']),
+        'm3' => hexdec($hex['4'].$hex['5'].$hex['6'].$hex['7']),
         'litros' => hexdec($hex['10'].$hex['11']),
         'decilitros' => hexdec($hex['15']),
         'valor' => ((hexdec($hex['5'].$hex['6'].$hex['7']) * 1000) + hexdec($hex['10'].$hex['11'])).hexdec($hex['15'])
