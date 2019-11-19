@@ -29,7 +29,7 @@ class FalhaExport  implements FromArray
         $imovel =  Imovel::find($this->imovel);
 
         $sheets = array(0 => array('Imovel' => $imovel->nome,), 1 => array(''), 2 => array('EQP', 'Nome EQP', 'Imóvel',
-        'Nome Responsável', 'Apartemento', 'ID Funcional', 'Status','Data'),3 => array(''));
+        'Nome Responsável', 'Apartemento', 'ID Funcional', 'Status', 'Repetidor', 'Data'),3 => array(''));
 
         foreach ($this->falhas as $falha) {
         
@@ -41,7 +41,8 @@ class FalhaExport  implements FromArray
                         'Apartemento' => $falha->prumada->unidade->nome,
                         'ID Funcional' => $falha->prumada->funcional_id,
                         'Status' => $falha->status,
-                        'Data' => date('d/m/Y - H:i', strtotime($falha->created_at)),
+                        'Repetidor' => $falha->repetidor ?? 'Inesitente',
+                        'Data' => date('d/m/Y', strtotime($falha->created_at)),
                     );
 
                     array_push($sheets, $relatorio);

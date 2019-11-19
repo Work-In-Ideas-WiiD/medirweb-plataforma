@@ -14,8 +14,6 @@ class FalhaController extends Controller
     {
         $falhas = [];
 
-        
-
         if(app('defender')->hasRoles('Administrador'))
             $imoveis = Imovel::pluck('nome', 'id');
         else if(app('defender')->hasRoles(['Sindico', 'Secretário']))

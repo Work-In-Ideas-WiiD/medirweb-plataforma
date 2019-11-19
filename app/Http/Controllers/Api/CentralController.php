@@ -89,6 +89,7 @@ class CentralController extends Controller
             Falha::firstOrCreate([
                 "prumada_id" => $resp['FLH_IDPRU'],
                 "status" => $resp['FLH_STATUS'],
+                'repetidor' => $resp['FLH_IDREPETIDOR'] ?? null,
                 "created_at" => date('Y-m-d', strtotime($resp['created_at']) ),
                 "updated_at" => date('Y-m-d', strtotime($resp['updated_at']) ),
             ]);

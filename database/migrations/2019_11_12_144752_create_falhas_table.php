@@ -22,6 +22,7 @@ class CreateFalhasTable extends Migration
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('status', 50);
+            $table->string('repetidor', 50)->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
         });
