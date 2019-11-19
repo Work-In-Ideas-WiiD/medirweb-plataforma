@@ -238,11 +238,13 @@ return [
                     'text' => 'Consulta Consumo',
                     'icon' => 'tachometer',
                     'url'  => 'relatorio/consumo',
+                    
                 ],
                 [
                     'text' => 'Consulta Falhas',
                     'icon' => 'close',
                     'url'  => 'relatorio/falha',
+
                 ],
             ],
         ],
