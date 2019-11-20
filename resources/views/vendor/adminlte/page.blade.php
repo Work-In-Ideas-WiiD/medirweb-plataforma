@@ -83,13 +83,13 @@
                         <!-- Profile -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img class="user-image hoverZoomLink" alt="User Image" @if(isset(auth()->user()->foto)) src="{{ url('/upload/usuarios/'.auth()->user()->foto) }}" @else src="/upload/usuarios/user_default.png" @endif>
+                            <img class="user-image hoverZoomLink" alt="User Image" src="{{ auth()->user()->foto }}">
                                 <span class="hidden-xs">{{auth()->user()->name}}</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header">
-                                    <img class="img-circle" alt="User Image" @if(isset(auth()->user()->foto)) src="{{ url('/upload/usuarios/'.auth()->user()->foto) }}" @else src="/upload/usuarios/user_default.png" @endif>
+                                    <img class="img-circle" alt="User Image" src="{{ auth()->user()->foto }}">
 
                                     <p>
                                         {{auth()->user()->name}}
@@ -175,7 +175,7 @@
                 <!-- Sidebar user panel -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img class="img-circle hoverZoomLink" alt="User Image" @if(isset(auth()->user()->foto)) src="{{ url('/upload/usuarios/'.auth()->user()->foto) }}" @else src="/upload/usuarios/user_default.png" @endif>
+                        <img class="img-circle hoverZoomLink" alt="User Image" src="{{ auth()->user()->foto }}">
                     </div>
                     <div class="pull-left info">
                         <p>{{auth()->user()->name}}</p>
