@@ -48,6 +48,7 @@ class CentralController extends Controller
     {
         if (!$imovel)
             $imovel = Imovel::where('ip', $ip)->first();
+       
         
         $response = Curl::to('http://'.$imovel->host.'/leituras/')
         // $response = Curl::to('http://e80b8f2a.ngrok.io/leituras/')
