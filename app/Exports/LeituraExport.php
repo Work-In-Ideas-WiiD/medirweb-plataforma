@@ -31,7 +31,7 @@ class LeituraExport implements FromArray
     {
         $imovel =  Imovel::find($this->imovel);
 
-        $sheets = array(0 => array('Imovel' => $imovel->nome,), 1 => array(''), 2 => array('Nomes', 'Apartamentos', '# Hidrômetro',
+        $sheets = array(0 => array('Imovel' => $imovel->nome,), 1 => array(''), 2 => array('Nomes', 'Torre', 'Apartamentos', '# Hidrômetro',
         'Leitura Anterior', 'Leitura Atual', 'Consumo M³', 'Valor','Data leitura Anterior', 'Data leitura Atual'),3 => array(''));
 
         $unidades = Imovel::find($this->imovel)->unidade;
@@ -67,6 +67,7 @@ class LeituraExport implements FromArray
 
                     $relatorio = array(
                         'Nomes' => $unid->nome_responsavel,
+                        'Torre' => $unid->agrupamento->nome,
                         'Apartamentos' => $unid->nome,
                         '# Hidrômetro' => '#'.$prumada->funcional_id,
                         'Leitura Anterior' => $leituraAnterior->metro.' m³',
