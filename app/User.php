@@ -32,6 +32,15 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function getFotoAttribute($value)
+    {
+        if ($value) 
+            return url("/upload/usuarios/{$value}");
+
+        return url('upload/usuarios/user_default.png');
+
+    }
+
     public function roles(){
         return $this->belongsToMany(Role::class);
     }

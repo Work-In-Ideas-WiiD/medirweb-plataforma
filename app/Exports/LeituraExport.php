@@ -45,7 +45,7 @@ class LeituraExport implements FromArray
 
                 if(isset($leituraAnterior) && isset($leituraAtual))
                 {
-                    $consumo =  $leituraAtual->LEI_METRO - $leituraAnterior->LEI_METRO;
+                    $consumo =  $leituraAtual->metro - $leituraAnterior->metro;
 
                     if(empty($consumo)){
                         $consumo = 0;
@@ -68,7 +68,7 @@ class LeituraExport implements FromArray
                     $relatorio = array(
                         'Nomes' => $unid->nome_responsavel,
                         'Apartamentos' => $unid->nome,
-                        '# Hidrômetro' => '#'.$prumada->id,
+                        '# Hidrômetro' => '#'.$prumada->funcional_id,
                         'Leitura Anterior' => $leituraAnterior->metro.' m³',
                         'Leitura Atual' => $leituraAtual->metro.' m³',
                         'Consumo M³' => $consumo.' m³',
