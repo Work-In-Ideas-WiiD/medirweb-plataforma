@@ -23,6 +23,7 @@ class CreateAgrupamentosTable extends Migration
                 ->onDelete('cascade');
             $table->string('nome', 300)->nullable();
             $table->integer('repetidor_id')->nullable();
+            $table->integer('repetidor_segundo_id')->nullable();
             $table->softDeletesTz();
             $table->timestampsTz();
 

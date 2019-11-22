@@ -16,30 +16,55 @@ use Session, Curl;
 class CentralController extends Controller
 {
 
-    public function getPrumadas($ip)
+    public function getPrumadas($ip, $id = null)
     {
         $imovel = Imovel::with('unidade.prumada', 'unidade.agrupamento')->where('ip', '192.168.130.13')->first();
         
         $arrayPrumadas = array();
 
-        if ($imovel) {
-            foreach ($imovel->unidade as $unidade) {
-        
-                foreach ($unidade->prumada as $prumada) {
-
-                    if($prumada->funcional_id != ""){
-
-                        $dados['EQP_IDUNI'] = $unidade->id;
-                        $dados['EQP_IDPRU'] = $prumada->id;
-                        $dados['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
-                        $dados['EQP_BLOCO'] = $unidade->agrupamento->nome;
-                        $dados['EQP_IDREPETIDOR'] = $unidade->agrupamento->repetidor_id;
-
-                        array_push($arrayPrumadas, $dados);
+        if($id == 2)
+        {
+            if ($imovel) {
+                foreach ($imovel->unidade as $unidade) {
+            
+                    foreach ($unidade->prumada as $prumada) {
+    
+                        if($prumada->funcional_id != ""){
+    
+                            $dados['EQP_IDUNI'] = $unidade->id;
+                            $dados['EQP_IDPRU'] = $prumada->id;
+                            $dados['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
+                            $dados['EQP_BLOCO'] = $unidade->agrupamento->nome;
+                            $dados['EQP_IDREPETIDOR'] = $unidade->agrupamento->repetidor_segundo_id;
+    
+                            array_push($arrayPrumadas, $dados);
+                        }
                     }
                 }
             }
         }
+        else
+        {
+            if ($imovel) {
+                foreach ($imovel->unidade as $unidade) {
+            
+                    foreach ($unidade->prumada as $prumada) {
+    
+                        if($prumada->funcional_id != ""){
+    
+                            $dados['EQP_IDUNI'] = $unidade->id;
+                            $dados['EQP_IDPRU'] = $prumada->id;
+                            $dados['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
+                            $dados['EQP_BLOCO'] = $unidade->agrupamento->nome;
+                            $dados['EQP_IDREPETIDOR'] = $unidade->agrupamento->repetidor_id;
+    
+                            array_push($arrayPrumadas, $dados);
+                        }
+                    }
+                }
+            }
+        }
+        
 
         return response()->json(response()->make($arrayPrumadas), 200);
     }
