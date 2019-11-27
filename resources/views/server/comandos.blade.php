@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class='box-body'>
-                <div class="col-md-5">
+                <div class="col-md-6">
                     <div class='form-group'>
                         {{ Form::label('imovel_id', 'Imóvel') }}
                         {{ Form::select('imovel_id', $imoveis, old('imovel_id', $imovel->id ?? null), ['class' => 'avalidate form-control', 'required']) }}
@@ -33,12 +33,12 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-7">
+                <div class="col-md-6">
                     <div class='form-group'>
-                        {{ Form::label('funcional_id', 'ID funcional') }}
-                        {{ Form::text('funcional_id', old('funcional_id', $data->funcional_id ?? null), ['class' => 'avalidate form-control', 'required']) }}
+                        {{ Form::label('comando', 'Comando') }}
+                        {{ Form::select('comando', $comandos, old('comando'), ['class' => 'avalidate form-control', 'required', 'placeholder' => 'Escolha um comando']) }}
 
-                        @error('funcional_id')
+                        @error('comando')
                         <span class="help-block">
                             <strong style="color: red;">{{ $message }}</strong>
                         </span>
@@ -48,7 +48,7 @@
                 <div class="col-md-6">
                     <div class='form-group'>
                         {{ Form::label('repetidor_id', 'ID Repetidor') }}
-                        {{ Form::text('repetidor_id', old('repetidor_id', $data->repetidor_id ?? null), ['class' => 'avalidate form-control']) }}
+                        {{ Form::text('repetidor_id', old('repetidor_id', $data->repetidor_id ?? null), ['class' => 'avalidate form-control', 'required']) }}
 
                         @error('repetidor_id')
                         <span class="help-block">

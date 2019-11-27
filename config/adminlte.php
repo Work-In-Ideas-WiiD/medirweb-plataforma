@@ -177,6 +177,11 @@ return [
             'icon'    => 'info-circle',
             'submenu' => [
                 [
+                    'text' => 'Comandos',
+                    'icon' => 'dev',
+                    'url'  => 'server/comandos',
+                ],
+                [
                     'text' => 'Equipamentos',
                     'icon' => 'cog',
                     'url'  => 'timeline/equipamento/buscar',

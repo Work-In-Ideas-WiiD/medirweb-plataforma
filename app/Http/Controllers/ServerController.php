@@ -99,4 +99,18 @@ class ServerController extends Controller
             return back()->withError('Ocorreu um erro inesperado!');
         }
     }
+
+    public function comandos()
+    {
+        $imoveis = Imovel::pluck('nome', 'id');
+
+        $comandos = [
+            '01 0F 03 00 20 00 00' => 'ligar',
+            '01 0F 03 00 20 FF 00' => 'desligar',
+            '01 0F 03 00 17 00 01' => 'leitura pulso',
+            '01 0F 03 00 17 00 96' => 'set pulso'
+        ];
+
+        return view('server.comandos', compact('imoveis', 'comandos'));
+    }
 }
