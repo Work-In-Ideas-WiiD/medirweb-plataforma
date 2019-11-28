@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Server\ComandosRequest;
 use App\Http\Requests\Server\ProcessLocalTestRequest;
 use App\Http\Requests\Server\ProcessTestRequest;
 use App\Models\Imovel;
@@ -98,5 +99,28 @@ class ServerController extends Controller
 
             return back()->withError('Ocorreu um erro inesperado!');
         }
+    }
+
+    public function comandos()
+    {
+        $imoveis = Imovel::pluck('nome', 'id');
+
+        $comandos = [
+            '03 00 20 00 00' => 'ligar',
+            '03 00 20 FF 00' => 'desligar',
+            '03 00 17 00 01' => 'leitura pulso',
+            '03 00 17 00 96' => 'set pulso'
+        ];
+
+        return view('server.comandos', compact('imoveis', 'comandos'));
+    }
+
+    public function comandosPost(ComandosRequest $request)
+    {
+        $imovel = Imovel::whereNotNull('ip')->whereId($request->imovel_id)->first();
+
+        $response = Curl::to("http://{$imovel->host}/comandos/".dechex($request->repetidor_id).'/'.$request->comando)->get();
+
+        dd($response);
     }
 }

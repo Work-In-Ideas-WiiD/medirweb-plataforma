@@ -152,6 +152,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/server/test/local', 'ServerController@localTest')->middleware('permissao');
     Route::post('/server/test/local', 'ServerController@processLocalTest')->middleware('permissao');
+
+    Route::get('/server/comandos', 'ServerController@comandos')->middleware('permissao');
+    Route::post('/server/comandos', 'ServerController@comandosPost')->middleware('permissao');
     //Route::
     Route::get('importar/csv', 'TesteController@uploadCsv');
     
