@@ -10,7 +10,7 @@
 
 @section('content')
 
-{!! Form::open(['action' => 'ServerController@processLocalTest', 'method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
+{!! Form::open(['method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 <div class="col-md-12">
     <div class="row">
         <div class="box box-primary">
