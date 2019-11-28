@@ -42,7 +42,7 @@ class FalhaExport  implements FromArray
                         'Apartemento' => $falha->prumada->unidade->nome,
                         'ID Funcional' => $falha->prumada->funcional_id,
                         'Status' => $falha->status,
-                        'Repetidor' => $falha->repetidor ?? 'Inesitente',
+                        'Repetidor' => $falha->repetidor ?? 'Inexistente',
                         'Data' => date('d/m/Y', strtotime($falha->created_at)),
                     );
 
