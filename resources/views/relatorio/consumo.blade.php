@@ -110,6 +110,9 @@
                         <div class='box-body' style="text-align: center;">
                             <button type="submit" type="button" name="export" value="excel" class="btn-default btn" style="margin-top: 5px; font-size: 10px;"><i class="fa fa-save"></i> CSV</button>
                         </div>
+                        <div class='box-body' style="text-align: center;">
+                            <button type="submit" type="button" name="export" value="excel2" class="btn-default btn" style="margin-top: 5px; font-size: 10px;"><i class="fa fa-save"></i> CSV - Consolidada</button>
+                        </div>
                     </div>
                 </div>
 
