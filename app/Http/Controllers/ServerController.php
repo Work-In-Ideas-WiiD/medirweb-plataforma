@@ -119,7 +119,7 @@ class ServerController extends Controller
     {
         $imovel = Imovel::whereNotNull('ip')->whereId($request->imovel_id)->first();
 
-        $response = Curl::to("http://{$imovel->host}/comandos/".dechex($request->repetidor_id).'/'.$request->comando)->get();
+        $response = Curl::to("http://{$imovel->host}/comando/".dechex($request->repetidor_id).'/'.$request->comando)->get();
 
         dd($response);
     }
