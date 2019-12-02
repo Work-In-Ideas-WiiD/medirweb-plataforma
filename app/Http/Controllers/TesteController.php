@@ -499,7 +499,7 @@ class TesteController extends Controller
             {
                 $senha = str_replace(' ', '', $user->name);
 
-                dd($senha);
+                // dd($senha);
     
                 $user->update(['password' => bcrypt('medirweb'.$senha) ]);
             }
