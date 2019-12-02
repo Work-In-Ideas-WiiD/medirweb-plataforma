@@ -184,3 +184,5 @@ Route::get('downloads/central-medirweb', function () {
 
 
 Route::get('felicitta', 'TesteController@felicittaAtualizarEquipamentos');
+Route::get('felicitta_senha', 'TesteController@felicittaLogins');
+
