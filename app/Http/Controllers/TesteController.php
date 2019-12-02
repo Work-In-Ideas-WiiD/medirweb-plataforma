@@ -495,9 +495,14 @@ class TesteController extends Controller
 
         foreach($users as $user)
         {
-            $senha = str_replace(' ', '', $user->name);
+            if($user->id != 33)
+            {
+                $senha = str_replace(' ', '', $user->name);
 
-            $user->update(['password' => bcrypt($senha) ]);
+                dd($senha);
+    
+                $user->update(['password' => bcrypt('medirweb'.$senha) ]);
+            }
         }
 
         echo 'finalizou senhas';
