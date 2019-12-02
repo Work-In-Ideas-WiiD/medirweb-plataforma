@@ -106,10 +106,10 @@ class ServerController extends Controller
         $imoveis = Imovel::pluck('nome', 'id');
 
         $comandos = [
-            '03_00_20_00_00' => 'ligar',
-            '03_00_20_FF_00' => 'desligar',
+            '06_00_20_00_00' => 'ligar',
+            '06_00_20_FF_00' => 'desligar',
             '03_00_17_00_01' => 'leitura pulso',
-            '03_00_17_00_96' => 'set pulso'
+            '06_00_17_00_96' => 'set pulso'
         ];
 
         return view('server.comandos', compact('imoveis', 'comandos'));
