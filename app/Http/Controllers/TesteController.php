@@ -489,4 +489,23 @@ class TesteController extends Controller
     
     }
 
+    public function felicittaLogins()
+    {
+        $users = User::where('imovel_id', 15)->get();
+
+        foreach($users as $user)
+        {
+            if($user->id != 33)
+            {
+                $senha = str_replace(' ', '', $user->name);
+
+                // dd($senha);
+    
+                $user->update(['password' => bcrypt('medirweb'.$senha) ]);
+            }
+        }
+
+        echo 'finalizou senhas';
+    }
+
 }
