@@ -119,8 +119,15 @@ class ServerController extends Controller
     {
         $imovel = Imovel::whereNotNull('ip')->whereId($request->imovel_id)->first();
 
+        if ($request->comando == '06_00_17_00_96')
+            $request->comando = str_replace('96', dechex($request->pulsos), $request->comando);
+
+        
         $response = Curl::to("http://{$imovel->host}/comando/".dechex($request->repetidor_id).'/'.$request->comando)->get();
 
-        dd($response);
+        if (empty($response))
+            $response = ['status' => 'error', 'message' => 'ocorreu um erro desconhecido, tente novamente!'];
+
+        return back()->with('response', json_encode($response));
     }
 }

@@ -112,6 +112,25 @@
             
             });
         });
+
+
+        $('[name="comando"]').change(function(data) {
+            let comando = $(':selected', this).text()
+
+            if (comando == 'set pulso') {
+                $('.pulso2').show()
+                $('.pulso1').removeClass('col-md-6')
+                $('.pulso1').addClass('col-md-4')
+                $('.pulso3').removeClass('col-md-6')
+                $('.pulso3').addClass('col-md-4')
+            } else {
+                $('.pulso2').hide()
+                $('.pulso1').removeClass('col-md-4')
+                $('.pulso1').addClass('col-md-6')
+                $('.pulso3').removeClass('col-md-4')
+                $('.pulso3').addClass('col-md-6')
+            }
+        })
     });
  
       

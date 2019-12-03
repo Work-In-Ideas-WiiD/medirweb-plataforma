@@ -12,6 +12,9 @@
 
 {!! Form::open(['method' => 'POST', 'enctype' => 'multipart/form-data']) !!}
 <div class="col-md-12">
+    @if (session('response'))
+    <div class="row alert alert-info">{{ session('response') }}</div>
+    @endif
     <div class="row">
         <div class="box box-primary">
             <div class="box-header with-border">
@@ -45,9 +48,9 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 pulso1">
                     <div class='form-group'>
-                        {{ Form::label('repetidor_id', 'ID Repetidor') }}
+                        {{ Form::label('repetidor_id', 'Repetidor / Hidrômetro') }}
                         {{ Form::text('repetidor_id', old('repetidor_id', $data->repetidor_id ?? null), ['class' => 'avalidate form-control', 'required']) }}
 
                         @error('repetidor_id')
@@ -57,7 +60,19 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4 pulso2" style="display: none;">
+                    <div class='form-group'>
+                        {{ Form::label('pulsos', 'Quantidade de pulsos') }}
+                        {{ Form::number('pulsos', old('pulsos', $data->pulsos ?? null), ['class' => 'avalidate form-control', 'max' => 255, 'min' => 0]) }}
+
+                        @error('pulsos')
+                        <span class="help-block">
+                            <strong style="color: red;">{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6 pulso3">
                     <div class="form-group">
                         {{ Form::label('', '&nbsp;') }}
                         <button type="submit" type="button" style="width: 100% "class="btn btn-primary"><i class="fa fa-check"></i> Checar</button>
@@ -189,5 +204,4 @@
 </div>
 @endif
 
-<?php // FIM - Resultados ?>
 @stop

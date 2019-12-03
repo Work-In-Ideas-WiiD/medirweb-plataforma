@@ -27,6 +27,7 @@ class ComandosRequest extends FormRequest
             'imovel_id' => ['required', 'exists:imoveis,id'],
             'repetidor_id' => ['required', 'int', 'min:0'],
             'comando' => ['required', 'string'],
+            'pulsos' => ['nullable', 'int', 'min:0', 'max:255']
         ];
     }
 }
