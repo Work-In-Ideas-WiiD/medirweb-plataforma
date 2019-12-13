@@ -72,7 +72,7 @@ class RelatorioController extends Controller
             foreach ($hidromentros as $hidromentro) {
                 $leituraAnterior = $hidromentro->leitura()->where('created_at', '>=', $request->data_anterior)->orderBy('created_at')->first();
 
-                $leituraAtual = $hidromentro->leitura()->where('created_at', '<=', $request->data_atual)->orderByDesc('created_at')->first();
+                $leituraAtual = $hidromentro->leitura()->where('created_at', '<=', now())->orderByDesc('created_at')->first();
 
                 // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
                 if(!isset($leituraAnterior)) {
