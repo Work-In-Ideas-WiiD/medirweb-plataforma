@@ -387,7 +387,7 @@ class TesteController extends Controller
 
     public function felicittaAtualizarEquipamentos()
     {
-        $file = storage_path('app/csv/conferencia_equipamentos_felicitta.csv');
+        $file = storage_path('app/csv/lista_atualizada_hidrometros.csv');
         
         $csv = file_get_contents($file);
 
@@ -403,12 +403,12 @@ class TesteController extends Controller
 
     public function felicittaAtualizarEquipamentos2($line)
     {
+        $line = str_replace("\r", "", $line);
         $line = str_replace("\n", "", $line);
-        $line = explode(',"', $line);
+        $line = explode(';', $line);
         $line = array_map(function($string) {
             return str_replace('"', '', $string);
         }, $line);
-       // dd($line);
 
         //imovel_id ==  15
 
@@ -431,34 +431,81 @@ class TesteController extends Controller
         }
     }
 
+    public function exportJson()
+    {
+        $file = storage_path('app/csv/lista_hidrometros_repetidor.json');
 
-    public function felicittaAtualizarEquipamentos3($agrupamento, $unidade, $line)
+        $arquivo = file_get_contents($file);
+                
+        // Decodifica o formato JSON e retorna um Objeto
+        $json = json_decode($arquivo);
+
+        foreach($json as $registro):
+            
+            $agrupamento = Agrupamento::where(function($query) use ($registro) {
+                $query->where('imovel_id', 15)->where(DB::raw("abs(nome)"), abs($registro->BLC));
+            })->orWhere(function($query) use ($registro) {
+                $query->where('imovel_id', 15)->where('nome', "Bloco 0{$registro->BLC}");
+            })->first();
+
+            if ($agrupamento) {
+                $unidade = Unidade::with('prumada')->where('agrupamento_id', $agrupamento->id)->where('nome', $registro->Ap)->first();
+                if ($unidade) {
+                    $this->felicittaAtualizarEquipamentos3($agrupamento, $unidade, $registro);
+                } else {
+                    file_put_contents(storage_path('app/csv/erros_felicitta.json'), json_encode($registro).',', FILE_APPEND);
+                }
+            } else {
+                file_put_contents(storage_path('app/csv/erros_felicitta.json'), json_encode($registro).',', FILE_APPEND);
+            }
+
+         
+        endforeach;
+
+        // dd($json);
+        echo 'Export success!';
+
+    }
+
+    public function felicittaAtualizarEquipamentos3($agrupamento, $unidade, $registro)
     {
         DB::beginTransaction();
 
+        if($registro->Local == 'A. Serv.'){
+            $nome = 'Área social / cozinha';
+        }
+        elseif($registro->Local == 'Banho'){
+            $nome = 'Banheiro';
+        }
+
         $prumada1 = Prumada::updateOrCreate([
             'unidade_id' => $unidade->id,
-            'nome' => 'Área social / cozinha'
+            'nome' => $nome
         ], [
             'tipo' => 1,
             'unidade_id' => $unidade->id,
-            'nome' => 'Área social / cozinha',
-            'funcional_id' => $line[4]
+            'nome' => $nome,
+            'funcional_id' => $registro->ID_equip
+        ]);
+        // dd($unidade);
+
+        $unidade->update([
+            'repetidor_id' => $registro->Rep_ativo
         ]);
 
-        $prumada2 = Prumada::updateOrCreate([
-            'unidade_id' => $unidade->id,
-            'nome' => 'Banheiro'
-        ], [
-            'tipo' => 1,
-            'unidade_id' => $unidade->id,
-            'nome' => 'Banheiro',
-            'funcional_id' => $line[7]
-        ]);
+        // $prumada2 = Prumada::updateOrCreate([
+        //     'unidade_id' => $unidade->id,
+        //     'nome' => 'Banheiro'
+        // ], [
+        //     'tipo' => 1,
+        //     'unidade_id' => $unidade->id,
+        //     'nome' => 'Banheiro',
+        //     'funcional_id' => $line[7]
+        // ]);
 
-        $login = $this->felicittaCriarLogins($unidade->imovel_id, $agrupamento->nome, $unidade);
+        // $login = $this->felicittaCriarLogins($unidade->imovel_id, $agrupamento->nome, $unidade);
 
-        if ($prumada1 and $prumada2 and $login) {
+        if ($prumada1) {
             DB::commit();
             return true;
         }
