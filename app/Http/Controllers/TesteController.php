@@ -19,6 +19,7 @@ use App\Models\FaturaUnidade;
 use App\Models\Prumada;
 use App\Models\Leitura;
 use App\Models\Timeline;
+use Carbon\Carbon;
 
 
 class TesteController extends Controller
@@ -89,8 +90,12 @@ class TesteController extends Controller
     }
 
     function teste()
-    {
-    
+    {   
+        $data = '2019-12-23';
+
+        $resut = Carbon::parse(strtotime($data))->month;
+        dd( $resut);
+
         //Migrar Pais
         Pais::firstOrCreate([
             'nome' => 'Brasil',
@@ -433,7 +438,7 @@ class TesteController extends Controller
 
     public function exportJson()
     {
-        $file = storage_path('app/csv/lista_hidrometros_repetidor.json');
+        $file = storage_path('app/csv/lista_hidrometros_repetidor_novo.json');
 
         $arquivo = file_get_contents($file);
                 

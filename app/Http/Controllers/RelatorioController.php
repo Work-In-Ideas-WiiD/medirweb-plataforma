@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\LeituraExport;
 use App\Exports\LeituraConsolidadaExport;
 use App\Charts\ConsumoCharts;
+use App\Exports\LeituraAdminExport;
 use DatePeriod;
 use DateTime;
 use DateInterval;
@@ -75,6 +76,10 @@ class RelatorioController extends Controller
         }
         // FIM - VALIDAÇÃO CAMPO IMOVEL
 
+        // SUBMIT "EXPORTAR EXCEL LEITURA CONSOLIDADA ADMINISTRADORA"
+        if($request->export == "excel3"){
+            return Excel::download(new LeituraAdminExport($request->imovel_id, $request->CONSUMO_DATA_ANTERIOR, $request->CONSUMO_DATA_ATUAL), 'relatorio_leitura_consolida_administradora.xlsx');
+        }
         
         // SUBMIT "EXPORTAR EXCEL LEITURA CONSOLIDADA"
         if($request->export == "excel2"){

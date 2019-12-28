@@ -187,3 +187,5 @@ Route::get('felicitta', 'TesteController@felicittaAtualizarEquipamentos');
 Route::get('felicitta_senha', 'TesteController@felicittaLogins');
 
 Route::get('felicitta_ajuste', 'TesteController@exportJson');
+
+Route::get('teste_data', 'TesteController@teste');
