@@ -35,7 +35,7 @@ class LeituraConsolidadaExport implements FromArray
     {
         $datas = new DatePeriod(new DateTime($this->dataAnterior), new DateInterval('P1D'), date_modify( new DateTime($this->dataAtual), '+1 day'));
 
-        $datas_relatorio = array(' ', ' ', ' ', ' ');
+        $datas_relatorio = array(' ', ' ', ' ', ' ', ' ');
 
         foreach($datas as $data) {
             array_push($datas_relatorio, $data->format('d/m/Y'));
