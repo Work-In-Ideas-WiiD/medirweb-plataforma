@@ -43,7 +43,7 @@ class LeituraConsolidadaExport implements FromArray
 
         $imovel =  Imovel::find($this->imovel);
 
-        $sheets = array(0 => array('Imovel' => $imovel->nome,), 1 => array('Leituras Consolidadas por Período'), 2 => array(''), 3 => array('Nomes', 'Torre', 'Apartamentos', '# Hidrômetro', 'Leituras'), 4 => $datas_relatorio);
+        $sheets = array(0 => array('Imovel' => $imovel->nome,), 1 => array('Leituras Consolidadas por Período'), 2 => array(''), 3 => array('Nomes', 'Torre', 'Apartamentos', '# Hidrômetro', 'Repetidor', 'Leituras'), 4 => $datas_relatorio);
 
         $unidades = Imovel::find($this->imovel)->unidade;
         foreach ($unidades as $unid) {
@@ -56,6 +56,7 @@ class LeituraConsolidadaExport implements FromArray
                     'Torre' => $unid->agrupamento->nome,
                     'Apartamentos' => $unid->nome,
                     '# Hidrômetro' => $prumada->funcional_id,
+                    'Repetidor' => $unid->repetidor_id,
                 );
 
                 foreach($datas as $data) {
