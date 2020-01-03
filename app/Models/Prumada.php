@@ -21,6 +21,14 @@ class Prumada extends Model
 		]);
 	}
 
+    public function getRepetidorAttribute()
+    {
+        if (!empty($this->repetidor_id))
+            $repetidor = "/".dechex($this->repetidor_id);
+
+        return $repetidor ?? '';
+    }
+    
     public function leitura()
     {
         return $this->hasMany(Leitura::class);

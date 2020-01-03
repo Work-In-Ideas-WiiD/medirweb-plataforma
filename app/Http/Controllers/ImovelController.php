@@ -628,7 +628,7 @@ class ImovelController extends Controller
         }
 
         $response = Curl::to(
-            "http://{$prumada->unidade->imovel->host}/api/leitura/".dechex($prumada->funcional_id).$prumada->unidade->agrupamento->repetidor
+            "http://{$prumada->unidade->imovel->host}/api/leitura/".dechex($prumada->funcional_id).$prumada->repetidor
         )->get();
         
         $leitura = converter_leitura($prumada->funcional_id, $response ?? [], $response ?? []);
