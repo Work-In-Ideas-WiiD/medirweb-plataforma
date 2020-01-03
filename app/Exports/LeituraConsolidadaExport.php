@@ -56,7 +56,7 @@ class LeituraConsolidadaExport implements FromArray
                     'Torre' => $unid->agrupamento->nome,
                     'Apartamentos' => $unid->nome,
                     '# Hidrômetro' => $prumada->funcional_id,
-                    'Repetidor' => $unid->repetidor_id,
+                    'Repetidor' => $prumada->repetidor_id,
                 );
 
                 foreach($datas as $data) {
