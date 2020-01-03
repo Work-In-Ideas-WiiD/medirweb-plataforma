@@ -33,7 +33,7 @@ class CentralController extends Controller
                         $dados['EQP_IDPRU'] = $prumada->id;
                         $dados['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
                         $dados['EQP_BLOCO'] = $unidade->agrupamento->nome;
-                        $dados['EQP_IDREPETIDOR'] = $unidade->repetidor_id;
+                        $dados['EQP_IDREPETIDOR'] = $prumada->repetidor_id;
 
                         array_push($arrayPrumadas, $dados);
                     }

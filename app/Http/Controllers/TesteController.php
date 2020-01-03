@@ -443,7 +443,9 @@ class TesteController extends Controller
         $arquivo = file_get_contents($file);
                 
         // Decodifica o formato JSON e retorna um Objeto
-        $json = json_decode($arquivo);
+        $json = json_decode($arquivo); 
+
+        // dd($json);
 
         foreach($json as $registro):
             
@@ -458,10 +460,10 @@ class TesteController extends Controller
                 if ($unidade) {
                     $this->felicittaAtualizarEquipamentos3($agrupamento, $unidade, $registro);
                 } else {
-                    file_put_contents(storage_path('app/csv/erros_felicitta.json'), json_encode($registro).',', FILE_APPEND);
+                    file_put_contents(storage_path('app/csv/erros_felicitta.json'), json_encode($registro, true).',', FILE_APPEND);
                 }
             } else {
-                file_put_contents(storage_path('app/csv/erros_felicitta.json'), json_encode($registro).',', FILE_APPEND);
+                file_put_contents(storage_path('app/csv/erros_felicitta.json'), json_encode($registro, true).',', FILE_APPEND);
             }
 
          
@@ -474,7 +476,7 @@ class TesteController extends Controller
 
     public function felicittaAtualizarEquipamentos3($agrupamento, $unidade, $registro)
     {
-        DB::beginTransaction();
+        // DB::beginTransaction();
 
         if($registro->Local == 'A. Serv.'){
             $nome = 'Área social / cozinha';
@@ -490,13 +492,22 @@ class TesteController extends Controller
             'tipo' => 1,
             'unidade_id' => $unidade->id,
             'nome' => $nome,
-            'funcional_id' => $registro->ID_equip
+            'funcional_id' => $registro->ID_equip,
+            'repetidor_id' => $registro->Rep_ativo,
         ]);
-        // dd($unidade);
 
-        $unidade->update([
-            'repetidor_id' => $registro->Rep_ativo
-        ]);
+    //    $unidade->update([
+    //         'repetidor_id' => $registro->Rep_ativo
+    //     ]);
+
+    //     if ($unidade->repetidor_id != $registro->Rep_ativo) {
+    //         DB::statement("UPDATE unidades SET repetidor_id = {$registro->Rep_ativo} where id = {$unidade->id}");
+    //     }
+        // // return $teste;
+        // if($unidade->id == 443)
+        // {
+        //     dd($unidade, $registro, $teste);
+        // }
 
         // $prumada2 = Prumada::updateOrCreate([
         //     'unidade_id' => $unidade->id,
@@ -510,12 +521,14 @@ class TesteController extends Controller
 
         // $login = $this->felicittaCriarLogins($unidade->imovel_id, $agrupamento->nome, $unidade);
 
-        if ($prumada1) {
-            DB::commit();
-            return true;
-        }
+        // if ($prumada1) {
+        //     DB::commit();
+        //     return true;
+        // }
 
-        DB::rollback();
+        // dd($registro);
+
+        // DB::rollback();
     }
 
 
