@@ -29,5 +29,4 @@ class Leitura extends Model
             ->orderBy('unidades.UNI_NOME', 'asc')
             ->get();
     }
-
 }

@@ -573,4 +573,17 @@ class TesteController extends Controller
         echo 'finalizou senhas';
     }
 
+
+    public function teste_relatorio()
+    {
+        $prumada = Prumada::find(1428);
+        
+        $data = Carbon::parse('2020-01-01');
+
+        $horas = [8, 12];
+
+        dd(
+            $prumada->leitura_ciclica($data, $horas)
+        );
+    }
 }
