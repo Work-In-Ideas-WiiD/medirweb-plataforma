@@ -580,10 +580,14 @@ class TesteController extends Controller
         
         $data = Carbon::parse('2020-01-01');
 
-        $horas = [8, 12];
+        $horas = [8, 12, 15, 20, 0];
+
+
+        $result = $prumada->leitura_ciclica($data, $horas, ['id', 'litro', 'metro']);
 
         dd(
-            $prumada->leitura_ciclica($data, $horas)
+            $result,
+            $result[12]->litro //exemplo de consulta de litro da hora 8
         );
     }
 }
