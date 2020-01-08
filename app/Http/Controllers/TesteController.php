@@ -91,7 +91,8 @@ class TesteController extends Controller
 
     function teste()
     {   
-        $data = '2019-12-23';
+        $data = now()->format('Y-m-d');
+        dd($data);
 
         $resut = Carbon::parse(strtotime($data))->month;
         dd( $resut);
