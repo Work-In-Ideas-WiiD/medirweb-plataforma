@@ -192,3 +192,5 @@ Route::get('teste_data', 'TesteController@teste');
 
 
 Route::get('teste_relatorio', 'TesteController@teste_relatorio');
+
+Route::get('relatorio_fatura_unidade', 'TesteController@relatorio_fatura_unidade');

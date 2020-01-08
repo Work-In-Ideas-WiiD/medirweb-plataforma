@@ -591,4 +591,37 @@ class TesteController extends Controller
             $result[12]->litro //exemplo de consulta de litro da hora 8
         );
     }
+
+
+    public function relatorio_fatura_unidade()
+    {
+        $json = storage_path('app/json/leitura_administradora.json');
+
+        $json = json_decode(file_get_contents($json));
+
+        foreach ($json as $info) {
+            $agrupamento = Agrupamento::where('imovel_id', 15)->where(DB::raw('abs(nome)'), $info->bloco)->first();
+
+            if ($agrupamento) {
+                $unidade = $agrupamento->unidade()->with('prumada')->where('nome', $info->unidade)->first();
+
+                $prumada = $unidade->prumada[0];
+
+
+                FaturaUnidade::firstOrCreate([
+                    'unidade_id' => $unidade->id,
+                    'fatura_id' => 11,
+                    'prumada_valor' => ($info->leitura_atual - $info->leitura_anterior) * 10,
+                    'prumada_id' => $prumada->id,
+                    'prumada_consumo' => $info->leitura_atual - $info->leitura_anterior,
+                    'prumada_leitura_anterior' => $info->leitura_anterior,
+                    'prumada_leitura_atual' => $info->leitura_atual,
+                    'prumada_data_leitura_anterior' => '2019-11-30',
+                    'prumada_data_leitura_atual' => '2019-12-31',
+                ]);
+            }      
+        }
+
+        return 'faturas unidades criadas';
+    }
 }
