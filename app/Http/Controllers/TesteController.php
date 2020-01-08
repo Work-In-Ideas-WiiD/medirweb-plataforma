@@ -91,7 +91,8 @@ class TesteController extends Controller
 
     function teste()
     {   
-        $data = '2019-12-23';
+        $data = now()->format('Y-m-d');
+        dd($data);
 
         $resut = Carbon::parse(strtotime($data))->month;
         dd( $resut);
@@ -573,4 +574,21 @@ class TesteController extends Controller
         echo 'finalizou senhas';
     }
 
+
+    public function teste_relatorio()
+    {
+        $prumada = Prumada::find(1428);
+        
+        $data = Carbon::parse('2020-01-01');
+
+        $horas = [8, 12, 15, 20, 0];
+
+
+        $result = $prumada->leitura_ciclica($data, $horas, ['id', 'litro', 'metro']);
+
+        dd(
+            $result,
+            $result[12]->litro //exemplo de consulta de litro da hora 8
+        );
+    }
 }

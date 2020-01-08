@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use DB, Carbon\Carbon;
 
 
 class Prumada extends Model
@@ -55,4 +56,35 @@ class Prumada extends Model
             ->join('imoveis', 'imoveis.id', '=', 'unidades.imovel_id')
             ->where('imoveis.id', $value)->get();
     }
+
+
+    public function leituraAt($data, $hora)
+    {
+        /*echo '<pre>';
+        print_r($data, $hora);
+*/
+        #a data sempre vem como 00:00 horas
+        $data_inicial = Carbon::parse($data->format('Y-m-d'))->addHours($hora);
+
+        $data_final = Carbon::parse($data->format('Y-m-d'))
+            ->addHours($hora)->addMinutes(59)->addSeconds(59);
+
+        return $this->hasMany(Leitura::class)->whereBetween('created_at', [
+            $data_inicial,
+            $data_final,
+        ]);
+
+    }
+
+    public function leitura_ciclica($data, $horas = [], $colunas = ['metro'])
+    {
+        $leituras = [];
+
+        foreach ($horas as $hora) {
+            $leituras[$hora] = $this->leituraAt($data, $hora)->select($colunas)->first();
+        }
+
+        return $leituras;
+    }
+
 }
