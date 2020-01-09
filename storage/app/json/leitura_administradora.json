@@ -1,0 +1,1160 @@
+[
+  {
+    "unidade": 101,
+    "bloco": "01",
+    "leitura_anterior": 30,
+    "leitura_atual": 38
+  },
+  {
+    "unidade": 102,
+    "bloco": "01",
+    "leitura_anterior": 8,
+    "leitura_atual": 16
+  },
+  {
+    "unidade": 103,
+    "bloco": "01",
+    "leitura_anterior": 6,
+    "leitura_atual": 22
+  },
+  {
+    "unidade": 104,
+    "bloco": "01",
+    "leitura_anterior": 121,
+    "leitura_atual": 140
+  },
+  {
+    "unidade": 201,
+    "bloco": "01",
+    "leitura_anterior": 29,
+    "leitura_atual": 35
+  },
+  {
+    "unidade": 202,
+    "bloco": "01",
+    "leitura_anterior": 12,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 203,
+    "bloco": "01",
+    "leitura_anterior": 29,
+    "leitura_atual": 39
+  },
+  {
+    "unidade": 204,
+    "bloco": "01",
+    "leitura_anterior": 1,
+    "leitura_atual": 13
+  },
+  {
+    "unidade": 301,
+    "bloco": "01",
+    "leitura_anterior": 23,
+    "leitura_atual": 40
+  },
+  {
+    "unidade": 302,
+    "bloco": "01",
+    "leitura_anterior": 87,
+    "leitura_atual": 91
+  },
+  {
+    "unidade": 303,
+    "bloco": "01",
+    "leitura_anterior": 10,
+    "leitura_atual": 20
+  },
+  {
+    "unidade": 304,
+    "bloco": "01",
+    "leitura_anterior": 0,
+    "leitura_atual": 4
+  },
+  {
+    "unidade": 401,
+    "bloco": "01",
+    "leitura_anterior": 22,
+    "leitura_atual": 26
+  },
+  {
+    "unidade": 402,
+    "bloco": "01",
+    "leitura_anterior": 10,
+    "leitura_atual": 20
+  },
+  {
+    "unidade": 403,
+    "bloco": "01",
+    "leitura_anterior": 9,
+    "leitura_atual": 19
+  },
+  {
+    "unidade": 404,
+    "bloco": "01",
+    "leitura_anterior": 41,
+    "leitura_atual": 52
+  },
+  {
+    "unidade": 101,
+    "bloco": "02",
+    "leitura_anterior": 20,
+    "leitura_atual": 23
+  },
+  {
+    "unidade": 102,
+    "bloco": "02",
+    "leitura_anterior": 20,
+    "leitura_atual": 24
+  },
+  {
+    "unidade": 103,
+    "bloco": "02",
+    "leitura_anterior": 12,
+    "leitura_atual": 22
+  },
+  {
+    "unidade": 104,
+    "bloco": "02",
+    "leitura_anterior": 0,
+    "leitura_atual": 4
+  },
+  {
+    "unidade": 201,
+    "bloco": "02",
+    "leitura_anterior": 12,
+    "leitura_atual": 20
+  },
+  {
+    "unidade": 202,
+    "bloco": "02",
+    "leitura_anterior": 1,
+    "leitura_atual": 4
+  },
+  {
+    "unidade": 203,
+    "bloco": "02",
+    "leitura_anterior": 29,
+    "leitura_atual": 39
+  },
+  {
+    "unidade": 204,
+    "bloco": "02",
+    "leitura_anterior": 6,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 301,
+    "bloco": "02",
+    "leitura_anterior": 10,
+    "leitura_atual": 14
+  },
+  {
+    "unidade": 302,
+    "bloco": "02",
+    "leitura_anterior": 22,
+    "leitura_atual": 26
+  },
+  {
+    "unidade": 303,
+    "bloco": "02",
+    "leitura_anterior": 8,
+    "leitura_atual": 21
+  },
+  {
+    "unidade": 304,
+    "bloco": "02",
+    "leitura_anterior": 28,
+    "leitura_atual": 42
+  },
+  {
+    "unidade": 401,
+    "bloco": "02",
+    "leitura_anterior": 14,
+    "leitura_atual": 24
+  },
+  {
+    "unidade": 402,
+    "bloco": "02",
+    "leitura_anterior": 24,
+    "leitura_atual": 36
+  },
+  {
+    "unidade": 403,
+    "bloco": "02",
+    "leitura_anterior": 8,
+    "leitura_atual": 11
+  },
+  {
+    "unidade": 404,
+    "bloco": "02",
+    "leitura_anterior": 17,
+    "leitura_atual": 31
+  },
+  {
+    "unidade": 101,
+    "bloco": "03",
+    "leitura_anterior": 21,
+    "leitura_atual": 27
+  },
+  {
+    "unidade": 102,
+    "bloco": "03",
+    "leitura_anterior": 37,
+    "leitura_atual": 56
+  },
+  {
+    "unidade": 103,
+    "bloco": "03",
+    "leitura_anterior": 0,
+    "leitura_atual": 3
+  },
+  {
+    "unidade": 104,
+    "bloco": "03",
+    "leitura_anterior": 10,
+    "leitura_atual": 13
+  },
+  {
+    "unidade": 201,
+    "bloco": "03",
+    "leitura_anterior": 55,
+    "leitura_atual": 58
+  },
+  {
+    "unidade": 202,
+    "bloco": "03",
+    "leitura_anterior": 39,
+    "leitura_atual": 47
+  },
+  {
+    "unidade": 203,
+    "bloco": "03",
+    "leitura_anterior": 12,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 204,
+    "bloco": "03",
+    "leitura_anterior": 10,
+    "leitura_atual": 20
+  },
+  {
+    "unidade": 301,
+    "bloco": "03",
+    "leitura_anterior": 4,
+    "leitura_atual": 12
+  },
+  {
+    "unidade": 302,
+    "bloco": "03",
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 303,
+    "bloco": "03",
+    "leitura_anterior": 14,
+    "leitura_atual": 26
+  },
+  {
+    "unidade": 304,
+    "bloco": "03",
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 401,
+    "bloco": "03",
+    "leitura_anterior": 46,
+    "leitura_atual": 49
+  },
+  {
+    "unidade": 402,
+    "bloco": "03",
+    "leitura_anterior": 36,
+    "leitura_atual": 48
+  },
+  {
+    "unidade": 403,
+    "bloco": "03",
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 404,
+    "bloco": "03",
+    "leitura_anterior": 8,
+    "leitura_atual": 18
+  },
+  {
+    "unidade": 101,
+    "bloco": "04",
+    "leitura_anterior": 3,
+    "leitura_atual": 7
+  },
+  {
+    "unidade": 102,
+    "bloco": "04",
+    "leitura_anterior": 21,
+    "leitura_atual": 33
+  },
+  {
+    "unidade": 103,
+    "bloco": "04",
+    "leitura_anterior": 0,
+    "leitura_atual": 8
+  },
+  {
+    "unidade": 104,
+    "bloco": "04",
+    "leitura_anterior": 10,
+    "leitura_atual": 16
+  },
+  {
+    "unidade": 201,
+    "bloco": "04",
+    "leitura_anterior": 16,
+    "leitura_atual": 28
+  },
+  {
+    "unidade": 202,
+    "bloco": "04",
+    "leitura_anterior": 5,
+    "leitura_atual": 13
+  },
+  {
+    "unidade": 203,
+    "bloco": "04",
+    "leitura_anterior": 19,
+    "leitura_atual": 32
+  },
+  {
+    "unidade": 204,
+    "bloco": "04",
+    "leitura_anterior": 11,
+    "leitura_atual": 17
+  },
+  {
+    "unidade": 301,
+    "bloco": "04",
+    "leitura_anterior": 12,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 302,
+    "bloco": "04",
+    "leitura_anterior": 0,
+    "leitura_atual": 8
+  },
+  {
+    "unidade": 303,
+    "bloco": "04",
+    "leitura_anterior": 12,
+    "leitura_atual": 20
+  },
+  {
+    "unidade": 304,
+    "bloco": "04",
+    "leitura_anterior": 41,
+    "leitura_atual": 57
+  },
+  {
+    "unidade": 401,
+    "bloco": "04",
+    "leitura_anterior": 0,
+    "leitura_atual": 4
+  },
+  {
+    "unidade": 402,
+    "bloco": "04",
+    "leitura_anterior": 3,
+    "leitura_atual": 6
+  },
+  {
+    "unidade": 403,
+    "bloco": "04",
+    "leitura_anterior": 4,
+    "leitura_atual": 8
+  },
+  {
+    "unidade": 404,
+    "bloco": "04",
+    "leitura_anterior": 1,
+    "leitura_atual": 4
+  },
+  {
+    "unidade": 101,
+    "bloco": "05",
+    "leitura_anterior": 9,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 102,
+    "bloco": "05",
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 103,
+    "bloco": "05",
+    "leitura_anterior": 14,
+    "leitura_atual": 24
+  },
+  {
+    "unidade": 104,
+    "bloco": "05",
+    "leitura_anterior": 1,
+    "leitura_atual": 4
+  },
+  {
+    "unidade": 201,
+    "bloco": "05",
+    "leitura_anterior": 0,
+    "leitura_atual": 3
+  },
+  {
+    "unidade": 202,
+    "bloco": "05",
+    "leitura_anterior": 2,
+    "leitura_atual": 6
+  },
+  {
+    "unidade": 203,
+    "bloco": "05",
+    "leitura_anterior": 19,
+    "leitura_atual": 38
+  },
+  {
+    "unidade": 204,
+    "bloco": "05",
+    "leitura_anterior": 1,
+    "leitura_atual": 9
+  },
+  {
+    "unidade": 301,
+    "bloco": "05",
+    "leitura_anterior": 43,
+    "leitura_atual": 62
+  },
+  {
+    "unidade": 302,
+    "bloco": "05",
+    "leitura_anterior": 8,
+    "leitura_atual": 16
+  },
+  {
+    "unidade": 303,
+    "bloco": "05",
+    "leitura_anterior": 33,
+    "leitura_atual": 47
+  },
+  {
+    "unidade": 304,
+    "bloco": "05",
+    "leitura_anterior": 4,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 401,
+    "bloco": "05",
+    "leitura_anterior": 1,
+    "leitura_atual": 4
+  },
+  {
+    "unidade": 402,
+    "bloco": "05",
+    "leitura_anterior": 13,
+    "leitura_atual": 27
+  },
+  {
+    "unidade": 403,
+    "bloco": "05",
+    "leitura_anterior": 20,
+    "leitura_atual": 37
+  },
+  {
+    "unidade": 404,
+    "bloco": "05",
+    "leitura_anterior": 11,
+    "leitura_atual": 17
+  },
+  {
+    "unidade": 101,
+    "bloco": "06",
+    "leitura_anterior": 21,
+    "leitura_atual": 29
+  },
+  {
+    "unidade": 102,
+    "bloco": "06",
+    "leitura_anterior": 0,
+    "leitura_atual": 4
+  },
+  {
+    "unidade": 103,
+    "bloco": "06",
+    "leitura_anterior": 17,
+    "leitura_atual": 25
+  },
+  {
+    "unidade": 104,
+    "bloco": "06",
+    "leitura_anterior": 7,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 201,
+    "bloco": "06",
+    "leitura_anterior": 24,
+    "leitura_atual": 36
+  },
+  {
+    "unidade": 202,
+    "bloco": "06",
+    "leitura_anterior": 46,
+    "leitura_atual": 63
+  },
+  {
+    "unidade": 203,
+    "bloco": "06",
+    "leitura_anterior": 36,
+    "leitura_atual": 55
+  },
+  {
+    "unidade": 204,
+    "bloco": "06",
+    "leitura_anterior": 6,
+    "leitura_atual": 12
+  },
+  {
+    "unidade": 301,
+    "bloco": "06",
+    "leitura_anterior": 0,
+    "leitura_atual": 3
+  },
+  {
+    "unidade": 302,
+    "bloco": "06",
+    "leitura_anterior": 9,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 303,
+    "bloco": "06",
+    "leitura_anterior": 0,
+    "leitura_atual": 8
+  },
+  {
+    "unidade": 304,
+    "bloco": "06",
+    "leitura_anterior": 12,
+    "leitura_atual": 16
+  },
+  {
+    "unidade": 401,
+    "bloco": "06",
+    "leitura_anterior": 31,
+    "leitura_atual": 46
+  },
+  {
+    "unidade": 402,
+    "bloco": "06",
+    "leitura_anterior": 33,
+    "leitura_atual": 52
+  },
+  {
+    "unidade": 403,
+    "bloco": "06",
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 404,
+    "bloco": "06",
+    "leitura_anterior": 8,
+    "leitura_atual": 20
+  },
+  {
+    "unidade": 101,
+    "bloco": "07",
+    "leitura_anterior": 19,
+    "leitura_atual": 27
+  },
+  {
+    "unidade": 102,
+    "bloco": "07",
+    "leitura_anterior": 23,
+    "leitura_atual": 33
+  },
+  {
+    "unidade": 103,
+    "bloco": "07",
+    "leitura_anterior": 0,
+    "leitura_atual": 3
+  },
+  {
+    "unidade": 104,
+    "bloco": "07",
+    "leitura_anterior": 8,
+    "leitura_atual": 14
+  },
+  {
+    "unidade": 201,
+    "bloco": "07",
+    "leitura_anterior": 7,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 202,
+    "bloco": "07",
+    "leitura_anterior": 10,
+    "leitura_atual": 14
+  },
+  {
+    "unidade": 203,
+    "bloco": "07",
+    "leitura_anterior": 11,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 204,
+    "bloco": "07",
+    "leitura_anterior": 0,
+    "leitura_atual": 8
+  },
+  {
+    "unidade": 301,
+    "bloco": "07",
+    "leitura_anterior": 34,
+    "leitura_atual": 46
+  },
+  {
+    "unidade": 302,
+    "bloco": "07",
+    "leitura_anterior": 9,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 303,
+    "bloco": "07",
+    "leitura_anterior": 9,
+    "leitura_atual": 21
+  },
+  {
+    "unidade": 304,
+    "bloco": "07",
+    "leitura_anterior": 21,
+    "leitura_atual": 37
+  },
+  {
+    "unidade": 401,
+    "bloco": "07",
+    "leitura_anterior": 3,
+    "leitura_atual": 16
+  },
+  {
+    "unidade": 402,
+    "bloco": "07",
+    "leitura_anterior": 19,
+    "leitura_atual": 23
+  },
+  {
+    "unidade": 403,
+    "bloco": "07",
+    "leitura_anterior": 20,
+    "leitura_atual": 35
+  },
+  {
+    "unidade": 404,
+    "bloco": "07",
+    "leitura_anterior": 29,
+    "leitura_atual": 43
+  },
+  {
+    "unidade": 101,
+    "bloco": "08",
+    "leitura_anterior": 21,
+    "leitura_atual": 29
+  },
+  {
+    "unidade": 102,
+    "bloco": "08",
+    "leitura_anterior": 11,
+    "leitura_atual": 19
+  },
+  {
+    "unidade": 103,
+    "bloco": "08",
+    "leitura_anterior": 41,
+    "leitura_atual": 60
+  },
+  {
+    "unidade": 104,
+    "bloco": "08",
+    "leitura_anterior": 56,
+    "leitura_atual": 75
+  },
+  {
+    "unidade": 201,
+    "bloco": "08",
+    "leitura_anterior": 3,
+    "leitura_atual": 6
+  },
+  {
+    "unidade": 202,
+    "bloco": "08",
+    "leitura_anterior": 34,
+    "leitura_atual": 51
+  },
+  {
+    "unidade": 203,
+    "bloco": "08",
+    "leitura_anterior": 19,
+    "leitura_atual": 33
+  },
+  {
+    "unidade": 204,
+    "bloco": "08",
+    "leitura_anterior": 20,
+    "leitura_atual": 24
+  },
+  {
+    "unidade": 301,
+    "bloco": "08",
+    "leitura_anterior": 4,
+    "leitura_atual": 12
+  },
+  {
+    "unidade": 302,
+    "bloco": "08",
+    "leitura_anterior": 6,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 303,
+    "bloco": "08",
+    "leitura_anterior": 3,
+    "leitura_atual": 7
+  },
+  {
+    "unidade": 304,
+    "bloco": "08",
+    "leitura_anterior": 4,
+    "leitura_atual": 17
+  },
+  {
+    "unidade": 401,
+    "bloco": "08",
+    "leitura_anterior": 23,
+    "leitura_atual": 29
+  },
+  {
+    "unidade": 402,
+    "bloco": "08",
+    "leitura_anterior": 4,
+    "leitura_atual": 7
+  },
+  {
+    "unidade": 403,
+    "bloco": "08",
+    "leitura_anterior": 0,
+    "leitura_atual": 8
+  },
+  {
+    "unidade": 404,
+    "bloco": "08",
+    "leitura_anterior": 5,
+    "leitura_atual": 9
+  },
+  {
+    "unidade": 101,
+    "bloco": "09",
+    "leitura_anterior": 23,
+    "leitura_atual": 31
+  },
+  {
+    "unidade": 102,
+    "bloco": "09",
+    "leitura_anterior": 9,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 103,
+    "bloco": "09",
+    "leitura_anterior": 16,
+    "leitura_atual": 26
+  },
+  {
+    "unidade": 104,
+    "bloco": "09",
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 201,
+    "bloco": "09",
+    "leitura_anterior": 23,
+    "leitura_atual": 33
+  },
+  {
+    "unidade": 202,
+    "bloco": "09",
+    "leitura_anterior": 24,
+    "leitura_atual": 41
+  },
+  {
+    "unidade": 203,
+    "bloco": "09",
+    "leitura_anterior": 9,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 204,
+    "bloco": "09",
+    "leitura_anterior": 4,
+    "leitura_atual": 8
+  },
+  {
+    "unidade": 301,
+    "bloco": "09",
+    "leitura_anterior": 13,
+    "leitura_atual": 25
+  },
+  {
+    "unidade": 302,
+    "bloco": "09",
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 303,
+    "bloco": "09",
+    "leitura_anterior": 27,
+    "leitura_atual": 30
+  },
+  {
+    "unidade": 304,
+    "bloco": "09",
+    "leitura_anterior": 27,
+    "leitura_atual": 41
+  },
+  {
+    "unidade": 401,
+    "bloco": "09",
+    "leitura_anterior": 127,
+    "leitura_atual": 142
+  },
+  {
+    "unidade": 402,
+    "bloco": "09",
+    "leitura_anterior": 19,
+    "leitura_atual": 23
+  },
+  {
+    "unidade": 403,
+    "bloco": "09",
+    "leitura_anterior": 18,
+    "leitura_atual": 22
+  },
+  {
+    "unidade": 404,
+    "bloco": "09",
+    "leitura_anterior": 17,
+    "leitura_atual": 23
+  },
+  {
+    "unidade": 101,
+    "bloco": 10,
+    "leitura_anterior": 11,
+    "leitura_atual": 19
+  },
+  {
+    "unidade": 102,
+    "bloco": 10,
+    "leitura_anterior": 0,
+    "leitura_atual": 3
+  },
+  {
+    "unidade": 103,
+    "bloco": 10,
+    "leitura_anterior": 12,
+    "leitura_atual": 18
+  },
+  {
+    "unidade": 104,
+    "bloco": 10,
+    "leitura_anterior": 30,
+    "leitura_atual": 33
+  },
+  {
+    "unidade": 201,
+    "bloco": 10,
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 202,
+    "bloco": 10,
+    "leitura_anterior": 12,
+    "leitura_atual": 16
+  },
+  {
+    "unidade": 203,
+    "bloco": 10,
+    "leitura_anterior": 25,
+    "leitura_atual": 40
+  },
+  {
+    "unidade": 204,
+    "bloco": 10,
+    "leitura_anterior": 48,
+    "leitura_atual": 67
+  },
+  {
+    "unidade": 301,
+    "bloco": 10,
+    "leitura_anterior": 3,
+    "leitura_atual": 6
+  },
+  {
+    "unidade": 302,
+    "bloco": 10,
+    "leitura_anterior": 44,
+    "leitura_atual": 63
+  },
+  {
+    "unidade": 303,
+    "bloco": 10,
+    "leitura_anterior": 0,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 304,
+    "bloco": 10,
+    "leitura_anterior": 7,
+    "leitura_atual": 17
+  },
+  {
+    "unidade": 401,
+    "bloco": 10,
+    "leitura_anterior": 3,
+    "leitura_atual": 11
+  },
+  {
+    "unidade": 402,
+    "bloco": 10,
+    "leitura_anterior": 16,
+    "leitura_atual": 28
+  },
+  {
+    "unidade": 403,
+    "bloco": 10,
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 404,
+    "bloco": 10,
+    "leitura_anterior": 22,
+    "leitura_atual": 41
+  },
+  {
+    "unidade": 101,
+    "bloco": 11,
+    "leitura_anterior": 12,
+    "leitura_atual": 22
+  },
+  {
+    "unidade": 102,
+    "bloco": 11,
+    "leitura_anterior": 1,
+    "leitura_atual": 4
+  },
+  {
+    "unidade": 103,
+    "bloco": 11,
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 104,
+    "bloco": 11,
+    "leitura_anterior": 52,
+    "leitura_atual": 70
+  },
+  {
+    "unidade": 201,
+    "bloco": 11,
+    "leitura_anterior": 19,
+    "leitura_atual": 22
+  },
+  {
+    "unidade": 202,
+    "bloco": 11,
+    "leitura_anterior": 11,
+    "leitura_atual": 15
+  },
+  {
+    "unidade": 203,
+    "bloco": 11,
+    "leitura_anterior": 74,
+    "leitura_atual": 93
+  },
+  {
+    "unidade": 204,
+    "bloco": 11,
+    "leitura_anterior": 5,
+    "leitura_atual": 8
+  },
+  {
+    "unidade": 301,
+    "bloco": 11,
+    "leitura_anterior": 12,
+    "leitura_atual": 20
+  },
+  {
+    "unidade": 302,
+    "bloco": 11,
+    "leitura_anterior": 12,
+    "leitura_atual": 20
+  },
+  {
+    "unidade": 303,
+    "bloco": 11,
+    "leitura_anterior": 33,
+    "leitura_atual": 49
+  },
+  {
+    "unidade": 304,
+    "bloco": 11,
+    "leitura_anterior": 7,
+    "leitura_atual": 11
+  },
+  {
+    "unidade": 401,
+    "bloco": 11,
+    "leitura_anterior": 26,
+    "leitura_atual": 38
+  },
+  {
+    "unidade": 402,
+    "bloco": 11,
+    "leitura_anterior": 14,
+    "leitura_atual": 18
+  },
+  {
+    "unidade": 403,
+    "bloco": 11,
+    "leitura_anterior": 15,
+    "leitura_atual": 25
+  },
+  {
+    "unidade": 404,
+    "bloco": 11,
+    "leitura_anterior": 11,
+    "leitura_atual": 19
+  },
+  {
+    "unidade": 101,
+    "bloco": 12,
+    "leitura_anterior": 4,
+    "leitura_atual": 7
+  },
+  {
+    "unidade": 102,
+    "bloco": 12,
+    "leitura_anterior": 20,
+    "leitura_atual": 32
+  },
+  {
+    "unidade": 103,
+    "bloco": 12,
+    "leitura_anterior": 26,
+    "leitura_atual": 34
+  },
+  {
+    "unidade": 104,
+    "bloco": 12,
+    "leitura_anterior": 17,
+    "leitura_atual": 25
+  },
+  {
+    "unidade": 201,
+    "bloco": 12,
+    "leitura_anterior": 0,
+    "leitura_atual": 14
+  },
+  {
+    "unidade": 202,
+    "bloco": 12,
+    "leitura_anterior": 20,
+    "leitura_atual": 28
+  },
+  {
+    "unidade": 203,
+    "bloco": 12,
+    "leitura_anterior": 14,
+    "leitura_atual": 18
+  },
+  {
+    "unidade": 204,
+    "bloco": 12,
+    "leitura_anterior": 20,
+    "leitura_atual": 30
+  },
+  {
+    "unidade": 301,
+    "bloco": 12,
+    "leitura_anterior": 10,
+    "leitura_atual": 16
+  },
+  {
+    "unidade": 302,
+    "bloco": 12,
+    "leitura_anterior": 6,
+    "leitura_atual": 12
+  },
+  {
+    "unidade": 303,
+    "bloco": 12,
+    "leitura_anterior": 20,
+    "leitura_atual": 26
+  },
+  {
+    "unidade": 304,
+    "bloco": 12,
+    "leitura_anterior": 20,
+    "leitura_atual": 23
+  },
+  {
+    "unidade": 401,
+    "bloco": 12,
+    "leitura_anterior": 0,
+    "leitura_atual": 10
+  },
+  {
+    "unidade": 402,
+    "bloco": 12,
+    "leitura_anterior": 14,
+    "leitura_atual": 30
+  },
+  {
+    "unidade": 403,
+    "bloco": 12,
+    "leitura_anterior": 0,
+    "leitura_atual": 8
+  },
+  {
+    "unidade": 404,
+    "bloco": 12,
+    "leitura_anterior": 19,
+    "leitura_atual": 31
+  },
+  {
+    "unidade": "",
+    "bloco": "",
+    "leitura_anterior": "",
+    "leitura_atual": ""
+  }
+]

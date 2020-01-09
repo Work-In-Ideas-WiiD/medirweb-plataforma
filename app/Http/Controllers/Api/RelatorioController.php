@@ -48,13 +48,15 @@ class RelatorioController extends Controller
 
     public function tarifa($consumo){
 
-        if($consumo > 10 && $consumo <= 15) {
-            $valor = (($consumo - 10) * 11.37) + 59;
-        } elseif ($consumo > 15) {
-            $valor = (($consumo - 10) * 13.98) + 59;
-        } else {
-            $valor = 59;
-        }
+        // if($consumo > 10 && $consumo <= 15) {
+        //     $valor = (($consumo - 10) * 11.37) + 59;
+        // } elseif ($consumo > 15) {
+        //     $valor = (($consumo - 10) * 13.98) + 59;
+        // } else {
+        //     $valor = 59;
+        // }
+
+        $valor = $consumo * 10;
 
         return $valor;
     }
@@ -80,7 +82,7 @@ class RelatorioController extends Controller
                 }
 
                 if(isset($leituraAnterior) && isset($leituraAtual)) {
-                    $consumo =  $leituraAtual->leitura_metro - $leituraAnterior->leitura_metro;
+                    $consumo =  $leituraAtual->metro - $leituraAnterior->metro;
 
                     $valor = SELF::tarifa($consumo);
 
