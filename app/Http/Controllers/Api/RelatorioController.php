@@ -18,7 +18,7 @@ class RelatorioController extends Controller
     {
        // $dadosFatura = [];
         $faturaImovel = FaturaUnidade::where('unidade_id', $request->user()->unidade_id)
-            ->with('unidade.unidade.prumada')
+            ->with('unidade.prumada')
             ->orderByDesc('prumada_data_leitura_atual')
             ->take(3)->get();
 
