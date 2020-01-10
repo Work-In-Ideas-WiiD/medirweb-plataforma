@@ -17,7 +17,7 @@ class RelatorioController extends Controller
     public function historicoFaturas(Request $request)
     {
        // $dadosFatura = [];
-        $faturaImovel = FaturaUnidade::where('unidade_id', $request->user()->unidade_id)
+       $faturaImovel = FaturaUnidade::where('unidade_id', $request->user()->unidade_id)
             ->with('unidade.prumada')
             ->orderByDesc('prumada_data_leitura_atual')
             ->take(3)->get();
@@ -88,6 +88,7 @@ class RelatorioController extends Controller
 
                     $relatorio_consumoAvancados = array(
                         'id' => $hidromentro->id,
+                        'id_funcional' => $hidromentro->funcional_id,
                         'nome' => $hidromentro->nome,
                         'tipo' => $hidromentro->tipo,
                         'status' => $hidromentro->status,
