@@ -174,4 +174,41 @@ class CentralController extends Controller
         return response()->json($dataForm, 200);
     }
 
+    public function prumadasFalhas($imovel)
+    {
+        $prumadas_erro = [];
+
+        $prumadas = Prumada::byImovel($imovel);
+
+        foreach ($prumadas as $prumada) {
+            $dias_atras = [
+                now()->subDays(1),
+                now()->subDays(2),
+                now()->subDays(3),
+            ];
+            
+            $leitura_erro = 0;
+
+            foreach ($dias_atras as $dia) {
+
+                $leitura = $prumada->leitura()->whereDate('created_at', $dia)->exists();
+
+                if (!$leitura and $prumada->funcional_id) {
+                    $leitura_erro += 1;
+                }
+            }
+
+            if ($leitura_erro == 3) {
+                $prumadas_erro['prumadas_com_falha'][] = $prumada->funcional_id;
+            }
+
+        }
+
+        if ($prumadas_erro) {
+            return $prumadas_erro;
+        }
+
+        return 'nenhum erro de leitura encontrado!';
+    }
+
 }
