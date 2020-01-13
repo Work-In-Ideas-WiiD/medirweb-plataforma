@@ -178,33 +178,38 @@ class CentralController extends Controller
     {
         $prumadas_erro = [];
 
-        $prumadas = Prumada::byImovel($imovel);
+        $unidades = Unidade::has('prumada.unidade')->with('prumada:id,unidade_id,funcional_id')->where('imovel_id', $imovel)->get(['id']);
 
-        foreach ($prumadas as $prumada) {
-            $dias_atras = [
-                now()->subDays(1),
-                now()->subDays(2),
-                now()->subDays(3),
-            ];
-            
-            $leitura_erro = 0;
+        $dias_atras = [
+            now()->subDays(1),
+            now()->subDays(2),
+            now()->subDays(3),
+        ];
 
-            foreach ($dias_atras as $dia) {
+        foreach ($unidades as $unidade) {
 
-                $leitura = $prumada->leitura()->whereDate('created_at', $dia)->exists();
+            foreach ($unidade->prumada as $prumada) {
 
-                if (!$leitura and $prumada->funcional_id) {
-                    $leitura_erro += 1;
+                $leitura_erro = 0;
+
+                foreach ($dias_atras as $dia) {
+
+                    $leitura = $prumada->leitura()->whereDate('created_at', $dia)->exists();
+
+                    if (!$leitura and $prumada->funcional_id) {
+                        $leitura_erro += 1;
+                    }
                 }
-            }
 
-            if ($leitura_erro == 3) {
-                $prumadas_erro['prumadas_com_falha'][] = $prumada->funcional_id;
+                if ($leitura_erro == 3) {
+                    $prumadas_erro['prumadas_com_falha'][] = $prumada->funcional_id;
+                }
             }
 
         }
 
         if ($prumadas_erro) {
+            $prumadas_erro['total_falhas'] = count($prumadas_erro['prumadas_com_falha']);
             return $prumadas_erro;
         }
 
