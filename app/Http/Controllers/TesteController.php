@@ -624,4 +624,24 @@ class TesteController extends Controller
 
         return 'faturas unidades criadas';
     }
+
+    public function felicitta_moradores()
+    {
+        $file = storage_path('app/csv/qtd_moradores_17012020.csv');
+        $file = file_get_contents($file);
+
+        foreach(explode("\n", $file) as $line) {
+            $line = explode(',', $line);
+
+            if (!empty($line[1])) {
+                $agrupamento = Agrupamento::where('imovel_id', 15)->where('nome', $line[1])->first();
+                
+                $unidade = $agrupamento->unidade()->where('nome', $line[0])->first();
+
+                if ($unidade)
+                    $unidade->update(['quantidade_moradores' => intval($line[2])]);
+            }
+
+        }
+    }
 }

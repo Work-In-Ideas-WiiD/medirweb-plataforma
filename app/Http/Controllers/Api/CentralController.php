@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Redirect;
+use App\Models\Agrupamento;
 use App\Models\Imovel;
 use App\Models\Unidade;
 use App\Models\Prumada;
@@ -214,6 +215,44 @@ class CentralController extends Controller
         }
 
         return 'nenhum erro de leitura encontrado!';
+    }
+
+    public function imovelConsumoMedio(Request $request)
+    {
+        return $this->_imovelConsumoMedio(
+            $request->imovel ?? '',
+            $request->bloco ?? '',
+            $request->apartamento ?? ''
+        );
+    }
+
+
+    private function _imovelConsumoMedio($imovel, $bloco, $apartamento)
+    {
+        //primeiro pegamos o agrupamento usando o imovel e o bloco
+        $agrupamento = Agrupamento::where('imovel_id', $imovel)->where('nome', $bloco)->first();
+
+        if ($agrupamento) {
+            $unidade = $agrupamento->unidade()->where('nome', $apartamento)->first();
+
+            if ($unidade) {
+                
+                return [
+                    'consumo_consolidado' => '',
+                    'consumo_medio' => '',
+                    'consumo_estimado' => '',
+                    'media_consumo_todas_unidades' => '',
+                    'media_consumo_por_dia_todas_unidades_mes_anterior' => '',
+                    'media_consumo_por_dia_todas_unidades_mes_atual' => '',
+                ]; 
+                
+            } else {
+                return ['error' => 'apartamento não encontrado.'];
+            }
+
+        } else {
+            return ['error' => 'imóvel ou bloco não são válidos'];
+        }
     }
 
 }
