@@ -72,9 +72,9 @@ class RelatorioController extends Controller
             $hidromentros = Prumada::where('unidade_id', $request->unidade_id)->get();
 
             foreach ($hidromentros as $hidromentro) {
-                $leituraAnterior = $hidromentro->leitura()->whereDate('created_at', now()->firstOfMonth()->format('Y-m-d'))->orderBy('created_at', 'DESC')->first();
+                $leituraAnterior = $hidromentro->leitura()->whereDate('created_at', '<=', now()->firstOfMonth()->format('Y-m-d'))->orderBy('created_at', 'DESC')->first();
 
-                $leituraAtual = $hidromentro->leitura()->whereDate('created_at', now()->format('Y-m-d'))->orderByDesc('created_at', 'DESC')->first();
+                $leituraAtual = $hidromentro->leitura()->whereDate('created_at', '<=', now()->format('Y-m-d'))->orderByDesc('created_at', 'DESC')->first();
 
                 // VALIDAÇÃO SE NAO TIVER LEITURA ANTEIOR
                 if(!isset($leituraAnterior)) {
