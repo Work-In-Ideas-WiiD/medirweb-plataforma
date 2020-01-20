@@ -19,8 +19,8 @@ class CentralController extends Controller
 
     public function getPrumadas($ip, $id = null)
     {
-        // $imovel = Imovel::with('unidade.prumada', 'unidade.agrupamento')->where('ip', '192.168.130.13')->first();
-        $imovel = Imovel::with('unidade.prumada', 'unidade.agrupamento')->where('ip', '192.168.130.4')->first();
+        $imovel = Imovel::with('unidade.prumada', 'unidade.agrupamento')->where('ip', '192.168.130.13')->first();
+        // $imovel = Imovel::with('unidade.prumada', 'unidade.agrupamento')->where('ip', '192.168.130.4')->first();
         
         $arrayPrumadas = array();
 
