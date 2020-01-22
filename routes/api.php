@@ -88,6 +88,6 @@ Route::group(['prefix' => 'central', 'namespace' => 'Api'], function()
     Route::get('{ip}/sicronizar/leituras', 'CentralController@sicronizarLeituras');
     Route::get('{ip}/sicronizar/falhas', 'CentralController@sicronizarFalhas');
     Route::any('{imovel}/prumadas/falhas', 'CentralController@prumadasFalhas');
-    Route::any('consumo/medio', 'CentralController@imovelConsumoMedio');
+    Route::any('media/consumo', 'CentralController@imovelMediaConsumo');
 });
 // fim - ### CentralResp CONTROLER ###
