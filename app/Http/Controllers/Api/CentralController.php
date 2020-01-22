@@ -299,10 +299,35 @@ class CentralController extends Controller
         $diferenca = 0;
 
         if (empty($data['data1']))
-            $data['data1'] = now()->subMonth(2)->day(1)->format('Y-m-d');
+            $data['data1'] = now()->subMonth(1)->day(1)->format('Y-m-d');
 
         if (empty($data['data2']))
-            $data['data2'] = now()->subMonth()->day(1)->format('Y-m-d');
+            $data['data2'] = now()->subMonth(1)->day(-0)->format('Y-m-d');
+
+        foreach ($unidade->prumada as $prumada) {
+            $leitura_anterior = $prumada->leitura()
+                ->whereDate('created_at', $data['data1'])
+                ->orderByDesc('id')->first();
+            
+            $leitura_atual = $prumada->leitura()
+                ->whereDate('created_at', $data['data2'])
+                ->orderByDesc('id')->first();
+
+            $diferenca += ($leitura_atual->metro) ?? 0 - ($leitura_anterior->metro ?? 0);
+        }
+
+        return $diferenca;
+    }
+
+    private function _imovelConsumoConsolidadoFatura($unidade, $data = ['data1' => null, 'data2' => null])
+    {
+        $diferenca = 0;
+
+        if (empty($data['data1']))
+            $data['data1'] = now()->subMonth(1)->day(1)->format('Y-m-d');
+
+        if (empty($data['data2']))
+            $data['data2'] = now()->subMonth(1)->day(-0)->format('Y-m-d');
 
         foreach ($unidade->prumada as $prumada) {
             $leitura_anterior = $prumada->leitura()
