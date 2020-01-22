@@ -282,8 +282,8 @@ class CentralController extends Controller
                     'consumo_consolidado' => $this->_imovelConsumoConsolidadoFatura($unidade),
                     'consumo_medio_por_dia' => $this->_imovelConsumoMedioPorDia($unidade),
                     'consumo_estimado' => $this->_imovelConsumoEstimado($unidade),
-                    'media_consumo_todas_unidades' => $this->_imovelConsumoTodasUnidades($unidade),
-                    'media_consumo_por_dia_todas_unidades_mes_anterior' => $this->_imovelConsumoTodasUnidadesMesAnterior($unidade),
+                    'media_consumo_todas_unidades_quantidade_moradores' => $this->_imovelConsumoTodasUnidades($unidade),
+                    'media_consumo_por_dia_todas_unidades_quantidade_moradores_dia' => $this->_imovelConsumoTodasUnidadesMesAnterior($unidade),
                     'media_consumo_por_dia_todas_unidades_mes_atual' => $this->_imovelConsumoTodasUnidadesMesAtual($unidade),
                 ]; 
                 
@@ -344,7 +344,7 @@ class CentralController extends Controller
 
         //     $diferenca += ($leitura_atual->metro) ?? 0 - ($leitura_anterior->metro ?? 0);
         // }
-        // dd(  now()->day(-0)->format('d'));
+        // dd(  $diferenca);
         return $diferenca->prumada_consumo ?? 0;
     }
 
@@ -365,19 +365,23 @@ class CentralController extends Controller
 
     private function _imovelConsumoTodasUnidades($unidade)
     {
-        $consumo = $this->_imovelConsumoConsolidado($unidade);
+        $consumo = $this->_imovelConsumoConsolidadoFatura($unidade);
 
         return $this->_imovelConsumoDivisao($consumo, ($unidade->quantidade_moradores ?? 3));
     }
 
     private function _imovelConsumoTodasUnidadesMesAnterior($unidade)
     {
-        $consumo = $this->_imovelConsumoConsolidado($unidade, [
-            'data1' => now()->day(1)->format('Y-m-d'),
-            'data2' => now()->format('Y-m-d')
-        ]);
+        // $consumo = $this->_imovelConsumoConsolidado($unidade, [
+        //     'data1' => now()->day(1)->format('Y-m-d'),
+        //     'data2' => now()->format('Y-m-d')
+        // ]);
 
-        return $this->_imovelConsumoDivisao($consumo, ($unidade->quantidade_moradores ?? 3));
+        $consumo = $this->_imovelConsumoConsolidadoFatura($unidade);
+
+        $media_morador = $this->_imovelConsumoDivisao($consumo, ($unidade->quantidade_moradores ?? 3));
+
+        return $this->_imovelConsumoDivisao($media_morador, now()->day(-0)->format('d'));
     }
 
     private function _imovelConsumoTodasUnidadesMesAtual($unidade)
