@@ -12,6 +12,8 @@ use App\Models\Prumada;
 use App\Models\Leitura;
 use App\Models\Fechamento;
 use App\Models\Falha;
+use App\Models\FaturaUnidade;
+
 use Session, Curl;
 
 class CentralController extends Controller
@@ -277,7 +279,7 @@ class CentralController extends Controller
             if ($unidade) {
 
                 return [
-                    'consumo_consolidado' => $this->_imovelConsumoConsolidado($unidade),
+                    'consumo_consolidado' => $this->_imovelConsumoConsolidadoFatura($unidade),
                     'consumo_medio_por_dia' => $this->_imovelConsumoMedioPorDia($unidade),
                     'consumo_estimado' => $this->_imovelConsumoEstimado($unidade),
                     'media_consumo_todas_unidades' => $this->_imovelConsumoTodasUnidades($unidade),
@@ -324,22 +326,24 @@ class CentralController extends Controller
         $diferenca = 0;
 
         if (empty($data['data1']))
-            $data['data1'] = now()->subMonth(1)->day(1)->format('Y-m-d');
+            $data['data1'] = now()->subMonth(2)->day(-0)->format('Y-m-d');
 
         if (empty($data['data2']))
             $data['data2'] = now()->subMonth(1)->day(-0)->format('Y-m-d');
 
-        foreach ($unidade->prumada as $prumada) {
-            $leitura_anterior = $prumada->leitura()
-                ->whereDate('created_at', $data['data1'])
-                ->orderByDesc('id')->first();
+        
+        $diferenca = FaturaUnidade::whereDate('prumada_data_leitura_anterior', $data['data1'])->whereDate('prumada_data_leitura_atual', $data['data2'])->where('unidade_id', $unidade->id)->orderByDesc('id')->first()->prumada_consumo;
+        // foreach ($unidade->prumada as $prumada) {
+        //     $leitura_anterior = $prumada->leitura()
+        //         ->whereDate('created_at', $data['data1'])
+        //         ->orderByDesc('id')->first();
             
-            $leitura_atual = $prumada->leitura()
-                ->whereDate('created_at', $data['data2'])
-                ->orderByDesc('id')->first();
+        //     $leitura_atual = $prumada->leitura()
+        //         ->whereDate('created_at', $data['data2'])
+        //         ->orderByDesc('id')->first();
 
-            $diferenca += ($leitura_atual->metro) ?? 0 - ($leitura_anterior->metro ?? 0);
-        }
+        //     $diferenca += ($leitura_atual->metro) ?? 0 - ($leitura_anterior->metro ?? 0);
+        // }
 
         return $diferenca;
     }
