@@ -326,13 +326,13 @@ class CentralController extends Controller
         $diferenca = 0;
 
         if (empty($data['data1']))
-            $data['data1'] = now()->subMonth(2)->day(-0)->format('Y-m-d');
+            $data['data1'] = now()->subMonth(1)->day(-0)->format('Y-m-d');
 
         if (empty($data['data2']))
-            $data['data2'] = now()->subMonth(1)->day(-0)->format('Y-m-d');
+            $data['data2'] = now()->subMonth(0)->day(-0)->format('Y-m-d');
 
         
-        $diferenca = FaturaUnidade::whereDate('prumada_data_leitura_anterior', $data['data1'])->whereDate('prumada_data_leitura_atual', $data['data2'])->where('unidade_id', $unidade->id)->orderByDesc('id')->first()->prumada_consumo;
+        $diferenca = FaturaUnidade::whereDate('prumada_data_leitura_anterior', $data['data1'])->whereDate('prumada_data_leitura_atual', $data['data2'])->where('unidade_id', $unidade->id)->orderByDesc('id')->first();
         // foreach ($unidade->prumada as $prumada) {
         //     $leitura_anterior = $prumada->leitura()
         //         ->whereDate('created_at', $data['data1'])
@@ -344,14 +344,14 @@ class CentralController extends Controller
 
         //     $diferenca += ($leitura_atual->metro) ?? 0 - ($leitura_anterior->metro ?? 0);
         // }
-
-        return $diferenca;
+        // dd(  now()->day(-0)->format('d'));
+        return $diferenca->prumada_consumo ?? 0;
     }
 
 
     private function _imovelConsumoMedioPorDia($unidade)
     {
-        $consumo = $this->_imovelConsumoConsolidado($unidade);
+        $consumo = $this->_imovelConsumoConsolidadoFatura($unidade);
 
         return $this->_imovelConsumoDivisao($consumo, now()->day(-0)->format('d'));
     }
