@@ -279,13 +279,14 @@ class CentralController extends Controller
             if ($unidade) {
 
                 return [
+                    'quantidade_moradores' => $unidade->quantidade_moradores,
                     'consumo_consolidado' => $this->_imovelConsumoConsolidadoFatura($unidade),
                     'consumo_medio_por_dia' => $this->_imovelConsumoMedioPorDia($unidade),
                     'consumo_estimado' => $this->_imovelConsumoEstimado($unidade),
                     'media_consumo_todas_unidades_quantidade_moradores' => $this->_imovelConsumoTodasUnidades($unidade),
                     'media_consumo_por_dia_todas_unidades_quantidade_moradores_dia' => $this->_imovelConsumoTodasUnidadesMesAnterior($unidade),
                     'media_consumo_por_dia_todas_unidades_mes_atual' => $this->_imovelConsumoTodasUnidadesMesAtual($unidade),
-                    'quantidade_moradores' => $unidade->quantidade_moradores
+                    
                 ]; 
                 
             } else {
@@ -334,19 +335,33 @@ class CentralController extends Controller
 
         
         $diferenca = FaturaUnidade::whereDate('prumada_data_leitura_anterior', $data['data1'])->whereDate('prumada_data_leitura_atual', $data['data2'])->where('unidade_id', $unidade->id)->orderByDesc('id')->first();
-        // foreach ($unidade->prumada as $prumada) {
-        //     $leitura_anterior = $prumada->leitura()
-        //         ->whereDate('created_at', $data['data1'])
-        //         ->orderByDesc('id')->first();
-            
-        //     $leitura_atual = $prumada->leitura()
-        //         ->whereDate('created_at', $data['data2'])
-        //         ->orderByDesc('id')->first();
-
-        //     $diferenca += ($leitura_atual->metro) ?? 0 - ($leitura_anterior->metro ?? 0);
-        // }
-        // dd(  $diferenca);
+       
         return $diferenca->prumada_consumo ?? 0;
+    }
+
+    private function _imovelConsumoConsolidadoFaturaSoma($unidade, $data = ['data1' => null, 'data2' => null])
+    {
+        $diferenca = 0;
+
+        if (empty($data['data1']))
+            $data['data1'] = now()->subMonth(1)->day(-0)->format('Y-m-d');
+
+        if (empty($data['data2']))
+            $data['data2'] = now()->subMonth(0)->day(-0)->format('Y-m-d');
+
+        if($unidade->quantidade_moradores === NULL)
+            $unidade->quantidade_moradores = 3;
+        
+        $unidades = Unidade::where('quantidade_moradores', $unidade->quantidade_moradores)->where('imovel_id', $unidade->imovel_id)->get();
+
+        foreach ($unidades as $und) {
+
+            $cosumo = FaturaUnidade::whereDate('prumada_data_leitura_anterior', $data['data1'])->whereDate('prumada_data_leitura_atual', $data['data2'])->where('unidade_id', $und->id)->orderByDesc('id')->first();
+
+            $diferenca += $cosumo->prumada_consumo;
+        }
+       
+        return $diferenca;
     }
 
 
@@ -366,21 +381,26 @@ class CentralController extends Controller
 
     private function _imovelConsumoTodasUnidades($unidade)
     {
-        $consumo = $this->_imovelConsumoConsolidadoFatura($unidade);
+        //
+        $consumo = $this->_imovelConsumoConsolidadoFaturaSoma($unidade);
 
-        return $this->_imovelConsumoDivisao($consumo, ($unidade->quantidade_moradores ?? 3));
+        // dd(Unidade::where('quantidade_moradores', $unidade->quantidade_moradores)->where('imovel_id', $unidade->imovel_id)->count(), $consumo);
+
+        return $this->_imovelConsumoDivisao($consumo, (Unidade::where('quantidade_moradores', $unidade->quantidade_moradores)->where('imovel_id', $unidade->imovel_id)->count() ?? 3));
     }
 
     private function _imovelConsumoTodasUnidadesMesAnterior($unidade)
     {
+        //
+        //
         // $consumo = $this->_imovelConsumoConsolidado($unidade, [
         //     'data1' => now()->day(1)->format('Y-m-d'),
         //     'data2' => now()->format('Y-m-d')
         // ]);
 
-        $consumo = $this->_imovelConsumoConsolidadoFatura($unidade);
+        $consumo = $this->_imovelConsumoConsolidadoFaturaSoma($unidade);
 
-        $media_morador = $this->_imovelConsumoDivisao($consumo, ($unidade->quantidade_moradores ?? 3));
+        $media_morador = $this->_imovelConsumoDivisao($consumo, (Unidade::where('quantidade_moradores', $unidade->quantidade_moradores)->where('imovel_id', $unidade->imovel_id)->count() ?? 3));
 
         return $this->_imovelConsumoDivisao($media_morador, now()->day(-0)->format('d'));
     }
