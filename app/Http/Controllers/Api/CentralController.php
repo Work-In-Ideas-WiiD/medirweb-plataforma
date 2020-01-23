@@ -285,6 +285,7 @@ class CentralController extends Controller
                     'media_consumo_todas_unidades_quantidade_moradores' => $this->_imovelConsumoTodasUnidades($unidade),
                     'media_consumo_por_dia_todas_unidades_quantidade_moradores_dia' => $this->_imovelConsumoTodasUnidadesMesAnterior($unidade),
                     'media_consumo_por_dia_todas_unidades_mes_atual' => $this->_imovelConsumoTodasUnidadesMesAtual($unidade),
+                    'quantidade_moradores' => $unidade->quantidade_moradores
                 ]; 
                 
             } else {
