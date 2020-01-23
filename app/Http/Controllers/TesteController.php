@@ -638,8 +638,13 @@ class TesteController extends Controller
                 
                 $unidade = $agrupamento->unidade()->where('nome', $line[0])->first();
 
+                if($line[2] == '')
+                    $line[2] = NULL;
+                else
+                    $line[2] = intval($line[2]);
+
                 if ($unidade)
-                    $unidade->update(['quantidade_moradores' => intval($line[2])]);
+                    $unidade->update(['quantidade_moradores' => $line[2]]);
             }
 
         }
