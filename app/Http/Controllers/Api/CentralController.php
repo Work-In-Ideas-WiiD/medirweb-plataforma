@@ -319,6 +319,8 @@ class CentralController extends Controller
 
             $diferenca += ($leitura_atual->metro) ?? 0 - ($leitura_anterior->metro ?? 0);
         }
+        
+        dd($diferenca);
 
         return $diferenca;
     }
@@ -374,12 +376,11 @@ class CentralController extends Controller
 
     private function _imovelConsumoEstimado($unidade)
     {
-        // return $this->_imovelConsumoConsolidado($unidade, [
-        //     'data1' => now()->day(1)->format('Y-m-d'),
-        //     'data2' => now()->format('Y-m-d')
-        // ]);
+        return $this->_imovelConsumoConsolidado($unidade, [
+            'data1' => now()->day(1)->format('Y-m-d'),
+            'data2' => now()->format('Y-m-d')
+        ]);
 
-        dd( now()->format('Y-m-d') );
     }
 
     private function _imovelConsumoTodasUnidades($unidade)
