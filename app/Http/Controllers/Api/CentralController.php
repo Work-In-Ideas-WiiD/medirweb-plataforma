@@ -379,10 +379,7 @@ class CentralController extends Controller
         //     'data2' => now()->format('Y-m-d')
         // ]);
 
-        dd($this->_imovelConsumoConsolidado($unidade, [
-            'data1' => now()->day(1)->format('Y-m-d'),
-            'data2' => now()->format('Y-m-d')
-        ]) );
+        dd( now()->day(1)->format('Y-m-d') );
     }
 
     private function _imovelConsumoTodasUnidades($unidade)
