@@ -320,8 +320,6 @@ class CentralController extends Controller
             $diferenca += ($leitura_atual->metro ?? 0) - ($leitura_anterior->metro ?? 0);
         }
 
-        dd($diferenca);
-
         return $diferenca;
     }
 
