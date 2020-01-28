@@ -350,7 +350,7 @@ class CentralController extends Controller
             $data['data2'] = now()->subMonth(0)->day(-0)->format('Y-m-d');
 
         if($unidade->quantidade_moradores === NULL)
-            $unidade->quantidade_moradores = 3;
+            $unidade->quantidade_moradores = 2;
         
         $unidades = Unidade::where('quantidade_moradores', $unidade->quantidade_moradores)->where('imovel_id', $unidade->imovel_id)->get();
 
