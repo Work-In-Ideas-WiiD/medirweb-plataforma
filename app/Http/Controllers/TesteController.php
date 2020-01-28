@@ -595,7 +595,7 @@ class TesteController extends Controller
 
     public function relatorio_fatura_unidade()
     {
-        $json = storage_path('app/json/leitura_administradora.json');
+        $json = storage_path('app/json/leitura_administradora_atualizado.json');
 
         $json = json_decode(file_get_contents($json));
 
