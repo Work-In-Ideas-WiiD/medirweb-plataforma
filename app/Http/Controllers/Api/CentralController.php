@@ -310,11 +310,11 @@ class CentralController extends Controller
 
         foreach ($unidade->prumada as $prumada) {
             $leitura_anterior = $prumada->leitura()
-                ->whereDate('created_at', '=>', $data['data1'])
+                ->whereDate('created_at', $data['data1'])
                 ->orderByDesc('id')->first();
             
             $leitura_atual = $prumada->leitura()
-                ->whereDate('created_at', '=<', $data['data2'])
+                ->whereDate('created_at', '<=', $data['data2'])
                 ->orderByDesc('id')->first();
 
             dd($leitura_atual->metro, $leitura_anterior->metro);
