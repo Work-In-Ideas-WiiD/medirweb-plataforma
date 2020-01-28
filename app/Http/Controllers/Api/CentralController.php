@@ -318,12 +318,9 @@ class CentralController extends Controller
                 ->orderByDesc('id')->first();
 
             
-            dd($leitura_atual, $leitura_anterior);
 
             $diferenca += ($leitura_atual->metro ?? 0) - ($leitura_anterior->metro ?? 0);
         }
-
-        dd($diferenca);
 
         return $diferenca;
     }
