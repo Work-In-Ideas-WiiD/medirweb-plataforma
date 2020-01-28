@@ -317,8 +317,6 @@ class CentralController extends Controller
                 ->whereDate('created_at', '<=', $data['data2'])
                 ->orderByDesc('id')->first();
 
-            dd($leitura_atual->metro, $leitura_anterior->metro);
-
             $diferenca += ($leitura_atual->metro ?? 0) - ($leitura_anterior->metro ?? 0);
         }
 
