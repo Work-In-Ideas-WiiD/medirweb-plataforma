@@ -49,25 +49,27 @@ class LeituraAdminExport implements FromArray
         $unidades = Imovel::find($this->imovel)->unidade;
         foreach ($unidades as $unid) {
             $prumadas = Unidade::find($unid->id)->prumada;
+            $leitura_total = 0;
             foreach ($prumadas as $prumada)
             {
-                $relatorio = array(
-                    'unidade' => intval($unid->nome),
-                    'bloco' => intval($unid->agrupamento->nome),
-                    'mes' => Carbon::parse(strtotime($this->dataAtual))->month,
-                    'ano' => Carbon::parse(strtotime($this->dataAtual))->year,
-                    'consumo' => 2,
-                    'leitura' => $prumada->leitura()->whereDate('created_at', '<=', Carbon::parse(strtotime($this->dataAtual))->format('Y-m-d'))->orderBy('created_at', 'desc')->first()->metro ?? '1',
-                );
-
-                // foreach($datas as $data) {
-
-                //     $relatorio[$data->format('d/m/Y')] = $prumada->leitura()->whereDate('created_at', $data->format('Y-m-d'))->orderBy('created_at', 'desc')->first()->metro ?? ' ';       
-                // }
-
-                array_push($sheets, $relatorio);
-                
+                $leitura_total += $prumada->leitura()->whereDate('created_at', '<=', Carbon::parse(strtotime($this->dataAtual))->format('Y-m-d'))->orderBy('created_at', 'desc')->first()->metro ?? 0;      
             }
+
+            $relatorio = array(
+                'unidade' => intval($unid->nome),
+                'bloco' => intval($unid->agrupamento->nome),
+                'mes' => Carbon::parse(strtotime($this->dataAtual))->month,
+                'ano' => Carbon::parse(strtotime($this->dataAtual))->year,
+                'consumo' => 2,
+                'leitura' => $leitura_total,
+            );
+
+            // foreach($datas as $data) {
+
+            //     $relatorio[$data->format('d/m/Y')] = $prumada->leitura()->whereDate('created_at', $data->format('Y-m-d'))->orderBy('created_at', 'desc')->first()->metro ?? ' ';       
+            // }
+
+            array_push($sheets, $relatorio);
         }
 
         return $sheets;
