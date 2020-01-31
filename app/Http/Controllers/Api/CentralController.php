@@ -185,9 +185,9 @@ class CentralController extends Controller
         $unidades = Unidade::has('prumada.unidade')->with('prumada:id,unidade_id,funcional_id')->where('imovel_id', $imovel)->get(['id']);
 
         $dias_atras = [
-            now()->subDays(0),
             now()->subDays(1),
             now()->subDays(2),
+            now()->subDays(3),
         ];
 
         foreach ($unidades as $unidade) {
