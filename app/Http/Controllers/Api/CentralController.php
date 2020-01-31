@@ -98,8 +98,8 @@ class CentralController extends Controller
             $imovel = Imovel::where('ip', $ip)->first();
        
         
-        //$response = Curl::to('http://'.$imovel->host.'/leituras/')
-        $response = Curl::to('http://9c4320a6.ngrok.io/leituras/')
+        $response = Curl::to('http://'.$imovel->host.'/leituras/')
+        //$response = Curl::to('http://9c4320a6.ngrok.io/leituras/')
         ->get();
 
         $retornos = json_decode($response, TRUE);
@@ -127,8 +127,8 @@ class CentralController extends Controller
         if (!$imovel)
             $imovel = Imovel::where('ip', $ip)->first();
         
-        //$response = Curl::to('http://'.$imovel->host.'/falhas/')
-        $response = Curl::to('http://9c4320a6.ngrok.io/falhas/')
+        $response = Curl::to('http://'.$imovel->host.'/falhas/')
+        //$response = Curl::to('http://9c4320a6.ngrok.io/falhas/')
         ->get();
 
         $retornos = json_decode($response, TRUE);
