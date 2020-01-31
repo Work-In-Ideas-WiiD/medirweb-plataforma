@@ -653,6 +653,7 @@ class TesteController extends Controller
 
     public function felicitta_corrigir_repetidor()
     {
+        $quantidade = 0;
         $repetidores = [
             4078 => [194, 147, 150],
             4079 => [406, 203, 195, 234],
@@ -665,9 +666,13 @@ class TesteController extends Controller
 
         foreach ($unidades as $unidade) {
             foreach ($repetidores as $repetidor => $hidrometro) {
-                $unidade->prumada()->where('funcional_id', $hidrometro)->update([
-                    'repetidor_id' => $repetidor
-                ]);
+                $up = $unidade->prumada()->where('funcional_id', $hidrometro)->first();
+                
+                if ($up) {
+                    $up->update([
+                        'repetidor_id' => $repetidor
+                    ]);
+                }
             }
         }
     }
