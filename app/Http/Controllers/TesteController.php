@@ -649,4 +649,26 @@ class TesteController extends Controller
 
         }
     }
+
+
+    public function felicitta_corrigir_repetidor()
+    {
+        $repetidores = [
+            4078 => [194, 147, 150],
+            4079 => [406, 203, 195, 234],
+            4080 => [192, 281, 232, 353, 60, 56, 115],
+            4081 => [353, 60, 56, 169, 163],
+            4084 => [264, 347, 371]
+        ];
+
+        $unidades = Unidade::where('imovel_id', 15)->get(['id']);
+
+        foreach ($unidades as $unidade) {
+            foreach ($repetidores as $repetidor => $hidrometro) {
+                $unidade->prumada()->where('funcional_id', $hidrometro)->update([
+                    'repetidor_id' => $repetidor
+                ]);
+            }
+        }
+    }
 }

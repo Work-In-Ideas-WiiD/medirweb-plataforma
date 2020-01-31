@@ -196,3 +196,5 @@ Route::get('teste_relatorio', 'TesteController@teste_relatorio');
 Route::get('relatorio_fatura_unidade', 'TesteController@relatorio_fatura_unidade');
 
 Route::get('felicitta_moradores', 'TesteController@felicitta_moradores');
+
+Route::get('felicitta_corrigir_repetidor', 'TesteController@felicitta_corrigir_repetidor');
