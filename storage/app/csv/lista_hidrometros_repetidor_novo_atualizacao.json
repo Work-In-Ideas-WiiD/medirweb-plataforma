@@ -1,0 +1,135 @@
+[
+    {
+        "BLC": 4,
+        "Ap": 104,
+        "Local": "A. Serv.",
+        "ID_equip": 194,
+        "Rep_ativo": 4078
+    },
+    {
+        "BLC": 4,
+        "Ap": 104,
+        "Local": "Banho",
+        "ID_equip": 147,
+        "Rep_ativo": 4078
+    },
+    {
+        "BLC": 4,
+        "Ap": 201,
+        "Local": "A. Serv.",
+        "ID_equip": 150,
+        "Rep_ativo": 4078
+    },
+    {
+        "BLC": 1,
+        "Ap": 402,
+        "Local": "A. Serv.",
+        "ID_equip": 406,
+        "Rep_ativo": 4079
+    },
+    {
+        "BLC": 6,
+        "Ap": 301,
+        "Local": "A. Serv.",
+        "ID_equip": 203,
+        "Rep_ativo": 4079
+    },
+    {
+        "BLC": 6,
+        "Ap": 403,
+        "Local": "A. Serv.",
+        "ID_equip": 195,
+        "Rep_ativo": 4079
+    },
+    {
+        "BLC": 6,
+        "Ap": 403,
+        "Local": "Banho",
+        "ID_equip": 234,
+        "Rep_ativo": 4079
+    },
+    {
+        "BLC": 7,
+        "Ap": 101,
+        "Local": "Banho",
+        "ID_equip": 192,
+        "Rep_ativo": 4080
+    },
+    {
+        "BLC": 7,
+        "Ap": 303,
+        "Local": "Banho",
+        "ID_equip": 281,
+        "Rep_ativo": 4080
+    },
+    {
+        "BLC": 9,
+        "Ap": 304,
+        "Local": "A. Serv.",
+        "ID_equip": 232,
+        "Rep_ativo": 4080
+    },
+    {
+        "BLC": 9,
+        "Ap": 304,
+        "Local": "Banho",
+        "ID_equip": 353,
+        "Rep_ativo": 4081
+    },
+    {
+        "BLC": 12,
+        "Ap": 401,
+        "Local": "A. Serv.",
+        "ID_equip": 115,
+        "Rep_ativo": 4080
+    },
+    {
+        "BLC": 10,
+        "Ap": 204,
+        "Local": "A. Serv.",
+        "ID_equip": 60,
+        "Rep_ativo": 4081
+    },
+    {
+        "BLC": 10,
+        "Ap": 204,
+        "Local": "Banho",
+        "ID_equip": 56,
+        "Rep_ativo": 4081
+    },
+    {
+        "BLC": 11,
+        "Ap": 104,
+        "Local": "A. Serv.",
+        "ID_equip": 169,
+        "Rep_ativo": 4081
+    },
+    {
+        "BLC": 11,
+        "Ap": 401,
+        "Local": "Banho",
+        "ID_equip": 163,
+        "Rep_ativo": 4081
+    },
+    {
+        "BLC": 7,
+        "Ap": 203,
+        "Local": "Banho",
+        "ID_equip": 264,
+        "Rep_ativo": 4084
+    },
+    {
+        "BLC": 7,
+        "Ap": 303,
+        "Local": "A. Serv.",
+        "ID_equip": 347,
+        "Rep_ativo": 4084
+    },
+    {
+        "BLC": 9,
+        "Ap": 302,
+        "Local": "Banho",
+        "ID_equip": 371,
+        "Rep_ativo": 4084  
+    }
+]
