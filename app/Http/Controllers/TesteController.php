@@ -439,7 +439,7 @@ class TesteController extends Controller
 
     public function exportJson()
     {
-        $file = storage_path('app/csv/lista_hidrometros_repetidor_novo.json');
+        $file = storage_path('app/csv/lista_hidrometros_repetidor_novo_atualizacao.json');
 
         $arquivo = file_get_contents($file);
                 
