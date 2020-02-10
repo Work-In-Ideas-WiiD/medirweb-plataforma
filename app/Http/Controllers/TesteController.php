@@ -663,4 +663,48 @@ class TesteController extends Controller
             4084 => [264, 347, 371]
         ];
     }
+
+
+    public function felicitta_equipamentos()
+    {
+        $equipamentos = [];
+
+        $blocos = [
+            '01' => [],
+            '02' => [],
+            '03' => [],
+            '04' => [],
+            '05' => [],
+            '06' => [],
+            '07' => [],
+            '08' => [],
+            '09' => [],
+            '10' => [],
+            '11' => [],
+            '12' => []
+        ];
+
+        $unidades = Unidade::where('imovel_id', 15)->get();
+
+        foreach ($unidades as $unidade) {
+            $prumadas = $unidade->prumada()->with('unidade.agrupamento')->orderBy('nome')->get();
+
+            foreach ($prumadas as $prumada) {
+
+                if (!isset($equipamentos[$prumada->repetidor_id])) {
+                    $equipamentos[$prumada->repetidor_id] = $blocos;
+                }
+
+                foreach ($equipamentos[$prumada->repetidor_id] as $bloco => $key) {
+                    if (($prumada->unidade->agrupamento->nome ?? null) == $bloco) {
+                        array_push($equipamentos[$prumada->repetidor_id][$bloco], $prumada->funcional_id);
+                    }
+                }
+
+            }
+
+        }
+
+        return $equipamentos;
+    }
 }
