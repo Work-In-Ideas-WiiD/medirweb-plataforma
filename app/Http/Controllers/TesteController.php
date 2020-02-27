@@ -687,7 +687,8 @@ class TesteController extends Controller
         $unidades = Unidade::where('imovel_id', 15)->get();
 
         foreach ($unidades as $unidade) {
-            $prumadas = $unidade->prumada()->with('unidade.agrupamento')->orderBy('nome')->get();
+            $prumadas = $unidade->prumada()->with('unidade.agrupamento')
+                ->orderBy('nome')->get();
 
             foreach ($prumadas as $prumada) {
 
@@ -696,8 +697,11 @@ class TesteController extends Controller
                 }
 
                 foreach ($equipamentos[$prumada->repetidor_id] as $bloco => $key) {
+    
                     if (($prumada->unidade->agrupamento->nome ?? null) == $bloco) {
-                        array_push($equipamentos[$prumada->repetidor_id][$bloco], $prumada->funcional_id);
+                        if (empty($equipamentos[$prumada->repetidor_id][$bloco][$unidade->nome]))
+                            $equipamentos[$prumada->repetidor_id][$bloco][$unidade->nome] = [];
+                        array_push($equipamentos[$prumada->repetidor_id][$bloco][$unidade->nome], $prumada->funcional_id);
                     }
                 }
 
