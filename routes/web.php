@@ -201,3 +201,6 @@ Route::get('felicitta_corrigir_repetidor', 'TesteController@felicitta_corrigir_r
 
 
 Route::get('equipamentos', 'TesteController@felicitta_equipamentos');
+
+
+Route::get('alterar_medidor', 'TesteController@alterar_medidor');

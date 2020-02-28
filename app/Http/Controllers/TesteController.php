@@ -711,4 +711,26 @@ class TesteController extends Controller
 
         return $equipamentos;
     }
+
+    public function alterar_medidor()
+    {
+        $leitura = [
+            [
+                'anterior' => 100,
+                'atual' => 110,
+                'consumo' => 10,
+            ],
+            [
+                'anterior' => 10,
+                'atual' => 110,
+                'consumo' => 10,
+            ],
+        ];
+
+
+
+
+        
+        dd($leitura);
+    }
 }

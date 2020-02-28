@@ -106,6 +106,31 @@ class CentralController extends Controller
 
         foreach($retornos ?? [] as $resp)
         {
+            /*
+            $prumada = Prumada::select('id', 'leitura_metro_inicial')->whereNotNull('leitura_metro_inicial')->find($resp['LEI_IDPRUMADA']);
+
+            if ($prumada) {
+            
+                $leitura_anterior = $prumada->leitura()->select('id', 'metro')->last();
+
+                if (intval($resp['LEI_METRO']) >= intval($prumada->leitura_metro_inicial)) {
+                    $resp['LEI_METRO'] = intval($resp['LEI_METRO']) - intval($prumada->leitura_metro_inicial);
+                } else {
+                    $resp['LEI_METRO'] = intval($resp['LEI_METRO']) + intval($prumada->leitura_metro_inicial);
+                }
+
+                if ($leitura_anterior) {
+
+                    if (intval($leitura_anterior->metro) < intval($resp['LEI_METRO'])) {
+                        $resp['LEI_METRO'] += intval($leitura_anterior->metro);
+                    } else {
+                        $resp['LEI_METRO'] -= intval($leitura_anterior->metro);
+                    }
+
+                }
+
+            }
+            */
             Leitura::firstOrCreate([
                 "prumada_id" => $resp['LEI_IDPRUMADA'],
                 "metro" => $resp['LEI_METRO'],
