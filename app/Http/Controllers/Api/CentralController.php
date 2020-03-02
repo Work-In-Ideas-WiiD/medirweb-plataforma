@@ -98,47 +98,50 @@ class CentralController extends Controller
             $imovel = Imovel::where('ip', $ip)->first();
        
         
-        $response = Curl::to('http://'.$imovel->host.'/leituras/')
-        //$response = Curl::to('http://9c4320a6.ngrok.io/leituras/')
+        //$response = Curl::to('http://'.$imovel->host.'/leituras/')
+        $response = Curl::to('http://29205fc9.ngrok.io/leituras/')
         ->get();
 
         $retornos = json_decode($response, TRUE);
 
+        
         foreach($retornos ?? [] as $resp)
         {
-            /*
-            $prumada = Prumada::select('id', 'leitura_metro_inicial')->whereNotNull('leitura_metro_inicial')->find($resp['LEI_IDPRUMADA']);
+            $consumo = 0; // quando o loop iniciar ela vai zerar
+
+            $prumada = Prumada::select('id')->find($resp['LEI_IDPRUMADA']);
 
             if ($prumada) {
-            
-                $leitura_anterior = $prumada->leitura()->select('id', 'metro')->last();
-
-                if (intval($resp['LEI_METRO']) >= intval($prumada->leitura_metro_inicial)) {
-                    $resp['LEI_METRO'] = intval($resp['LEI_METRO']) - intval($prumada->leitura_metro_inicial);
-                } else {
-                    $resp['LEI_METRO'] = intval($resp['LEI_METRO']) + intval($prumada->leitura_metro_inicial);
-                }
-
+                $leitura_anterior = $prumada->leitura()->select('id', 'metro')->orderByDesc('id')->first();
+                
                 if ($leitura_anterior) {
-
-                    if (intval($leitura_anterior->metro) < intval($resp['LEI_METRO'])) {
-                        $resp['LEI_METRO'] += intval($leitura_anterior->metro);
+                    if ($leitura_anterior->funcional_id == $prumada->funcional_id) {
+                        $consumo += intval($resp['LEI_METRO']) - intval($leitura_anterior->metro);
+                        
                     } else {
-                        $resp['LEI_METRO'] -= intval($leitura_anterior->metro);
+                        $consumo += intval($leitura_anterior->consumo);
                     }
 
                 }
-
             }
-            */
+            
             Leitura::firstOrCreate([
                 "prumada_id" => $resp['LEI_IDPRUMADA'],
                 "metro" => $resp['LEI_METRO'],
                 "litro" => $resp['LEI_LITRO'],
                 "mililitro" => $resp['LEI_MILILITRO'],
                 "valor" => $resp['LEI_VALOR'],
-                "created_at" => date('Y-m-d H:i:s', strtotime($resp['created_at']) ),
-                "updated_at" => date('Y-m-d H:i:s', strtotime($resp['updated_at']) ),
+                "created_at" => date('Y-m-d H:i:s', strtotime($resp['created_at'])),
+                "updated_at" => date('Y-m-d H:i:s', strtotime($resp['updated_at'])),
+            ], [ "prumada_id" => $resp['LEI_IDPRUMADA'],
+                "metro" => $resp['LEI_METRO'],
+                "litro" => $resp['LEI_LITRO'],
+                "mililitro" => $resp['LEI_MILILITRO'],
+                "valor" => $resp['LEI_VALOR'],
+                'consumo' => $consumo,
+                'funcional_id' => $resp['LEI_IDFUNCIONAL'],
+                "created_at" => date('Y-m-d H:i:s', strtotime($resp['created_at'])),
+                "updated_at" => date('Y-m-d H:i:s', strtotime($resp['updated_at'])),
             ]);
 
         }
