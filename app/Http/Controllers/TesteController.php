@@ -561,7 +561,7 @@ class TesteController extends Controller
 
         foreach($users as $user)
         {
-            if($user->id == 113 || $user->id == 177)
+            if($user->id == 73)
             {
                 $senha = str_replace(' ', '', $user->name);
 
