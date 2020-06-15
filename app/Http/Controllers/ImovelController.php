@@ -742,9 +742,14 @@ class ImovelController extends Controller
         );
 
         if($response) {
-            if (prumada_status($response) == '00')
-                $prumada->status = 1;
+            //  if (prumada_status($response) == '00')
+            //     $prumada->status = 1;
                 
+            // else
+            //     $prumada->status = 0;
+
+            if ($comando == 'ativacao')
+                $prumada->status = 1;
             else
                 $prumada->status = 0;
 
