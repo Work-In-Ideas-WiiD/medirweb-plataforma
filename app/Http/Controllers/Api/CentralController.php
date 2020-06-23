@@ -456,4 +456,11 @@ class CentralController extends Controller
         return (float) number_format($result, 2);
     }
 
+    public function webhook(Request $request)
+    {
+        file_put_contents(storage_path('app/payload.txt'), $request->payload);
+
+        return ['retorno' =>  'OK', 'status' => true];
+    }
+
 }
