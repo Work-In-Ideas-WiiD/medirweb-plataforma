@@ -70,15 +70,6 @@ Route::middleware('auth:api')->namespace('Api')->group(function () {
 });
 
 
-
-
-
-
-
-
-
-
-
 // ### CentralResp CONTROLER ###
 Route::group(['prefix' => 'central', 'namespace' => 'Api'], function()
 {
@@ -89,5 +80,8 @@ Route::group(['prefix' => 'central', 'namespace' => 'Api'], function()
     Route::get('{ip}/sicronizar/falhas', 'CentralController@sicronizarFalhas');
     Route::any('{imovel}/prumadas/falhas', 'CentralController@prumadasFalhas');
     Route::any('media/consumo', 'CentralController@imovelMediaConsumo');
+
+    Route::any('webhook', 'CentralController@webhook');
 });
 // fim - ### CentralResp CONTROLER ###
+
