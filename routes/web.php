@@ -167,6 +167,19 @@ Route::middleware('auth')->group(function () {
     Route::post('relatorio/faturas', 'RelatorioController@getFaturaLista');
     
     Route::match(['get', 'post'], 'relatorio/falha', 'FalhaController@index');
+
+    Route::group(['prefix' => 'sindico'], function() {
+        Route::get('busca', 'SindicoController@busca');
+        Route::get('painel', 'SindicoController@painel');
+        Route::get('unidade', 'SindicoController@unidade');
+
+        Route::group(['prefix' => 'relatorio'], function() {
+            Route::get('consumo-por-unidade', 'SindicoController@consumoPorUnidade');
+            Route::get('consumo-por-bloco-ultimos6-meses/{bloco}', 'SindicoController@consumoPorBlocoUltimos6Meses');
+            Route::get('lista-de-leitura', 'SindicoController@listaDeLeitura');
+            Route::get('comparativo-de-consumo', 'SindicoController@comparativoDeConsumo');
+        });
+    });
 });
 
 

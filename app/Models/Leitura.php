@@ -12,7 +12,7 @@ class Leitura extends Model
 
     public function prumada()
     {
-    	return $this->hasOne(Prumada::class);
+    	return $this->belongsTo(Prumada::class);
 
     }
 

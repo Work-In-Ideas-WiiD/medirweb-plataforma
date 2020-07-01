@@ -265,7 +265,7 @@ return [
         ]
     ],
 
-
+    /*
     'menu2' => [
         [
             'text'    => 'Imóveis',
@@ -294,7 +294,40 @@ return [
             'url'     => 'relatorio/faturas',
         ],
     ],
-
+    */
+    'menu2' => [
+        [
+            'text' => 'Painel',
+            'icon' => 'dashboard',
+            'url' => 'sindico/painel',
+        ],
+        [
+            'text' => 'Unidades',
+            'icon' => 'university',
+            'url' => 'sindico/unidade',
+        ],
+        [
+            'text' => 'Relatórios',
+            'icon' => 'paper',
+            'submenu' => [
+                [
+                    'text' => 'Consumo por unidades',
+                    'icon' => 'paper',
+                    'url' => 'sindico/relatorio/consumo-por-unidade',
+                ],
+                [
+                    'text' => 'Lista de leituras',
+                    'icon' => 'paper',
+                    'url' => 'sindico/relatorio/lista-de-leitura',
+                ],
+                [
+                    'text' => 'Comparativo de consumo',
+                    'icon' => 'paper',
+                    'url' => 'sindico/relatorio/comparativo-de-consumo',
+                ],
+            ],
+        ],
+    ],
     /*
     |--------------------------------------------------------------------------
     | Menu Filters
@@ -330,5 +363,6 @@ return [
         'datatables' => true,
         'select2'    => true,
         'chartjs'    => true,
+        'flot' => true,
     ],
 ];
