@@ -67,14 +67,6 @@
                 </tr>
             </thead>
             <tbody class="tabela-comparativo-unidades">
-                @foreach ($consumo_ultimos_6meses ?? [] as $bloco => $consumos)
-                <tr data-bloco="{{ $bloco }}">
-                    <td>{{ $bloco }}</td>
-                    @foreach ($consumos as $mes => $consumo)
-                        <td data-mes="{{ $mes }}" data-consumo="{{ $consumo }}" class="mes-para-comparar">{{ $consumo }}</td>
-                    @endforeach
-                </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
@@ -82,11 +74,11 @@
     <div class="col-md-3 bg-warning">
         <div class="h4">Comparativo</div>
         <div class="row" style="margin-bottom:15px;">
-            <div class="col-md-6 text-center" id="bloco-e-mes0">-</div>
+            <div class="col-md-6 text-center" id="unidade-e-mes0">-</div>
             <div class="col-md-6 text-center" id="consumo0">-</div>
         </div>
         <div class="row" style="margin-bottom:15px;">
-            <div class="col-md-6 text-center" id="bloco-e-mes1">-</div>
+            <div class="col-md-6 text-center" id="unidade-e-mes1">-</div>
             <div class="col-md-6 text-center" id="consumo1">-</div>
         </div>
         <div class="row" style="margin-bottom:15px;">
@@ -106,7 +98,9 @@
 @push('js')
 <script src="/js/sindico_unidade.js"></script>
 <script src="/js/sindico_unidade_comparativo.js"></script>
+<script src="/js/sindico_unidade_escolher_ecomparar.js"></script>
 <script>
+
     $(function() {
         data = [];
         
@@ -160,5 +154,6 @@
             options: barChartOptions
         })
     })
+
 </script>
 @endpush
