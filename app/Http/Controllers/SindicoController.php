@@ -35,8 +35,6 @@ class SindicoController extends Controller
 
         $mes = $this->mes;
 
-        //dd($consumo_ultimos_6meses);
-
         return view('sindico.painel', compact(
             'unidades',
             'prumadas',
@@ -55,28 +53,22 @@ class SindicoController extends Controller
         $queryBulder = Leitura::whereIn('prumada_id', $prumadas)
             ->whereYear('created_at', now()->year)
             ->whereMonth('created_at', $month);
-/*
-        if ($bloco and !$unidade) {
-            $queryBulder->whereHas('prumada.unidade.agrupamento', function($query) use ($bloco) {
-                $query->where('nome', $bloco);
-            });
-        }*/
+
 
         if ($bloco or $unidade) {
             $queryBulder->whereHas('prumada.unidade', function($query) use ($bloco, $unidade) {
                 if ($unidade) {
                     $query->where('nome', $unidade);
                 }
-
-                if ($bloco) {
-                    $query->whereHas('agrupamento', function($query) use ($bloco) {
-                        $query->where('nome', $bloco);
+                    
+                if ($bloco and false) {
+                    $query->whereHas('agrupamento', function($subquery) use ($bloco) {
+                        $subquery->where('nome', $bloco);
                     });
                 }
             });
-        }
 
-       // dd($queryBulder->toSql());
+        }
         
         return $queryBulder->sum('consumo');
     }
@@ -175,41 +167,27 @@ class SindicoController extends Controller
 
     public function consumoPorBlocoUltimos6Meses(Request $request, $bloco)
     {
-        /*
-        // 100 - junho
-        // 200 - maio
-        // 300 - abril
-        // 400 - março
-        // 500 - fevereiro
-        // 600 - janeiro
-        $array = [100, 200, 300, 400, 500, 600];
-        dd(
-            //$consumo,
-            $this->mesAntes($array), //aqui deveria ser o mes 2 de 2020
-            //$this->mesAntes($array) //aqui deveria ser o mes 3 de 2020
-        );
-        */
-        $prumadas = Prumada::whereHas('unidade', function($query) use ($bloco) {
-            $query->where('imovel_id', $bloco);
+        $prumadas = Prumada::whereHas('unidade', function($query) {
+            $query->where('imovel_id', auth()->user()->imovel_id);
         })->get(['id']);
         
         $unidades = Unidade::with('agrupamento')->where('imovel_id', auth()->user()->imovel_id)
             ->whereHas('agrupamento', function($query) use ($bloco) {
-            //$query->where('nome', $bloco);
+                $query->where('nome', $bloco);
         })->get();
 
         foreach ($unidades as $unidade) {
             $consumo[$unidade->nome] = $this->montarMeses([
-                $this->consumoMensal($prumadas, $this->mesAntes(5), $unidade->agrupamento->nome, $unidade->nome),
-                $this->consumoMensal($prumadas, $this->mesAntes(4), $unidade->agrupamento->nome, $unidade->nome),
-                $this->consumoMensal($prumadas, $this->mesAntes(3), $unidade->agrupamento->nome, $unidade->nome),
-                $this->consumoMensal($prumadas, $this->mesAntes(2), $unidade->agrupamento->nome, $unidade->nome),
+                $this->consumoMensal($prumadas, $this->mesAntes(0), $unidade->agrupamento->nome, $unidade->nome),
                 $this->consumoMensal($prumadas, $this->mesAntes(1), $unidade->agrupamento->nome, $unidade->nome),
-                $this->consumoMensal($prumadas, $this->mesAntes(0), $unidade->agrupamento->nome, $unidade->nome),                
+                $this->consumoMensal($prumadas, $this->mesAntes(2), $unidade->agrupamento->nome, $unidade->nome),
+                $this->consumoMensal($prumadas, $this->mesAntes(3), $unidade->agrupamento->nome, $unidade->nome),
+                $this->consumoMensal($prumadas, $this->mesAntes(4), $unidade->agrupamento->nome, $unidade->nome),
+                $this->consumoMensal($prumadas, $this->mesAntes(5), $unidade->agrupamento->nome, $unidade->nome),                
             ]);
-
-            //o bug acontece pq hoje é o ultimo dia do mes
+            // pode ser que no primeiro e ultimo dia do mes as informações apareçam de forma incorreta por causa do calculo de data
         }
+
         return $consumo;
     }
 
