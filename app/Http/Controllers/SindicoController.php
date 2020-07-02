@@ -61,7 +61,7 @@ class SindicoController extends Controller
                     $query->where('nome', $unidade);
                 }
                     
-                if ($bloco and false) {
+                if ($bloco) {
                     $query->whereHas('agrupamento', function($subquery) use ($bloco) {
                         $subquery->where('nome', $bloco);
                     });
@@ -201,14 +201,23 @@ class SindicoController extends Controller
         return view('sindico.comparativo-de-consumo');
     }
 
-    public function graficoConsumoAnual($prumadas, $imovel_id)
+    public function graficoConsumoAnual($bloco)
     {
-        $blocos = Agrupamento::where('imovel_id', $imovel_id)->orderBy('nome')->get(['id', 'nome']);
+        $unidades_total = auth()->user()->imovel->unidade()->count();
 
-        foreach ($blocos as $bloco) {
-            for ($mes = 1; $mes <= 12; $mes++) {
-                $consumo_mes[$mes] = $this->consumoMensal($prumadas, $mes, $bloco->nome);
-            }
+        $unidades_bloco = auth()->user()->imovel->unidade()
+            ->whereHas('agrupamento', function($query) use ($bloco) {
+            $query->where('nome', $bloco);
+        })->count();
+
+        $prumadas = Prumada::whereHas('unidade', function($query) {
+            $query->where('imovel_id', auth()->user()->imovel_id);
+        })->pluck('id');
+
+        for ($mes = 1; $mes <= 12; $mes++) {
+            $consumo['bloco'][] =  intval($this->consumoMensal($prumadas, $mes, $bloco) / $unidades_bloco);
+
+            $consumo['total'][] =  intval($this->consumoMensal($prumadas, $mes) / $unidades_total);
         }
 
         return $consumo;

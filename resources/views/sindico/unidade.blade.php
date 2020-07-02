@@ -100,11 +100,4 @@
 <script src="/js/sindico_unidade_comparativo.js"></script>
 <script src="/js/sindico_unidade_escolher_ecomparar.js"></script>
 <script src="/js/sindico_unidade_grafico.js"></script>
-<script>
-
-    $(function() {
-        data1 = []
-        data2 = []
-    })
-</script>
 @endpush
