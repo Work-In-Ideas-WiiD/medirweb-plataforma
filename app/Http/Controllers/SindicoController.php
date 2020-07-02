@@ -200,4 +200,17 @@ class SindicoController extends Controller
     {
         return view('sindico.comparativo-de-consumo');
     }
+
+    public function graficoConsumoAnual($prumadas, $imovel_id)
+    {
+        $blocos = Agrupamento::where('imovel_id', $imovel_id)->orderBy('nome')->get(['id', 'nome']);
+
+        foreach ($blocos as $bloco) {
+            for ($mes = 1; $mes <= 12; $mes++) {
+                $consumo_mes[$mes] = $this->consumoMensal($prumadas, $mes, $bloco->nome);
+            }
+        }
+
+        return $consumo;
+    }
 }
