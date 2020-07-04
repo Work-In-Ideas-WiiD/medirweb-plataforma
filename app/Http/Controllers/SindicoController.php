@@ -31,7 +31,7 @@ class SindicoController extends Controller
 
         $consumo_medio_por_unidade_mensal = number_format($consumo_total_mensal / $unidades, 2);
 
-        $consumo_ultimos_6meses = $this->ultimosMeses(0, 5);
+        $consumo_ultimos_6meses = $this->ultimosPorBlocoMeses(0, 5);
 
         $mes = $this->mes;
 
@@ -59,7 +59,7 @@ class SindicoController extends Controller
                 $query->whereDay('created_at', $dia);
             })->when($array['unidade'] ?? null, function($query, $unidade) {
                 $query->whereHas('prumada.unidade', function($subquery) use ($unidade) {
-                    $query->where('nome', $unidade);
+                    $subquery->where('nome', $unidade);
                 });
             })->when($array['bloco'] ?? null, function($query, $bloco) {
                 $query->whereHas('prumada.unidade.agrupamento', function($subquery) use ($bloco) {
@@ -98,7 +98,7 @@ class SindicoController extends Controller
         return $novo_array;
     }
 
-    private function ultimosMeses($primeiro_mes, $ultimo_mes)
+    private function ultimosPorBlocoMeses($primeiro_mes, $ultimo_mes)
     {
         $blocos = Agrupamento::where('imovel_id', auth()->user()->imovel_id)->orderBy('nome')->get(['nome']);
 
@@ -162,31 +162,26 @@ class SindicoController extends Controller
         return view('sindico.consumo-por-unidade', compact('blocos'));
     }
 
-    public function consumoMensalPorUnidade(Request $request, $bloco)
+    public function consumoPorBlocoEUnidade(Request $request, $bloco, $primeiro_mes, $ultimo_mes)
     {
-        return;
-    }
-
-    public function consumoPorBlocoUltimos6Meses(Request $request, $bloco)
-    {
-        $prumadas = Prumada::whereHas('unidade', function($query) {
-            $query->where('imovel_id', auth()->user()->imovel_id);
-        })->get(['id']);
-        
         $unidades = Unidade::with('agrupamento')->where('imovel_id', auth()->user()->imovel_id)
             ->whereHas('agrupamento', function($query) use ($bloco) {
                 $query->where('nome', $bloco);
         })->get();
 
         foreach ($unidades as $unidade) {
-            $consumo[$unidade->nome] = $this->montarMeses([
-                $this->consumoMensal($prumadas, $this->mesAntes(0), $unidade->agrupamento->nome, $unidade->nome),
-                $this->consumoMensal($prumadas, $this->mesAntes(1), $unidade->agrupamento->nome, $unidade->nome),
-                $this->consumoMensal($prumadas, $this->mesAntes(2), $unidade->agrupamento->nome, $unidade->nome),
-                $this->consumoMensal($prumadas, $this->mesAntes(3), $unidade->agrupamento->nome, $unidade->nome),
-                $this->consumoMensal($prumadas, $this->mesAntes(4), $unidade->agrupamento->nome, $unidade->nome),
-                $this->consumoMensal($prumadas, $this->mesAntes(5), $unidade->agrupamento->nome, $unidade->nome),                
-            ]);
+            $consumo_por_meses = [];
+
+            foreach (range($ultimo_mes, $primeiro_mes) as $mes) {
+                $consumo_por_meses[] = $this->consumoMensal([
+                    'mes' => $this->mesAntes($mes),
+                    'ano' => now()->year,
+                    'bloco' => $bloco,
+                    'unidade' => $unidade->nome,
+                ]);
+            }
+
+            $consumo[$unidade->nome] = $consumo_por_meses;
             // pode ser que no primeiro e ultimo dia do mes as informações apareçam de forma incorreta por causa do calculo de data
         }
 
@@ -243,14 +238,10 @@ class SindicoController extends Controller
             $query->where('nome', $bloco);
         })->count();
 
-        $prumadas = Prumada::whereHas('unidade', function($query) {
-            $query->where('imovel_id', auth()->user()->imovel_id);
-        })->pluck('id');
-
         for ($mes = 1; $mes <= 12; $mes++) {
-            $consumo['bloco'][] =  intval($this->consumoMensal($prumadas, $mes, $bloco) / $unidades_bloco);
+            $consumo['bloco'][] =  intval($this->consumoMensal(['mes' => $mes, 'ano' => now()->year, 'bloco' => $bloco]) / $unidades_bloco);
 
-            $consumo['total'][] =  intval($this->consumoMensal($prumadas, $mes) / $unidades_total);
+            $consumo['total'][] =  intval($this->consumoMensal(['mes' => $mes, 'ano' => now()->year]) / $unidades_total);
         }
 
         return $consumo;
