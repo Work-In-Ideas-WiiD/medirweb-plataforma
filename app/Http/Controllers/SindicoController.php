@@ -193,7 +193,36 @@ class SindicoController extends Controller
 
     public function listaDeLeitura(Request $request)
     {
-        return view('sindico.lista-de-leitura');
+        $blocos = Agrupamento::where('imovel_id', auth()->user()->imovel_id)->orderBy('nome')->get(['nome']);
+
+        return view('sindico.lista-de-leitura', compact('blocos'));
+    }
+
+    public function listaDeLeituraTabela(Request $request)
+    {
+        return Leitura::whereHas('prumada.unidade', function($query) {
+                $query->where('imovel_id', auth()->user()->imovel_id);
+            })->when($request->bloco, function($query, $bloco) {
+                $query->whereHas('prumada.unidade.agrupamento', function($subquery) use ($bloco) {
+                    $subquery->where('nome', $bloco);
+                });
+            })->when($request->unidade, function($query, $unidade) {
+                $query->whereHas('prumada.unidade', function($subquery) use ($unidade) {
+                    $subquery->where('nome', $unidade);
+                });
+            })->when($request->data_inicio, function($query, $data_inicio) {
+                $query->whereDate('created_at', '>=', $data_inicio);
+            })->when($request->data_fim, function($query, $data_fim) {
+                $query->whereDate('created_at', '<=', $data_fim);
+            })->orderByDesc('id')->get(['metro', 'consumo', 'created_at']);
+    }
+
+    public function unidadePorBloco($bloco)
+    {
+        return Unidade::where('imovel_id', auth()->user()->imovel_id)
+            ->whereHas('agrupamento', function($query) use ($bloco) {
+            $query->where('nome', $bloco);
+        })->pluck('nome');
     }
 
     public function comparativoDeConsumo(Request $request)

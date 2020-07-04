@@ -173,11 +173,13 @@ Route::middleware('auth')->group(function () {
         Route::get('painel', 'SindicoController@painel');
         Route::get('unidade', 'SindicoController@unidade');
         Route::get('unidade/grafico-consumo-anual/{bloco}', 'SindicoController@graficoConsumoAnual');
-
+        
         Route::group(['prefix' => 'relatorio'], function() {
             Route::get('consumo-por-unidade', 'SindicoController@consumoPorUnidade');
             Route::get('consumo-por-bloco-ultimos6-meses/{bloco}', 'SindicoController@consumoPorBlocoUltimos6Meses');
             Route::get('lista-de-leitura', 'SindicoController@listaDeLeitura');
+            Route::get('lista-de-leitura/tabela', 'SindicoController@listaDeLeituraTabela');
+            Route::get('unidade-por-bloco/{bloco}', 'SindicoController@unidadePorBloco');
             Route::get('comparativo-de-consumo', 'SindicoController@comparativoDeConsumo');
         });
     });
