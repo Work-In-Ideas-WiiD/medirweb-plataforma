@@ -42,6 +42,9 @@
                 <div class="col-md-1">
                     <select name="ano" class="form-control">
                         <option>ano</option>
+                        @foreach(range(now()->year, 2017) as $ano)
+                        <option value="{{ $ano }}">ano {{ $ano }}</option>
+                        @endforeach
                     </select>
                 </div>
 
@@ -54,9 +57,9 @@
             <thead>
                 <tr>
                     <th>Unidade</th>
-                    <th>Data e Hora</th>
-                    <th>Leitura Acumulada</th>
-                    <th>Consumo Acumulado</th>
+                    @foreach ($meses as $mes)
+                    <th>{{ substr($mes, 0, 3) }}</th>
+                    @endforeach
                 </tr>
             </thead>
             <tbody class="consumo-mensal">

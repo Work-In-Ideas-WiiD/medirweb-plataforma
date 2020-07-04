@@ -160,11 +160,17 @@ class SindicoController extends Controller
     {
         $blocos = Agrupamento::where('imovel_id', auth()->user()->imovel_id)->orderBy('nome')->get(['nome']);
 
-        return view('sindico.consumo-por-unidade', compact('blocos'));
+        $meses = $this->mes;
+
+        return view('sindico.consumo-por-unidade', compact('blocos', 'meses'));
     }
 
     public function consumoPorBlocoEUnidade(Request $request, $bloco, $primeiro_mes, $ultimo_mes)
     {
+        if ($bloco == 'bloco' or $request->ano == 'ano') {
+            return [];
+        }
+
         $unidades = Unidade::with('agrupamento')->where('imovel_id', auth()->user()->imovel_id)
             ->whereHas('agrupamento', function($query) use ($bloco) {
                 $query->where('nome', $bloco);
@@ -173,10 +179,10 @@ class SindicoController extends Controller
         foreach ($unidades as $unidade) {
             $consumo_por_meses = [];
 
-            foreach (range($ultimo_mes, $primeiro_mes) as $mes) {
+            foreach (range($primeiro_mes, $ultimo_mes) as $mes) {
                 $consumo_por_meses[] = $this->consumoMensal([
-                    'mes' => $this->mesAntes($mes),
-                    'ano' => now()->year,
+                    'mes' => $mes + 1,
+                    'ano' => $request->ano,
                     'bloco' => $bloco,
                     'unidade' => $unidade->nome,
                 ]);

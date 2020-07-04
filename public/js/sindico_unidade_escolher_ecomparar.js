@@ -42,8 +42,8 @@ function escolherEComparar() {
                 $('#diferenca-consumo').text(diferenca_consumo)
                 $('#diferenca-porcentagem').text(`${diferenca_porcentagem}%`)
             } else {
-                $('#diferenca-consumo').text(`-${diferenca_consumo}`)
-                $('#diferenca-porcentagem').text(`-${diferenca_porcentagem}%`)
+                $('#diferenca-consumo').text(`${diferenca_consumo}`)
+                $('#diferenca-porcentagem').text(`${diferenca_porcentagem}%`)
             }
         }
 
