@@ -108,6 +108,7 @@ class SindicoController extends Controller
             foreach (range($ultimo_mes, $primeiro_mes) as $mes) {
                 $consumo_por_meses[] = $this->consumoMensal([
                     'mes' => $this->mesAntes($mes),
+                    'ano' => now()->year,
                     'bloco' => $bloco->nome,
                 ]);
             }
