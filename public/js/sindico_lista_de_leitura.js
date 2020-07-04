@@ -16,7 +16,7 @@ $(function() {
         form.preventDefault()
 
         $.get('/sindico/relatorio/lista-de-leitura/tabela', $(this).serialize(), function(response) {
-            console.log(response)
+
             let html = ''
 
             $.each(response, function(key, value) {

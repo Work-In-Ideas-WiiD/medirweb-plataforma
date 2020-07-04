@@ -19,7 +19,7 @@
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="text-center">Comparativo de consumo ultimos 6 meses</h3>
+        <h3 class="text-center">Lista de Leituras</h3>
     </div>
     <div class="col-md-12">
         <div class="row">
