@@ -98,6 +98,9 @@
                 <div class="col-md-1">
                     <select name="ano-diario" class="form-control">
                         <option>ano</option>
+                        @foreach(range(now()->year, 2017) as $ano)
+                        <option value="{{ $ano }}">ano {{ $ano }}</option>
+                        @endforeach
                     </select>
                 </div>
 

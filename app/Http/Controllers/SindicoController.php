@@ -195,6 +195,40 @@ class SindicoController extends Controller
         return $consumo;
     }
 
+    public function consumoPorBlocoEUnidadeDiario(Request $request, $bloco)
+    {
+        if ($bloco == 'bloco' or $request->ano == 'ano' or $request->mes == 'mes') {
+            return [];
+        }
+
+        $unidades = Unidade::with('agrupamento')->where('imovel_id', auth()->user()->imovel_id)
+            ->whereHas('agrupamento', function($query) use ($bloco) {
+                $query->where('nome', $bloco);
+        })->get();
+
+        foreach ($unidades as $unidade) {
+            $consumo_por_dias = [];
+
+            foreach (range(1, now()->month($request->mes)->daysInMonth) as $dia) {
+                $consumo_por_dias[] = $this->consumoMensal([
+                    'dia' => $dia,
+                    'mes' => $request->mes,
+                    'ano' => $request->ano,
+                    'bloco' => $bloco,
+                    'unidade' => $unidade->nome,
+                ]);
+            }
+
+            $consumo[$unidade->nome] = $consumo_por_dias;
+            // pode ser que no primeiro e ultimo dia do mes as informações apareçam de forma incorreta por causa do calculo de data
+        }
+
+        return [
+            'dias' => range(1, now()->month($request->mes)->daysInMonth),
+            'consumo' => $consumo,
+        ];
+    }
+
     public function listaDeLeitura(Request $request)
     {
         $blocos = Agrupamento::where('imovel_id', auth()->user()->imovel_id)->orderBy('nome')->get(['nome']);

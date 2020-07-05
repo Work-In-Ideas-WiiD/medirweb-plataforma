@@ -174,6 +174,7 @@ Route::middleware('auth')->group(function () {
         Route::get('unidade', 'SindicoController@unidade');
         Route::get('unidade/grafico-consumo-anual/{bloco}', 'SindicoController@graficoConsumoAnual');
         Route::get('consumo-por-bloco-e-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@consumoPorBlocoEUnidade');
+        Route::get('consumo-por-bloco-e-unidade/{bloco}/diario', 'SindicoController@consumoPorBlocoEUnidadeDiario');
         
         Route::group(['prefix' => 'relatorio'], function() {
             Route::get('consumo-por-unidade', 'SindicoController@consumoPorUnidade');
