@@ -76,9 +76,9 @@
     </div>
     <div class="col-md-12">
         <div class="row">
-            <form>
+            <form id="consumo-diario">
                 <div class="col-md-1">
-                    <select name="bloco" class="form-control">
+                    <select name="bloco-diario" class="form-control">
                         <option>bloco</option>
                         @foreach($blocos as $bloco)
                         <option value="{{ $bloco->nome }}">bloco {{ $bloco->nome }}</option>
@@ -87,13 +87,16 @@
                 </div>
 
                 <div class="col-md-1">
-                    <select name="unidade" class="form-control">
-                        <option>unidade</option>
+                    <select name="mes-diario" class="form-control">
+                        <option>mes</option>
+                        @foreach ($meses as $numero => $extenso)
+                        <option value="{{ $numero }}">{{ $extenso }}</option>
+                        @endforeach
                     </select>
                 </div>
 
                 <div class="col-md-1">
-                    <select name="ano" class="form-control">
+                    <select name="ano-diario" class="form-control">
                         <option>ano</option>
                     </select>
                 </div>
@@ -107,12 +110,12 @@
             <thead>
                 <tr>
                     <th>Unidade</th>
-                    <th>Data e Hora</th>
-                    <th>Leitura Acumulada</th>
-                    <th>Consumo Acumulado</th>
+                    @foreach(range(1, now()->daysInMonth) as $day)
+                    <th>{{ $day }}</th>
+                    @endforeach
                 </tr>
             </thead>
-            <tbody class="leituras">
+            <tbody class="consumo-diario">
 
             </tbody>
         </table>
