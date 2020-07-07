@@ -182,6 +182,7 @@ Route::middleware('auth')->group(function () {
             Route::get('lista-de-leitura/tabela', 'SindicoController@listaDeLeituraTabela');
             Route::get('unidade-por-bloco/{bloco}', 'SindicoController@unidadePorBloco');
             Route::get('comparativo-de-consumo', 'SindicoController@comparativoDeConsumo');
+            Route::get('comparativo-de-consumo-mensal', 'SindicoController@comparativoDeConsumoMensal');
         });
     });
 });

@@ -267,7 +267,40 @@ class SindicoController extends Controller
     {
         $blocos = Agrupamento::where('imovel_id', auth()->user()->imovel_id)->orderBy('nome')->get(['nome']);
 
-        return view('sindico.comparativo-de-consumo', compact('blocos'));
+        $meses = $this->mes;
+
+        return view('sindico.comparativo-de-consumo', compact('blocos', 'meses'));
+    }
+
+    public function comparativoDeConsumoMensal(Request $request)
+    {
+        if ($request->bloco == 'bloco' or $request->mes == 'mes' or $request->ano == 'ano') {
+            return [];
+        }
+
+        $unidades = auth()->user()->imovel->unidade()->when($request->unidade != 'unidade', function($query) use ($request) {
+            $query->where('nome', $request->unidade);
+        })->get(['nome']);
+
+        $queryBulder = Leitura::whereHas('prumada.unidade', function($query) use ($request) {
+            $query->where('imovel_id', auth()->user()->imovel_id);
+            $query->whereHas('agrupamento', function($subquery) use ($request){
+                $subquery->where('nome', $request->bloco);
+            });
+        })->when($request->unidade != 'unidade', function($query) use ($request) {
+            $query->whereHas('prumada.unidade', function($subquery) use ($request) {
+                $subquery->where('nome', $request->unidade);
+            });
+        })->whereYear('created_at', $request->ano);
+
+        foreach ($unidades as $unidade) {
+            dd($unidade);
+            foreach(range($request->mes, 0) as $mes) {
+                echo $mes;
+            }
+            dd($mes, $queryBulder->toSql());
+        }
+
     }
 
     public function graficoConsumoAnual($bloco)
@@ -287,4 +320,5 @@ class SindicoController extends Controller
 
         return $consumo;
     }
+
 }

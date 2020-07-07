@@ -42,6 +42,17 @@
                 <div class="col-md-1">
                     <select name="ano" class="form-control">
                         <option>ano</option>
+                        @foreach(range(now()->year, 2017) as $ano)
+                        <option value="{{ $ano }}">ano {{ $ano }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-1">
+                    <select name="mes" class="form-control">
+                        <option>mes</option>
+                        <option value="2">3 meses atrás</option>
+                        <option value="5">6 meses atrás</option>
                     </select>
                 </div>
 
@@ -53,9 +64,10 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Data e Hora</th>
-                    <th>Leitura Acumulada</th>
-                    <th>Consumo Acumulado</th>
+                    <th colspan="1">Unidade</th>
+                    <th colspan="">{{ $meses[now()->subMonth(2)->month] }}</th>
+                    <th>{{ $meses[now()->subMonth(1)->month] }}</th>
+                    <th>{{ $meses[now()->subMonth(0)->month] }}</th>
                 </tr>
             </thead>
             <tbody class="leituras">
@@ -69,5 +81,5 @@
 
 
 @push('js')
-<script src="/js/sindico_lista_de_leitura.js"></script>
+<script src="/js/sindico_comparativo_de_consumo.js"></script>
 @endpush
