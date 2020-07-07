@@ -68,12 +68,16 @@ class SindicoController extends Controller
             })->sum('consumo');
     }
 
-    private function mesAntes($mes)
+    private function mesAntes($mes, $ano = null)
     {
-        $data = now()->subMonth($mes);
+        if (!$ano) {
+            $ano = now()->year;
+        }
+
+        $data = now()->year($ano)->subMonth($mes);
 
         if (now()->day == 30) {
-            $data = now()->subMonth($mes)->subDay(1);
+            $data = now()->year($ano)->subMonth($mes)->subDay(1);
         }
 
         return $data->month;
@@ -274,33 +278,48 @@ class SindicoController extends Controller
 
     public function comparativoDeConsumoMensal(Request $request)
     {
+        $consumo = [];
+        $unidade = null;
+
         if ($request->bloco == 'bloco' or $request->mes == 'mes' or $request->ano == 'ano') {
             return [];
         }
 
-        $unidades = auth()->user()->imovel->unidade()->when($request->unidade != 'unidade', function($query) use ($request) {
-            $query->where('nome', $request->unidade);
-        })->get(['nome']);
-
-        $queryBulder = Leitura::whereHas('prumada.unidade', function($query) use ($request) {
-            $query->where('imovel_id', auth()->user()->imovel_id);
-            $query->whereHas('agrupamento', function($subquery) use ($request){
-                $subquery->where('nome', $request->bloco);
-            });
-        })->when($request->unidade != 'unidade', function($query) use ($request) {
-            $query->whereHas('prumada.unidade', function($subquery) use ($request) {
-                $subquery->where('nome', $request->unidade);
-            });
-        })->whereYear('created_at', $request->ano);
-
-        foreach ($unidades as $unidade) {
-            dd($unidade);
-            foreach(range($request->mes, 0) as $mes) {
-                echo $mes;
-            }
-            dd($mes, $queryBulder->toSql());
+        if (!empty($request->unidade) and $request->unidade != 'unidade') {
+            $unidade = $request->unidade;
         }
 
+        $unidades = auth()->user()->imovel->unidade()
+            ->when($unidade, function($query, $unidade) {
+            $query->where('nome', $unidade);
+        })->get(['id', 'nome']);
+
+        foreach ($unidades as $unidade) {
+
+            foreach($request->mes == 1 ? range(1, 6) : range(7, 12) as $mes) {
+                
+                $query = Leitura::whereHas('prumada.unidade', function($query) use ($request, $unidade) {
+                    $query->where('id', $unidade->id);
+                    $query->where('imovel_id', auth()->user()->imovel_id);
+                    $query->whereHas('agrupamento', function($subquery) use ($request){
+                        $subquery->where('nome', $request->bloco);
+                    });
+                })->whereYear('created_at', $request->ano)
+                ->whereMonth('created_at', $mes)
+                ->select('metro', 'consumo');
+
+                $ultima = $query->orderByDesc('id')->first();
+
+                $consumo[$unidade->nome][$mes] = [
+                    'primeira' => $query->first()->metro ?? 0,
+                    'ultima' => $ultima->metro ?? 0,
+                    'consumo' => $ultima->consumo ?? 0,
+                ];
+            }
+
+        }
+
+        return $consumo;
     }
 
     public function graficoConsumoAnual($bloco)

@@ -51,8 +51,8 @@
                 <div class="col-md-1">
                     <select name="mes" class="form-control">
                         <option>mes</option>
-                        <option value="2">3 meses atrás</option>
-                        <option value="5">6 meses atrás</option>
+                        <option value="1">1º Semestre</option>
+                        <option value="2">2º Semestre</option>
                     </select>
                 </div>
 
