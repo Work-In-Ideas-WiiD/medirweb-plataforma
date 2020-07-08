@@ -49,22 +49,22 @@ class SindicoController extends Controller
 
     private function consumoMensal($array)
     {
-        return Leitura::whereHas('prumada.unidade', function($query) {
+        return Leitura::whereHas('prumada.unidade', function($query) use ($array) {
                 $query->where('imovel_id', auth()->user()->imovel_id);
+                $query->when($array['bloco'] ?? null, function($subquery, $bloco) {
+                    $subquery->whereHas('agrupamento', function($subsubquery) use ($bloco) {
+                        $subsubquery->where('nome', $bloco);
+                    });
+                });
+                $query->when($array['unidade'] ?? null, function($subquery, $unidade) {
+                    $subquery->where('nome', $unidade);
+                });
             })->when($array['ano'] ?? null, function($query, $ano) {
                 $query->whereYear('created_at', $ano);
             })->when($array['mes'] ?? null, function($query, $mes) {
                 $query->whereMonth('created_at', $mes);
             })->when($array['dia'] ?? null, function($query, $dia) {
                 $query->whereDay('created_at', $dia);
-            })->when($array['unidade'] ?? null, function($query, $unidade) {
-                $query->whereHas('prumada.unidade', function($subquery) use ($unidade) {
-                    $subquery->where('nome', $unidade);
-                });
-            })->when($array['bloco'] ?? null, function($query, $bloco) {
-                $query->whereHas('prumada.unidade.agrupamento', function($subquery) use ($bloco) {
-                    $subquery->where('nome', $bloco);
-                });
             })->sum('consumo');
     }
 
@@ -304,15 +304,16 @@ class SindicoController extends Controller
                     $query->whereHas('agrupamento', function($subquery) use ($request){
                         $subquery->where('nome', $request->bloco);
                     });
-                })->whereYear('created_at', $request->ano)
+                })
+                ->whereYear('created_at', $request->ano)
                 ->whereMonth('created_at', $mes)
                 ->select('metro', 'consumo');
 
                 $ultima = $query->orderByDesc('id')->first();
 
                 $consumo[$unidade->nome][$mes] = [
-                    'primeira' => $query->first()->metro ?? 0,
-                    'ultima' => $ultima->metro ?? 0,
+                    'inicio' => $query->first()->metro ?? 0,
+                    'fim' => $ultima->metro ?? 0,
                     'consumo' => $ultima->consumo ?? 0,
                 ];
             }
