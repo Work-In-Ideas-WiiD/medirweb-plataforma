@@ -309,12 +309,10 @@ class SindicoController extends Controller
                 ->whereMonth('created_at', $mes)
                 ->select('metro', 'consumo');
 
-                $ultima = $query->orderByDesc('id')->first();
-
                 $consumo[$unidade->nome][$mes] = [
                     'inicio' => $query->first()->metro ?? 0,
-                    'fim' => $ultima->metro ?? 0,
-                    'consumo' => $ultima->consumo ?? 0,
+                    'fim' =>  $query->orderByDesc('id')->first()->metro ?? 0,
+                    'consumo' => $query->sum('consumo') ?? 0,
                 ];
             }
 
