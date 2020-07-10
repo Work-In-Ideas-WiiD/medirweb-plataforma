@@ -23,7 +23,8 @@
         @endforeach
     </div>
     <div class="col-md-11">
-        b
+        <div class="row listar-unidades">
+        </div>
     </div>
 </div>
 <div class="row">
@@ -97,6 +98,7 @@
 
 @push('js')
 <script src="/js/sindico_unidade.js"></script>
+<script src="/js/sindico_unidade_unidades.js"></script>
 <script src="/js/sindico_unidade_comparativo.js"></script>
 <script src="/js/sindico_unidade_escolher_ecomparar.js"></script>
 <script src="/js/sindico_unidade_grafico.js"></script>

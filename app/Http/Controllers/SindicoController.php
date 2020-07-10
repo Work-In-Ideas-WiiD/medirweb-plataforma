@@ -46,7 +46,6 @@ class SindicoController extends Controller
         ));
     }
 
-
     private function consumoMensal($array)
     {
         return Leitura::whereHas('prumada.unidade', function($query) use ($array) {
