@@ -184,6 +184,14 @@ Route::middleware('auth')->group(function () {
             Route::get('comparativo-de-consumo', 'SindicoController@comparativoDeConsumo');
             Route::get('comparativo-de-consumo-mensal', 'SindicoController@comparativoDeConsumoMensal');
         });
+
+        //EXPORT TABLES DOWNLOAD 
+        Route::group(['prefix' => 'export'], function() {
+            Route::get('consumo-ultimo-seis-meses', 'SindicoController@exportUltimosPorBlocoSeisMeses');
+            Route::get('consumo-grafico', 'SindicoController@exportGraficoCosumo');
+            
+        });
+        
     });
 });
 

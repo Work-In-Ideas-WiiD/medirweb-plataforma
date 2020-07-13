@@ -6,6 +6,9 @@ use App\Models\Agrupamento;
 use App\Models\Prumada;
 use App\Models\Leitura;
 use App\Models\Unidade;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CosumoExport;
+use App\Exports\CosumoGraficoExport;
 
 class SindicoController extends Controller
 {
@@ -336,6 +339,24 @@ class SindicoController extends Controller
         }
 
         return $consumo;
+    }
+
+    // EXPORT TABLES
+
+    public function exportUltimosPorBlocoSeisMeses()
+    {
+        $consumo = $this->ultimosPorBlocoMeses(0, 5);
+
+        return Excel::download(new CosumoExport(auth()->user()->imovel_id, $consumo), 'cosumo_export.xlsx');
+    }
+
+    public function exportGraficoCosumo()
+    {
+        for ($mes = 1; $mes <= 12; $mes++) {
+            $consumo_mes[$mes] = $this->consumoMensal(['mes' => $mes, 'ano' => now()->year]);
+        }
+
+        return Excel::download(new CosumoGraficoExport(auth()->user()->imovel_id, $consumo_mes), 'cosumo_grafico_export.xlsx');
     }
 
 }
