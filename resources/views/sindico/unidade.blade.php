@@ -23,7 +23,8 @@
         @endforeach
     </div>
     <div class="col-md-11">
-        b
+        <div class="row listar-unidades">
+        </div>
     </div>
 </div>
 <div class="row">
@@ -67,14 +68,6 @@
                 </tr>
             </thead>
             <tbody class="tabela-comparativo-unidades">
-                @foreach ($consumo_ultimos_6meses ?? [] as $bloco => $consumos)
-                <tr data-bloco="{{ $bloco }}">
-                    <td>{{ $bloco }}</td>
-                    @foreach ($consumos as $mes => $consumo)
-                        <td data-mes="{{ $mes }}" data-consumo="{{ $consumo }}" class="mes-para-comparar">{{ $consumo }}</td>
-                    @endforeach
-                </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
@@ -82,11 +75,11 @@
     <div class="col-md-3 bg-warning">
         <div class="h4">Comparativo</div>
         <div class="row" style="margin-bottom:15px;">
-            <div class="col-md-6 text-center" id="bloco-e-mes0">-</div>
+            <div class="col-md-6 text-center" id="unidade-e-mes0">-</div>
             <div class="col-md-6 text-center" id="consumo0">-</div>
         </div>
         <div class="row" style="margin-bottom:15px;">
-            <div class="col-md-6 text-center" id="bloco-e-mes1">-</div>
+            <div class="col-md-6 text-center" id="unidade-e-mes1">-</div>
             <div class="col-md-6 text-center" id="consumo1">-</div>
         </div>
         <div class="row" style="margin-bottom:15px;">
@@ -105,60 +98,8 @@
 
 @push('js')
 <script src="/js/sindico_unidade.js"></script>
+<script src="/js/sindico_unidade_unidades.js"></script>
 <script src="/js/sindico_unidade_comparativo.js"></script>
-<script>
-    $(function() {
-        data = [];
-        
-        var areaChartData = {
-            labels  : ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-            datasets: [
-                {
-                    label: 'Média de consumo bloco 6',
-                    backgroundColor: 'rgba(60,141,188,0.9)',
-                    borderColor: 'rgba(60,141,188,0.8)',
-                    pointRadius: false,
-                    pointColor: '#3b8bba',
-                    pointStrokeColor: 'rgba(60,141,188,1)',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(60,141,188,1)',
-                    data: data
-                },
-                {
-                    label: 'Média de consumo total',
-                    backgroundColor: 'rgba(210, 214, 222, 1)',
-                    borderColor: 'rgba(210, 214, 222, 1)',
-                    pointRadius: false,
-                    pointColor: 'rgba(210, 214, 222, 1)',
-                    pointStrokeColor: '#c1c7d1',
-                    pointHighlightFill: '#fff',
-                    pointHighlightStroke: 'rgba(220,220,220,1)',
-                    data: data
-                },
-            ]
-        }
-        //-------------
-        //- BAR CHART -
-        //-------------
-        var barChartCanvas = $('#barChart').get(0).getContext('2d')
-        var barChartData = $.extend(true, {}, areaChartData)
-        var temp0 = areaChartData.datasets[0]
-        //var temp1 = areaChartData.datasets[1]
-        
-        //barChartData.datasets[0] = temp1
-        barChartData.datasets[0] = temp0
-        
-        var barChartOptions = {
-            responsive: true,
-            maintainAspectRatio: false,
-            datasetFill: false
-        }
-        
-        var barChart = new Chart(barChartCanvas, {
-            type: 'bar',
-            data: barChartData,
-            options: barChartOptions
-        })
-    })
-</script>
+<script src="/js/sindico_unidade_escolher_ecomparar.js"></script>
+<script src="/js/sindico_unidade_grafico.js"></script>
 @endpush

@@ -3,7 +3,7 @@ function comparativoTabela(bloco) {
     
     var html = ''
 
-    $.get(`/sindico/relatorio/consumo-por-bloco-ultimos6-meses/${bloco}`, function(response) {
+    $.get(`/sindico/consumo-por-bloco-e-unidade/${bloco}/0/5`, function(response) {
         tabela.empty()
     
         $.each(response, function(key, value) {

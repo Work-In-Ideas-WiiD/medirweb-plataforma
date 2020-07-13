@@ -46,7 +46,7 @@
 
                         <div class="small-box bg-orange">
                             <div class="inner">
-                                <h3>{{ count($prumadas) }}</h3>
+                                <h3>{{ $prumadas }}</h3>
 
                                 <p>Hidrômetros</p>
                             </div>
