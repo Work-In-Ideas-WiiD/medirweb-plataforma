@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="card-header">
-                        <h3 class="card-title text-center">Comparativo de consumo <a href="#" class="btn btn-info" style="float:right; margin-right:20px;">Ver mais</a></h3>
+                        <h3 class="card-title text-center">Comparativo de consumo <a href="" id="link-comparativo-consumo" class="btn btn-info" style="float:right; margin-right:20px;">Ver mais</a></h3>
 
                         <!--div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i>
