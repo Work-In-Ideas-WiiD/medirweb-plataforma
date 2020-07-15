@@ -18,5 +18,14 @@ $(function() {
 
             modalGrafico(data)
         })
+
+        $.get(`/sindico/unidade/modal-media-anual/${bloco}/${unidade}`, function(response) {
+            $('.modal-media-anual').find('div').text(response)
+            $('.modal-media-mensal').find('div').text(parseInt(response / 12))
+        })
+
+        $.get(`/sindico/unidade/modal-este-mes/${bloco}/${unidade}`, function(response) {
+            $('.modal-este-mes').find('div').text(response)
+        })
     })
 })

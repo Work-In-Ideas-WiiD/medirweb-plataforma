@@ -25,17 +25,17 @@
                     </div>
                     Média mensal
                 </div>
-                <div class="col-md-4 modal-media-deste-ano">
+                <div class="col-md-4 modal-media-anual">
                     <div class="bg-info text-center circulos">
                         -
                     </div>
-                    Média deste ano
+                    Média Este ano
                 </div>
-                <div class="col-md-4 modal-media-deste-mes">
+                <div class="col-md-4 modal-este-mes">
                     <div class="bg-info text-center circulos">
                         -
                     </div>
-                    Média deste mes
+                    Este mês
                 </div>
             </div>
         </div>

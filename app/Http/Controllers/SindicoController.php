@@ -373,13 +373,29 @@ class SindicoController extends Controller
         foreach (range(1, 12) as $mes) {
             $consumo[$mes] = $this->consumoMensal([
                 'mes' => $mes,
-                'ano' => now()->year,
                 'unidade' => $unidade,
                 'bloco' => $bloco,
             ]);
         }
 
         return $consumo;
+    }
+
+    public function unidadeModalMediaAnual($bloco, $unidade)
+    {
+        return $this->consumoMensal([
+            'bloco' => $bloco,
+            'unidade' => $unidade,
+        ]);
+    }
+
+    public function unidadeModalEsteMes($bloco, $unidade)
+    {
+        return $this->consumoMensal([
+            'bloco' => $bloco,
+            'unidade' => $unidade,
+            'mes' => now()->month,
+        ]);
     }
 
 }
