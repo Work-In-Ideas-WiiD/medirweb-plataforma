@@ -10,6 +10,7 @@
 @stop
 
 @section('content')
+@include('sindico.unidade_modal')
 <div class="row">
     <div class="col-md-12">        
         <input class="form-control w-100" type="search" placeholder="Pesquise por nome, bloco, apartamento ou CPF">
@@ -102,4 +103,5 @@
 <script src="/js/sindico_unidade_comparativo.js"></script>
 <script src="/js/sindico_unidade_escolher_ecomparar.js"></script>
 <script src="/js/sindico_unidade_grafico.js"></script>
+<script src="/js/sindico_unidade_modal.js"></script>
 @endpush

@@ -359,4 +359,13 @@ class SindicoController extends Controller
         return Excel::download(new CosumoGraficoExport(auth()->user()->imovel_id, $consumo_mes), 'cosumo_grafico_export.xlsx');
     }
 
+    public function dadosUnidade(Request $request)
+    {
+        return auth()->user()->imovel->unidade()
+            ->where('nome', $request->unidade)
+            ->whereHas('agrupamento', function($query) use ($request) {
+                $query->where('nome', $request->bloco);
+            })->first();
+    }
+
 }

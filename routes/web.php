@@ -172,6 +172,7 @@ Route::middleware('auth')->group(function () {
         Route::get('busca', 'SindicoController@busca');
         Route::get('painel', 'SindicoController@painel');
         Route::get('unidade', 'SindicoController@unidade');
+        Route::get('unidade/dados', 'SindicoController@dadosUnidade');
         Route::get('unidade/grafico-consumo-anual/{bloco}', 'SindicoController@graficoConsumoAnual');
         Route::get('consumo-por-bloco-e-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@consumoPorBlocoEUnidade');
         Route::get('consumo-por-bloco-e-unidade/{bloco}/diario', 'SindicoController@consumoPorBlocoEUnidadeDiario');
