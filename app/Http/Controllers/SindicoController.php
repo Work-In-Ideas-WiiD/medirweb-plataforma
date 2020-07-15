@@ -368,4 +368,18 @@ class SindicoController extends Controller
             })->first();
     }
 
+    public function unidadeModalGrafico($bloco, $unidade)
+    {
+        foreach (range(1, 12) as $mes) {
+            $consumo[$mes] = $this->consumoMensal([
+                'mes' => $mes,
+                'ano' => now()->year,
+                'unidade' => $unidade,
+                'bloco' => $bloco,
+            ]);
+        }
+
+        return $consumo;
+    }
+
 }

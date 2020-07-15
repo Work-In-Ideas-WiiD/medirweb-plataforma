@@ -32,18 +32,18 @@
     <div class="col-md-12">
         <div class="card card-success">
             <div class="card-header">
-            <h3 class="card-title text-center">Comparativo de consumo</h3>
+                <h3 class="card-title text-center">Comparativo de consumo</h3>
 
-            <!--div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i>
-                </button>
-                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fa fa-times"></i></button>
-            </div-->
-            </div>
-            <div class="card-body">
-            <div class="chart">
-                <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-            </div>
+                <!--div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fa fa-times"></i></button>
+                </div-->
+                </div>
+                <div class="card-body">
+                <div class="chart">
+                    <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
             </div>
             <!-- /.card-body -->
         </div>
@@ -104,4 +104,5 @@
 <script src="/js/sindico_unidade_escolher_ecomparar.js"></script>
 <script src="/js/sindico_unidade_grafico.js"></script>
 <script src="/js/sindico_unidade_modal.js"></script>
+<script src="/js/sindico_unidade_modal_grafico.js"></script>
 @endpush
