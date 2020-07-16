@@ -3,7 +3,7 @@ $(function() {
         let bloco = $(this).data('bloco')
         let unidade = $(this).data('unidade')
 
-        $('#link-comparativo-consumo').attr('href', `/sindico/comparativo-consumo-unidade/${bloco}/${unidade}`)
+        $('#link-comparativo-consumo').attr('href', `/sindico/unidade/comparativo-de-consumo/${bloco}/${unidade}`)
 
         $.get('/sindico/unidade/dados', {unidade, bloco}, function(response) {
             $('.modal-unidade-nome').text(response.nome_responsavel)

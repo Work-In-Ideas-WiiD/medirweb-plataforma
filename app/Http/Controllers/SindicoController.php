@@ -398,4 +398,15 @@ class SindicoController extends Controller
         ]);
     }
 
+    public function unidadeComparativoDeConsumo($bloco, $unidade)
+    {
+        $meses = $this->mes;
+
+        return view('sindico.unidade-comparativo-de-consumo', compact(
+            'bloco',
+            'unidade',
+            'meses',
+        ));
+    }
+
 }
