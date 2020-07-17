@@ -406,6 +406,8 @@ class SindicoController extends Controller
 
     public function unidadeComparativoDeConsumo($bloco, $unidade)
     {
+        $unidades = auth()->user()->imovel->unidade()->count();
+
         $meses = $this->mes;
 
         foreach (range(1, 12) as $mes) {
@@ -416,11 +418,25 @@ class SindicoController extends Controller
             ]);
         }
 
+        $total_ano = array_sum($grafico);
+
+        $media_mensal = intval($total_ano / 12);
+
+        $este_mes = $grafico[now()->month - 1];
+
+        $media_unidades = (somar_consumo([
+            'mes' => now()->month,
+        ]) / $unidades);
+
         return view('sindico.unidade-comparativo-de-consumo', compact(
             'bloco',
             'unidade',
             'meses',
             'grafico',
+            'total_ano',
+            'este_mes',
+            'media_mensal',
+            'media_unidades',
         ));
     }
 

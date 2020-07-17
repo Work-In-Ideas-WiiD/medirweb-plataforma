@@ -51,28 +51,28 @@
             <div class="col-md-3">
                 <div class="bg-info">
                     neste ano
-                    <div class="circulos">-</div>
+                    <div class="circulos">{{ $media_mensal }}</div>
                     média mensal
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="bg-info">
                     neste ano
-                    <div class="circulos">-</div>
+                    <div class="circulos">{{ $total_ano }}</div>
                     consumo total
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="bg-info">
                     neste mês
-                    <div class="circulos">-</div>
+                    <div class="circulos">{{ $este_mes }}</div>
                     consumo total
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="bg-info">
                     neste mês
-                    <div class="circulos">-</div>
+                    <div class="circulos">{{ $media_unidades }}</div>
                     média de consumo do condomínio
                 </div>
             </div>
