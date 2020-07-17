@@ -5,9 +5,8 @@ function listarUnidades(bloco) {
         let html = ''
 
         $.each(response, function(key, value) {
-            console.log(key, value)
             html += `
-            <div class="col-md-3">
+            <div class="col-md-3 click-unidade" data-unidade="${key}" data-bloco="${bloco}" data-toggle="modal" data-target=".bd-example-modal-lg">
                 <div class="card bg-info" style="width: 18rem;">
                     <div class="card-body text-center">
                         <h3 class="card-title">Unidade ${key}</h3>

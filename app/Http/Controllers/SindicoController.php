@@ -380,5 +380,55 @@ class SindicoController extends Controller
 
         return Excel::download(new CosumoExport(auth()->user()->imovel_id, $consumo, 'Unidade', 12), 'cosumo_export_mensal.xlsx');
     }
+    
+    public function dadosUnidade(Request $request)
+    {
+        return auth()->user()->imovel->unidade()
+            ->where('nome', $request->unidade)
+            ->whereHas('agrupamento', function($query) use ($request) {
+                $query->where('nome', $request->bloco);
+            })->first();
+    }
+
+    public function unidadeModalGrafico($bloco, $unidade)
+    {
+        foreach (range(1, 12) as $mes) {
+            $consumo[$mes] = $this->consumoMensal([
+                'mes' => $mes,
+                'unidade' => $unidade,
+                'bloco' => $bloco,
+            ]);
+        }
+
+        return $consumo;
+    }
+
+    public function unidadeModalMediaAnual($bloco, $unidade)
+    {
+        return $this->consumoMensal([
+            'bloco' => $bloco,
+            'unidade' => $unidade,
+        ]);
+    }
+
+    public function unidadeModalEsteMes($bloco, $unidade)
+    {
+        return $this->consumoMensal([
+            'bloco' => $bloco,
+            'unidade' => $unidade,
+            'mes' => now()->month,
+        ]);
+    }
+
+    public function unidadeComparativoDeConsumo($bloco, $unidade)
+    {
+        $meses = $this->mes;
+
+        return view('sindico.unidade-comparativo-de-consumo', compact(
+            'bloco',
+            'unidade',
+            'meses',
+        ));
+    }
 
 }
