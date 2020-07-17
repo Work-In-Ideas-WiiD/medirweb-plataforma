@@ -9,6 +9,7 @@ use App\Models\Unidade;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CosumoExport;
 use App\Exports\CosumoGraficoExport;
+use App\Exports\CosumoGraficoMediaExport;
 
 class SindicoController extends Controller
 {
@@ -347,7 +348,7 @@ class SindicoController extends Controller
     {
         $consumo = $this->ultimosPorBlocoMeses(0, 5);
 
-        return Excel::download(new CosumoExport(auth()->user()->imovel_id, $consumo), 'cosumo_export.xlsx');
+        return Excel::download(new CosumoExport(auth()->user()->imovel_id, $consumo, 'Bloco', 6), 'cosumo_export.xlsx');
     }
 
     public function exportGraficoCosumo()
@@ -357,6 +358,27 @@ class SindicoController extends Controller
         }
 
         return Excel::download(new CosumoGraficoExport(auth()->user()->imovel_id, $consumo_mes), 'cosumo_grafico_export.xlsx');
+    }
+
+    public function exportUltimosPorUnidadeSeisMeses(Request $request, $bloco, $primeiro_mes, $ultimo_mes)
+    {
+        $consumo = $this->consumoPorBlocoEUnidade($request, $bloco, $primeiro_mes, $ultimo_mes);
+
+        return Excel::download(new CosumoExport(auth()->user()->imovel_id, $consumo, 'Unidade', 6), 'cosumo_export_bloco.xlsx');
+    }
+
+    public function exportGraficoCosumoMedia($bloco)
+    {
+        $consumo = $this->graficoConsumoAnual($bloco);
+
+        return Excel::download(new CosumoGraficoMediaExport(auth()->user()->imovel_id, $consumo), 'cosumo_grafico_export_media.xlsx');
+    }    
+
+    public function exportMensalPorUnidadeAno(Request $request, $bloco, $primeiro_mes, $ultimo_mes)
+    {
+        $consumo = $this->consumoPorBlocoEUnidade($request, $bloco, $primeiro_mes, $ultimo_mes);
+
+        return Excel::download(new CosumoExport(auth()->user()->imovel_id, $consumo, 'Unidade', 12), 'cosumo_export_mensal.xlsx');
     }
 
 }

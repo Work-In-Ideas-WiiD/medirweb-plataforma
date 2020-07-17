@@ -189,6 +189,9 @@ Route::middleware('auth')->group(function () {
         Route::group(['prefix' => 'export'], function() {
             Route::get('consumo-ultimo-seis-meses', 'SindicoController@exportUltimosPorBlocoSeisMeses');
             Route::get('consumo-grafico', 'SindicoController@exportGraficoCosumo');
+            Route::get('consumo-ultimo-seis-meses-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@exportUltimosPorUnidadeSeisMeses');
+            Route::get('consumo-grafico-media/{bloco}', 'SindicoController@exportGraficoCosumoMedia');
+            Route::get('consumo-mensal-por-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@exportMensalPorUnidadeAno');
             
         });
         
