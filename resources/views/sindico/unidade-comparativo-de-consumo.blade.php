@@ -148,6 +148,17 @@
 
 @push('js')
 <script src="/js/sindico_unidade_comparativo_de_consumo.js"></script>
-<script src="/js/sindico_unidade_comparativo_de_consumo_grafico.js"></script>
+<script src="/js/sindico_grafico.js"></script>
 
+<script>
+    $(function() {
+        let data = []
+
+        $.each({!! json_encode($grafico) !!}, function(key, value) {
+            data.push(value)
+        })
+
+        criarGrafico({data: data, title: 'Comparativo de consumo'})        
+    })
+</script>
 @endpush
