@@ -11,8 +11,19 @@
 
 @section('content')
 
+<style>
+    .circulos {
+        padding-top: 16%;
+        margin: auto;
+        background: #3c8dbc;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+    }
+</style>
+
 <div class="row">
-    <div class="col-md-12">        
+    <div class="col-md-12">
         <input class="form-control w-100" type="search" placeholder="Pesquise por nome, bloco, apartamento ou CPF">
     </div>
 </div>
@@ -35,18 +46,34 @@
         </div>
     </div>
     <div class="col-md-7">
-        <div class="row">
+        <div class="row text-center">
             <div class="col-md-3">
-                <div class="bg-info">1</div>
+                <div class="bg-info">
+                    neste ano
+                    <div class="circulos">-</div>
+                    média mensal
+                </div>
             </div>
             <div class="col-md-3">
-                <div class="bg-info">2</div>
+                <div class="bg-info">
+                    neste ano
+                    <div class="circulos">-</div>
+                    consumo total
+                </div>
             </div>
             <div class="col-md-3">
-                <div class="bg-info">3</div>
+                <div class="bg-info">
+                    neste mês
+                    <div class="circulos">-</div>
+                    consumo total
+                </div>
             </div>
             <div class="col-md-3">
-                <div class="bg-info">4</div>
+                <div class="bg-info">
+                    neste mês
+                    <div class="circulos">-</div>
+                    média de consumo do condomínio
+                </div>
             </div>
         </div>
     </div>
