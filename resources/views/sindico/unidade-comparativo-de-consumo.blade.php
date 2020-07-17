@@ -13,12 +13,13 @@
 
 <style>
     .circulos {
-        padding-top: 16%;
+        padding-top: 15%;
         margin: auto;
         background: #3c8dbc;
         width: 100px;
         height: 100px;
         border-radius: 50%;
+        font-size:25px;
     }
 </style>
 
@@ -79,7 +80,30 @@
     </div>
 </div>
 <br>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-success">
+            <div class="card-header">
+                <h3 class="card-title text-center">Comparativo de consumo</h3>
+
+                <!--div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fa fa-times"></i></button>
+                </div-->
+                </div>
+                <div class="card-body">
+                <div class="chart">
+                    <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+    </div>
+</div>
 <br>
+
 <div class="row">
     <div class="col-md-12">
         <h3 class="text-center">Comparativo de consumo ultimos 6 meses</h3>
@@ -123,5 +147,7 @@
 
 
 @push('js')
-<script src="/js/sindico_unidade.js"></script>
+<script src="/js/sindico_unidade_comparativo_de_consumo.js"></script>
+<script src="/js/sindico_unidade_comparativo_de_consumo_grafico.js"></script>
+
 @endpush
