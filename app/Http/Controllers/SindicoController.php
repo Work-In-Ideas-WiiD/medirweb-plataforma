@@ -408,6 +408,14 @@ class SindicoController extends Controller
     {
         $unidades = auth()->user()->imovel->unidade()->count();
 
+        $unidades_bloco = auth()->user()->imovel->unidade()->whereHas('agrupamento', function($query)use ($bloco) {
+            $query->where('nome', $bloco);
+        })->count();
+
+        $blocos = Agrupamento::whereHas('unidade', function($query) {
+            $query->where('imovel_id', auth()->user()->imovel_id);
+        })->count();
+
         $meses = $this->mes;
 
         foreach (range(1, 12) as $mes) {
@@ -416,6 +424,17 @@ class SindicoController extends Controller
                 'bloco' => $bloco,
                 'unidade' => $unidade,
             ]);
+
+            $consumo_total = somar_consumo(['mes' => $mes]);
+
+            $consumo[$this->mes[$mes]] = [
+                'media_consumo_por_unidade' => intval(somar_consumo([
+                        'mes' => $mes,
+                        'bloco' => $bloco,
+                    ]) / $unidades_bloco),
+                'media_consumo_por_bloco' => intval($consumo_total / $blocos),
+                'consumo_total' => $consumo_total,
+            ];
         }
 
         $total_ano = array_sum($grafico);
@@ -424,7 +443,7 @@ class SindicoController extends Controller
 
         $este_mes = $grafico[now()->month - 1];
 
-        $media_unidades = (somar_consumo([
+        $media_unidades = intval(somar_consumo([
             'mes' => now()->month,
         ]) / $unidades);
 
@@ -437,6 +456,7 @@ class SindicoController extends Controller
             'este_mes',
             'media_mensal',
             'media_unidades',
+            'consumo',
         ));
     }
 

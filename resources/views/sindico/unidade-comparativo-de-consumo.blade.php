@@ -105,19 +105,25 @@
 <br>
 
 <div class="row">
-    <div class="col-md-12">
-        <h3 class="text-center">Comparativo de consumo ultimos 6 meses</h3>
-    </div>
     <div class="col-md-9">
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Média consumo unidade</th>
                     <th>Média consumo bloco</th>
                     <th>Consumo total</th>
                 </tr>
             </thead>
-            <tbody class="tabela-comparativo-unidades">
+            <tbody>
+                @foreach ($consumo as $mes => $info)
+                <tr>
+                    <td>{{ $mes }}</td>
+                    <td>{{ $info['media_consumo_por_unidade'] }} m<sup>3</sup></td>
+                    <td>{{ $info['media_consumo_por_bloco'] }} m<sup>3</sup></td>
+                    <td>{{ $info['consumo_total'] }} m<sup>3</sup></td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -141,6 +147,25 @@
             </div>
             
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="text-center">Comparativo de consumo ultimos 6 meses</h3>
+    </div>
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Média consumo unidade</th>
+                    <th>Média consumo bloco</th>
+                    <th>Consumo total</th>
+                </tr>
+            </thead>
+            <tbody class="tabela-comparativo-unidades">
+            </tbody>
+        </table>
     </div>
 </div>
 @stop
