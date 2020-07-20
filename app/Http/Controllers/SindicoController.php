@@ -447,6 +447,14 @@ class SindicoController extends Controller
             'mes' => now()->month,
         ]) / $unidades);
 
+        $leituras = Leitura::whereHas('prumada.unidade', function($query) use ($bloco, $unidade) {
+            $query->where('imovel_id', auth()->user()->imovel_id);
+            $query->where('nome', $unidade);
+            $query->whereHas('agrupamento', function($subquery) use ($bloco) {
+                $subquery->where('nome', $bloco);
+            });
+        })->limit(10)->orderByDesc('id')->get();
+
         return view('sindico.unidade-comparativo-de-consumo', compact(
             'bloco',
             'unidade',
@@ -457,6 +465,7 @@ class SindicoController extends Controller
             'media_mensal',
             'media_unidades',
             'consumo',
+            'leituras',
         ));
     }
 

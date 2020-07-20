@@ -152,18 +152,22 @@
 
 <div class="row">
     <div class="col-md-12">
-        <h3 class="text-center">Comparativo de consumo ultimos 6 meses</h3>
-    </div>
-    <div class="col-md-12">
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Média consumo unidade</th>
-                    <th>Média consumo bloco</th>
-                    <th>Consumo total</th>
+                    <th>Data</th>
+                    <th>Leitura acumulada</th>
+                    <th>Consumo acumulado</th>
                 </tr>
             </thead>
-            <tbody class="tabela-comparativo-unidades">
+            <tbody>
+                @foreach ($leituras as $leitura)
+                <tr>
+                    <td>{{ $leitura->created_at->format('d/m/Y i:s') }}</td>
+                    <td>{{ $leitura->metro }}m <sup>3</sup></td>
+                    <td>{{ $leitura->consumo }}m <sup>3</sup></td>
+                </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

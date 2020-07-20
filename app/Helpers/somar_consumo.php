@@ -4,7 +4,9 @@ use App\Models\Leitura;
 
 function somar_consumo($array) {
     return Leitura::whereHas('prumada.unidade', function($query) use ($array) {
-        $query->where('imovel_id', auth()->user()->imovel_id);
+        
+        $query->where('imovel_id', $array['imovel_id'] ?? auth()->user()->imovel_id);
+
         $query->when($array['bloco'] ?? null, function($subquery, $bloco) {
             $subquery->whereHas('agrupamento', function($subsubquery) use ($bloco) {
                 $subsubquery->where('nome', $bloco);
