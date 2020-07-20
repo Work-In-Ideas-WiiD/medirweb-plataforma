@@ -18,8 +18,6 @@ $(function() {
             comparar[0].ultimo = false
         }
 
-        console.log(comparar)
-
         $('#unidade-e-mes0').text(`${comparar[0].mes}`)
         $('#consumo0').html(`${comparar[0].consumo}<sup>m3</sup>`)
 
