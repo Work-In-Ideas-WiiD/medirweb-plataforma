@@ -38,7 +38,8 @@ Route::middleware('auth:api')->namespace('Api')->group(function () {
         Route::post('/', 'UnidadeController@show');
         Route::post('/imovel', 'UnidadeController@imovel');
         Route::post('/agrupamento', 'UnidadeController@agrupamento');
-        Route::get('/consumo-ultimos-meses', 'UnidadeController@consumoUltimosMeses');
+        Route::get('consumo-ultimos-meses', 'UnidadeController@consumoUltimosMeses');
+        Route::get('comparativo', 'UnidadeController@comparativo');
     });
     //fim unidade
 
