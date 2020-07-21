@@ -24,4 +24,22 @@ class UnidadeController extends Controller
     {
         return $request->user()->unidade()->with('telefone')->first();
     }
+
+    public function consumoUltimosMeses(Request $request)
+    {
+        foreach (range(1, $request->meses ?? 3) as $mes) {
+            $data = now()->subMonth($mes);
+
+            $consumo[$data->month] = somar_consumo([
+                'mes' => $data->month,
+                'ano' => $data->year,
+                'unidade' => auth()->user()->unidade_id,
+            ]);
+
+            
+        }
+
+        return $consumo;
+
+    }
 }
