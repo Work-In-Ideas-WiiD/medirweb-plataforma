@@ -6,6 +6,10 @@ use App\Models\Agrupamento;
 use App\Models\Prumada;
 use App\Models\Leitura;
 use App\Models\Unidade;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\CosumoExport;
+use App\Exports\CosumoGraficoExport;
+use App\Exports\CosumoGraficoMediaExport;
 
 class SindicoController extends Controller
 {
@@ -48,23 +52,7 @@ class SindicoController extends Controller
 
     private function consumoMensal($array)
     {
-        return Leitura::whereHas('prumada.unidade', function($query) use ($array) {
-                $query->where('imovel_id', auth()->user()->imovel_id);
-                $query->when($array['bloco'] ?? null, function($subquery, $bloco) {
-                    $subquery->whereHas('agrupamento', function($subsubquery) use ($bloco) {
-                        $subsubquery->where('nome', $bloco);
-                    });
-                });
-                $query->when($array['unidade'] ?? null, function($subquery, $unidade) {
-                    $subquery->where('nome', $unidade);
-                });
-            })->when($array['ano'] ?? null, function($query, $ano) {
-                $query->whereYear('created_at', $ano);
-            })->when($array['mes'] ?? null, function($query, $mes) {
-                $query->whereMonth('created_at', $mes);
-            })->when($array['dia'] ?? null, function($query, $dia) {
-                $query->whereDay('created_at', $dia);
-            })->sum('consumo');
+        return somar_consumo($array);
     }
 
     private function mesAntes($mes, $ano = null)
@@ -336,6 +324,149 @@ class SindicoController extends Controller
         }
 
         return $consumo;
+    }
+
+    // EXPORT TABLES
+
+    public function exportUltimosPorBlocoSeisMeses()
+    {
+        $consumo = $this->ultimosPorBlocoMeses(0, 5);
+
+        return Excel::download(new CosumoExport(auth()->user()->imovel_id, $consumo, 'Bloco', 6), 'cosumo_export.xlsx');
+    }
+
+    public function exportGraficoCosumo()
+    {
+        for ($mes = 1; $mes <= 12; $mes++) {
+            $consumo_mes[$mes] = $this->consumoMensal(['mes' => $mes, 'ano' => now()->year]);
+        }
+
+        return Excel::download(new CosumoGraficoExport(auth()->user()->imovel_id, $consumo_mes), 'cosumo_grafico_export.xlsx');
+    }
+
+    public function exportUltimosPorUnidadeSeisMeses(Request $request, $bloco, $primeiro_mes, $ultimo_mes)
+    {
+        $consumo = $this->consumoPorBlocoEUnidade($request, $bloco, $primeiro_mes, $ultimo_mes);
+
+        return Excel::download(new CosumoExport(auth()->user()->imovel_id, $consumo, 'Unidade', 6), 'cosumo_export_bloco.xlsx');
+    }
+
+    public function exportGraficoCosumoMedia($bloco)
+    {
+        $consumo = $this->graficoConsumoAnual($bloco);
+
+        return Excel::download(new CosumoGraficoMediaExport(auth()->user()->imovel_id, $consumo), 'cosumo_grafico_export_media.xlsx');
+    }    
+
+    public function exportMensalPorUnidadeAno(Request $request, $bloco, $primeiro_mes, $ultimo_mes)
+    {
+        $consumo = $this->consumoPorBlocoEUnidade($request, $bloco, $primeiro_mes, $ultimo_mes);
+
+        return Excel::download(new CosumoExport(auth()->user()->imovel_id, $consumo, 'Unidade', 12), 'cosumo_export_mensal.xlsx');
+    }
+    
+    public function dadosUnidade(Request $request)
+    {
+        return auth()->user()->imovel->unidade()
+            ->where('nome', $request->unidade)
+            ->whereHas('agrupamento', function($query) use ($request) {
+                $query->where('nome', $request->bloco);
+            })->first();
+    }
+
+    public function unidadeModalGrafico($bloco, $unidade)
+    {
+        foreach (range(1, 12) as $mes) {
+            $consumo[$mes] = $this->consumoMensal([
+                'mes' => $mes,
+                'unidade' => $unidade,
+                'bloco' => $bloco,
+            ]);
+        }
+
+        return $consumo;
+    }
+
+    public function unidadeModalMediaAnual($bloco, $unidade)
+    {
+        return $this->consumoMensal([
+            'bloco' => $bloco,
+            'unidade' => $unidade,
+        ]);
+    }
+
+    public function unidadeModalEsteMes($bloco, $unidade)
+    {
+        return $this->consumoMensal([
+            'bloco' => $bloco,
+            'unidade' => $unidade,
+            'mes' => now()->month,
+        ]);
+    }
+
+    public function unidadeComparativoDeConsumo($bloco, $unidade)
+    {
+        $unidades = auth()->user()->imovel->unidade()->count();
+
+        $unidades_bloco = auth()->user()->imovel->unidade()->whereHas('agrupamento', function($query)use ($bloco) {
+            $query->where('nome', $bloco);
+        })->count();
+
+        $blocos = Agrupamento::whereHas('unidade', function($query) {
+            $query->where('imovel_id', auth()->user()->imovel_id);
+        })->count();
+
+        $meses = $this->mes;
+
+        foreach (range(1, 12) as $mes) {
+            $grafico[] = somar_consumo([
+                'mes' => $mes,
+                'bloco' => $bloco,
+                'unidade' => $unidade,
+            ]);
+
+            $consumo_total = somar_consumo(['mes' => $mes]);
+
+            $consumo[$this->mes[$mes]] = [
+                'media_consumo_por_unidade' => intval(somar_consumo([
+                        'mes' => $mes,
+                        'bloco' => $bloco,
+                    ]) / $unidades_bloco),
+                'media_consumo_por_bloco' => intval($consumo_total / $blocos),
+                'consumo_total' => $consumo_total,
+            ];
+        }
+
+        $total_ano = array_sum($grafico);
+
+        $media_mensal = intval($total_ano / 12);
+
+        $este_mes = $grafico[now()->month - 1];
+
+        $media_unidades = intval(somar_consumo([
+            'mes' => now()->month,
+        ]) / $unidades);
+
+        $leituras = Leitura::whereHas('prumada.unidade', function($query) use ($bloco, $unidade) {
+            $query->where('imovel_id', auth()->user()->imovel_id);
+            $query->where('nome', $unidade);
+            $query->whereHas('agrupamento', function($subquery) use ($bloco) {
+                $subquery->where('nome', $bloco);
+            });
+        })->limit(10)->orderByDesc('id')->get();
+
+        return view('sindico.unidade-comparativo-de-consumo', compact(
+            'bloco',
+            'unidade',
+            'meses',
+            'grafico',
+            'total_ano',
+            'este_mes',
+            'media_mensal',
+            'media_unidades',
+            'consumo',
+            'leituras',
+        ));
     }
 
 }
