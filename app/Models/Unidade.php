@@ -11,6 +11,11 @@ class Unidade extends Model
 
     protected $guarded = [];
 
+    public function acompanhamento()
+    {
+        return $this->hasMany(Acompanhamento::class);
+    }
+
     public function agrupamento()
     {
         return $this->belongsTo(Agrupamento::class);
