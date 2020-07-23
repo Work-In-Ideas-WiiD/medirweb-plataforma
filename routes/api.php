@@ -32,6 +32,9 @@ Route::middleware('auth:api')->namespace('Api')->group(function () {
     });
     //fim usuario
 
+    //inicio acompanhamento
+    Route::apiResource('acompanhamento', 'AcompanhamentoController');
+    //fim acompanhamento
 
     //inicio unidade
     Route::group(['prefix' => 'unidade'], function () {

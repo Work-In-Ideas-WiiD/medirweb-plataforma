@@ -27,10 +27,10 @@ class SindicoController extends Controller
             $query->where('imovel_id', auth()->user()->imovel_id);
         })->count();
 
-        $consumo_total_mensal = $this->consumoMensal(['mes' => now()->month, 'ano' => now()->year]);
+        $consumo_total_mensal = $this->consumoMensal(['mes' => now()->month]);
 
         for ($mes = 1; $mes <= 12; $mes++) {
-            $consumo_mes[$mes] = $this->consumoMensal(['mes' => $mes, 'ano' => now()->year]);
+            $consumo_mes[$mes] = $this->consumoMensal(['mes' => $mes]);
         }
 
         $consumo_medio_por_unidade_mensal = number_format($consumo_total_mensal / $unidades, 2);
@@ -99,7 +99,6 @@ class SindicoController extends Controller
             foreach (range($ultimo_mes, $primeiro_mes) as $mes) {
                 $consumo_por_meses[] = $this->consumoMensal([
                     'mes' => $this->mesAntes($mes),
-                    'ano' => now()->year,
                     'bloco' => $bloco->nome,
                 ]);
             }
@@ -318,9 +317,9 @@ class SindicoController extends Controller
         })->count();
 
         for ($mes = 1; $mes <= 12; $mes++) {
-            $consumo['bloco'][] =  intval($this->consumoMensal(['mes' => $mes, 'ano' => now()->year, 'bloco' => $bloco]) / $unidades_bloco);
+            $consumo['bloco'][] =  intval($this->consumoMensal(['mes' => $mes, 'bloco' => $bloco]) / $unidades_bloco);
 
-            $consumo['total'][] =  intval($this->consumoMensal(['mes' => $mes, 'ano' => now()->year]) / $unidades_total);
+            $consumo['total'][] =  intval($this->consumoMensal(['mes' => $mes]) / $unidades_total);
         }
 
         return $consumo;
@@ -338,7 +337,7 @@ class SindicoController extends Controller
     public function exportGraficoCosumo()
     {
         for ($mes = 1; $mes <= 12; $mes++) {
-            $consumo_mes[$mes] = $this->consumoMensal(['mes' => $mes, 'ano' => now()->year]);
+            $consumo_mes[$mes] = $this->consumoMensal(['mes' => $mes]);
         }
 
         return Excel::download(new CosumoGraficoExport(auth()->user()->imovel_id, $consumo_mes), 'cosumo_grafico_export.xlsx');
