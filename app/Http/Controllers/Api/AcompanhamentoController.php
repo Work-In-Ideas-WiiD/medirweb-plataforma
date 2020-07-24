@@ -9,6 +9,8 @@ use App\Traits\UploadFile;
 
 class AcompanhamentoController extends Controller
 {
+    use UploadFile;
+    
     /**
      * Display a listing of the resource.
      *
