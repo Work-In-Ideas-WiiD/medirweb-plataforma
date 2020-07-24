@@ -32,12 +32,17 @@ Route::middleware('auth:api')->namespace('Api')->group(function () {
     });
     //fim usuario
 
+    //inicio acompanhamento
+    Route::apiResource('acompanhamento', 'AcompanhamentoController');
+    //fim acompanhamento
 
     //inicio unidade
     Route::group(['prefix' => 'unidade'], function () {
         Route::post('/', 'UnidadeController@show');
         Route::post('/imovel', 'UnidadeController@imovel');
         Route::post('/agrupamento', 'UnidadeController@agrupamento');
+        Route::get('consumo-ultimos-meses', 'UnidadeController@consumoUltimosMeses');
+        Route::get('comparativo', 'UnidadeController@comparativo');
     });
     //fim unidade
 
