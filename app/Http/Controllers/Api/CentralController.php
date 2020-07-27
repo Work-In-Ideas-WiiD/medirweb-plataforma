@@ -459,18 +459,36 @@ class CentralController extends Controller
     public function webhook(Request $request)
     {
         if ($request->type == 'uplink') {
-            dd(leitura_nova_para_decimal('AhsAAAAByAAAAAEAAAAAAgAAAAI=' ?? $request->params['payload']));
+            $consumo = 0;
+    
+            $leitura = leitura_nova_para_decimal($request->params['payload']);
+
+            $unidade = Unidade::where('device', $request->meta['device'])->first();
+
+            $prumada = $unidade->prumada()->first();
+
+            if ($prumada) {
+                $leitura_anterior = $prumada->leitura()->select('id', 'metro')->orderByDesc('id')->first();
+                
+                if ($leitura_anterior) {
+                    if ($leitura_anterior->funcional_id == $prumada->funcional_id) {
+                        $consumo += intval($leitura['relogio_01']) - intval($leitura_anterior->metro);
+                    }
+                }
+            }
+
+            $prumada->leitura()->firstOrCreate([
+                'metro' => $leitura['relogio_01'],
+                'litro' => 0,
+                'mililitro' => 0,
+                'diferenca' => 0,
+                'valor' => 0,
+                'consumo' => $consumo,
+            ]);
+
+            return ['sucesso' => true];
         }
 
-        return $request->all();
-
-        file_put_contents(storage_path('app/requestall.txt'), json_encode(request()->all()));
-
-        file_put_contents(storage_path('app/payloads.txt'), $request->payloads);
-
-        file_put_contents(storage_path('app/payload.txt'), $request->payload);
-
-        return ['retorno' =>  'OK', 'status' => true];
     }
 
 }
