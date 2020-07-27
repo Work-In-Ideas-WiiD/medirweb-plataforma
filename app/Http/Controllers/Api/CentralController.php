@@ -458,6 +458,12 @@ class CentralController extends Controller
 
     public function webhook(Request $request)
     {
+        if ($request->type == 'uplink') {
+            dd(leitura_nova_para_decimal('AhsAAAAByAAAAAEAAAAAAgAAAAI=' ?? $request->params['payload']));
+        }
+
+        return $request->all();
+
         file_put_contents(storage_path('app/requestall.txt'), json_encode(request()->all()));
 
         file_put_contents(storage_path('app/payloads.txt'), $request->payloads);
