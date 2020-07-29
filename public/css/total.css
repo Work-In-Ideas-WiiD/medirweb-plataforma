@@ -325,3 +325,7 @@ p.bloco-imovel-cad
 .content-wrapper{
 	background-color: #e2edff !important;
 }
+
+.skin-blue .main-sidebar{
+	background-color: #2c2f36 !important;
+}

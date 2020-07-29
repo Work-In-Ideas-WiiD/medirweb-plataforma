@@ -2,7 +2,7 @@ function listarUnidades(bloco) {
     let month = new Date().getMonth() + 1 //mes atual
 
     $.get(`/sindico/consumo-por-bloco-e-unidade/${bloco}/${month}/${month}`, function(response) {
-        let html = ''
+        let html = '<h3>Bloco '+bloco+'</h3>'
 
         $.each(response, function(key, value) {
             html += `

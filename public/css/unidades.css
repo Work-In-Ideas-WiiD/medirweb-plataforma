@@ -1,0 +1,114 @@
+.pesquisar{
+    border-radius: 5px !important;
+    border-color: #4684ff !important;
+}
+
+.pesquisar::placeholder{
+    color: #4684ff !important;
+}
+
+.escolher-bloco{
+    color: #4783ff;
+    font-weight: 100;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    font-size: 1.1em;
+}
+.escolher-bloco:active, .escolher-bloco:focus{
+    font-size: 1.4em;
+    font-weight: bold;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #4783ff;
+}
+.containerBloco{
+    text-align: center;
+}
+
+.table{
+    border: none !important;
+}
+.table tbody > tr > td{
+    background-color: #553fea !important;
+    color: #fff;
+    border: none !important;
+    text-align: center;
+    cursor: pointer;
+}
+.table tbody > tr:nth-child(odd) > td{
+    background-color: #664bfa !important;
+    color: #fff;
+}
+
+.table th{
+    background-color: #3d2dd6 !important;
+    border: none !important;
+    text-align: center !important;
+}
+
+.table th:first-child{
+    border-radius: 8px 0px 0px;
+} 
+.table th:last-child{
+    border-radius: 0px 8px 0px 0px;
+} 
+.table tbody tr:last-child td:first-child{
+    border-radius: 0px 0px 0px 8px;
+}
+.table tbody tr:last-child td:last-child{
+    border-radius: 0px 0px 8px 0px;
+}
+
+.table tbody tr td:first-child{
+    background-color: #3d2dd6 !important;
+    border: none !important;
+    text-align: center !important;
+    color: #fff;
+}
+
+.tituloComp{
+    color: #4684ff !important;
+    font-style: oblique;
+    font-weight: bold !important; 
+    text-align: center;
+}
+
+.quadroComp{
+    background-color: #f5ea7e;
+    border-radius: 5px;
+}
+
+#bloco-e-mes0, #bloco-e-mes1{
+    color: #4684ff !important;
+    font-weight: bold;
+}
+#consumo0, #consumo1{
+    color: #4684ff !important;
+}
+#diferenca-consumo, #diferenca-porcentagem{
+    background: #ff4848;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0px;
+    color: #fff;
+}
+.blocoResultado{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+.tituloCentral{
+    color: #4684ff !important;
+    font-style: oblique;
+}
+.tituloCentralSub{
+    color: #4684ff !important;
+    font-size: 1.2em;
+    margin-top: -5px;
+    margin-bottom: 2em;
+}
