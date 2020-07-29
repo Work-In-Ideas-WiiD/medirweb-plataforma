@@ -459,13 +459,37 @@ class CentralController extends Controller
 
     public function webhook(Request $request)
     {
-        file_put_contents(storage_path('app/requestall'.Str::random(4).now()->format('Y-m-d H:i').'.txt'), json_encode(request()->all()));
+        if ($request->type == 'uplink') {
+            $consumo = 0;
+    
+            $leitura = leitura_nova_para_decimal($request->params['payload']);
 
-        file_put_contents(storage_path('app/payloads'.Str::random(4).now()->format('Y-m-d H:i').'.txt'), $request->payloads);
+            $unidade = Unidade::where('device', $request->meta['device'])->first();
 
-        file_put_contents(storage_path('app/payload'.Str::random(4).now()->format('Y-m-d H:i').'.txt'), $request->payload);
+            $prumada = $unidade->prumada()->first();
 
-        return ['retorno' =>  'OK', 'status' => true];
+            if ($prumada) {
+                $leitura_anterior = $prumada->leitura()->select('id', 'metro')->orderByDesc('id')->first();
+                
+                if ($leitura_anterior) {
+                    if ($leitura_anterior->funcional_id == $prumada->funcional_id) {
+                        $consumo += intval($leitura['relogio_01']) - intval($leitura_anterior->metro);
+                    }
+                }
+            }
+
+            $prumada->leitura()->firstOrCreate([
+                'metro' => $leitura['relogio_01'],
+                'litro' => 0,
+                'mililitro' => 0,
+                'diferenca' => 0,
+                'valor' => 0,
+                'consumo' => $consumo,
+            ]);
+
+            return ['sucesso' => true];
+        }
+
     }
 
 }
