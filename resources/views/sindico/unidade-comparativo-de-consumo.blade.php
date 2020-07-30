@@ -16,7 +16,7 @@
 
 <style>
     .circulos {
-        margin: auto;
+        
         background: #2c2f36;
         width: 100px;
         height: 100px;

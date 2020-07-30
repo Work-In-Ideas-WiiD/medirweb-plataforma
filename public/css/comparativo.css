@@ -87,7 +87,7 @@
     border-bottom: 1.2em solid #c846e8;
     border-left: 1.2em solid transparent;
     top: 4px;
-    left: 10px;
+    left: 0px;
     border-top: 1.2em solid #c846e8;
     transform: rotate(40deg);
     top: 1.6em;
@@ -104,7 +104,7 @@
     border-bottom: 1.2em solid #664bfa;
     border-left: 1.2em solid transparent;
     top: 4px;
-    left: 10px;
+    left: 0px;
     border-top: 1.2em solid #664bfa;
     transform: rotate(40deg);
     top: 1.6em;
@@ -121,7 +121,7 @@
     border-bottom: 1.2em solid #00e2e1;
     border-left: 1.2em solid transparent;
     top: 4px;
-    left: 10px;
+    left: 0px;
     border-top: 1.2em solid #00e2e1;
     transform: rotate(40deg);
     top: 1.6em;
@@ -138,7 +138,7 @@
     border-bottom: 1.2em solid #b3cefd;
     border-left: 1.2em solid transparent;
     top: 4px;
-    left: 10px;
+    left: 0px;
     border-top: 1.2em solid #b3cefd;
     transform: rotate(40deg);
     top: 1.6em;
