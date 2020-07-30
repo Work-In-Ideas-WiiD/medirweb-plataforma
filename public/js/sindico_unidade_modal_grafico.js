@@ -4,13 +4,13 @@ function modalGrafico(data) {
         datasets: [
             {
                 label: 'Média de consumo da unidade',
-                backgroundColor: 'rgba(60,141,188,0.9)',
-                borderColor: 'rgba(60,141,188,0.8)',
+                backgroundColor: '#00e2e1',
+                borderColor: '#00e2e1',
                 pointRadius: false,
-                pointColor: '#3b8bba',
-                pointStrokeColor: 'rgba(60,141,188,1)',
+                pointColor: '#00e2e1',
+                pointStrokeColor: '#fff',
                 pointHighlightFill: '#fff',
-                pointHighlightStroke: 'rgba(60,141,188,1)',
+                pointHighlightStroke: '#fff',
                 data: data
             },
         ]
