@@ -39,15 +39,15 @@ class SindicoController extends Controller
 
         $mes = $this->mes;
         
-        return view('sindico.painel', compact(
-            'prumadas',
-            'unidades',
-            'consumo_total_mensal',
-            'consumo_medio_por_unidade_mensal',
-            'consumo_mes',
-            'consumo_ultimos_6meses',
-            'mes',
-        ));
+        // return view('sindico.painel', compact(
+        //     'prumadas',
+        //     'unidades',
+        //     'consumo_total_mensal',
+        //     'consumo_medio_por_unidade_mensal',
+        //     'consumo_mes',
+        //     'consumo_ultimos_6meses',
+        //     'mes'
+        // ));
     }
 
     private function consumoMensal($array)
