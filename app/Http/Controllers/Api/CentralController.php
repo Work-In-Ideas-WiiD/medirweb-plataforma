@@ -462,7 +462,7 @@ class CentralController extends Controller
     {
         $payload = json_decode($request->payload);
 
-        LogDispositivo::updateOrCreate([
+        LogDispositivo::create([
             'dispositivo' => $payload->meta->device ?? null,
             'base64' => $payload->params->payload ?? null,
             'json' => $request->payload
