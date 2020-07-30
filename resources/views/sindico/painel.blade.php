@@ -149,7 +149,11 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>{{ $mes[now()->subMonth(5)->month] }}</th>
+                    @if(now()->day == 30)
+                        <th>{{ $mes[now()->subMonth(5)->subDay(1)->month] }}</th>
+                    @else
+                        <th>{{ $mes[now()->subMonth(5)->month] }}</th>
+                    @endif
                     <th>{{ $mes[now()->subMonth(4)->month] }}</th>
                     <th>{{ $mes[now()->subMonth(3)->month] }}</th>
                     <th>{{ $mes[now()->subMonth(2)->month] }}</th>

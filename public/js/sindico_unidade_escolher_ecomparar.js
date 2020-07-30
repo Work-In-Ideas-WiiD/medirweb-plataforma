@@ -1,5 +1,5 @@
 function escolherEComparar() {
-    let mes = [null, 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out']
+    let mes = ['Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
 
     let comparar = [
         {unidade: null, consumo: null, mes: null, ultimo: false},
