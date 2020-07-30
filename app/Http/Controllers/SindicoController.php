@@ -46,7 +46,7 @@ class SindicoController extends Controller
             'consumo_medio_por_unidade_mensal',
             'consumo_mes',
             'consumo_ultimos_6meses',
-            'mes',
+            'mes'
         ));
     }
 
