@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var mes = [null, 'Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out']
+    var mes = ['Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
 
     var comparar = [
         {bloco: null, consumo: null, mes: null, ultimo: false},

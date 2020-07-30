@@ -3,28 +3,31 @@
 @section('title', 'MedirWeb')
 
 @section('content_header')
-<h1>Dashboard <small>Seja bem vindo</small></h1>
+<!-- <h1>Dashboard <small>Seja bem vindo</small></h1>
 <ol class="breadcrumb">
     {{ date('d \d\e M \d\e Y ') }}
-</ol>
+</ol> -->
 @stop
+
+{!! Html::style( asset('css/listaLeitura.css')) !!}
+{!! Html::style( asset('css/total.css')) !!}
 
 @section('content')
 <div class="row">
     <div class="col-md-12">        
-        <input class="form-control w-100" type="search" placeholder="Pesquise por nome, bloco, apartamento ou CPF">
+        <input class="form-control w-100 pesquisar" type="search" placeholder="Pesquise por nome, bloco, apartamento ou CPF">
     </div>
 </div>
 
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="text-center">Lista de Leituras</h3>
+        <h3 class="text-center tituloCentral">Lista de Leituras</h3>
     </div>
     <div class="col-md-12">
         <div class="row">
             <form>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <select name="bloco" class="form-control">
                         <option>bloco</option>
                         @foreach($blocos as $bloco)
@@ -33,24 +36,24 @@
                     </select>
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <select name="unidade" class="form-control">
                         <option>unidade</option>
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <span>De</span>
-                    <input type="date" style="width:90%; float:right;" class="form-control" name="data_inicio" placeholder="data de inicio">
+                <div class="col-md-3">
+                    <label class="labelInput">De</label>
+                    <input type="date" style="width:90%; float:right;" class="form-control filtro" name="data_inicio" placeholder="data de inicio">
                 </div>
 
-                <div class="col-md-2">
-                    <span>Até</span>
-                    <input type="date" style="width:90%; float:right;" class="form-control" name="data_fim" placeholder="data fim">
+                <div class="col-md-3">
+                    <label class="labelInput">Até</label>
+                    <input type="date" style="width:90%; float:right;" class="form-control filtro" name="data_fim" placeholder="data fim">
                 </div>
 
                 <div class="col-md-1">
-                    <button class="btn btn-danger">aplicar</button>
+                    <button class="btn btn-danger botaoIr">Aplicar</button>
                 </div>
             </form>
         </div>

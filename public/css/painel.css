@@ -1,0 +1,200 @@
+.pesquisar{
+    border-radius: 5px !important;
+    border-color: #4684ff !important;
+}
+
+.pesquisar::placeholder{
+    color: #4684ff !important;
+}
+
+.box.box-warning{
+    border: none !important;
+    background-color: transparent !important;
+}
+
+.dataPainel{
+    float: right;
+    padding: 0px !important;
+    background-color: transparent !important;
+    color: #4684ff;
+    margin-bottom: 0px !important;
+}
+
+.titulo{
+    color: #654af9;
+    font-family: 'Gugi', cursive;
+    font-size: 3em !important;
+    padding-left: 10px;
+}
+.box-header.with-border{
+    border: none !important;
+    margin-bottom: -2em;
+}
+.bloco1{
+    background-color: #654af9 !important;
+    border-radius: 10px !important;
+    min-height: 100px;
+}
+.bloco2{
+    background-color: #c846e8 !important;
+    border-radius: 10px !important;
+    min-height: 100px;
+}
+.bloco3{
+    background-color: #00e2e1 !important;
+    border-radius: 10px !important;
+    min-height: 100px;
+}
+.bloco4{
+    background-color: #4683ff !important;
+    border-radius: 10px !important;
+    min-height: 100px;
+}
+
+.bloco1 h3, .bloco2 h3, .bloco3 h3, .bloco4 h3{
+    float: left;
+    font-size: 5em !important;
+    margin-top: 28px !important;
+    color: #e2edff;
+}
+.bloco1 p, .bloco2 p, .bloco3 p, .bloco4 p{
+    float: left;
+    margin-bottom: 0px;
+    margin-top: 4em;
+    margin-left: 10px;
+    color: #e2edff;
+}
+.bloco1 .icon, .bloco2 .icon, .bloco3 .icon, .bloco4 .icon{
+    margin-top: 20px;
+}
+.bloco1 .icon i, .bloco2 .icon i, .bloco3 .icon i, .bloco4 .icon i{
+    color: rgba(255,255,255, 0.4);
+}
+
+.tituloCentral{
+    color: #4684ff !important;
+    font-style: oblique;
+}
+.tituloCentralSub{
+    color: #4684ff !important;
+    font-size: 1.2em;
+    margin-top: -5px;
+    margin-bottom: 2em;
+}
+.table{
+    border: none !important;
+}
+.table tbody > tr > td{
+    background-color: #553fea !important;
+    color: #fff;
+    border: none !important;
+    text-align: center;
+    cursor: pointer;
+}
+.table tbody > tr:nth-child(odd) > td{
+    background-color: #664bfa !important;
+    color: #fff;
+}
+
+.table th{
+    background-color: #3d2dd6 !important;
+    border: none !important;
+    text-align: center !important;
+}
+
+.table th:first-child{
+    border-radius: 8px 0px 0px;
+} 
+.table th:last-child{
+    border-radius: 0px 8px 0px 0px;
+} 
+.table tbody tr:last-child td:first-child{
+    border-radius: 0px 0px 0px 8px;
+}
+.table tbody tr:last-child td:last-child{
+    border-radius: 0px 0px 8px 0px;
+}
+
+.table tbody tr td:first-child{
+    background-color: #3d2dd6 !important;
+    border: none !important;
+    text-align: center !important;
+    color: #fff;
+}
+
+.tituloComp{
+    color: #4684ff !important;
+    font-style: oblique;
+    font-weight: bold !important; 
+    text-align: center;
+}
+
+.quadroComp{
+    background-color: #f5ea7e;
+    border-radius: 5px;
+}
+
+#bloco-e-mes0, #bloco-e-mes1{
+    color: #4684ff !important;
+    font-weight: bold;
+}
+#consumo0, #consumo1{
+    color: #4684ff !important;
+}
+#diferenca-consumo, #diferenca-porcentagem{
+    background: #ff4848;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 0px;
+    color: #fff;
+}
+.blocoResultado{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+}
+
+.iconeFuncao{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #664bfa;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.iconeFuncao2{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #1cf793;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.iconeFuncao3{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #c846e8;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.iconeFuncao i, .iconeFuncao2 i, .iconeFuncao3 i{
+    color: #fff;
+}

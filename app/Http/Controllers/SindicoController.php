@@ -38,7 +38,7 @@ class SindicoController extends Controller
         $consumo_ultimos_6meses = $this->ultimosPorBlocoMeses(0, 5);
 
         $mes = $this->mes;
-
+        
         return view('sindico.painel', compact(
             'prumadas',
             'unidades',
