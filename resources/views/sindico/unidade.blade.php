@@ -56,7 +56,7 @@
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="text-center tituloCentral">Comparativo de consumo</h3>
+        <h3 class="text-center tituloCentral2">Comparativo de consumo</h3>
         <h3 class="text-center tituloCentralSub">nos ultimos 6 meses</h3>
     </div>
     <div class="col-md-9">

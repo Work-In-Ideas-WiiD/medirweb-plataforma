@@ -22,12 +22,15 @@ $(function() {
         })
 
         $.get(`/sindico/unidade/modal-media-anual/${bloco}/${unidade}`, function(response) {
-            $('.modal-media-anual').find('div').text(response)
-            $('.modal-media-mensal').find('div').text(parseInt(response / 12))
+            $('.modal-media-anual').find('div').text(response+"m³")
+            $('.modal-media-mensal').find('div').text(parseInt(response / 12)+"m³")
         })
 
         $.get(`/sindico/unidade/modal-este-mes/${bloco}/${unidade}`, function(response) {
-            $('.modal-este-mes').find('div').text(response)
+            $('.modal-este-mes').find('div').text(response+"m³")
         })
-    })
+    });
+    $(document).on('click', ".iconeFechar", function(){
+        $(".bd-example-modal-lg").trigger('click');
+    });
 })

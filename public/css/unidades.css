@@ -202,3 +202,115 @@
     color: #fff;
     font-size: 1.5em;
 }
+
+.modalUnidades{
+    display: none;
+    position: absolute;
+    z-index: 9;
+    right: 1%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    top: 12em;
+    padding: 0px !important;
+    background-color: #4683ff;
+    width: 65%;
+    border-radius: 10px;
+}
+.modalUnidades .modal-content{
+    background-color: transparent;
+}
+.modal-unidade-nome{
+    color: #fff;
+    font-size: 1.5em;
+    font-weight: 100;
+    margin-bottom: 20px;
+    padding-left: 0.5em;
+}
+.modal-unidade-bloco, .modal-unidade-cpf{
+    color: #fff;
+    font-size: 1em;
+    font-weight: 100;
+    margin-bottom: 20px;
+    padding-left: 0.8em;
+}
+.iconeFechar{
+    float: right;
+    top: 0px;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+.iconeFechar i{
+    color: #fff;
+    font-size: 2em;
+}
+.tituloCentral{
+    color: #fff !important;
+    font-style: oblique;
+}
+.tituloCentral2{
+    color: #4684ff !important;
+    font-style: oblique;
+}
+#link-comparativo-consumo{
+    float: right;
+    margin-right: 6%;
+    color: #4684fd;
+    background-color: #fff;
+    border: none;
+    padding-left: 3em;
+    padding-right: 3em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    margin-top: -40px;
+    font-size: 1.2em;
+    font-style: oblique;
+}
+.modal-media-mensal, .modal-media-anual, .modal-este-mes{
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    color: #fff;
+}
+.circulos1::after{
+    background-color: transparent;
+    content: " ";
+    position: absolute;
+    width: 135px;
+    z-index: -1;
+    border-right: 2.2em solid #664bfa;
+    border-radius: 50%;
+    height: 135px;
+    border-bottom: 2em solid #664bfa;
+    border-left: 2em solid transparent;
+}
+.circulos2::after{
+    background-color: transparent;
+    content: " ";
+    position: absolute;
+    width: 135px;
+    z-index: -1;
+    border-right: 2.2em solid #c846e8;
+    border-radius: 50%;
+    height: 135px;
+    border-bottom: 2em solid #c846e8;
+    border-left: 2em solid transparent;
+}
+.circulos3::after{
+    background-color: transparent;
+    content: " ";
+    position: absolute;
+    width: 135px;
+    z-index: -1;
+    border-right: 2.2em solid #00e2e1;
+    border-radius: 50%;
+    height: 135px;
+    border-bottom: 2em solid #00e2e1;
+    border-left: 2em solid transparent;
+}
+.modal-backdrop{
+    display: none !important;
+}
+.body, .modal-open{
+    overflow: scroll !important;
+}
