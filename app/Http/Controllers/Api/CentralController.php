@@ -14,7 +14,8 @@ use App\Models\Fechamento;
 use App\Models\Falha;
 use App\Models\FaturaUnidade;
 use Illuminate\Support\Str;
-
+use App\Models\LogDispositivo;
+use Illuminate\Support\Facades\Log;
 use Session, Curl;
 
 class CentralController extends Controller
@@ -459,13 +460,47 @@ class CentralController extends Controller
 
     public function webhook(Request $request)
     {
-        file_put_contents(storage_path('app/requestall'.Str::random(4).now()->format('Y-m-d H:i').'.txt'), json_encode(request()->all()));
+        $payload = json_decode($request->payload);
 
-        file_put_contents(storage_path('app/payloads'.Str::random(4).now()->format('Y-m-d H:i').'.txt'), $request->payloads);
+        LogDispositivo::updateOrCreate([
+            'dispositivo' => $payload->meta->device ?? null,
+            'base64' => $payload->params->payload ?? null,
+            'json' => $request->payload
+        ]);
 
-        file_put_contents(storage_path('app/payload'.Str::random(4).now()->format('Y-m-d H:i').'.txt'), $request->payload);
+        if ($payload->type == 'uplink') {
+            $consumo = 0;
 
-        return ['retorno' =>  'OK', 'status' => true];
+            $leitura = leitura_nova_para_decimal($payload->params->payload);
+            
+            $unidade = Unidade::where('device', $payload->meta->device)->first();
+
+            $prumada = $unidade->prumada()->first();
+
+            if ($prumada) {
+                $leitura_anterior = $prumada->leitura()->select('id', 'metro')->orderByDesc('id')->first();
+                
+                if ($leitura_anterior) {
+                    if ($leitura_anterior->funcional_id == $prumada->funcional_id) {
+                        $consumo += intval($leitura['relogio_01']) - intval($leitura_anterior->metro);
+                    }
+                }
+            }
+
+            $prumada->leitura()->firstOrCreate([
+                'metro' => $leitura['relogio_01'],
+                'litro' => 0,
+                'mililitro' => 0,
+                'diferenca' => 0,
+                'valor' => 0,
+                'consumo' => $consumo,
+                'base64' => $payload->params->payload,
+                'json' => $request->payload
+            ]);
+
+            return ['sucesso' => true];
+        }
+
     }
 
 }

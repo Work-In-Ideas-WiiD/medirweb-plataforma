@@ -45,7 +45,8 @@
             "app/Helpers/excel.php",
             "app/Helpers/converter_leitura.php",
             "app/Helpers/prumada.php",
-            "app/Helpers/somar_consumo.php"
+            "app/Helpers/somar_consumo.php",
+            "app/Helpers/leitura_nova_para_decimal.php"
         ]
     },
     "autoload-dev": {

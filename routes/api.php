@@ -87,6 +87,7 @@ Route::group(['prefix' => 'central', 'namespace' => 'Api'], function()
     Route::any('media/consumo', 'CentralController@imovelMediaConsumo');
 
     Route::any('webhook', 'CentralController@webhook');
+    
 });
 // fim - ### CentralResp CONTROLER ###
 
