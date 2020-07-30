@@ -3,35 +3,42 @@
 @section('title', 'MedirWeb')
 
 @section('content_header')
-<h1>Dashboard <small>Seja bem vindo</small></h1>
+<!-- <h1>Dashboard <small>Seja bem vindo</small></h1>
 <ol class="breadcrumb">
     {{ date('d \d\e M \d\e Y ') }}
-</ol>
+</ol> -->
 @stop
+
+{!! Html::style( asset('css/comparativo.css')) !!}
+{!! Html::style( asset('css/total.css')) !!}
 
 @section('content')
 
 <style>
     .circulos {
-        padding-top: 15%;
         margin: auto;
-        background: #3c8dbc;
+        background: #2c2f36;
         width: 100px;
         height: 100px;
         border-radius: 50%;
-        font-size:25px;
+        font-size: 2em;
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        color: #fff;
+        font-weight: 100;
     }
 </style>
 
 <div class="row">
     <div class="col-md-12">
-        <input class="form-control w-100" type="search" placeholder="Pesquise por nome, bloco, apartamento ou CPF">
+        <input class="form-control w-100 pesquisar" type="search" placeholder="Pesquise por nome, bloco, apartamento ou CPF">
     </div>
 </div>
 <br>
 <div class="row">
     <div class="col-md-12">
-        AA
+        <h3 class="tituloBloco">Bloco 6 <label>Unidade 07</label></h3>
     </div>
 </div>
 <br>
@@ -39,40 +46,48 @@
     <div class="col-md-5">
         <div class="row">
             <div class="col-md-6">
-                <div class="bg-info">A</div>
+                <div class="bg-info blocoAB">A</div>
             </div>
             <div class="col-md-6">
-                <div class="bg-info">B</div>
+                <div class="bg-info blocoAB">B</div>
             </div>
         </div>
     </div>
     <div class="col-md-7">
-        <div class="row text-center">
+        <div class="row text-center blocoCirculos">
             <div class="col-md-3">
-                <div class="bg-info">
+                <div class="bg-info antesCirculo">
                     neste ano
-                    <div class="circulos">{{ $media_mensal }}</div>
+                    <div class="circulos1">
+                        <div class="circulos ">{{ $media_mensal }}</div>
+                    </div>
                     média mensal
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="bg-info">
+                <div class="bg-info antesCirculo">
                     neste ano
-                    <div class="circulos">{{ $total_ano }}</div>
+                    <div class="circulos2">
+                        <div class="circulos">{{ $total_ano }}</div>
+                    </div>
                     consumo total
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="bg-info">
+                <div class="bg-info antesCirculo">
                     neste mês
-                    <div class="circulos">{{ $este_mes }}</div>
+                    <div class="circulos3">
+                        <div class="circulos ">{{ $este_mes }}</div>
+                    </div>
                     consumo total
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="bg-info">
+                <div class="bg-info antesCirculo">
                     neste mês
-                    <div class="circulos">{{ $media_unidades }}</div>
+                    <div class="circulos4">
+                        <div class="circulos ">{{ $media_unidades }}</div>
+                    </div>
                     média de consumo do condomínio
                 </div>
             </div>
@@ -85,7 +100,7 @@
     <div class="col-md-12">
         <div class="card card-success">
             <div class="card-header">
-                <h3 class="card-title text-center">Comparativo de consumo</h3>
+                <h3 class="card-title text-center tituloCentral">Comparativo de consumo</h3>
 
                 <!--div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i>
@@ -128,8 +143,8 @@
         </table>
     </div>
 
-    <div class="col-md-3 bg-warning">
-        <div class="h4">Comparativo</div>
+    <div class="col-md-3 bg-warning quadroComp">
+        <div class="h4 tituloComp">Comparativo</div>
         <div class="row" style="margin-bottom:15px;">
             <div class="col-md-6 text-center" id="unidade-e-mes0">-</div>
             <div class="col-md-6 text-center" id="consumo0">-</div>
@@ -139,10 +154,10 @@
             <div class="col-md-6 text-center" id="consumo1">-</div>
         </div>
         <div class="row" style="margin-bottom:15px;">
-            <div class="col-md-6">
+            <div class="col-md-6 blocoResultado">
                 <div class="text-center" style="background:#ff0047;" id="diferenca-consumo">-</div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 blocoResultado">
                 <div class="text-center" style="background:#ff0047;" id="diferenca-porcentagem">-</div>
             </div>
             
