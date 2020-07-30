@@ -14,7 +14,8 @@ use App\Models\Fechamento;
 use App\Models\Falha;
 use App\Models\FaturaUnidade;
 use Illuminate\Support\Str;
-
+use App\Models\LogDispositivo;
+use Illuminate\Support\Facades\Log;
 use Session, Curl;
 
 class CentralController extends Controller
@@ -459,12 +460,20 @@ class CentralController extends Controller
 
     public function webhook(Request $request)
     {
-        if ($request->type == 'uplink') {
-            $consumo = 0;
-    
-            $leitura = leitura_nova_para_decimal($request->params['payload']);
+        $payload = json_decode($request->payload);
 
-            $unidade = Unidade::where('device', $request->meta['device'])->first();
+        LogDispositivo::updateOrCreate([
+            'dispositivo' => $payload->meta->device ?? null,
+            'base64' => $payload->params->payload ?? null,
+            'json' => $request->payload
+        ]);
+
+        if ($payload->type == 'uplink') {
+            $consumo = 0;
+
+            $leitura = leitura_nova_para_decimal($payload->params->payload);
+            
+            $unidade = Unidade::where('device', $payload->meta->device)->first();
 
             $prumada = $unidade->prumada()->first();
 
@@ -485,6 +494,8 @@ class CentralController extends Controller
                 'diferenca' => 0,
                 'valor' => 0,
                 'consumo' => $consumo,
+                'base64' => $payload->params->payload,
+                'json' => $request->payload
             ]);
 
             return ['sucesso' => true];

@@ -15,7 +15,15 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
 
     Route::get('/', function () {
-        return redirect('/imovel');
+
+        if(app('defender')->hasRoles('Sindico'))
+        {
+            return redirect('/sindico/painel');
+        }
+        else{
+            return redirect('/imovel');
+        }
+       
     });
     
     Route::get('/home', 'HomeController@index')->name('home')->middleware('permissao:administrador|sindico|secretario');
