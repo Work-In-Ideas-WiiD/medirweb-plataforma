@@ -3,28 +3,39 @@
 @section('title', 'MedirWeb')
 
 @section('content_header')
-<h1>Dashboard <small>Seja bem vindo</small></h1>
+<!-- <h1>Dashboard <small>Seja bem vindo</small></h1>
 <ol class="breadcrumb">
     {{ date('d \d\e M \d\e Y ') }}
-</ol>
+</ol> -->
 @stop
+
+{!! Html::style( asset('css/consumoUnidade.css')) !!}
+{!! Html::style( asset('css/total.css')) !!}
 
 @section('content')
 <div class="row">
     <div class="col-md-12">        
-        <input class="form-control w-100" type="search" placeholder="Pesquise por nome, bloco, apartamento ou CPF">
+        <input class="form-control w-100 pesquisar" type="search" placeholder="Pesquise por nome, bloco, apartamento ou CPF">
     </div>
 </div>
 
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="text-center">Consumo mensal por unidades</h3>
+        <h3 class="text-center tituloCentral">Consumo mensal por unidades<div class="icon iconeFuncao">
+                    <i class="fa fa-file-o"></i>
+                </div>
+                <div class="icon iconeFuncao2">
+                    <i class="fa fa-file-excel-o"></i>
+                </div>
+                <div class="icon iconeFuncao3">
+                    <i class="fa fa-print"></i>
+                </div></h3>
     </div>
     <div class="col-md-12">
         <div class="row">
             <form id="consumo-mensal">
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <select name="bloco" class="form-control">
                         <option>bloco</option>
                         @foreach($blocos as $bloco)
@@ -39,7 +50,7 @@
                     </select>
                 </div-->
 
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <select name="ano" class="form-control">
                         <option>ano</option>
                         @foreach(range(now()->year, 2017) as $ano)
@@ -48,8 +59,8 @@
                     </select>
                 </div>
 
-                <div class="col-md-1">
-                    <button class="btn btn-danger">aplicar</button>
+                <div class="col-md-2">
+                    <button class="btn btn-danger botaoIr">Aplicar</button>
                 </div>
             </form>
         </div>
@@ -72,12 +83,20 @@
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="text-center">Comparativo por diario por unidade</h3>
+        <h3 class="text-center tituloCentral">Comparativo por diario por unidade<div class="icon iconeFuncao">
+                    <i class="fa fa-file-o"></i>
+                </div>
+                <div class="icon iconeFuncao2">
+                    <i class="fa fa-file-excel-o"></i>
+                </div>
+                <div class="icon iconeFuncao3">
+                    <i class="fa fa-print"></i>
+                </div></h3>
     </div>
     <div class="col-md-12">
         <div class="row">
             <form id="consumo-diario">
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <select name="bloco-diario" class="form-control">
                         <option>bloco</option>
                         @foreach($blocos as $bloco)
@@ -86,7 +105,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <select name="mes-diario" class="form-control">
                         <option>mes</option>
                         @foreach ($meses as $numero => $extenso)
@@ -95,7 +114,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-1">
+                <div class="col-md-2">
                     <select name="ano-diario" class="form-control">
                         <option>ano</option>
                         @foreach(range(now()->year, 2017) as $ano)
@@ -104,8 +123,8 @@
                     </select>
                 </div>
 
-                <div class="col-md-1">
-                    <button class="btn btn-danger">aplicar</button>
+                <div class="col-md-2">
+                    <button class="btn btn-danger botaoIr">Aplicar</button>
                 </div>
             </form>
         </div>
