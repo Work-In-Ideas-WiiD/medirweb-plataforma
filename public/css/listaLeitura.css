@@ -94,12 +94,17 @@
 .iconeFuncao i, .iconeFuncao2 i, .iconeFuncao3 i{
     color: #fff;
 }
-select{
+select, .filtro{
     border: none !important;
     background-color: transparent !important;
     color: #4484ff !important;
     font-size: 1.2em !important;
     font-weight: 200 !important;
+}
+.labelInput{
+    margin-top: 7px;
+    font-weight: 300;
+    color: 4484ff;
 }
 
 .botaoIr{
