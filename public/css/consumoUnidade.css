@@ -1,0 +1,115 @@
+.pesquisar{
+    border-radius: 5px !important;
+    border-color: #4684ff !important;
+    margin-top: -15px;
+}
+.pesquisar::placeholder{
+    color: #4684ff !important;
+}
+
+.table{
+    border: none !important;
+}
+.table tbody > tr > td{
+    background-color: #553fea !important;
+    color: #fff;
+    border: none !important;
+    text-align: center;
+    cursor: pointer;
+}
+.table tbody > tr:nth-child(odd) > td{
+    background-color: #664bfa !important;
+    color: #fff;
+}
+
+.table th{
+    background-color: #3d2dd6 !important;
+    border: none !important;
+    text-align: center !important;
+}
+
+.table th:first-child{
+    border-radius: 8px 0px 0px;
+} 
+.table th:last-child{
+    border-radius: 0px 8px 0px 0px;
+} 
+.table tbody tr:last-child td:first-child{
+    border-radius: 0px 0px 0px 8px;
+}
+.table tbody tr:last-child td:last-child{
+    border-radius: 0px 0px 8px 0px;
+}
+
+.table tbody tr td:first-child{
+    background-color: #3d2dd6 !important;
+    border: none !important;
+    text-align: center !important;
+    color: #fff;
+}
+
+.tituloCentral{
+    color: #4684ff !important;
+    font-style: oblique;
+    margin-bottom: 2em;
+}
+
+.iconeFuncao{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #664bfa;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.iconeFuncao2{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #1cf793;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.iconeFuncao3{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #c846e8;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.iconeFuncao i, .iconeFuncao2 i, .iconeFuncao3 i{
+    color: #fff;
+}
+select{
+    border: none !important;
+    background-color: transparent !important;
+    color: #4484ff !important;
+    font-size: 1.2em !important;
+    font-weight: 200 !important;
+}
+
+.botaoIr{
+    background-color: #fff !important;
+    color: blue !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding-left: 3em !important;
+    padding-right: 3em !important;
+    margin-bottom: 10px !important;
+    font-size: 1em !important;
+    font-weight: 300 !important;
+}
