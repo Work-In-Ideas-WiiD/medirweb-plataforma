@@ -161,6 +161,7 @@
 .quadroComp{
     background-color: #f5ea7e;
     border-radius: 5px;
+    margin-bottom: 1em;
 }
 
 #unidade-e-mes0, #unidade-e-mes1{
@@ -180,4 +181,50 @@
     align-items: center;
     padding-top: 0px;
     color: #fff;
+}
+
+.iconeFuncao{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #664bfa;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-right: 4%;
+    cursor: pointer;
+}
+.iconeFuncao2{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #1cf793;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.iconeFuncao3{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #c846e8;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.iconeFuncao i, .iconeFuncao2 i, .iconeFuncao3 i{
+    color: #fff;
+    font-size: 1.5em;
 }
