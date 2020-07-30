@@ -35,7 +35,7 @@
     <div class="col-md-12">
         <div class="card card-success">
             <div class="card-header">
-                <h3 class="card-title text-center">Comparativo de consumo</h3>
+                <!-- <h3 class="card-title text-center">Comparativo de consumo</h3> -->
 
                 <!--div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fa fa-minus"></i>
@@ -96,6 +96,15 @@
             </div>
             
         </div>
+    </div>
+    <div class="icon iconeFuncao">
+        <i class="fa fa-file-o"></i>
+    </div>
+    <div class="icon iconeFuncao2">
+        <i class="fa fa-file-excel-o"></i>
+    </div>
+    <div class="icon iconeFuncao3">
+        <i class="fa fa-print"></i>
     </div>
 </div>
 @stop

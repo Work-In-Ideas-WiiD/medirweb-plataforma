@@ -1,6 +1,7 @@
 .pesquisar{
     border-radius: 5px !important;
     border-color: #4684ff !important;
+    margin-top: -20px;
 }
 
 .pesquisar::placeholder{
@@ -23,6 +24,48 @@
 }
 .containerBloco{
     text-align: center;
+    padding-top: 4em;
+}
+
+.tituloBloco{
+    margin-top: 0px;
+    margin-bottom: -12px;
+    padding-left: 15px;
+    color: #b2cefd;
+    font-size: 3.5em;
+    font-family: 'Gugi', cursive;
+}
+.click-unidade{
+    cursor: pointer;
+}
+
+.click-unidade .card{
+    background-color: #4683ff;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 15px;
+}
+
+.click-unidade .card-title{
+    font-weight: 600;
+    font-size: 1.4em;
+    color: #fff;
+}
+
+.click-unidade .card-text{
+    color: #fff;
+    font-size: 2em;
+    font-weight: 100;
+}
+
+.listaUnidades{
+    background-color: #b2cefd;
+    display: table;
+    border-radius: 10px;
+    padding-top: 20px;
+    padding-bottom: 30px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .table{
@@ -76,9 +119,10 @@
 .quadroComp{
     background-color: #f5ea7e;
     border-radius: 5px;
+    margin-bottom: 15px;
 }
 
-#bloco-e-mes0, #bloco-e-mes1{
+#bloco-e-mes0, #bloco-e-mes1, #unidade-e-mes0, #unidade-e-mes1{
     color: #4684ff !important;
     font-weight: bold;
 }
@@ -111,4 +155,50 @@
     font-size: 1.2em;
     margin-top: -5px;
     margin-bottom: 2em;
+}
+
+.iconeFuncao{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #664bfa;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-right: 4%;
+    cursor: pointer;
+}
+.iconeFuncao2{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #1cf793;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+}
+.iconeFuncao3{
+    float: right;
+    width: 50px;
+    height: 50px;
+    background: #c846e8;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.iconeFuncao i, .iconeFuncao2 i, .iconeFuncao3 i{
+    color: #fff;
+    font-size: 1.5em;
 }

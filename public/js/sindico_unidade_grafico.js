@@ -3,7 +3,7 @@ function criarGrafico(data1, data2) {
         labels  : ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
         datasets: [
             {
-                label: 'Média de consumo bloco 6',
+                label: 'Média de consumo do bloco',
                 backgroundColor: 'rgba(60,141,188,0.9)',
                 borderColor: 'rgba(60,141,188,0.8)',
                 pointRadius: false,
