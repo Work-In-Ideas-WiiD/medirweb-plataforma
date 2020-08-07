@@ -506,8 +506,8 @@ class ImovelController extends Controller
                         ->where('created_at', '<=', date("Y-m-d", strtotime($anoAtual."-".$mes."-31")).' 23:59:59')
                         ->orderBy('created_at', 'desc')->first();
 
-                    $arrayLeiMensalAnoAnterior = array('mes' => array('mes'.$mes => $leituraAnoAnterior['LEI_METRO']));
-                    $arrayLeiMensalAnoAtual = array('mes' => array('mes'.$mes => $leituraAnoAtual['LEI_METRO']));
+                    $arrayLeiMensalAnoAnterior = array('mes' => array('mes'.$mes => $leituraAnoAnterior['LEI_METRO'] ?? 0));
+                    $arrayLeiMensalAnoAtual = array('mes' => array('mes'.$mes => $leituraAnoAtual['LEI_METRO'] ?? 0));
 
                     array_push($leiMensalAnoAnterior, $arrayLeiMensalAnoAnterior);
                     array_push($leiMensalAnoAtual, $arrayLeiMensalAnoAtual);
