@@ -488,8 +488,8 @@ class CentralController extends Controller
             }
 
             $prumada->leitura()->firstOrCreate([
-                'metro' => $leitura['relogio_01'],
-                'litro' => 0,
+                'metro' => intval($leitura['relogio_01'] / 1000),
+                'litro' => $leitura['relogio_01'] % 1000,
                 'mililitro' => 0,
                 'diferenca' => 0,
                 'valor' => 0,

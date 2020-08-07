@@ -166,16 +166,17 @@
 																	</div>
 
 																	<div class="col-md-4">
-																		<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ route('unidade.show', $unidade->id) }}">
-																			@if( $prumada->leitura()->count() > 0){{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->mililitro }} @else 0 @endif
-																		</a>
+																		@if ($prumada->unidade->device == null)
+																			<a style="color: #ff6600; font-family: 'Orbitron', sans-serif;" href="{{ route('unidade.show', $unidade->id) }}">
+																				@if( $prumada->leitura()->count() > 0){{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->mililitro }} @else 0 @endif
+																			</a>
 
-																		@if($prumada->tipo == 3)
-																		<small style="color: grey;">mW</small>
-																		@else
-																		<small style="color: grey;">dL</small>
+																			@if($prumada->tipo == 3)
+																			<small style="color: grey;">mW</small>
+																			@else
+																			<small style="color: grey;">dL</small>
+																			@endif
 																		@endif
-
 																	</div>
 
 																</div>
@@ -187,6 +188,7 @@
 																	<div class="pull-right">
 
 																		<!-- Botao Leitura -->
+																		@if ($prumada->unidade->device == null)
 																		<div style="margin-left: -50px;">
 																			<a  href="{{ url('/leitura/prumada/'.$prumada->id.'') }}" id="ocultar" onclick="loading()" class="btn btn-default ocultar"><i class="fa fa-retweet"></i></a>
 																		</div>
@@ -204,6 +206,7 @@
 
 																			@endis
 																		</div>
+																		@endif
 																		<!-- fim -  Botao Desligar / Ligar -->
 
 																	</div>
