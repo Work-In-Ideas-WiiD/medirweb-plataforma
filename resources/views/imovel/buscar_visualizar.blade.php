@@ -177,7 +177,7 @@
 																			<small style="color: grey;">dL</small>
 																			@endif
 																		@else
-																			{{ $prumada->leitura()->orderByDesc('created_at')->first()->created_at->format('d-m-Y h:i') ?? 'nenhuma leitura' }}
+																			{{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->created_at->format('d-m-Y h:i') ?? 'nenhuma leitura' }}
 																		@endif
 																	</div>
 
