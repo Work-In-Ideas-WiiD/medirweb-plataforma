@@ -176,8 +176,9 @@
 																			@else
 																			<small style="color: grey;">dL</small>
 																			@endif
-																		@else
-																			{{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->created_at ?? 'nenhuma leitura' }}
+																		@elseif(isset($prumada->leitura()->orderBy('created_at', 'DESC')->first()->created_at))
+			
+																			{{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->created_at->format('d-m-Y h:i') }}
 																		@endif
 																	</div>
 
