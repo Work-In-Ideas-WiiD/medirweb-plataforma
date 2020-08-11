@@ -487,9 +487,11 @@ class CentralController extends Controller
                 }
             }
 
+            $relogio = ['ffff860d8ea87ba0' => 'relogio_02', 'ffff860d8ea82787' => 'relogio_02', 'ffff860d8ea87b3d' => 'relogio_02'];
+
             $prumada->leitura()->firstOrCreate([
-                'metro' => intval($leitura['relogio_01'] / 1000),
-                'litro' => $leitura['relogio_01'] % 1000,
+                'metro' => intval($leitura[$relogio[$payload->meta->device] ?? 'relogio_01'] / 1000),
+                'litro' => $leitura[$relogio[$payload->meta->device] ?? 'relogio_01'] % 1000,
                 'mililitro' => 0,
                 'diferenca' => 0,
                 'valor' => 0,
