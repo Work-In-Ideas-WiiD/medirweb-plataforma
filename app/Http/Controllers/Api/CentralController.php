@@ -478,11 +478,11 @@ class CentralController extends Controller
             $prumada = $unidade->prumada()->first();
 
             if ($prumada) {
-                $leitura_anterior = $prumada->leitura()->select('id', 'metro')->orderByDesc('id')->first();
-                
+                $leitura_anterior = $prumada->leitura()->select('id', 'metro', 'prumada_id')->orderByDesc('id')->first();
+
                 if ($leitura_anterior) {
-                    if ($leitura_anterior->funcional_id == $prumada->funcional_id) {
-                        $consumo += intval($leitura['relogio_01']) - intval($leitura_anterior->metro);
+                    if ($leitura_anterior->prumada_id == $prumada->id) {
+                        $consumo += intval($leitura['relogio_01'] / 1000) - intval($leitura_anterior->metro);
                     }
                 }
             }
