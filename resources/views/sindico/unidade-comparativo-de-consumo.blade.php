@@ -1,4 +1,4 @@
-@extends('adminlte::page')
+Error dentro do data/hora na e dados leitura na view da unidade no leitura acumula@extends('adminlte::page')
 
 @section('title', 'MedirWeb')
 
@@ -187,7 +187,7 @@
             <tbody>
                 @foreach ($leituras as $leitura)
                 <tr>
-                    <td>{{ $leitura->created_at->format('d/m/Y i:s') }}</td>
+                    <td>{{ $leitura->created_at->format('d/m/Y H:i') }}</td>
                     <td>{{ $leitura->metro }}m <sup>3</sup></td>
                     <td>{{ $leitura->consumo }}m <sup>3</sup></td>
                 </tr>
