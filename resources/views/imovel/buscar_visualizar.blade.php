@@ -128,7 +128,7 @@
 																	</div>
 
 																	<div class="col-md-10">
-																		<h4>{{ $unidade->nome }} <small style="color: grey;">#{{ $prumada->funcional_id }} - {{ $prumada->nome }}</small></h4>
+																		<h4>{{ $unidade->nome }} <small style="color: grey;">{{ $prumada->unidade->device ?? '#'.$prumada->funcional_id }}</small></h4>
 																	</div>
 
 																</div>
