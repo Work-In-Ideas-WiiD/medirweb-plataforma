@@ -39,17 +39,21 @@ class CriarUnidadeAlerta extends Command
      */
     public function handle()
     {
-        $unidades = Unidade::whereDoesntHave('prumada.leitura', function($query) {
+        Unidade::whereDoesntHave('prumada.leitura', function($query) {
             $query->where('created_at', '>', now()->subHours(12));
-        })->whereNotNull('device')->chunk(100, function($unidades) {
+        })->whereDoesntHave('alerta', function($query) {
+            $query->where('created_at', '>', now()->subHours(12));
+        })->whereNotNull('device')->chunk(1000, function($unidades) {
             foreach ($unidades as $unidade) {
-                $this->criarAlerta($unidade);
+                $insert[] = [
+                    'unidade_id' => $unidade->id,
+                    'device' => $unidade->device,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
             }
-        });
-    }
 
-    private function criarAlerta($unidade)
-    {
-        
+            Alerta::insert($insert); // aqui fazemos um insert massivo de até 1000 registros de uma unica vez
+        });
     }
 }
