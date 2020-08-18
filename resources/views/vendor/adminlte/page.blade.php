@@ -64,23 +64,23 @@
                                 <i class="fa fa-bell-o"></i>
 
                                 @if ($alertas)
-                                    <span class="label label-danger">{{ $alertas }}</span>
+                                    <span class="label label-danger">{{ count($alertas) }}</span>
                                 @else
                                     <span class="label">0</span>
                                 @endif
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">Você tem {{ $alertas }} notificação</li>
+                                <li class="header">Você tem {{ count($alertas) }} notificação</li>
                                 <li>
                                     <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-users text-orange"></i> Seja bem vindo de volta! :)
-                                            </a>
-                                        </li>
+                                        @foreach ($alertas as $alerta)
+                                            <li><a href="#" >O ap. {{ $alerta->unidade->nome }} não recebe uplink há 12 horas</a></li>
+                                        @empty
+                                            <li><a href="#" >Nenhum alerta</a></li>
+                                        @endforeach
                                     </ul>
                                 </li>
-                                <li class="footer"><a href="#">Ver todas</a></li>
+                                <!--li class="footer"><a href="#">Ver todas</a></li-->
                             </ul>
                         </li>
                         <!-- [END] Notifications -->

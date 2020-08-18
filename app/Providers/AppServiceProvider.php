@@ -38,9 +38,9 @@ class AppServiceProvider extends ServiceProvider
     private function checarAlertas()
     {
         view()->composer('*', function(View $view) {
-            $alertas = UnidadeAlerta::whereHas('unidade', function($query) {
+            $alertas = UnidadeAlerta::with('unidade')->whereHas('unidade', function($query) {
                 $query->where('imovel_id', auth()->user()->imovel_id ?? null);
-            })->whereNull('visto_em')->count();
+            })->whereNull('visto_em')->get();
 
             $view->with('alertas', $alertas);
         });
