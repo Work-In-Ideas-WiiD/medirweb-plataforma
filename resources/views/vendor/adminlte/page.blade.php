@@ -62,10 +62,15 @@
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
-                                <span class="label label-danger">1</span>
+
+                                @if ($alertas)
+                                    <span class="label label-danger">{{ $alertas }}</span>
+                                @else
+                                    <span class="label">0</span>
+                                @endif
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">Você tem 1 notificação</li>
+                                <li class="header">Você tem {{ $alertas }} notificação</li>
                                 <li>
                                     <ul class="menu">
                                         <li>
