@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
         // Cron - Todas as leituras
         $schedule->command(ConsumirLeitura::class)->daily();
         $schedule->command(ConsumirFalha::class)->daily()->withoutOverlapping();
-        $schedule->command(CriarUnidadeAlerta::class)->everySixHours();
+        $schedule->command(CriarUnidadeAlerta::class)->hourly();
 
         /*
         $schedule->call(function () {
