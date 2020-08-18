@@ -7,79 +7,17 @@ use Illuminate\Http\Request;
 
 class UnidadeAlertaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function marcarComoVisto($alerta)
     {
-        //
-    }
+        $alerta = UnidadeAlerta::where('id', $alerta)->whereHas('unidade', function($query) {
+            $query->where('imovel_id', auth()->user()->imovel_id);
+        })->first();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+        if ($alerta) {
+            $alerta->update(['visto_em' => now()]);
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            return ['success' => true];
+        }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\LeituraAlerta  $leituraAlerta
-     * @return \Illuminate\Http\Response
-     */
-    public function show(LeituraAlerta $leituraAlerta)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\LeituraAlerta  $leituraAlerta
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(LeituraAlerta $leituraAlerta)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\LeituraAlerta  $leituraAlerta
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, LeituraAlerta $leituraAlerta)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\LeituraAlerta  $leituraAlerta
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(LeituraAlerta $leituraAlerta)
-    {
-        //
     }
 }

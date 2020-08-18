@@ -63,7 +63,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
 
-                                @if ($alertas)
+                                @if (count($alertas))
                                     <span class="label label-danger">{{ count($alertas) }}</span>
                                 @else
                                     <span class="label">0</span>
@@ -73,11 +73,11 @@
                                 <li class="header">Você tem {{ count($alertas) }} notificação</li>
                                 <li>
                                     <ul class="menu">
-                                        @foreach ($alertas as $alerta)
-                                            <li><a href="#" >O ap. {{ $alerta->unidade->nome }} não recebe uplink há 12 horas</a></li>
+                                        @forelse ($alertas as $alerta)
+                                            <li><a href="#" data-id="{{ $alerta->id }}" class="apagar-alerta">O ap. {{ $alerta->unidade->nome }} não recebe uplink há 12 horas</a></li>
                                         @empty
                                             <li><a href="#" >Nenhum alerta</a></li>
-                                        @endforeach
+                                        @endforelse
                                     </ul>
                                 </li>
                                 <!--li class="footer"><a href="#">Ver todas</a></li-->
