@@ -1,4 +1,4 @@
-Error dentro do data/hora na e dados leitura na view da unidade no leitura acumula@extends('adminlte::page')
+@extends('adminlte::page')
 
 @section('title', 'MedirWeb')
 

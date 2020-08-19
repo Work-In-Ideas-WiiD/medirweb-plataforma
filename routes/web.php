@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     
     Route::post('importar/csv', 'TesteController@process')->middleware('permissao:administrador|sindico');
     
+    Route::get('unidade/alerta/{alerta}/marcar-como-visto', 'UnidadeAlertaController@marcarComoVisto');
     /* Usuários */
     
     Route::resource('usuario', 'UserController', [

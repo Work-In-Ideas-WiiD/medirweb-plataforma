@@ -199,6 +199,15 @@
    
     $(document).ready(function() {
 
+        $('.apagar-alerta').click(function() {
+            var elemento = $(this)
+            $.get(`/unidade/alerta/${$(this).data('id')}/marcar-como-visto`, function(response) {
+                if (response.success) {
+                    elemento.remove()
+                }
+            })
+        })
+
         $('select[name="estado_id"]').on('change', (data) => {
 
             $.ajax({
