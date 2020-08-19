@@ -74,7 +74,7 @@
                                 <li>
                                     <ul class="menu">
                                         @forelse ($alertas as $alerta)
-                                            <li><a href="#" data-id="{{ $alerta->id }}" class="apagar-alerta">O ap. {{ $alerta->unidade->nome }} não recebe uplink há 12 horas</a></li>
+                                        <li><a href="{{ url("/sindico/unidade/comparativo-de-consumo/{$alerta->unidade->agrupamento->nome}/{$alerta->unidade->nome}")}}" data-id="{{ $alerta->id }}" class="apagar-alerta">O ap. {{ $alerta->unidade->nome }} não recebe uplink há mais de 12Hs</a></li>
                                         @empty
                                             <li><a href="#" >Nenhum alerta</a></li>
                                         @endforelse
