@@ -62,20 +62,25 @@
                         <li class="dropdown notifications-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-bell-o"></i>
-                                <span class="label label-danger">1</span>
+
+                                @if (count($alertas))
+                                    <span class="label label-danger">{{ count($alertas) }}</span>
+                                @else
+                                    <span class="label">0</span>
+                                @endif
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="header">Você tem 1 notificação</li>
+                                <li class="header">Você tem {{ count($alertas) }} notificação</li>
                                 <li>
                                     <ul class="menu">
-                                        <li>
-                                            <a href="#">
-                                                <i class="fa fa-users text-orange"></i> Seja bem vindo de volta! :)
-                                            </a>
-                                        </li>
+                                        @forelse ($alertas as $alerta)
+                                        <li><a href="{{ url("/sindico/unidade/comparativo-de-consumo/{$alerta->unidade->agrupamento->nome}/{$alerta->unidade->nome}")}}" data-id="{{ $alerta->id }}" class="apagar-alerta">O ap. {{ $alerta->unidade->nome }} não recebe uplink há mais de 12Hs</a></li>
+                                        @empty
+                                            <li><a href="#" >Nenhum alerta</a></li>
+                                        @endforelse
                                     </ul>
                                 </li>
-                                <li class="footer"><a href="#">Ver todas</a></li>
+                                <!--li class="footer"><a href="#">Ver todas</a></li-->
                             </ul>
                         </li>
                         <!-- [END] Notifications -->

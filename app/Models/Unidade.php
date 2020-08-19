@@ -21,6 +21,11 @@ class Unidade extends Model
         return $this->belongsTo(Agrupamento::class);
     }
 
+    public function alerta()
+    {
+        return $this->hasOne(UnidadeAlerta::class);
+    }
+
     public function imovel()
     {
         return $this->belongsTo(Imovel::class);

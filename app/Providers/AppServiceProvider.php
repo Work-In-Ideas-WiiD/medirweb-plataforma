@@ -7,6 +7,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\View\View;
+use App\Models\UnidadeAlerta;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -29,9 +31,22 @@ class AppServiceProvider extends ServiceProvider
                 $event->menu->add($item);
  
         });
+
+        $this->checarAlertas();
     }
 
-    /**d
+    private function checarAlertas()
+    {
+        view()->composer('*', function(View $view) {
+            $alertas = UnidadeAlerta::with('unidade')->whereHas('unidade', function($query) {
+                $query->where('imovel_id', auth()->user()->imovel_id ?? null);
+            })->whereNull('visto_em')->get();
+
+            $view->with('alertas', $alertas);
+        });
+    }
+
+    /**
      * Register any application services.
      *
      * @return void
