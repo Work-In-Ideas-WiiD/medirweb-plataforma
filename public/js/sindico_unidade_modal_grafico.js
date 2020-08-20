@@ -4,16 +4,29 @@ function modalGrafico(data) {
         datasets: [
             {
                 label: 'Média de consumo da unidade',
-                backgroundColor: '#00e2e1',
-                borderColor: '#00e2e1',
+                backgroundColor: '#d42a17',
+                borderColor: '#d42a17',
                 pointRadius: false,
-                pointColor: '#00e2e1',
+                pointColor: '#d42a17',
                 pointStrokeColor: '#fff',
                 pointHighlightFill: '#fff',
                 pointHighlightStroke: '#fff',
                 data: data
             },
-        ]
+            
+        ],
+        options: {
+            scales: {
+                yAxes: [{
+                    color: "#fff",
+                }],
+            },
+            legend: {
+                labels: {
+                    fontColor: '#fff'
+                }
+            }
+        }
     }
     //-------------
     //- BAR CHART -
@@ -29,7 +42,34 @@ function modalGrafico(data) {
     var barChartOptions = {
         responsive: true,
         maintainAspectRatio: false,
-        datasetFill: false
+        datasetFill: false,
+        legend: {
+            labels: {
+                fontColor: '#fff'
+            },
+        },
+        scales: {
+            yAxes: [{
+                fontColor: '#fff',
+                gridLines: {
+                    color: "#fff",
+                    zeroLineColor: "#fff"
+                },
+                ticks: {
+                    fontColor: "#fff"
+                }
+            }],
+            xAxes: [{
+                fontColor: '#fff',
+                gridLines: {
+                    color: "#fff"
+                },
+                ticks: {
+                    fontColor: "#fff"
+                }
+            }],
+            
+        }
     }
     
     var barChart = new Chart(barChartCanvas, {

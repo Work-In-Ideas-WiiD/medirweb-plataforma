@@ -5,7 +5,7 @@
         border-radius:50%;
         font-size: 30px;
         background-color: #e2edff;
-        color: #6599ff;
+        color: #2c2f36;
         font-weight: 100;
         justify-content: center;
         display: flex;

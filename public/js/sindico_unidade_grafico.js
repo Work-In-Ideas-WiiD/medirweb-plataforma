@@ -4,8 +4,8 @@ function criarGrafico(data1, data2) {
         datasets: [
             {
                 label: 'Média de consumo do bloco',
-                backgroundColor: 'rgba(60,141,188,0.9)',
-                borderColor: 'rgba(60,141,188,0.8)',
+                backgroundColor: '#d42a17',
+                borderColor: '#d42a17',
                 pointRadius: false,
                 pointColor: '#3b8bba',
                 pointStrokeColor: 'rgba(60,141,188,1)',
@@ -15,8 +15,8 @@ function criarGrafico(data1, data2) {
             },
             {
                 label: 'Média de consumo total',
-                backgroundColor: 'rgba(210, 214, 222, 1)',
-                borderColor: 'rgba(210, 214, 222, 1)',
+                backgroundColor: '#fbdb02',
+                borderColor: '#fbdb02',
                 pointRadius: false,
                 pointColor: 'rgba(210, 214, 222, 1)',
                 pointStrokeColor: '#c1c7d1',

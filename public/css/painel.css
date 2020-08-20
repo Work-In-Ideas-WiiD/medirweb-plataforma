@@ -135,11 +135,11 @@
 }
 
 #bloco-e-mes0, #bloco-e-mes1{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
     font-weight: bold;
 }
 #consumo0, #consumo1{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
 }
 #diferenca-consumo, #diferenca-porcentagem{
     background: #ff4848;
