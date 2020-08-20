@@ -1,22 +1,22 @@
 .pesquisar{
     border-radius: 5px !important;
-    border-color: #4684ff !important;
+    border-color: #2c2f36 !important;
     margin-top: -15px;
 }
 .pesquisar::placeholder{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
 }
 .tituloBloco{
     margin-top: 0px;
     margin-bottom: -12px;
     padding-left: 15px;
-    color: #b2cefd;
+    color: #059337;
     font-size: 3.5em;
     font-family: 'Gugi', cursive;
 }
 .tituloBloco label{
     font-size: 0.3em;
-    color: #6960e1;
+    color: #05692b;
     font-family: 'Source Sans Pro','Helvetica Neue',Helvetica,Arial,sans-serif;
     font-weight: 100;
 }
@@ -24,7 +24,7 @@
     padding: 30px;
     text-align: center;
     color: #fff;
-    background-color: #3d2dd6 !important;
+    background-color: #05692b !important;
     border-radius: 10px;
 }
 
@@ -32,19 +32,19 @@
     border: none !important;
 }
 .table tbody > tr > td{
-    background-color: #553fea !important;
+    background-color: #4a59a4 !important;
     color: #fff;
     border: none !important;
     text-align: center;
     cursor: pointer;
 }
 .table tbody > tr:nth-child(odd) > td{
-    background-color: #664bfa !important;
+    background-color: #425093 !important;
     color: #fff;
 }
 
 .table th{
-    background-color: #3d2dd6 !important;
+    background-color: #1E308E !important;
     border: none !important;
     text-align: center !important;
 }
@@ -63,7 +63,7 @@
 }
 
 .table tbody tr td:first-child{
-    background-color: #3d2dd6 !important;
+    background-color: #1E308E !important;
     border: none !important;
     text-align: center !important;
     color: #fff;
@@ -82,14 +82,14 @@
     position: absolute;
     width: 132px;
     z-index: 0;
-    border-right: 1.2em solid #c846e8;
+    border-right: 1.2em solid #1e308e;
     border-radius: 50%;
     height: 132px;
-    border-bottom: 1.2em solid #c846e8;
+    border-bottom: 1.2em solid #1e308e;
     border-left: 1.2em solid transparent;
     top: 4px;
     left: 0px;
-    border-top: 1.2em solid #c846e8;
+    border-top: 1.2em solid #1e308e;
     transform: rotate(40deg);
     top: 1.6em;
 }
@@ -99,14 +99,14 @@
     position: absolute;
     width: 132px;
     z-index: 0;
-    border-right: 1.2em solid #664bfa;
+    border-right: 1.2em solid #fbdb02;
     border-radius: 50%;
     height: 132px;
-    border-bottom: 1.2em solid #664bfa;
+    border-bottom: 1.2em solid #fbdb02;
     border-left: 1.2em solid transparent;
     top: 4px;
     left: 0px;
-    border-top: 1.2em solid #664bfa;
+    border-top: 1.2em solid #fbdb02;
     transform: rotate(40deg);
     top: 1.6em;
 }
@@ -116,14 +116,14 @@
     position: absolute;
     width: 132px;
     z-index: 0;
-    border-right: 1.2em solid #00e2e1;
+    border-right: 1.2em solid #d42a17;
     border-radius: 50%;
     height: 132px;
-    border-bottom: 1.2em solid #00e2e1;
+    border-bottom: 1.2em solid #d42a17;
     border-left: 1.2em solid transparent;
     top: 4px;
     left: 0px;
-    border-top: 1.2em solid #00e2e1;
+    border-top: 1.2em solid #d42a17;
     transform: rotate(40deg);
     top: 1.6em;
 }
@@ -133,14 +133,14 @@
     position: absolute;
     width: 132px;
     z-index: 0;
-    border-right: 1.2em solid #b3cefd;
+    border-right: 1.2em solid #059337;
     border-radius: 50%;
     height: 132px;
-    border-bottom: 1.2em solid #b3cefd;
+    border-bottom: 1.2em solid #059337;
     border-left: 1.2em solid transparent;
     top: 4px;
     left: 0px;
-    border-top: 1.2em solid #b3cefd;
+    border-top: 1.2em solid #059337;
     transform: rotate(40deg);
     top: 1.6em;
 }
@@ -149,28 +149,28 @@
 }
 
 .tituloCentral{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
     font-style: oblique;
 }
 .tituloComp{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
     font-style: oblique;
     font-weight: bold !important; 
     text-align: center;
 }
 
 .quadroComp{
-    background-color: #f5ea7e;
+    background-color: #fff;
     border-radius: 5px;
     margin-bottom: 1em;
 }
 
 #unidade-e-mes0, #unidade-e-mes1{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
     font-weight: bold;
 }
 #consumo0, #consumo1{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
 }
 #diferenca-consumo, #diferenca-porcentagem{
     background: #ff4848;
@@ -188,7 +188,7 @@
     float: right;
     width: 50px;
     height: 50px;
-    background: #664bfa;
+    background: #1e308e;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -202,7 +202,7 @@
     float: right;
     width: 50px;
     height: 50px;
-    background: #1cf793;
+    background: #fbdb02;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -215,7 +215,7 @@
     float: right;
     width: 50px;
     height: 50px;
-    background: #c846e8;
+    background: #d42a17;
     display: flex;
     justify-content: center;
     align-content: center;
