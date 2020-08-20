@@ -1,10 +1,10 @@
 .pesquisar{
     border-radius: 5px !important;
-    border-color: #4684ff !important;
+    border-color: #2c2f36 !important;
 }
 
 .pesquisar::placeholder{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
 }
 
 .box.box-warning{
@@ -16,12 +16,12 @@
     float: right;
     padding: 0px !important;
     background-color: transparent !important;
-    color: #4684ff;
+    color: #2c2f36;
     margin-bottom: 0px !important;
 }
 
 .titulo{
-    color: #654af9;
+    color: #05692b;
     font-family: 'Gugi', cursive;
     font-size: 3em !important;
     padding-left: 10px;
@@ -31,22 +31,22 @@
     margin-bottom: -2em;
 }
 .bloco1{
-    background-color: #654af9 !important;
+    background-color: #05692b !important;
     border-radius: 10px !important;
     min-height: 100px;
 }
 .bloco2{
-    background-color: #c846e8 !important;
+    background-color: #d42a17 !important;
     border-radius: 10px !important;
     min-height: 100px;
 }
 .bloco3{
-    background-color: #00e2e1 !important;
+    background-color: #059337 !important;
     border-radius: 10px !important;
     min-height: 100px;
 }
 .bloco4{
-    background-color: #4683ff !important;
+    background-color: #1e308e !important;
     border-radius: 10px !important;
     min-height: 100px;
 }
@@ -72,11 +72,11 @@
 }
 
 .tituloCentral{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
     font-style: oblique;
 }
 .tituloCentralSub{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
     font-size: 1.2em;
     margin-top: -5px;
     margin-bottom: 2em;
@@ -85,19 +85,19 @@
     border: none !important;
 }
 .table tbody > tr > td{
-    background-color: #553fea !important;
+    background-color: #4a59a4 !important;
     color: #fff;
     border: none !important;
     text-align: center;
     cursor: pointer;
 }
 .table tbody > tr:nth-child(odd) > td{
-    background-color: #664bfa !important;
+    background-color: #425093 !important;
     color: #fff;
 }
 
 .table th{
-    background-color: #3d2dd6 !important;
+    background-color: #1E308E !important;
     border: none !important;
     text-align: center !important;
 }
@@ -116,21 +116,21 @@
 }
 
 .table tbody tr td:first-child{
-    background-color: #3d2dd6 !important;
+    background-color: #1E308E !important;
     border: none !important;
     text-align: center !important;
     color: #fff;
 }
 
 .tituloComp{
-    color: #4684ff !important;
+    color: #2c2f36 !important;
     font-style: oblique;
     font-weight: bold !important; 
     text-align: center;
 }
 
 .quadroComp{
-    background-color: #f5ea7e;
+    background-color: #fff;
     border-radius: 5px;
 }
 
@@ -162,7 +162,7 @@
     float: right;
     width: 50px;
     height: 50px;
-    background: #664bfa;
+    background: #1e308e;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -174,7 +174,7 @@
     float: right;
     width: 50px;
     height: 50px;
-    background: #1cf793;
+    background: #fbdb02;
     display: flex;
     justify-content: center;
     align-content: center;
@@ -186,7 +186,7 @@
     float: right;
     width: 50px;
     height: 50px;
-    background: #c846e8;
+    background: #d42a17;
     display: flex;
     justify-content: center;
     align-content: center;

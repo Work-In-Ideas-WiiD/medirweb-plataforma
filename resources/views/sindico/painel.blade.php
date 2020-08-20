@@ -213,10 +213,10 @@
             datasets: [
                 {
                     label: 'no ano corrente',
-                    backgroundColor: '#c846e8',
-                    borderColor: '#c846e8',
+                    backgroundColor: '#d42a17',
+                    borderColor: '#d42a17',
                     pointRadius: true,
-                    pointColor: '#c846e8',
+                    pointColor: '#d42a17',
                     pointStrokeColor: 'rgba(60,141,188,1)',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(60,141,188,1)',

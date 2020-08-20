@@ -319,7 +319,7 @@ p.bloco-imovel-cad
 }
 
 .skin-blue .main-header .navbar, .skin-blue .main-header .logo, .sidebar-toggle:hover{
-	background-color: #4683ff !important;
+	background-color: #A86C16 !important;
 }
 
 .content-wrapper{
@@ -331,4 +331,19 @@ p.bloco-imovel-cad
 }
 h3,label, span, a, div, select, input, table, td, th, button{
 	font-family: 'Chivo', sans-serif;
+}
+
+.logoLogin img{
+	width: 50%;
+}
+.login-box{
+	margin-top: 5em !important;
+}
+.login-page{
+	background: rgb(5,147,55);
+	background: linear-gradient(13deg, rgba(5,147,55,1) 0%, rgba(253,187,45,1) 31%, rgba(212,42,23,1) 100%) no-repeat;
+	overflow: hidden;
+}
+.logo-lg img{
+	width: 26%;
 }

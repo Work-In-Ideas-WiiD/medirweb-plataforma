@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'logo' => 'Medir<b>Web</b>',
+    'logo' => '<img src="/image/logo2.png" />',
 
     'logo_mini' => 'M<b>W</b>',
 
