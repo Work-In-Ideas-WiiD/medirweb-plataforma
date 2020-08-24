@@ -1,5 +1,5 @@
 function listarUnidades(bloco) {
-    let month = new Date().getMonth() + 1 //mes atual
+    let month = new Date().getMonth() //mes atual
 
     $.get(`/sindico/consumo-por-bloco-e-unidade/${bloco}/${month}/${month}`, function(response) {
         let html = '<h3 class="tituloBloco">Bloco '+bloco+'</h3> <div class="listaUnidades">'
