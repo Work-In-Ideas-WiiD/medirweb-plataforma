@@ -3,7 +3,11 @@ function comparativoTabela(bloco) {
     
     var html = ''
 
-    $.get(`/sindico/consumo-por-bloco-e-unidade/${bloco}/0/5`, function(response) {
+    let month = new Date().getMonth()
+
+    let diferenca = (month - 6) + 1
+
+    $.get(`/sindico/consumo-por-bloco-e-unidade/${bloco}/${diferenca}/${month}`, function(response) {
         tabela.empty()
     
         $.each(response, function(key, value) {
