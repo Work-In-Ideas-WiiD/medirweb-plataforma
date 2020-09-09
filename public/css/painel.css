@@ -1,10 +1,10 @@
 .pesquisar{
     border-radius: 5px !important;
-    border-color: #2c2f36 !important;
+    border-color: #4684ff !important;
 }
 
 .pesquisar::placeholder{
-    color: #2c2f36 !important;
+    color: #4684ff !important;
 }
 
 .box.box-warning{
@@ -16,12 +16,12 @@
     float: right;
     padding: 0px !important;
     background-color: transparent !important;
-    color: #2c2f36;
+    color: #83abff;
     margin-bottom: 0px !important;
 }
 
 .titulo{
-    color: #05692b;
+    color: #a5c5ff;
     font-family: 'Gugi', cursive;
     font-size: 3em !important;
     padding-left: 10px;
@@ -31,22 +31,22 @@
     margin-bottom: -2em;
 }
 .bloco1{
-    background-color: #05692b !important;
+    background-color: #a5c5ff !important;
     border-radius: 10px !important;
     min-height: 100px;
 }
 .bloco2{
-    background-color: #d42a17 !important;
+    background-color: #2c64b7 !important;
     border-radius: 10px !important;
     min-height: 100px;
 }
 .bloco3{
-    background-color: #059337 !important;
+    background-color: #5290ff !important;
     border-radius: 10px !important;
     min-height: 100px;
 }
 .bloco4{
-    background-color: #1e308e !important;
+    background-color: #22338d !important;
     border-radius: 10px !important;
     min-height: 100px;
 }
@@ -72,11 +72,11 @@
 }
 
 .tituloCentral{
-    color: #2c2f36 !important;
+    color: #4583fe !important;
     font-style: oblique;
 }
 .tituloCentralSub{
-    color: #2c2f36 !important;
+    color: #4583fe !important;
     font-size: 1.2em;
     margin-top: -5px;
     margin-bottom: 2em;
@@ -85,14 +85,14 @@
     border: none !important;
 }
 .table tbody > tr > td{
-    background-color: #4a59a4 !important;
+    background-color: #4a67ef !important;
     color: #fff;
     border: none !important;
     text-align: center;
     cursor: pointer;
 }
 .table tbody > tr:nth-child(odd) > td{
-    background-color: #425093 !important;
+    background-color: #5290ff !important;
     color: #fff;
 }
 
@@ -100,6 +100,7 @@
     background-color: #1E308E !important;
     border: none !important;
     text-align: center !important;
+    font-style: oblique;
 }
 
 .table th:first-child{
@@ -123,23 +124,23 @@
 }
 
 .tituloComp{
-    color: #2c2f36 !important;
+    color: #7fa3d3 !important;
     font-style: oblique;
     font-weight: bold !important; 
     text-align: center;
 }
 
 .quadroComp{
-    background-color: #fff;
+    background-color: #f5ea7e;
     border-radius: 5px;
 }
 
 #bloco-e-mes0, #bloco-e-mes1{
-    color: #2c2f36 !important;
+    color: #7fa3d3 !important;
     font-weight: bold;
 }
 #consumo0, #consumo1{
-    color: #2c2f36 !important;
+    color: #7fa3d3 !important;
 }
 #diferenca-consumo, #diferenca-porcentagem{
     background: #ff4848;

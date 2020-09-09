@@ -166,7 +166,7 @@
                 <tr data-bloco="{{ $bloco }}">
                     <td>B{{ $bloco }}</td>
                     @foreach ($consumos as $mes => $consumo)
-                        <td data-mes="{{ $mes }}" data-consumo="{{ $consumo }}" class="mes-para-comparar">{{ $consumo }}</td>
+                        <td data-mes="{{ $mes }}" data-consumo="{{ $consumo }}" class="mes-para-comparar">{{ $consumo }}m³</td>
                     @endforeach
                 </tr>
                 @endforeach
@@ -209,14 +209,14 @@
         })
         
         var areaChartData = {
-            labels  : ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            labels  : ['JAN', 'FEV', 'MAR', 'ABR', 'MAI', 'JUN', 'JUL', 'AGO', 'SET', 'OUT', 'NOV', 'DEZ'],
             datasets: [
                 {
                     label: 'no ano corrente',
-                    backgroundColor: '#d42a17',
-                    borderColor: '#d42a17',
+                    backgroundColor: '#fbc604',
+                    borderColor: '#fbc604',
                     pointRadius: true,
-                    pointColor: '#d42a17',
+                    pointColor: '#fbc604',
                     pointStrokeColor: 'rgba(60,141,188,1)',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(60,141,188,1)',

@@ -1,12 +1,16 @@
 $(function() {
     consumoDiario()
     consumoMensal()
+    $('.loadIcone').css('display','none');
 })
 
 
 function consumoMensal() {
     $('#consumo-mensal').submit(function(form) {
         form.preventDefault()
+        $('.botaoIr').addClass('disabled');
+        $('.botaoIr').attr('type','button');
+        $('.loadIcone').css('display','inline-block');
 
         $.get(`/sindico/consumo-por-bloco-e-unidade/${$('[name=bloco]').val()}/0/11`, {
             ano: $('[name=ano]').val()
@@ -26,7 +30,10 @@ function consumoMensal() {
                 html += '</tr>'
             })
 
-            $('.consumo-mensal').empty().append(html)
+            $('.consumo-mensal').empty().append(html);
+            $('.botaoIr').removeClass('disabled');
+            $('.botaoIr').removeAttr('type');
+            $('.loadIcone').css('display','none');
         })
     })
 }
@@ -34,6 +41,9 @@ function consumoMensal() {
 function consumoDiario() {
     $('#consumo-diario').submit(function(form) {
         form.preventDefault()
+        $('.botaoIr').addClass('disabled');
+        $('.botaoIr').attr('type','button');
+        $('.loadIcone').css('display','inline-block');
 
         $.get(`/sindico/consumo-por-bloco-e-unidade/${$('[name=bloco-diario]').val()}/diario`, {
             ano: $('[name=ano-diario]').val(),
@@ -68,7 +78,10 @@ function consumoDiario() {
                     html += '</tr>'
                 })
 
-                $('.consumo-diario').empty().append(html)
+                $('.consumo-diario').empty().append(html);
+                $('.botaoIr').removeClass('disabled');
+                $('.botaoIr').removeAttr('type');
+                $('.loadIcone').css('display','none');
             }
         })
     })

@@ -27,6 +27,7 @@
 
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/AdminLTE.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/adminlte/css/jquery-ui.min.css') }}">
 
     @if(config('adminlte.plugins.datatables'))
     <!-- DataTables with bootstrap 3 style -->
@@ -42,6 +43,7 @@
 
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Orbitron" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Gugi" rel="stylesheet">
 </head>
@@ -51,6 +53,7 @@
 
 
     <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('vendor/adminlte/vendor/jquery/dist/jquery.slimscroll.min.js') }}"></script>
     <script src="{{ asset('vendor/adminlte/vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     

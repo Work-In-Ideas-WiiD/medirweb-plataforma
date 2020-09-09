@@ -163,15 +163,18 @@
             
         </div>
     </div>
-    <div class="icon iconeFuncao">
-        <i class="fa fa-file-o"></i>
+    <div style="margin: 0 auto; display: table;">
+        <div class="icon iconeFuncao">
+            <i class="fa fa-file-o"></i>
+        </div>
+        <div class="icon iconeFuncao2">
+            <i class="fa fa-file-excel-o"></i>
+        </div>
+        <div class="icon iconeFuncao3">
+            <i class="fa fa-print"></i>
+        </div>
     </div>
-    <div class="icon iconeFuncao2">
-        <i class="fa fa-file-excel-o"></i>
-    </div>
-    <div class="icon iconeFuncao3">
-        <i class="fa fa-print"></i>
-    </div>
+    
 </div>
 
 <div class="row">

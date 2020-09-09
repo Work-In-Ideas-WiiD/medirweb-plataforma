@@ -1,6 +1,7 @@
 $(document).ready(function() {
     escolherBloco()
     escolherEComparar()
+    $('body > div > div > section.content > div:nth-child(5) > div.col-md-2.containerBloco > p:nth-child(1) > a').trigger('click');
 })
 
 
