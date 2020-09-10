@@ -475,6 +475,9 @@ class CentralController extends Controller
             
             $unidade = Unidade::where('device', $payload->meta->device)->first();
 
+            if(!$unidade)
+                return ['error' => 'divice não registrado na base'];
+
             $prumada = $unidade->prumada()->first();
 
             if ($prumada) {
