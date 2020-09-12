@@ -35,6 +35,10 @@ function escolherEComparar() {
 
             diferenca_porcentagem = ((comparar[1].consumo / comparar[0].consumo) * 100).toFixed(2)
 
+            if (isNaN(diferenca_porcentagem)) {
+                diferenca_porcentagem = 0
+            }
+
             if (diferenca_consumo > 0) {
                 $('#diferenca-consumo').text(`+${diferenca_consumo}`)
                 $('#diferenca-porcentagem').text(`+${diferenca_porcentagem}%`)
