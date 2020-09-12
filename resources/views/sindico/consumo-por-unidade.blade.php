@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <button class="btn btn-danger botaoIr">Aplicar<i class="fa fa-refresh fa-spin loadIcone"></i>
+                    <button class="btn btn-danger botaoIr verificarBotao" disabled>Aplicar<i class="fa fa-refresh fa-spin loadIcone"></i>
                     </button>
                 </div>
                 
@@ -126,7 +126,7 @@
                 </div>
 
                 <div class="col-md-2">
-                    <button class="btn btn-danger botaoIr">Aplicar <i class="fa fa-refresh fa-spin loadIcone"></i></button>
+                    <button class="btn btn-danger botaoIr aplicar2" disabled>Aplicar <i class="fa fa-refresh fa-spin loadIcone"></i></button>
                 </div>
             </form>
         </div>

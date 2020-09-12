@@ -43,8 +43,6 @@ $(function() {
 
 
     $('[name=bloco], [name=unidade], [name=data_inicio], [name=data_fim]').change(function() {
-        let value = $(this).val()
-
         let bloco = $('[name=bloco]').val() != 'bloco'
         let unidade = $('[name=unidade]').val() != 'unidade'
         let data_inicio = $('[name=data_inicio]').val() != ''

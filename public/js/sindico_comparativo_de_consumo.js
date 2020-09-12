@@ -74,4 +74,18 @@ $(function() {
             })
         })
     })
+
+    $('[name=bloco], [name=unidade], [name=mes], [name=ano]').change(function() {
+
+        let bloco = $('[name=bloco]').val() != 'bloco'
+        let unidade = $('[name=unidade]').val() != 'unidade'
+        let mes = $('[name=mes]').val() != 'mes'
+        let ano = $('[name=ano]').val() != 'ano'
+
+        if (bloco && unidade && mes && ano) {
+            $('.botaoIr').prop('disabled', false)
+        } else {
+            $('.botaoIr').prop('disabled', true)
+        }
+    })
 })
