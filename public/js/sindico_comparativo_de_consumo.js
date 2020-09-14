@@ -4,7 +4,7 @@ $(function() {
     $('[name=bloco]').change(function() {
         $.get(`/sindico/relatorio/unidade-por-bloco/${$(this).val()}`, function(response) {
 
-            let html = '<option>unidade</bloco>'
+            let html = '<option>unidade</option>'
 
             $.each(response, function(key, value) {
                 html += `<option value="${value}">unidade ${value}</option>`
