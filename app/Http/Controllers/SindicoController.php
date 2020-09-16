@@ -460,7 +460,7 @@ class SindicoController extends Controller
 
         $total_ano = array_sum($grafico);
 
-        $media_mensal = intval($total_ano / 12);
+        $media_mensal = intval($total_ano / now()->month);
 
         $este_mes = $grafico[now()->month - 1];
 

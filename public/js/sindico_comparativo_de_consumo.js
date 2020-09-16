@@ -4,7 +4,7 @@ $(function() {
     $('[name=bloco]').change(function() {
         $.get(`/sindico/relatorio/unidade-por-bloco/${$(this).val()}`, function(response) {
 
-            let html = '<option>unidade</bloco>'
+            let html = '<option>unidade</option>'
 
             $.each(response, function(key, value) {
                 html += `<option value="${value}">unidade ${value}</option>`
@@ -73,5 +73,19 @@ $(function() {
                 $('.leituras').empty().append(html)
             })
         })
+    })
+
+    $('[name=bloco], [name=unidade], [name=mes], [name=ano]').change(function() {
+
+        let bloco = $('[name=bloco]').val() != 'bloco'
+        let unidade = $('[name=unidade]').val() != 'unidade'
+        let mes = $('[name=mes]').val() != 'mes'
+        let ano = $('[name=ano]').val() != 'ano'
+
+        if (bloco && unidade && mes && ano) {
+            $('.botaoIr').prop('disabled', false)
+        } else {
+            $('.botaoIr').prop('disabled', true)
+        }
     })
 })

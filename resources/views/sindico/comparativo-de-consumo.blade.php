@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="col-md-1">
-                    <button class="btn btn-danger botaoIr">Aplicar</button>
+                    <button class="btn btn-danger botaoIr" disabled>Aplicar</button>
                 </div>
             </form>
         </div>

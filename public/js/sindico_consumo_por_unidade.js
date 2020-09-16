@@ -2,6 +2,31 @@ $(function() {
     consumoDiario()
     consumoMensal()
     $('.loadIcone').css('display','none');
+
+    $('[name=bloco], [name=ano]').change(function() {
+
+        let bloco = $('[name=bloco]').val() != 'bloco'
+        let ano = $('[name=ano]').val() != 'ano'
+
+        if (bloco && ano) {
+            $('.verificarBotao').prop('disabled', false)
+        } else {
+            $('.verificarBotao').prop('disabled', true)
+        }
+    })
+
+    $('[name=bloco-diario], [name=mes-diario], [name=ano-diario]').change(function() {
+
+        let bloco = $('[name=bloco-diario]').val() != 'bloco'
+        let ano = $('[name=ano-diario]').val() != 'ano'
+        let mes = $('[name=mes-diario]').val() != 'mes'
+
+        if (bloco && ano && mes) {
+            $('.aplicar2').prop('disabled', false)
+        } else {
+            $('.aplicar2').prop('disabled', true)
+        }
+    })    
 })
 
 

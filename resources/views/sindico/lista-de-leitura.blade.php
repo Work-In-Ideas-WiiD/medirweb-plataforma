@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="col-md-1">
-                    <button class="btn btn-danger botaoIr">Aplicar<i class="fa fa-refresh fa-spin loadIcone"></i></button>
+                    <button class="btn btn-danger botaoIr" disabled>Aplicar<i class="fa fa-refresh fa-spin loadIcone"></i></button>
                 </div>
             </form>
         </div>
