@@ -64,6 +64,17 @@
 								</span>
 								@enderror
 							</div>
+
+							<div class='form-group'>
+								{{ Form::label('device', 'Dispositivo') }}
+								{{ Form::text('device', $unidade->device ?? null, ['class' => 'form-control']) }}
+
+								@error('device')
+								<span class="help-block">
+									<strong style="color: red;">{{ $message }}</strong>
+								</span>
+								@enderror
+							</div>
 						</div>
 
 						<div class="col-md-6">
