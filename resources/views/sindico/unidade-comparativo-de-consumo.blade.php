@@ -38,7 +38,7 @@
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="tituloBloco">Bloco 6 <label>Unidade 07</label></h3>
+        <h3 class="tituloBloco">Bloco {{ $bloco }} <label>Unidade {{ $unidade }}</label></h3>
     </div>
 </div>
 <br>

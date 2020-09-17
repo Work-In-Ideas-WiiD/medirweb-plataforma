@@ -188,6 +188,7 @@ Route::middleware('auth')->group(function () {
         Route::get('unidade/grafico-consumo-anual/{bloco}', 'SindicoController@graficoConsumoAnual');
         Route::get('unidade/comparativo-de-consumo/{bloco}/{unidade}', 'SindicoController@unidadeComparativoDeConsumo');
         Route::get('consumo-por-bloco-e-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@consumoPorBlocoEUnidade');
+        Route::get('consumo-por-bloco-e-unidade-painel/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@consumoPorBlocoEUnidadePainel');
         Route::get('consumo-por-bloco-e-unidade/{bloco}/diario', 'SindicoController@consumoPorBlocoEUnidadeDiario');
         
         Route::group(['prefix' => 'relatorio'], function() {

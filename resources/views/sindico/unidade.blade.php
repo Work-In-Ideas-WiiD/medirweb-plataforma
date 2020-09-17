@@ -23,7 +23,7 @@
 <div class="row">
     <div class="col-md-2 containerBloco">
         @foreach ($blocos as $bloco)
-            <p><a href="javascript:void(0)" class="escolher-bloco" data-bloco="{{ $bloco['nome'] }}">Bloco {{ $bloco['nome'] }}</a></p>
+            <p><a href="javascript:void(0)" class="escolher-bloco" data-bloco="{{ $bloco['nome'] }}">{{ $bloco['nome'] }}</a></p>
         @endforeach
     </div>
     <div class="col-md-10">

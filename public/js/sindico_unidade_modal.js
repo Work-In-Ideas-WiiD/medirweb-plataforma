@@ -8,7 +8,7 @@ $(function() {
         $.get('/sindico/unidade/dados', {unidade, bloco}, function(response) {
             $('.modal-unidade-nome').text(response.nome_responsavel)
             $('.modal-unidade-cpf').text(`CPF ${response.cpf_responsavel}`)
-            $('.modal-unidade-bloco').html(`Unidade ${ unidade } <br>Bloco ${ bloco }`)
+            $('.modal-unidade-bloco').html(`Unidade ${ unidade }`)
         })
 
         $.get(`/sindico/unidade/modal-grafico/${bloco}/${unidade}`, function(response) {

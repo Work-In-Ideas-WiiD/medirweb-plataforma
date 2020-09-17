@@ -40,4 +40,18 @@ $(function() {
 
         })
     })
+
+
+    $('[name=bloco], [name=unidade], [name=data_inicio], [name=data_fim]').change(function() {
+        let bloco = $('[name=bloco]').val() != 'bloco'
+        let unidade = $('[name=unidade]').val() != 'unidade'
+        let data_inicio = $('[name=data_inicio]').val() != ''
+        let data_fim = $('[name=data_fim]').val() != ''
+
+        if (bloco && unidade && data_inicio && data_fim) {
+            $('.botaoIr').prop('disabled', false)
+        } else {
+            $('.botaoIr').prop('disabled', true)
+        }
+    })
 })

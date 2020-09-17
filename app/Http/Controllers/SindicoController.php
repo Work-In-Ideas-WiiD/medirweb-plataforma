@@ -177,6 +177,36 @@ class SindicoController extends Controller
         return $consumo;
     }
 
+    public function consumoPorBlocoEUnidadePainel(Request $request, $bloco, $primeiro_mes, $ultimo_mes)
+    {
+        if ($bloco == 'bloco' or $request->ano == 'ano') {
+            return [];
+        }
+
+        $unidades = Unidade::with('agrupamento')->where('imovel_id', auth()->user()->imovel_id)
+            ->whereHas('agrupamento', function($query) use ($bloco) {
+                $query->where('nome', $bloco);
+        })->get();
+
+        foreach ($unidades as $unidade) {
+            $consumo_por_meses = [];
+
+            foreach (range($primeiro_mes, $ultimo_mes) as $mes) {
+                $consumo_por_meses[] = $this->consumoMensal([
+                    // 'mes' => $mes + 1,
+                    'ano' => $request->ano,
+                    'bloco' => $bloco,
+                    'unidade' => $unidade->nome,
+                ]);
+            }
+
+            $consumo[$unidade->nome] = $consumo_por_meses;
+            // pode ser que no primeiro e ultimo dia do mes as informações apareçam de forma incorreta por causa do calculo de data
+        }
+
+        return $consumo;
+    }
+
     public function consumoPorBlocoEUnidadeDiario(Request $request, $bloco)
     {
         if ($bloco == 'bloco' or $request->ano == 'ano' or $request->mes == 'mes') {
@@ -430,7 +460,7 @@ class SindicoController extends Controller
 
         $total_ano = array_sum($grafico);
 
-        $media_mensal = intval($total_ano / 12);
+        $media_mensal = intval($total_ano / now()->month);
 
         $este_mes = $grafico[now()->month - 1];
 

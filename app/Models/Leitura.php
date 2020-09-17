@@ -5,17 +5,22 @@ namespace App\Models;
 use DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 
 class Leitura extends Model
 {
     protected $guarded = [];
+
+    public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d/m/Y h:i');
+    }
 
     public function prumada()
     {
     	return $this->belongsTo(Prumada::class);
 
     }
-
 
     public function scopeByLeituraexport($query, $value)
     {
