@@ -55,7 +55,7 @@
     </div>
     <div class="col-md-7">
         <div class="row text-center blocoCirculos">
-            <div class="col-md-3">
+            <div class="col-md-3 col-lg-2  col-sm-6">
                 <div class="bg-info antesCirculo">
                     neste ano
                     <div class="circulos1">
@@ -64,7 +64,7 @@
                     média mensal
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-lg-2 col-lg-offset-1 col-sm-6">
                 <div class="bg-info antesCirculo">
                     neste ano
                     <div class="circulos2">
@@ -73,7 +73,7 @@
                     consumo total
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-lg-2 col-lg-offset-1 col-sm-6">
                 <div class="bg-info antesCirculo">
                     neste mês
                     <div class="circulos3">
@@ -82,7 +82,7 @@
                     consumo total
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-lg-2 col-lg-offset-1 col-sm-6">
                 <div class="bg-info antesCirculo">
                     neste mês
                     <div class="circulos4">

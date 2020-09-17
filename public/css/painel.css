@@ -22,7 +22,7 @@
 
 .titulo{
     color: #a5c5ff;
-    font-family: 'Gugi', cursive;
+    font-family: 'Gugi', cursive !important;
     font-size: 3em !important;
     padding-left: 10px;
 }
