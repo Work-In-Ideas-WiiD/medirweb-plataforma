@@ -55,7 +55,7 @@
 }
 
 .iconeFuncao{
-    float: right;
+    /* float: right; */
     width: 50px;
     height: 50px;
     background: #1e308e;
@@ -65,9 +65,11 @@
     align-items: center;
     border-radius: 50%;
     margin-right: 10px;
+    position: absolute;
+    right: 10px;
 }
 .iconeFuncao2{
-    float: right;
+    /* float: right; */
     width: 50px;
     height: 50px;
     background: #fbdb02;
@@ -77,9 +79,11 @@
     align-items: center;
     border-radius: 50%;
     margin-right: 10px;
+    position: absolute;
+    right: 70px;
 }
 .iconeFuncao3{
-    float: right;
+    /* float: right; */
     width: 50px;
     height: 50px;
     background: #d42a17;
@@ -89,6 +93,8 @@
     align-items: center;
     border-radius: 50%;
     margin-right: 10px;
+    position: absolute;
+    right: 130px;
 }
 
 .iconeFuncao i, .iconeFuncao2 i, .iconeFuncao3 i{
@@ -100,6 +106,13 @@ select{
     color: #2c2f36 !important;
     font-size: 1.2em !important;
     font-weight: 200 !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: transparent !important;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") !important;
+    background-repeat: no-repeat !important;
+    background-position-x: 100% !important;
+    background-position-y: 5px !important;
 }
 
 .botaoIr{
