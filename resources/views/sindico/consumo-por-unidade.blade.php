@@ -25,7 +25,7 @@
         <h3 class="text-center tituloCentral">Consumo mensal por unidades<div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
-                <div class="icon iconeFuncao2">
+                <div class="icon iconeFuncao2 para-ir" data-para-ir="#link-aqui">
                     <i class="fa fa-file-excel-o"></i>
                 </div>
                 <div class="icon iconeFuncao3">
@@ -89,7 +89,7 @@
                     <i class="fa fa-file-o"></i>
                 </div>
                 <div class="icon iconeFuncao2">
-                    <i class="fa fa-file-excel-o"></i>
+                    <i class="fa fa-file-excel-o para-ir" data-para-ir="#link-aqui"></i>
                 </div>
                 <div class="icon iconeFuncao3">
                     <i class="fa fa-print"></i>

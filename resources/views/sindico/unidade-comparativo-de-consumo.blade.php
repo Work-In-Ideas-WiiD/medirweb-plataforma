@@ -167,7 +167,7 @@
         <div class="icon iconeFuncao">
             <i class="fa fa-file-o"></i>
         </div>
-        <div class="icon iconeFuncao2">
+        <div class="icon iconeFuncao2 para-ir" data-para-ir="#link-aqui">
             <i class="fa fa-file-excel-o"></i>
         </div>
         <div class="icon iconeFuncao3">
