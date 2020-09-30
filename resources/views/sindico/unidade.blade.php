@@ -104,7 +104,7 @@
     <div class="icon iconeFuncao">
         <i class="fa fa-file-o"></i>
     </div>
-    <div class="icon iconeFuncao2">
+    <div class="icon iconeFuncao2 para-ir">
         <i class="fa fa-file-excel-o"></i>
     </div>
     <div class="icon iconeFuncao3">
@@ -122,4 +122,11 @@
 <script src="/js/sindico_unidade_grafico.js"></script>
 <script src="/js/sindico_unidade_modal.js"></script>
 <script src="/js/sindico_unidade_modal_grafico.js"></script>
+<script>
+    $('.escolher-bloco').click(function() {
+        
+        let url = `/sindico/export/consumo-ultimo-seis-meses-unidade/${$(this).data('bloco')}/{{now()->subMonths(5)->month}}/{{now()->month}}`
+        $('.iconeFuncao2').data('para-ir', url)
+    })
+</script>
 @endpush
