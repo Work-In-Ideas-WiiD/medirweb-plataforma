@@ -347,10 +347,15 @@ h3,label, span, a, div, select, input, table, td, th, button, p{
     box-shadow: 1px 1px 5px rgba(0,0,0,0.3);
 }
 .login-page{
-	background: rgb(5,147,55);
-	background: linear-gradient(13deg, rgba(5,147,55,1) 0%, rgba(253,187,45,1) 31%, rgba(212,42,23,1) 100%) no-repeat;
+	/* background: rgb(5,147,55);
+	background: linear-gradient(13deg, rgba(5,147,55,1) 0%, rgba(253,187,45,1) 31%, rgba(212,42,23,1) 100%) no-repeat; */
+	background: #e2edff;
 	overflow: hidden;
 }
 .logo-lg img{
 	width: 26%;
+}
+
+.treeview-menu>li>a{
+	padding: 12px 5px 12px 15px !important;
 }

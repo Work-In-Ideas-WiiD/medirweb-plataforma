@@ -17,7 +17,7 @@
 
 <div class="modalUnidades fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 <div class="icon iconeFechar" >
-        <i class="fa fa-angle-down"></i>
+        <i class="fa fa-close"></i>
     </div>  
 <div class="modal-dialog" style="width:100%;">
   

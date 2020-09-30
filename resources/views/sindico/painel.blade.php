@@ -83,7 +83,7 @@
                             <div class="inner">
                                 <h3>{{ $consumo_medio_por_unidade_mensal }} <sup style="font-size:17px;top:-20px!important;">m³</sup> </h3>
 
-                                <p>Consumo médio por unidade mensal</p>
+                                <p>Consumo médio por unidade/mês</p>
                             </div>
                             <div class="icon">
                                 <i class="fa fa-info"></i>

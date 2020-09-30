@@ -1,4 +1,5 @@
 function comparativoTabela(bloco) {
+      
     var tabela = $('.tabela-comparativo-unidades')
     
     var html = ''
@@ -18,7 +19,7 @@ function comparativoTabela(bloco) {
             `
 
             $.each(value, function(mes, consumo) {
-                html += `<td data-mes="${mes}" data-consumo="${consumo}" class="mes-para-comparar">${consumo}m³</td>`
+                html += `<td data-mes="${mes}" data-consumo="${consumo}" class="mes-para-comparar" ><div data-toggle="tooltip" title="Clique aqui para comparar">${consumo}m³</div></td>`
             })
 
             html += `</tr>`

@@ -70,7 +70,7 @@
 }
 .antesCirculo{
     background-color: transparent !important;
-    text-align: left !important;
+    /* text-align: left !important; */
 }
 .circulos1, .circulos2, .circulos3, .circulos4{
     margin-top: 1.3em;

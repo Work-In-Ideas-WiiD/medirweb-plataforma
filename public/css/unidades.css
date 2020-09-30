@@ -26,6 +26,27 @@
     text-align: center;
     padding-top: 4em;
 }
+.containerBloco p{
+    padding: 10px;
+    background: #4684ff;
+    border-radius: 20px;
+    border: 1px solid #4684ff;
+}
+.containerBloco p:hover{
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #4684ff;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.containerBloco p:hover a{
+    padding: 10px;
+    color: #4684ff;
+    border-radius: 20px;
+}
+.containerBloco p a{
+    color: #fff;
+}
 
 .tituloBloco{
     margin-top: 0px;
@@ -37,6 +58,7 @@
 }
 .click-unidade{
     cursor: pointer;
+    margin-left: 15px;
 }
 
 .click-unidade .card{
@@ -64,14 +86,16 @@
 
 .listaUnidades{
     background-color: #a5c5ff;
-    display: table;
+    display: flex;
     border-radius: 10px;
     padding-top: 20px;
     padding-bottom: 30px;
     padding-left: 15px;
     padding-right: 15px;
+    justify-content: end;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
-
 .table{
     border: none !important;
 }
@@ -249,11 +273,12 @@
 }
 .modalUnidades .modal-content{
     background-color: transparent;
+    box-shadow: none;
 }
 .modal-unidade-nome{
     color: #fff;
     font-size: 1.5em;
-    font-weight: 100;
+    font-weight: 700;
     margin-bottom: 20px;
     padding-left: 0.5em;
 }
@@ -348,4 +373,11 @@
 }
 .modal-dialog:focus, .modalUnidades{
     outline: none !important;
+}
+.grafico{
+    margin-top: 6%;
+    padding-left: 20px;
+}
+.graficoPagina{
+    margin-top: 6%;
 }

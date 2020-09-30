@@ -31,7 +31,7 @@
         </div>
     </div>
 </div>
-<div class="row">
+<div class="row graficoPagina">
     <div class="col-md-12">
         <div class="card card-success">
             <div class="card-header">
