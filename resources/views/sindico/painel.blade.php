@@ -104,7 +104,7 @@
                 <div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
-                <div class="icon iconeFuncao2">
+                <div class="icon iconeFuncao2 para-ir" data-para-ir="{{ route('sindico.export.consumo-grafico') }}">
                     <i class="fa fa-file-excel-o"></i>
                 </div>
                 <div class="icon iconeFuncao3">
@@ -135,7 +135,7 @@
         <h3 class="text-center tituloCentral">Comparativo de consumo<div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
-                <div class="icon iconeFuncao2">
+                <div class="icon iconeFuncao2 para-ir" data-para-ir="{{ route('sindico.export.consumo-ultimo-seis-meses') }}">
                     <i class="fa fa-file-excel-o"></i>
                 </div>
                 <div class="icon iconeFuncao3">

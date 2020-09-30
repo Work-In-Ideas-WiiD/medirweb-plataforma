@@ -177,7 +177,7 @@ Route::middleware('auth')->group(function () {
     
     Route::match(['get', 'post'], 'relatorio/falha', 'FalhaController@index');
 
-    Route::group(['prefix' => 'sindico'], function() {
+    Route::group(['prefix' => 'sindico', 'as' => 'sindico.'], function() {
         Route::get('busca', 'SindicoController@busca');
         Route::get('painel', 'SindicoController@painel');
         Route::get('unidade', 'SindicoController@unidade');
@@ -201,15 +201,13 @@ Route::middleware('auth')->group(function () {
         });
 
         //EXPORT TABLES DOWNLOAD 
-        Route::group(['prefix' => 'export'], function() {
-            Route::get('consumo-ultimo-seis-meses', 'SindicoController@exportUltimosPorBlocoSeisMeses');
-            Route::get('consumo-grafico', 'SindicoController@exportGraficoCosumo');
-            Route::get('consumo-ultimo-seis-meses-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@exportUltimosPorUnidadeSeisMeses');
-            Route::get('consumo-grafico-media/{bloco}', 'SindicoController@exportGraficoCosumoMedia');
-            Route::get('consumo-mensal-por-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@exportMensalPorUnidadeAno');
-            
+        Route::group(['prefix' => 'export', 'as' => 'export.'], function() {
+            Route::get('consumo-ultimo-seis-meses', 'SindicoController@exportUltimosPorBlocoSeisMeses')->name('consumo-ultimo-seis-meses');
+            Route::get('consumo-grafico', 'SindicoController@exportGraficoCosumo')->name('consumo-grafico');
+            Route::get('consumo-ultimo-seis-meses-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@exportUltimosPorUnidadeSeisMeses')->name('consumo-ultimo-seis-meses-unidades');
+            Route::get('consumo-grafico-media/{bloco}', 'SindicoController@exportGraficoCosumoMedia')->name('consumo-grafico-media');
+            Route::get('consumo-mensal-por-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@exportMensalPorUnidadeAno')->name('consumo-mensal-por-unidade');
         });
-        
     });
 });
 
