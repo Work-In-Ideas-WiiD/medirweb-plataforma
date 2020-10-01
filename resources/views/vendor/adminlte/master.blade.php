@@ -87,7 +87,9 @@
     //UNIDADES - CAMPO AGRUPAMENTO
     $(document).ready(function() {
         $('.para-ir').click(function() {
-            window.location.href = $(this).data('para-ir')
+            if ($(this).data('para-ir') != undefined || $(this).data('para-ir') != '') {
+                window.location.href = $(this).data('para-ir')
+            }
         })
 
         $('select[name="imovel_id"]').on('change', function() {
