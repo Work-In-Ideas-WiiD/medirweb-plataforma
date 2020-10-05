@@ -108,7 +108,7 @@ class SindicoController extends Controller
 
         $termos = explode(',', request()->termos ?? '');
 
-        $queryBulder = Unidade::where('imovel_id', $imovel_id);
+        $queryBulder = Unidade::with('agrupamento:id,nome')->where('imovel_id', $imovel_id);
 
         if (strpos($termos[0], '__BLOCO__')) {
             $queryBulder->whereHas('agrupamento', function($query) use ($termos){

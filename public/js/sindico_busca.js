@@ -10,14 +10,21 @@ $(function() {
             }
 
             $.get(url, function(res) {
-                response( $.map( res, function( item ) {
+                response($.map( res, function( item ) {
+                    let content = `${item.agrupamento.nome} - ${item.nome} | ${item.nome_responsavel}`
                     return {
-                        item: item,
-                        label: `${item.nome} / ${item.nome_responsavel}`,
-                        value: item.id
+                        data: item,
+                        label: content,
+                        value: content,
                     }
-                  }));
+                  })
+                );
             })
+        },
+        select: function( event, ui ) {
+            let data = ui.item.data
+
+            window.location.href = `/sindico/unidade/comparativo-de-consumo/${data.agrupamento.nome}/${data.nome}`
         },
         minLength: 2
     })
