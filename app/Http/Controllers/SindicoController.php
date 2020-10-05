@@ -502,5 +502,4 @@ class SindicoController extends Controller
 
         return view('sindico.unidade-comparativo-de-consumo', compact( 'bloco', 'unidade', 'meses', 'grafico', 'total_ano', 'este_mes', 'media_mensal', 'media_unidades', 'consumo', 'leituras'));
     }
-
 }

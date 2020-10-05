@@ -115,6 +115,7 @@
 
 
 @push('js')
+<script src="/js/sindico_busca.js"></script>
 <script src="/js/sindico_unidade.js"></script>
 <script src="/js/sindico_unidade_unidades.js"></script>
 <script src="/js/sindico_unidade_comparativo.js"></script>

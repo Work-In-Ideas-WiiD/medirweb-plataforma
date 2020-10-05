@@ -149,6 +149,7 @@
 
 
 @push('js')
+<script src="/js/sindico_busca.js"></script>
 <script src="/js/sindico_consumo_por_unidade.js"></script>
 
 <script>

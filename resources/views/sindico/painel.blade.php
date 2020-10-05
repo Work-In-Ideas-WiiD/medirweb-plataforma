@@ -199,6 +199,7 @@
 
 
 @push('js')
+<script src="/js/sindico_busca.js"></script>
 <script src="/js/sindico_painel.js"></script>
 <script>
     $(function() {

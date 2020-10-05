@@ -84,6 +84,7 @@
 
 
 @push('js')
+<script src="/js/sindico_busca.js"></script>
 <script src="/js/sindico_lista_de_leitura.js"></script>
 <script>
     $('.verificarBotao').click(function() {
