@@ -8,8 +8,10 @@ use App\Models\Leitura;
 use App\Models\Unidade;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CosumoExport;
+use App\Exports\CosumoDiaExport;
 use App\Exports\CosumoGraficoExport;
 use App\Exports\CosumoGraficoMediaExport;
+use App\Exports\CosumoLeituraExport;
 
 class SindicoController extends Controller
 {
@@ -385,7 +387,29 @@ class SindicoController extends Controller
 
         return Excel::download(new CosumoExport(auth()->user()->imovel_id, $consumo, 'Unidade', 12), 'cosumo_export_mensal.xlsx');
     }
+
+    public function exportDiarioPorUnidadeAno(Request $request, $bloco, $mes, $ano)
+    {
+        $request->mes = $mes;
+        $request->ano = $ano;
+
+        $consumo = $this->consumoPorBlocoEUnidadeDiario($request, $bloco);
+
+        return Excel::download(new CosumoDiaExport(auth()->user()->imovel_id, $consumo, 'Unidade', 12), 'cosumo_export_mensal.xlsx');
+    }
     
+    public function exportListaPorUnidade(Request $request, $bloco, $unidade, $data_inicio, $data_fim)
+    {
+        $request->bloco = $bloco;
+        $request->unidade = $unidade;
+        $request->data_inicio = $data_inicio;
+        $request->data_fim = $data_fim;
+
+        $consumo = $this->listaDeLeituraTabela($request, $bloco);
+
+        return Excel::download(new CosumoLeituraExport(auth()->user()->imovel_id, $consumo, 'Unidade', 12), 'cosumo_export_lista.xlsx');
+    }
+
     public function dadosUnidade(Request $request)
     {
         return auth()->user()->imovel->unidade()

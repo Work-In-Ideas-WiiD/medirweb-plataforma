@@ -207,6 +207,11 @@ Route::middleware('auth')->group(function () {
             Route::get('consumo-ultimo-seis-meses-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@exportUltimosPorUnidadeSeisMeses')->name('consumo-ultimo-seis-meses-unidades');
             Route::get('consumo-grafico-media/{bloco}', 'SindicoController@exportGraficoCosumoMedia')->name('consumo-grafico-media');
             Route::get('consumo-mensal-por-unidade/{bloco}/{primeiro_mes}/{ultimo_mes}', 'SindicoController@exportMensalPorUnidadeAno')->name('consumo-mensal-por-unidade');
+
+            Route::get('consumo-diario-por-unidade/{bloco}/{mes}/{ano}', 'SindicoController@exportDiarioPorUnidadeAno')->name('consumo-diario-por-unidade');
+            Route::get('consumo-leitura-por-unidade/{bloco}/{unidade}/{data_inicio}/{data_fim}', 'SindicoController@exportListaPorUnidade')->name('consumo-leitura-por-unidade');
+
+
         });
     });
 });

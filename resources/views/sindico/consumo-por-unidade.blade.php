@@ -174,7 +174,7 @@
             $mes2 = abs(now()->month);
         @endphp
 
-        let url = `/sindico/export/consumo-ultimo-seis-meses-unidade/${bloco}/{{$mes1}}/{{$mes2}}`
+        let url = `/sindico/export/consumo-diario-por-unidade/${bloco}/${mes}/${ano}`
 
         $('.consumo6meses').data('para-ir', url)
     })
