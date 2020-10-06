@@ -134,9 +134,9 @@
                 @foreach ($consumo as $mes => $info)
                 <tr data-mes="{{ substr($mes, 0, 3) }}" data-consumo="{{ $info['consumo_total'] }}" class="mes-para-comparar">
                     <td>{{ $mes }}</td>
-                    <td>{{ $info['media_consumo_por_unidade'] }} m<sup>3</sup></td>
-                    <td>{{ $info['media_consumo_por_bloco'] }} m<sup>3</sup></td>
-                    <td>{{ $info['consumo_total'] }} m<sup>3</sup></td>
+                    <td><div data-toggle="tooltip" title="Clique aqui para comparar">{{ $info['media_consumo_por_unidade'] }} m<sup>3</sup></div></td>
+                    <td><div data-toggle="tooltip" title="Clique aqui para comparar">{{ $info['media_consumo_por_bloco'] }} m<sup>3</sup></div></td>
+                    <td><div data-toggle="tooltip" title="Clique aqui para comparar">{{ $info['consumo_total'] }} m<sup>3</sup></div></td>
                 </tr>
                 @endforeach
             </tbody>

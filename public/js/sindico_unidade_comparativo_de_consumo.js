@@ -4,6 +4,8 @@ $(function() {
         {consumo: null, mes: null, ultimo: false},
     ]
 
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
+
     $('body').on('click', '.mes-para-comparar', function() {
 
         if (!comparar[0].ultimo) {
