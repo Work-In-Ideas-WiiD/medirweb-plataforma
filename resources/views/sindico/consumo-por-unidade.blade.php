@@ -25,7 +25,7 @@
         <h3 class="text-center tituloCentral">Consumo mensal por unidades<div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
-                <div class="icon iconeFuncao2">
+                <div class="icon iconeFuncao2 cmpu para-ir">
                     <i class="fa fa-file-excel-o"></i>
                 </div>
                 <div class="icon iconeFuncao3">
@@ -88,7 +88,7 @@
         <h3 class="text-center tituloCentral">Comparativo por diario por unidade<div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
-                <div class="icon iconeFuncao2">
+                <div class="icon iconeFuncao2 consumo6meses para-ir">
                     <i class="fa fa-file-excel-o"></i>
                 </div>
                 <div class="icon iconeFuncao3">
@@ -149,5 +149,37 @@
 
 
 @push('js')
+<script src="/js/sindico_busca.js"></script>
 <script src="/js/sindico_consumo_por_unidade.js"></script>
+
+<script>
+    $('.verificarBotao').click(function() {
+        let bloco = $('[name=bloco]').val()
+
+        let ano = $('[name=ano]').val()
+
+        let url = `/sindico/export/consumo-mensal-por-unidade/${bloco}/0/11`
+
+        $(".cmpu").data('para-ir', url)
+    })
+
+    $('.aplicar2').click(function() {
+        let bloco = $('[name=bloco-diario]').val()
+
+        let mes = $('[name=mes-diario]').val()
+
+        let ano = $('[name=ano-diario]').val()
+
+        @php
+            $mes1 = abs(now()->subMonth(5)->month);
+            $mes2 = abs(now()->month);
+        @endphp
+
+        let url = `/sindico/export/consumo-diario-por-unidade/${bloco}/${mes}/${ano}`
+
+        $('.consumo6meses').data('para-ir', url)
+    })
+
+
+</script>
 @endpush

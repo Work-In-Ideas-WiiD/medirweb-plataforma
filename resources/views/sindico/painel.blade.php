@@ -104,7 +104,7 @@
                 <div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
-                <div class="icon iconeFuncao2">
+                <div class="icon iconeFuncao2 para-ir" data-para-ir="{{ route('sindico.export.consumo-grafico') }}">
                     <i class="fa fa-file-excel-o"></i>
                 </div>
                 <div class="icon iconeFuncao3">
@@ -136,7 +136,7 @@
                 <div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
-                <div class="icon iconeFuncao2">
+                <div class="icon iconeFuncao2 para-ir" data-para-ir="{{ route('sindico.export.consumo-ultimo-seis-meses') }}">
                     <i class="fa fa-file-excel-o"></i>
                 </div>
                 <div class="icon iconeFuncao3">
@@ -201,6 +201,7 @@
 
 
 @push('js')
+<script src="/js/sindico_busca.js"></script>
 <script src="/js/sindico_painel.js"></script>
 <script>
     $(function() {

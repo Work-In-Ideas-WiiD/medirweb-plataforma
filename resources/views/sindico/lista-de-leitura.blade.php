@@ -25,7 +25,7 @@
         <h3 class="text-center tituloCentral">Lista de Leituras<div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
-                <div class="icon iconeFuncao2">
+                <div class="icon iconeFuncao2 lista para-ir" data-para-ir="#link-aqui">
                     <i class="fa fa-file-excel-o"></i>
                 </div>
                 <div class="icon iconeFuncao3">
@@ -61,7 +61,7 @@
                 </div>
 
                 <div class="col-md-1">
-                    <button class="btn btn-danger botaoIr" disabled>Aplicar<i class="fa fa-refresh fa-spin loadIcone"></i></button>
+                    <button class="btn btn-danger verificarBotao botaoIr" disabled>Aplicar<i class="fa fa-refresh fa-spin loadIcone"></i></button>
                 </div>
             </form>
         </div>
@@ -84,5 +84,23 @@
 
 
 @push('js')
+<script src="/js/sindico_busca.js"></script>
 <script src="/js/sindico_lista_de_leitura.js"></script>
+<script>
+    $('.verificarBotao').click(function() {
+        let bloco = $('[name=bloco]').val()
+
+        let unidade = $('[name=unidade]').val()
+
+        let data_inicio = $('[name=data_inicio]').val()
+
+        let data_fim = $('[name=data_fim]').val()
+
+        let url = `/sindico/export/consumo-leitura-por-unidade/${bloco}/${unidade}/${data_inicio}/${data_fim}`
+
+        $(".lista").data('para-ir', url)
+    })
+
+</script>
+
 @endpush

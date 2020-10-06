@@ -93,5 +93,6 @@
 
 
 @push('js')
+<script src="/js/sindico_busca.js"></script>
 <script src="/js/sindico_comparativo_de_consumo.js"></script>
 @endpush

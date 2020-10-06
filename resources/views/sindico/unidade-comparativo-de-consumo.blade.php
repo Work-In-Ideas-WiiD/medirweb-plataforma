@@ -168,7 +168,7 @@
         <div class="icon iconeFuncao">
             <i class="fa fa-file-o"></i>
         </div>
-        <div class="icon iconeFuncao2">
+        <div class="icon iconeFuncao2 para-ir" data-para-ir="#link-aqui">
             <i class="fa fa-file-excel-o"></i>
         </div>
         <div class="icon iconeFuncao3">
@@ -191,7 +191,7 @@
             <tbody>
                 @foreach ($leituras as $leitura)
                 <tr>
-                    <td>{{ $leitura->created_at->format('d/m/Y H:i') }}</td>
+                    <td>{{ $leitura->created_at }}</td>
                     <td>{{ $leitura->metro }}m <sup>3</sup></td>
                     <td>{{ $leitura->consumo }}m <sup>3</sup></td>
                 </tr>
@@ -204,6 +204,7 @@
 
 
 @push('js')
+<script src="/js/sindico_busca.js"></script>
 <script src="/js/sindico_unidade_comparativo_de_consumo.js"></script>
 <script src="/js/sindico_grafico.js"></script>
 
