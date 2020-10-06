@@ -1,4 +1,6 @@
 $(document).ready(function() {
+
+    $("body").tooltip({ selector: '[data-toggle=tooltip]' });
     var mes = ['Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez']
 
     var comparar = [
@@ -22,6 +24,14 @@ $(document).ready(function() {
             comparar[0].ultimo = false
         }
 
+        $('.expComp').fadeOut();
+        $('#bloco-e-mes0').show();
+        $('#bloco-e-mes1').show();
+        $('#diferenca-consumo').css("display", "flex");
+        $('#diferenca-porcentagem').css("display", "flex");
+        $('#consumo0').show();
+        $('#consumo1').show();
+        
 
         $('#bloco-e-mes0').text(`Bloco ${comparar[0].bloco} (${mes[comparar[0].mes]})`)
         $('#consumo0').html(`${comparar[0].consumo}<sup>m3</sup>`)

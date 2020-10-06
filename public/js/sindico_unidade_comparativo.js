@@ -1,4 +1,6 @@
 function comparativoTabela(bloco) {
+
+    
       
     var tabela = $('.tabela-comparativo-unidades')
     

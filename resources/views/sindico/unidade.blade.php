@@ -83,6 +83,7 @@
 
     <div class="col-md-3 quadroComp">
         <div class="h4 tituloComp">Comparativo</div>
+        <h2 class="expComp">Clique nas medições da tabela para comparar</h2>
         <div class="row" style="margin-bottom:15px;">
             <div class="col-md-6 text-center" id="unidade-e-mes0">-</div>
             <div class="col-md-6 text-center" id="consumo0">-</div>

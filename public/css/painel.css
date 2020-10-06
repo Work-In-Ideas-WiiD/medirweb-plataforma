@@ -26,6 +26,12 @@
     font-size: 3em !important;
     padding-left: 10px;
 }
+.expComp{
+    text-align: center;
+    font-family: 'Chivo', sans-serif !important;
+    color: #777;
+    margin-top: 30px;
+}
 .box-header.with-border{
     border: none !important;
     margin-bottom: -2em;
@@ -139,9 +145,11 @@
 #bloco-e-mes0, #bloco-e-mes1{
     color: #7fa3d3 !important;
     font-weight: bold;
+    display: none;
 }
 #consumo0, #consumo1{
     color: #7fa3d3 !important;
+    display: none;
 }
 #diferenca-consumo, #diferenca-porcentagem{
     background: #ff4848;
@@ -153,6 +161,7 @@
     align-items: center;
     padding-top: 0px;
     color: #fff;
+    display: none;
 }
 .blocoResultado{
     text-align: center;

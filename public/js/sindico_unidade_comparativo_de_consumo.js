@@ -18,6 +18,15 @@ $(function() {
             comparar[0].ultimo = false
         }
 
+        $('.expComp').fadeOut();
+        $('#unidade-e-mes0').show();
+        $('#unidade-e-mes1').show();
+        $('#diferenca-consumo').css('display', "flex");
+        $('#diferenca-porcentagem').css('display', "flex");
+        $('#consumo0').show();
+        $('#consumo1').show();
+        
+
         $('#unidade-e-mes0').text(`${comparar[0].mes}`)
         $('#consumo0').html(`${comparar[0].consumo}<sup>m3</sup>`)
 

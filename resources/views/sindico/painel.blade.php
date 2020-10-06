@@ -132,7 +132,8 @@
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="text-center tituloCentral">Comparativo de consumo<div class="icon iconeFuncao">
+        <h3 class="text-center tituloCentral">Comparativo de consumo
+                <div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
                 <div class="icon iconeFuncao2">
@@ -166,7 +167,7 @@
                 <tr data-bloco="{{ $bloco }}">
                     <td>B{{ $bloco }}</td>
                     @foreach ($consumos as $mes => $consumo)
-                        <td data-mes="{{ $mes }}" data-consumo="{{ $consumo }}" class="mes-para-comparar">{{ $consumo }}m³</td>
+                        <td data-mes="{{ $mes }}" data-consumo="{{ $consumo }}" class="mes-para-comparar"><div data-toggle="tooltip" title="Clique aqui para comparar">{{ $consumo }}m³</div></td>
                     @endforeach
                 </tr>
                 @endforeach
@@ -176,6 +177,7 @@
 
     <div class="col-md-3 quadroComp">
         <div class="h4 tituloComp">Comparativo</div>
+        <h2 class="expComp">Clique nas medições da tabela para comparar</h2>
         <div class="row" style="margin-bottom:15px;">
             <div class="col-md-6 text-center" id="bloco-e-mes0">-</div>
             <div class="col-md-6 text-center" id="consumo0">-</div>
