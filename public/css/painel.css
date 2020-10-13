@@ -1,6 +1,7 @@
 .pesquisar{
     border-radius: 5px !important;
     border-color: #4684ff !important;
+    padding-left: 30px !important;
 }
 
 .pesquisar::placeholder{
