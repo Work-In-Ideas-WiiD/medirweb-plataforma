@@ -10,18 +10,22 @@
 }
 
 .escolher-bloco{
-    color: #2c2f36;
-    font-weight: 100;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 10px;
+    background: #4684ff;
+    border-radius: 20px;
+    border: 1px solid #4684ff;
+    color: #fff;
+    display: block;
     font-size: 1.1em;
 }
-.escolher-bloco:active, .escolher-bloco:focus{
-    font-size: 1.4em;
-    font-weight: bold;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    color: #2c2f36;
+.escolher-bloco:active, .escolher-bloco:focus, .escolher-bloco:hover{
+    padding: 10px;
+    background: #fff;
+    border: 1px solid #4684ff;
+    color: #4684ff;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1.1em;
 }
 .containerBloco{
     text-align: center;
@@ -33,24 +37,24 @@
     color: #777;
     margin-top: 30px;
 }
-.containerBloco p{
+/* .containerBloco p{
     padding: 10px;
     background: #4684ff;
     border-radius: 20px;
     border: 1px solid #4684ff;
-}
-.containerBloco p:hover{
+} */
+/* .containerBloco p:hover, .containerBloco p:active, .containerBloco p:focus{
     padding: 10px;
     background: #fff;
     border: 1px solid #4684ff;
     border-radius: 20px;
     cursor: pointer;
-}
-.containerBloco p:hover a{
+} */
+/* .containerBloco p:hover a{
     padding: 10px;
     color: #4684ff;
     border-radius: 20px;
-}
+} */
 .containerBloco p a{
     color: #fff;
 }
