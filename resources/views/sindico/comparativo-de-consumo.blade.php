@@ -83,7 +83,7 @@
                     <th>{{ $meses[now()->subMonth(0)->month] }}</th>
                 </tr>
             </thead>
-            <tbody class="leituras">
+            <tbody class="leituras comparativoTabela">
 
             </tbody>
         </table>

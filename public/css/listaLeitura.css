@@ -35,12 +35,25 @@
 .table th:last-child{
     border-radius: 0px 8px 0px 0px;
 } 
+
 .table tbody tr:last-child td:first-child{
     border-radius: 0px 0px 0px 8px;
 }
 .table tbody tr:last-child td:last-child{
     border-radius: 0px 0px 8px 0px;
 }
+.comparativoTabela .table tbody tr:last-child td:first-child{
+    border-radius: 0px;
+} 
+.comparativoTabela .table th:first-child{
+    border-radius: 0px;
+} 
+.comparativoTabela .table th:last-child{
+    border-radius: 0px;
+} 
+.comparativoTabela .table tbody tr:last-child td:first-child{
+    border-radius: 0px;
+} 
 
 .table tbody tr td:first-child{
     background-color: #1E308E !important;
