@@ -16,6 +16,7 @@
 <div class="row">
     <div class="col-md-12">        
         <input class="form-control w-100 pesquisar" type="search" placeholder="Pesquise por nome, bloco, apartamento ou CPF">
+        <span class="fa fa-search form-control-feedback" style="font-family: 'FontAwesome' !important; left: 15px; color: #4684ff; margin-top: -15px;"></span>
     </div>
 </div>
 

@@ -2,6 +2,7 @@
     border-radius: 5px !important;
     border-color: #4684ff !important;
     margin-top: -15px;
+    padding-left: 30px !important;
 }
 .pesquisar::placeholder{
     color: #4684ff !important;

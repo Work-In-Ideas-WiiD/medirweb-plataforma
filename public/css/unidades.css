@@ -2,6 +2,7 @@
     border-radius: 5px !important;
     border-color: #4684ff !important;
     margin-top: -20px;
+    padding-left: 30px !important;
 }
 
 .pesquisar::placeholder{
@@ -98,7 +99,7 @@
     padding-bottom: 30px;
     padding-left: 15px;
     padding-right: 15px;
-    justify-content: end;
+    justify-content: start;
     flex-direction: row;
     flex-wrap: wrap;
 }
@@ -206,7 +207,7 @@
     align-items: center;
     border-radius: 50%;
     margin-right: 10px;
-    margin-right: 4%;
+    margin-right: 7%;
     cursor: pointer;
 }
 .iconeFuncao2{
