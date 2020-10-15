@@ -111,6 +111,7 @@
                 <div class="icon iconeFuncao3">
                     <i class="fa fa-print"></i>
                 </div>
+                <div class="icontext">Exportar para:</div>
             </h3>
             
 
@@ -131,7 +132,7 @@
 </div>
 <br>
 <br>
-<div class="row">
+<!-- <div class="row">
     <div class="col-md-12">
         <h3 class="text-center tituloCentral">Comparativo de consumo
                 <div class="icon iconeFuncao">
@@ -144,7 +145,7 @@
                     <i class="fa fa-print"></i>
                 </div>
             </h3>
-        <h3 class="text-center tituloCentralSub">nos ultimos 6 meses</h3>
+        <h3 class="text-center tituloCentralSub">últimos 6 meses</h3>
     </div>
     <div class="col-md-9">
         <table class="table table-bordered">
@@ -178,7 +179,7 @@
 
     <div class="col-md-3 quadroComp">
         <div class="h4 tituloComp">Comparativo</div>
-        <h2 class="expComp">Clique nas medições da tabela para comparar</h2>
+        <h2 class="expComp">Selecione dois valores da tabela ao lado para comparar</h2>
         <div class="row" style="margin-bottom:15px;">
             <div class="col-md-6 text-center" id="bloco-e-mes0">-</div>
             <div class="col-md-6 text-center" id="consumo0">-</div>
@@ -197,7 +198,7 @@
             
         </div>
     </div>
-</div>
+</div> -->
 @stop
 
 
@@ -217,13 +218,14 @@
             datasets: [
                 {
                     label: 'no ano corrente',
-                    backgroundColor: '#fbc604',
+                    backgroundColor: 'rgba(0, 0, 0, 0)',
                     borderColor: '#fbc604',
                     pointRadius: true,
                     pointColor: '#fbc604',
                     pointStrokeColor: 'rgba(60,141,188,1)',
                     pointHighlightFill: '#fff',
                     pointHighlightStroke: 'rgba(60,141,188,1)',
+                    pointBorderWidth: 4,
                     data: data
                 },
             ]
@@ -242,11 +244,15 @@
         var barChartOptions = {
             responsive: true,
             maintainAspectRatio: false,
-            datasetFill: false
+            datasetFill: false,
+            legend: {
+                display: true,
+                position: 'bottom'
+            }
         }
         
         var barChart = new Chart(barChartCanvas, {
-            type: 'bar',
+            type: 'line',
             data: barChartData,
             options: barChartOptions
         })

@@ -23,7 +23,9 @@
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="text-center tituloCentral">Consumo mensal por unidades<div class="icon iconeFuncao">
+        <h3 class="text-center tituloCentral">Consumo mensal por unidade
+                  
+                <div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
                 <div class="icon iconeFuncao2 cmpu para-ir">
@@ -31,14 +33,17 @@
                 </div>
                 <div class="icon iconeFuncao3">
                     <i class="fa fa-print"></i>
-                </div></h3>
+                </div>
+                <div class="icontext">Exportar para:</div>
+            </h3>
     </div>
     <div class="col-md-12">
         <div class="row">
             <form id="consumo-mensal">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <select name="bloco" class="form-control">
-                        <option>bloco</option>
+                        <option>Selecione</option>
+                        <option>Todas as Unidades</option>
                         @foreach($blocos as $bloco)
                         <option value="{{ $bloco->nome }}">bloco {{ $bloco->nome }}</option>
                         @endforeach
@@ -51,18 +56,17 @@
                     </select>
                 </div-->
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <select name="ano" class="form-control">
-                        <option>ano</option>
+                        <option>Selecione o ano</option>
                         @foreach(range(now()->year, 2017) as $ano)
-                        <option value="{{ $ano }}">ano {{ $ano }}</option>
+                        <option value="{{ $ano }}">{{ $ano }}</option>
                         @endforeach
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <button class="btn btn-danger botaoIr verificarBotao" disabled>Aplicar<i class="fa fa-refresh fa-spin loadIcone"></i>
-                    </button>
+                <div class="col-md-3">
+                    <button class="btn btn-danger botaoIr verificarBotao" disabled>Aplicar</button><i class="fa fa-refresh fa-spin loadIcone"></i>
                 </div>
                 
             </form>
@@ -86,7 +90,8 @@
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="text-center tituloCentral">Comparativo por diario por unidade<div class="icon iconeFuncao">
+        <h3 class="text-center tituloCentral">Consumo diário por unidade
+                <div class="icon iconeFuncao">
                     <i class="fa fa-file-o"></i>
                 </div>
                 <div class="icon iconeFuncao2 consumo6meses para-ir">
@@ -94,40 +99,43 @@
                 </div>
                 <div class="icon iconeFuncao3">
                     <i class="fa fa-print"></i>
-                </div></h3>
+                </div>
+                <div class="icontext">Exportar para:</div>
+            </h3>
     </div>
     <div class="col-md-12">
         <div class="row">
             <form id="consumo-diario">
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <select name="bloco-diario" class="form-control">
-                        <option>bloco</option>
+                        <option>Selecione</option>
+                        <option>Todas as Unidades</option>
                         @foreach($blocos as $bloco)
                         <option value="{{ $bloco->nome }}">bloco {{ $bloco->nome }}</option>
                         @endforeach
                     </select>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <select name="mes-diario" class="form-control">
-                        <option>mes</option>
+                        <option>Selecione o mês</option>
                         @foreach ($meses as $numero => $extenso)
                         <option value="{{ $numero }}">{{ $extenso }}</option>
                         @endforeach
                     </select>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <select name="ano-diario" class="form-control">
-                        <option>ano</option>
+                        <option>Selecione o ano</option>
                         @foreach(range(now()->year, 2017) as $ano)
-                        <option value="{{ $ano }}">ano {{ $ano }}</option>
+                        <option value="{{ $ano }}">{{ $ano }}</option>
                         @endforeach
                     </select>
                 </div>
 
-                <div class="col-md-2">
-                    <button class="btn btn-danger botaoIr aplicar2" disabled>Aplicar <i class="fa fa-refresh fa-spin loadIcone"></i></button>
+                <div class="col-md-3">
+                    <button class="btn btn-danger botaoIr aplicar2" disabled>Aplicar </button><i class="fa fa-refresh fa-spin loadIcone"></i>
                 </div>
             </form>
         </div>

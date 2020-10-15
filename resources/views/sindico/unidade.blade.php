@@ -23,6 +23,7 @@
 <br>
 <div class="row">
     <div class="col-md-2 containerBloco">
+        <h3 class="menusec">Selecione uma opção:</h3>
         @foreach ($blocos as $bloco)
             <p><a href="javascript:void(0)" class="escolher-bloco" data-bloco="{{ $bloco['nome'] }}">{{ $bloco['nome'] }}</a></p>
         @endforeach
@@ -58,7 +59,7 @@
 <div class="row">
     <div class="col-md-12">
         <h3 class="text-center tituloCentral2">Comparativo de consumo</h3>
-        <h3 class="text-center tituloCentralSub">nos ultimos 6 meses</h3>
+        <h3 class="text-center tituloCentralSub">últimos 6 meses</h3>
     </div>
     <div class="col-md-9">
         <table class="table table-bordered">
@@ -84,7 +85,7 @@
 
     <div class="col-md-3 quadroComp">
         <div class="h4 tituloComp">Comparativo</div>
-        <h2 class="expComp">Clique nas medições da tabela para comparar</h2>
+        <h2 class="expComp">Selecione dois valores da tabela ao lado para comparar</h2>
         <div class="row" style="margin-bottom:15px;">
             <div class="col-md-6 text-center" id="unidade-e-mes0">-</div>
             <div class="col-md-6 text-center" id="consumo0">-</div>
@@ -103,6 +104,7 @@
             
         </div>
     </div>
+    <div class="icontext">Exportar para:</div>
     <div class="icon iconeFuncao">
         <i class="fa fa-file-o"></i>
     </div>
@@ -112,6 +114,7 @@
     <div class="icon iconeFuncao3">
         <i class="fa fa-print"></i>
     </div>
+    
 </div>
 @stop
 

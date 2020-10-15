@@ -5,7 +5,7 @@ function criarGrafico(data = {}) {
         datasets: [
             {
                 label: data.title,
-                backgroundColor: '#d42a17',
+                backgroundColor: 'rgba(0, 0, 0, 0)',
                 borderColor: '#d42a17',
                 pointRadius: false,
                 pointColor: '#3b8bba',
@@ -31,11 +31,15 @@ function criarGrafico(data = {}) {
     var barChartOptions = {
         responsive: true,
         maintainAspectRatio: false,
-        datasetFill: false
+        datasetFill: false,
+        legend: {
+            display: true,
+            position: 'bottom'
+        }
     }
 
     var barChart = new Chart(barChartCanvas, {
-        type: 'bar',
+        type: 'line',
         data: barChartData,
         options: barChartOptions
     })

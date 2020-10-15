@@ -1,9 +1,13 @@
 $(function() {
     $('.loadIcone').css('display','none');
+    var selector = document.getElementsByClassName("date");
+
+    var im = new Inputmask("99/99/9999");
+    im.mask(selector);
     $('[name=bloco]').change(function() {
         $.get(`/sindico/relatorio/unidade-por-bloco/${$(this).val()}`, function(response) {
 
-            let html = '<option>unidade</bloco>'
+            let html = '<option>Selecione a Unidade</bloco>'
 
             $.each(response, function(key, value) {
                 html += `<option value="${value}">unidade ${value}</option>`

@@ -1,8 +1,9 @@
 $(function() {
     $(document).on('click', '.click-unidade', function() {
+        
         let bloco = $(this).data('bloco')
         let unidade = $(this).data('unidade')
-
+        // window.location.href = `/sindico/unidade/comparativo-de-consumo/${bloco}/${unidade}`;
         $('#link-comparativo-consumo').attr('href', `/sindico/unidade/comparativo-de-consumo/${bloco}/${unidade}`)
 
         $.get('/sindico/unidade/dados', {unidade, bloco}, function(response) {

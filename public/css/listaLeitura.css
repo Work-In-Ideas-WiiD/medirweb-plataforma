@@ -115,34 +115,27 @@
     color: #fff;
 }
 select, .filtro{
-    border: none !important;
-    background-color: transparent !important;
-    color: #2c2f36 !important;
-    font-size: 1.2em !important;
-    font-weight: 200 !important;
+    
+    
+    color: #000 !important;
+    font-size: 1.1em !important;
+    font-weight: 100 !important;
+    line-height: 23px !important;
 }
-select{
-    border: none !important;
-    background-color: transparent !important;
-    color: #2c2f36 !important;
-    font-size: 1.2em !important;
-    font-weight: 200 !important;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background: transparent !important;
-    background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") !important;
-    background-repeat: no-repeat !important;
-    background-position-x: 100% !important;
-    background-position-y: 5px !important;
-}
-.labelInput{
-    margin-top: 7px;
-    font-weight: 300;
-    color: #2c2f36;
+select, input{
+    border: 1px solid #C2C2C2 !important;
+    border-radius: 8px !important;
+    background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") no-repeat right #fff !important;
+    background-position-x: right 7px !important;
+    font-size: 1.0em !important;
+    -moz-appearance:none; /* Firefox */
+    -webkit-appearance:none; /* Safari and Chrome */
+    appearance:none;
+    color: #353535 !important;
 }
 
 .botaoIr{
-    background-color: #5290ff !important;
+    background-color: #4683ff !important;
     color: #fff !important;
     border: none !important;
     border-radius: 5px !important;
@@ -151,8 +144,19 @@ select{
     margin-bottom: 10px !important;
     font-size: 1em !important;
     font-weight: 300 !important;
+    transition: 0.3s;
+}
+.botaoIr:hover
+{
+    background: #3874f0 !important;
 }
 .loadIcone{
     margin-left: 10px;
     display: none;
+    margin-top: -20px;
+}
+.labelInput{
+    margin-top: 7px;
+    font-weight: 300;
+    color: #2c2f36;
 }

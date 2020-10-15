@@ -38,7 +38,8 @@
             <form>
                 <div class="col-md-2">
                     <select name="bloco" class="form-control">
-                        <option>bloco</option>
+                        <option>Selecione</option>
+                        <option>Todas as Unidades</option>
                         @foreach($blocos as $bloco)
                         <option value="{{ $bloco->nome }}">bloco {{ $bloco->nome }}</option>
                         @endforeach
@@ -47,18 +48,18 @@
 
                 <div class="col-md-2">
                     <select name="unidade" class="form-control">
-                        <option>unidade</option>
+                        <option>Selecione a Unidade</option>
                     </select>
                 </div>
 
                 <div class="col-md-3">
                     <label class="labelInput">De</label>
-                    <input type="date" style="width:90%; float:right;" class="form-control filtro" name="data_inicio" placeholder="data de inicio">
+                    <input type="text" style="width:90%; float:right;" class="form-control filtro date" name="data_inicio" placeholder="Selecione uma data">
                 </div>
 
                 <div class="col-md-3">
                     <label class="labelInput">Até</label>
-                    <input type="date" style="width:90%; float:right;" class="form-control filtro" name="data_fim" placeholder="data fim">
+                    <input type="text" style="width:90%; float:right;" class="form-control filtro date" name="data_fim" placeholder="Selecione uma data">
                 </div>
 
                 <div class="col-md-1">
@@ -70,7 +71,7 @@
             <thead>
                 <tr>
                     <th>Data e Hora</th>
-                    <th>Leitura Acumulada</th>
+                    <th>Leitura Realizada</th>
                     <th>Consumo Acumulado</th>
                 </tr>
             </thead>
@@ -87,6 +88,7 @@
 @push('js')
 <script src="/js/sindico_busca.js"></script>
 <script src="/js/sindico_lista_de_leitura.js"></script>
+<script src="/js/jquery-inputmask/dist/inputmask/inputmask.js"></script>
 <script>
     $('.verificarBotao').click(function() {
         let bloco = $('[name=bloco]').val()

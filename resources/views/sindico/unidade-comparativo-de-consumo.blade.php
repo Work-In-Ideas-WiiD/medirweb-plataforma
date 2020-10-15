@@ -33,12 +33,13 @@
 <div class="row">
     <div class="col-md-12">
         <input class="form-control w-100 pesquisar" type="search" placeholder="Pesquise por nome, bloco, apartamento ou CPF">
+        <span class="fa fa-search form-control-feedback" style="font-family: 'FontAwesome' !important; left: 15px; color: #4684ff; margin-top: -15px;"></span>
     </div>
 </div>
 <br>
 <div class="row">
     <div class="col-md-12">
-        <h3 class="tituloBloco">Bloco {{ $bloco }} <label>Unidade {{ $unidade }}</label></h3>
+        <h3 class="tituloBloco">Bloco {{ $bloco }} <!--<label>Unidade {{ $unidade }}</label> --></h3>
     </div>
 </div>
 <br>
@@ -46,10 +47,16 @@
     <div class="col-md-5">
         <div class="row">
             <div class="col-md-6">
-                <div class="bg-info blocoAB">A</div>
+                <div class="bg-info blocoAB">
+                    <p><strong>Informações da Unidade:</strong></p>
+                    <p>Indisponível.</p>
+                </div>
             </div>
             <div class="col-md-6">
-                <div class="bg-info blocoAB">B</div>
+                <div class="bg-info blocoAB">
+                    <p><strong>Informações do Equipamento:</strong></p>
+                    <p>Indisponível.</p>
+                </div>
             </div>
         </div>
     </div>
@@ -57,38 +64,38 @@
         <div class="row text-center blocoCirculos">
             <div class="col-md-3 col-lg-2  col-sm-6">
                 <div class="bg-info antesCirculo">
-                    neste ano
+                    Neste Ano
                     <div class="circulos1">
                         <div class="circulos ">{{ $media_mensal }}</div>
                     </div>
-                    média mensal
+                    Média Mensal</br>(m³)
                 </div>
             </div>
             <div class="col-md-3 col-lg-2 col-lg-offset-1 col-sm-6">
                 <div class="bg-info antesCirculo">
-                    neste ano
+                    Neste Ano
                     <div class="circulos2">
                         <div class="circulos">{{ $total_ano }}</div>
                     </div>
-                    consumo total
+                    Consumo Total</br>(m³)
                 </div>
             </div>
             <div class="col-md-3 col-lg-2 col-lg-offset-1 col-sm-6">
                 <div class="bg-info antesCirculo">
-                    neste mês
+                    Neste Mês
                     <div class="circulos3">
                         <div class="circulos ">{{ $este_mes }}</div>
                     </div>
-                    consumo total
+                    Consumo Atual</br> (m³)
                 </div>
             </div>
             <div class="col-md-3 col-lg-2 col-lg-offset-1 col-sm-6">
                 <div class="bg-info antesCirculo">
-                    neste mês
+                    Neste Mês
                     <div class="circulos4">
                         <div class="circulos ">{{ $media_unidades }}</div>
                     </div>
-                    média de consumo do condomínio
+                    Média de</br>consumo do </br>condomínio (m³)
                 </div>
             </div>
         </div>
@@ -98,7 +105,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card card-success">
+        <div class="card card-success tabelaComp">
             <div class="card-header">
                 <h3 class="card-title text-center tituloCentral">Comparativo de consumo</h3>
 
@@ -125,9 +132,9 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Média consumo unidade</th>
-                    <th>Média consumo bloco</th>
-                    <th>Consumo total</th>
+                    <th>Consumo da unidade</th>
+                    <th>Média de consumo no condomínio</th>
+                    <!-- <th>Consumo total</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -136,7 +143,7 @@
                     <td>{{ $mes }}</td>
                     <td><div data-toggle="tooltip" title="Clique aqui para comparar">{{ $info['media_consumo_por_unidade'] }} m<sup>3</sup></div></td>
                     <td><div data-toggle="tooltip" title="Clique aqui para comparar">{{ $info['media_consumo_por_bloco'] }} m<sup>3</sup></div></td>
-                    <td><div data-toggle="tooltip" title="Clique aqui para comparar">{{ $info['consumo_total'] }} m<sup>3</sup></div></td>
+                    <!-- <td><div data-toggle="tooltip" title="Clique aqui para comparar">{{ $info['consumo_total'] }} m<sup>3</sup></div></td> -->
                 </tr>
                 @endforeach
             </tbody>
@@ -145,7 +152,7 @@
 
     <div class="col-md-3 bg-warning quadroComp">
         <div class="h4 tituloComp">Comparativo</div>
-        <h2 class="expComp">Clique nas medições da tabela para comparar</h2>
+        <h2 class="expComp">Selecione dois valores da tabela ao lado para comparar</h2>
         <div class="row" style="margin-bottom:15px;">
             <div class="col-md-6 text-center" id="unidade-e-mes0">-</div>
             <div class="col-md-6 text-center" id="consumo0">-</div>
@@ -165,6 +172,7 @@
         </div>
     </div>
     <div style="margin: 0 auto; display: table;">
+        <div class="icontext">Exportar para:</div>
         <div class="icon iconeFuncao">
             <i class="fa fa-file-o"></i>
         </div>
@@ -184,7 +192,7 @@
             <thead>
                 <tr>
                     <th>Data</th>
-                    <th>Leitura acumulada</th>
+                    <th>Leitura Realizada</th>
                     <th>Consumo acumulado</th>
                 </tr>
             </thead>
@@ -216,7 +224,7 @@
             data.push(value)
         })
 
-        criarGrafico({data: data, title: 'Comparativo de consumo'})        
+        criarGrafico({data: data, title: 'Consumo no mês (m³)'})        
     })
 </script>
 @endpush

@@ -320,11 +320,11 @@ return [
                     'icon' => 'paper',
                     'url' => 'sindico/relatorio/lista-de-leitura',
                 ],
-                [
-                    'text' => 'Comparativo de consumo',
-                    'icon' => 'paper',
-                    'url' => 'sindico/relatorio/comparativo-de-consumo',
-                ],
+                // [
+                //     'text' => 'Comparativo de consumo',
+                //     'icon' => 'paper',
+                //     'url' => 'sindico/relatorio/comparativo-de-consumo',
+                // ],
             ],
         ],
     ],

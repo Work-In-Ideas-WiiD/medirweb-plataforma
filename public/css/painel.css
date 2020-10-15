@@ -80,7 +80,7 @@
 
 .tituloCentral{
     color: #4583fe !important;
-    font-style: oblique;
+    font-style: normal;
     margin-bottom: 45px;    
 }
 .tituloCentralSub{
@@ -169,7 +169,20 @@
     justify-content: center;
     display: flex;
 }
-
+.icontext{
+    width: 145px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    margin-left: 15px;
+    position: absolute;
+    right: 210px;
+    font-size: 0.7em !important;
+    font-style: normal;
+    color: #000;
+}
 .iconeFuncao{
     /* float: right; */
     width: 50px;
@@ -215,4 +228,8 @@
 
 .iconeFuncao i, .iconeFuncao2 i, .iconeFuncao3 i{
     color: #fff;
+}
+
+.chart{
+    margin-top: 5em;
 }
