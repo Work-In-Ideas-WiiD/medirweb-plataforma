@@ -470,6 +470,8 @@ class CentralController extends Controller
 
         if ($payload->type == 'uplink') {
             $consumo = 0;
+            
+            $relogio = ['ffff860d8ea87b80' => 'relogio_02', 'ffff860d8ea87a70' => 'relogio_02', 'ffff860d8ea87b3d' => 'relogio_01'];
 
             $leitura = leitura_nova_para_decimal($payload->params->payload);
             
@@ -485,12 +487,10 @@ class CentralController extends Controller
 
                 if ($leitura_anterior) {
                     if ($leitura_anterior->prumada_id == $prumada->id) {
-                        $consumo += intval($leitura['relogio_01'] / 1000) - intval($leitura_anterior->metro);
+                        $consumo += intval($leitura[$relogio[$payload->meta->device] ?? 'relogio_01'] / 1000) - intval($leitura_anterior->metro);
                     }
                 }
             }
-
-            $relogio = ['ffff860d8ea87b80' => 'relogio_02', 'ffff860d8ea87a70' => 'relogio_02', 'ffff860d8ea87b3d' => 'relogio_01'];
 
             $prumada->leitura()->firstOrCreate([
                 'metro' => intval($leitura[$relogio[$payload->meta->device] ?? 'relogio_01'] / 1000),
@@ -498,7 +498,7 @@ class CentralController extends Controller
                 'mililitro' => 0,
                 'diferenca' => 0,
                 'valor' => 0,
-                'consumo' => $consumo,
+                'consumo' => $consumo ?? 0,
                 'base64' => $payload->params->payload,
                 'json' => $request->payload
             ]);
