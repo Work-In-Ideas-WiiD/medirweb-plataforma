@@ -26,7 +26,15 @@
             <div class="box-header with-border">
                 <h3 class="box-title titulo">Painel</h3>
                 <ol class="breadcrumb dataPainel">
-                    {{ date('d \d\e M \d\e Y ') }}
+                    @php
+                    setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese'); 
+                    date_default_timezone_set('America/Sao_Paulo');
+
+                    $date = date('Y-m-d');
+                    echo strftime("%d de %B de %Y", strtotime($date));
+                      
+                    @endphp
+                    {{-- {{ date('d \d\e M \d\e Y ') }} --}}
                 </ol>
             </div>
 
