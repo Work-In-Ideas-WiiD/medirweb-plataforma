@@ -469,6 +469,7 @@ class CentralController extends Controller
         ]);
 
         if ($payload->type == 'uplink') {
+
             $consumo = 0;
             
             $relogio = ['ffff860d8ea87b80' => 'relogio_02', 'ffff860d8ea87a70' => 'relogio_02', 'ffff860d8ea87b3d' => 'relogio_01'];
@@ -486,7 +487,7 @@ class CentralController extends Controller
                 $leitura_anterior = $prumada->leitura()->select('id', 'metro', 'prumada_id')->orderByDesc('id')->first();
 
                 if ($leitura_anterior) {
-                    if ($leitura_anterior->prumada_id == $prumada->id) {
+                    if ($leitura_anterior->prumada_id == $prumada->id && intval($leitura[$relogio[$payload->meta->device] ?? 'relogio_01'] / 1000) >= intval($leitura_anterior->metro) ) {
                         $consumo += intval($leitura[$relogio[$payload->meta->device] ?? 'relogio_01'] / 1000) - intval($leitura_anterior->metro);
                     }
                 }
