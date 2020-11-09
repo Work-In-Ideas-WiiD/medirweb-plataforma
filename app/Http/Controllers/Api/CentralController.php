@@ -472,7 +472,7 @@ class CentralController extends Controller
 
             $consumo = 0;
             
-            $relogio = ['ffff860d8ea82781' => 'relogio_04', 'ffff860d8ea87ba1' => 'relogio_02', 'ffff860d8ea87b80' => 'relogio_02', 'ffff860d8ea87a70' => 'relogio_02', 'ffff860d8ea87b3d' => 'relogio_01'];
+            $relogio = ['ffff860d8ea87a6f' => 'relogio_04', 'ffff860d8ea82794' => 'relogio_02', 'ffff860d8ea87b1d' => 'relogio_03', 'ffff860d8ea82781' => 'relogio_04', 'ffff860d8ea87ba1' => 'relogio_02', 'ffff860d8ea87b80' => 'relogio_02', 'ffff860d8ea87a70' => 'relogio_02', 'ffff860d8ea87b3d' => 'relogio_01'];
 
             $leitura = leitura_nova_para_decimal($payload->params->payload);
             
