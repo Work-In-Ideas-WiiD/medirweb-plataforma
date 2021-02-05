@@ -54,10 +54,21 @@
                         </div>
 
                         <div class='form-group'>
-                            {{ Form::label('funcional_id', 'ID Funcional') }}
+                            {{ Form::label('funcional_id', 'TX ID Device') }}
                             {{ Form::text('funcional_id', null, ['class' => 'avalidate form-control']) }}
 
                             @error('funcional_id')
+                            <span class="help-block">
+                                <strong style="color: red;">{{ $message }}</strong>
+                            </span>
+                            @enderror
+                        </div>
+
+                        <div class='form-group'>
+                            {{ Form::label('relogio', 'Relogio') }}
+                            {{ Form::select('relogio', ['relogio_01' => 'Relogio 01', 'relogio_02' => 'Relogio 02', 'relogio_03' => 'Relogio 03', 'relogio_04' => 'Relogio 04',], null, ['class' => 'form-control', 'placeholder' => 'Selecione... ']) }}
+
+                            @error('tipo')
                             <span class="help-block">
                                 <strong style="color: red;">{{ $message }}</strong>
                             </span>

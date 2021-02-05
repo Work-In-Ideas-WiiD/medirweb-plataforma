@@ -121,53 +121,53 @@ class PrumadaController extends Controller
 
 
 
-		// PRUCURANDO prumada na central raspberry para pegar o id da prumada da central
-		$chPruCentral = curl_init();
-		curl_setopt($chPruCentral, CURLOPT_RETURNTRANSFER, 1);
-		if ($this->debug)
-			curl_setopt($chPruCentral, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/");
-		else
-			curl_setopt($chPruCentral, CURLOPT_URL, "http://{$prumada->unidade->imovel->ip}/equipamentos/");
+		// // PRUCURANDO prumada na central raspberry para pegar o id da prumada da central
+		// $chPruCentral = curl_init();
+		// curl_setopt($chPruCentral, CURLOPT_RETURNTRANSFER, 1);
+		// if ($this->debug)
+		// 	curl_setopt($chPruCentral, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/");
+		// else
+		// 	curl_setopt($chPruCentral, CURLOPT_URL, "http://{$prumada->unidade->imovel->ip}/equipamentos/");
 
-		$getPruCentral_json = curl_exec($chPruCentral);
-		curl_close($chPruCentral);
+		// $getPruCentral_json = curl_exec($chPruCentral);
+		// curl_close($chPruCentral);
 
 
-		// Sem comunicação com a central do imovel
-		if($getPruCentral_json == NULL){
-			return redirect()->route('prumada.edit', $prumada->id)->with('error',
-				'Sem comunicação com a central do imovel! Tente novamente mais tarde para atualizar a base de dados!'
-			);
-		}
-		//
+		// // Sem comunicação com a central do imovel
+		// if($getPruCentral_json == NULL){
+		// 	return redirect()->route('prumada.edit', $prumada->id)->with('error',
+		// 		'Sem comunicação com a central do imovel! Tente novamente mais tarde para atualizar a base de dados!'
+		// 	);
+		// }
+		// //
 
-		$getPruCentral = json_decode($getPruCentral_json, true);
-		foreach ($getPruCentral as $key => $pruCentral) {
-			if($pruCentral['EQP_IDPRU'] == $prumada->id)
-				$idPruCentral = $pruCentral['id'];
+		// $getPruCentral = json_decode($getPruCentral_json, true);
+		// foreach ($getPruCentral as $key => $pruCentral) {
+		// 	if($pruCentral['EQP_IDPRU'] == $prumada->id)
+		// 		$idPruCentral = $pruCentral['id'];
 
-		}
-		// fim
+		// }
+		// // fim
 
-		if (!empty($idPruCentral)) {
-			// Atualizar prumada no central raspberry
-			$dadosCentral['EQP_IDUNI'] = $prumada->unidade_id;
-			$dadosCentral['EQP_IDPRU'] = $prumada->id;
-			$dadosCentral['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
+		// if (!empty($idPruCentral)) {
+		// 	// Atualizar prumada no central raspberry
+		// 	$dadosCentral['EQP_IDUNI'] = $prumada->unidade_id;
+		// 	$dadosCentral['EQP_IDPRU'] = $prumada->id;
+		// 	$dadosCentral['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
 
-			$curl = curl_init();
-			curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		// 	$curl = curl_init();
+		// 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
 			
-			if ($this->debug)
-				curl_setopt($curl, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/{$idPruCentral}/");
-			else
-				curl_setopt($curl, CURLOPT_URL, "http://{$prumada->unidade->imovel->ip}/equipamentos/{$idPruCentral}/");
+		// 	if ($this->debug)
+		// 		curl_setopt($curl, CURLOPT_URL, "{$this->raspberry_url}/equipamentos/{$idPruCentral}/");
+		// 	else
+		// 		curl_setopt($curl, CURLOPT_URL, "http://{$prumada->unidade->imovel->ip}/equipamentos/{$idPruCentral}/");
 
-			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
-			curl_setopt($curl, CURLOPT_POSTFIELDS, $dadosCentral);
-			$resposta = curl_exec($curl);
-			curl_close($curl);
-		}
+		// 	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "PUT");
+		// 	curl_setopt($curl, CURLOPT_POSTFIELDS, $dadosCentral);
+		// 	$resposta = curl_exec($curl);
+		// 	curl_close($curl);
+		// }
 
 		return back()->withSuccess('Equipamento atualizado com sucesso.');
 	}

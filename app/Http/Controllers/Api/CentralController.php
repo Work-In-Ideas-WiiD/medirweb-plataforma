@@ -479,23 +479,26 @@ class CentralController extends Controller
             $unidade = Unidade::where('device', $payload->meta->device)->first();
 
             if(!$unidade)
-                return ['error' => 'divice não registrado na base'];
+                $prumada = Prumada::where('funcional_id', $payload->meta->device)->first();
+            else
+                $prumada = $unidade->prumada()->first();
 
-            $prumada = $unidade->prumada()->first();
+            if(!$prumada)
+                return ['error' => 'device não registrado na base'];
 
             if ($prumada) {
                 $leitura_anterior = $prumada->leitura()->select('id', 'metro', 'prumada_id')->orderByDesc('id')->first();
 
                 if ($leitura_anterior) {
-                    if ($leitura_anterior->prumada_id == $prumada->id && intval($leitura[$relogio[$payload->meta->device] ?? 'relogio_01'] / 1000) >= intval($leitura_anterior->metro) ) {
-                        $consumo += intval($leitura[$relogio[$payload->meta->device] ?? 'relogio_01'] / 1000) - intval($leitura_anterior->metro);
+                    if ($leitura_anterior->prumada_id == $prumada->id && intval($leitura[$relogio[$payload->meta->device] ?? $prumada->relogio] / 1000) >= intval($leitura_anterior->metro) ) {
+                        $consumo += intval($leitura[$relogio[$payload->meta->device] ?? $prumada->relogio] / 1000) - intval($leitura_anterior->metro);
                     }
                 }
             }
 
             $prumada->leitura()->firstOrCreate([
-                'metro' => intval($leitura[$relogio[$payload->meta->device] ?? 'relogio_01'] / 1000),
-                'litro' => $leitura[$relogio[$payload->meta->device] ?? 'relogio_01'] % 1000,
+                'metro' => intval($leitura[$relogio[$payload->meta->device] ?? $prumada->relogio] / 1000),
+                'litro' => $leitura[$relogio[$payload->meta->device] ?? $prumada->relogio] % 1000,
                 'mililitro' => 0,
                 'diferenca' => 0,
                 'valor' => 0,
