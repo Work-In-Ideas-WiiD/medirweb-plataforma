@@ -12,7 +12,8 @@
 @section('body')
     <div class="login-box">
         <div class="login-logo">
-            <a class="logoLogin" href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a>
+            <!-- <a class="logoLogin" href="{{ url(config('adminlte.dashboard_url', 'home')) }}">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</a> -->
+            <a class="logoLogin" href="{{ url(config('adminlte.dashboard_url', 'home')) }}">Condomínio Vilagio <b>Felicitta</b></a>
         </div>
         <!-- /.login-logo -->
         <div class="login-box-body">

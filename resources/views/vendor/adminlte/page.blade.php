@@ -41,9 +41,11 @@
             <!-- Logo -->
             <a href="{{ url(config('adminlte.dashboard_url', 'home')) }}" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini">{!! config('adminlte.logo_mini', '<b>A</b>LT') !!}</span>
+                <!-- <span class="logo-mini">{!! config('adminlte.logo_mini', '<b>A</b>LT') !!}</span> -->
+                <span class="logo-mini"><b>Felicitta</b></span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</span>
+                <!-- <span class="logo-lg">{!! config('adminlte.logo', '<b>Admin</b>LTE') !!}</span> -->
+                <span class="logo-lg"><b>Felicitta</b></span>
             </a>
 
             <!-- Header Navbar -->
