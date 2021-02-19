@@ -188,7 +188,7 @@
 																	<div class="pull-right">
 
 																		<!-- Botao Leitura -->
-																		@if ($prumada->unidade->device == null)
+																		{{-- @if ($prumada->unidade->device == null)
 																		<div style="margin-left: -50px;">
 																			<a  href="{{ url('/leitura/prumada/'.$prumada->id.'') }}" id="ocultar" onclick="loading()" class="btn btn-default ocultar"><i class="fa fa-retweet"></i></a>
 																		</div>
@@ -205,8 +205,8 @@
 																			@endif
 
 																			@endis
-																		</div>
-																		@elseif(isset($prumada->leitura()->orderBy('created_at', 'DESC')->first()->created_at))
+																		</div> --}}
+																		@if(isset($prumada->leitura()->orderBy('created_at', 'DESC')->first()->created_at))
 			
 																			{{ $prumada->leitura()->orderBy('created_at', 'DESC')->first()->created_at->format('d/m/Y H:i') }}
 
