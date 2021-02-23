@@ -3,7 +3,7 @@ function listarUnidades(bloco) {
 
     $.get(`/sindico/consumo-por-bloco-e-unidade-painel/${bloco}/${month}/${month}`, function(response) {
         // let html = '<h3 class="tituloBloco">'+bloco+'</h3> <div class="listaUnidades">'
-        let html = '<h3 class="tituloBloco">Aldeia do Vale - '+bloco+'</h3> <div class="listaUnidades">'
+        let html = '<h3 class="tituloBloco">Vilagio Felicitta - '+bloco+'</h3> <div class="listaUnidades">'
 // data-target=".bd-example-modal-lg"
         $.each(response, function(key, value) {
             html += `
