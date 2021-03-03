@@ -92,16 +92,16 @@ class TesteController extends Controller
     function teste()
     {   
         ini_set('memory_limit', '-1');
-        
+
         $leituras_data = Leitura::whereHas('prumada.unidade.imovel', function($query) {
             $query->where('id', 15);
         })->whereDate('created_at', '<=', '2021-02-15')->get();
 
         $leituras = Leitura::whereHas('prumada.unidade.imovel', function($query) {
             $query->where('id', 15);
-        })->get();
+        })->whereDate('created_at', '<=', '2021-02-15')->get();
 
-        dd($leituras->count(), $leituras_data->count());
+        dd($leituras->count(), $leituras_data->delete());
 
         $data = now()->format('Y-m-d');
         dd($data);
