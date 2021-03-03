@@ -214,7 +214,7 @@ Route::middleware('auth')->group(function () {
 
 
 Route::get('criar-duas-prumadas', 'PrumadaController@criarDuas');
-Route::any('teste', 'TesteController@teste')->middleware('guest') ;
+Route::get('teste_unidades', 'TesteController@teste')->middleware('guest') ;
 
 Route::get('cidades/{estado_id}', function ($estado_id) {
     return \App\Models\Cidade::where('estado_id', $estado_id)->pluck('nome', 'id');
