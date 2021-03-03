@@ -93,15 +93,28 @@ class TesteController extends Controller
     {   
         ini_set('memory_limit', '-1');
 
-        $leituras = Leitura::whereHas('prumada.unidade.imovel', function($query) {
-            $query->where('id', 15);
-        })->whereDate('created_at', '<=', '2021-02-15')->get();
+        $atualizado = 0;
 
-        Leitura::whereHas('prumada.unidade.imovel', function($query) {
+        $users = User::whereHas('unidade.imovel', function($query) {
             $query->where('id', 15);
-        })->whereDate('created_at', '<=', '2021-02-15')->delete();
+        })->get();
 
-        dd($leituras->count());
+        foreach($users as $user)
+        {
+            $user->password = bcrypt($user->unidade->agrupamento->nome.$user->unidade->nome.'@medirweb');
+            $user->save();
+            $atualizado++;
+        }
+
+        // $leituras = Leitura::whereHas('prumada.unidade.imovel', function($query) {
+        //     $query->where('id', 15);
+        // })->whereDate('created_at', '<=', '2021-02-15')->get();
+
+        // Leitura::whereHas('prumada.unidade.imovel', function($query) {
+        //     $query->where('id', 15);
+        // })->whereDate('created_at', '<=', '2021-02-15')->delete();
+
+        dd($users->count(), $atualizado);
 
         $data = now()->format('Y-m-d');
         dd($data);
