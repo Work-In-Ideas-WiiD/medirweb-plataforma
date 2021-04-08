@@ -10,6 +10,7 @@ use App\Exports\LeituraExport;
 use App\Exports\LeituraConsolidadaExport;
 use App\Charts\ConsumoCharts;
 use App\Exports\LeituraAdminExport;
+use App\Exports\UnidadeExport;
 use DatePeriod;
 use DateTime;
 use DateInterval;
@@ -451,6 +452,12 @@ class RelatorioController extends Controller
         }
  
         return view('relatorio.fatura', compact('imoveis', 'faturas', 'faturaAvancados'));
+    }
+
+    public function getExport(Request $request)
+    {
+        $request->imovel_id = 15;
+        return Excel::download(new UnidadeExport($request), 'relatorio_unidade_devices.xlsx');
     }
 
 }

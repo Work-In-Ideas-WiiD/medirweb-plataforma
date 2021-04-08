@@ -169,6 +169,8 @@ Route::middleware('auth')->group(function () {
     
     /* Relatorios */
     
+    Route::get('/relatorio/imovel/export', 'RelatorioController@getExport')->name('Relatorio Export');
+
     Route::get('/relatorio/consumo', 'RelatorioController@relatorioConsumo')->name('Relatorio Consumo');
     Route::post('relatorio/consumo', 'RelatorioController@getConsumoLista');
 
