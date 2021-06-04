@@ -109,7 +109,7 @@ class UnidadeController extends Controller
 
         $agrupamentos = Agrupamento::pluck('nome', 'id');
 
-        $acompanhamentos = Acompanhamento::where('unidade_id', $unidade->id)->orderByDesc('created_at')->get();
+        $acompanhamentos = Acompanhamento::where('unidade_id', $unidade->id)->orderBy('created_at','desc')->get();
 
         return view('unidade.edit', compact('unidade', 'agrupamentos', 'imoveis', 'prumadas', 'users', 'acompanhamentos'));
     }
