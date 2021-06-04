@@ -357,6 +357,53 @@
 		</div>
 		<!-- [FIM] Equipamentos -->
 
+		<!-- Equipamentos -->
+		<div class="box box-warning collapsed-box">
+			<div class="box-header with-border">
+				<h3 class="box-title"><i class="fa fa-wrench"></i> Acompanhamentos</h3>
+				<div class="box-tools pull-right">
+					<button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
+					</button>
+				</div>
+			</div>
+			<div class='box-body'>
+				<div class='row'>
+					<div class='col-md-12'>
+						<table id="lista-clientes" class="table table-responsive table-bordered table-hover powertabela">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Image</th>
+									<th>Leitura</th>
+									<th>Data</th>
+									<th>Ações</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach ($acompanhamentos as $acompanhamento)
+								<tr>
+									<td>{{ $acompanhamento->id }}</td>
+									<td>
+										<a href="{{ url('/upload/acompanhamentos/'.$acompanhamento->foto) }}" target="_blank">{{ $acompanhamento->foto }}</a>
+									</td>
+									<td>{{ $acompanhamento->leitura }}</td>
+									<td>{{ $acompanhamento->created_at->format('d/m/Y H:i') }}</td>
+									<td>
+										<div class="btn-group">
+                                            <a href="{{ url('/upload/acompanhamentos/'.$acompanhamento->foto) }}" target="_blank" type="button" class="btn btn-info btn-flat"><i class="fa fa-eye"></i></a>
+                                        </div>
+									</td>
+								</tr>
+								@endforeach
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- [FIM] Equipamentos -->
+
 	</div>
 
 </div>

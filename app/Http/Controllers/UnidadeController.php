@@ -13,6 +13,7 @@ use App\Http\Requests\Unidade\UnidadeSaveRequest;
 use App\Http\Requests\Unidade\UnidadeEditRequest;
 use App\Http\Requests\Unidade\UnidadeUserEditRequest;
 use App\Charts\ConsumoCharts;
+use App\Models\Acompanhamento;
 use Mail;
 
 class UnidadeController extends Controller
@@ -108,7 +109,9 @@ class UnidadeController extends Controller
 
         $agrupamentos = Agrupamento::pluck('nome', 'id');
 
-        return view('unidade.edit', compact('unidade', 'agrupamentos', 'imoveis', 'prumadas', 'users'));
+        $acompanhamentos = Acompanhamento::where('unidade_id', $unidade->id)->orderByDesc('created_at')->get();
+
+        return view('unidade.edit', compact('unidade', 'agrupamentos', 'imoveis', 'prumadas', 'users', 'acompanhamentos'));
     }
 
     public function update(UnidadeEditRequest $data, Unidade $unidade)
