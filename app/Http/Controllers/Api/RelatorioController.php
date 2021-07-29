@@ -100,8 +100,8 @@ class RelatorioController extends Controller
                         'leitura_atual_mililitro' => $leituraAtual->mililitro,
                         'consumo' => $consumo,
                         'valor' => number_format($valor, 2, ',', '.'),
-                        'data_leitura_anterior' => $leituraAnterior->created_at,
-                        'data_leitura_atual' => $leituraAtual->created_at,
+                        'data_leitura_anterior' => date('Y-m-6', strtotime($leituraAnterior->created_at)), //$leituraAnterior->created_at,
+                        'data_leitura_atual' => date('Y-m-6', strtotime($leituraAtual->created_at)), // $leituraAtual->created_at,
                     );
                     array_push($consumoAvancados, $relatorio_consumoAvancados);
                 }
