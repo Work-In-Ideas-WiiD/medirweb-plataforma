@@ -10,6 +10,7 @@ use App\Models\Unidade;
 use App\Models\Fatura;
 use App\Models\Prumada;
 use App\Models\FaturaUnidade;
+use Carbon\Carbon;
 
 class RelatorioController extends Controller
 {
@@ -101,7 +102,7 @@ class RelatorioController extends Controller
                         'consumo' => $consumo,
                         'valor' => number_format($valor, 2, ',', '.'),
                         'data_leitura_anterior' => date('Y-m-6', strtotime($leituraAnterior->created_at)), //$leituraAnterior->created_at,
-                        'data_leitura_atual' => date('Y-m-6', strtotime($leituraAtual->created_at)), // $leituraAtual->created_at,
+                        'data_leitura_atual' => Carbon::parse(strtotime($leituraAtual->created_at))->addMonths(1)->format('Y-m-6'), //date('Y-m-6', strtotime($leituraAtual->created_at)), // $leituraAtual->created_at,
                     );
                     array_push($consumoAvancados, $relatorio_consumoAvancados);
                 }
