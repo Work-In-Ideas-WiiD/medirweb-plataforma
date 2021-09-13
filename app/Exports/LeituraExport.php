@@ -32,7 +32,7 @@ class LeituraExport implements FromArray
         $imovel =  Imovel::find($this->imovel);
 
         $sheets = array(0 => array('Imovel' => $imovel->nome,), 1 => array(''), 2 => array('Nomes', 'Torre', 'Apartamentos', '# Hidrômetro',
-        'Leitura Anterior', 'Leitura Atual', 'Consumo M³', 'Valor','Data leitura Anterior', 'Data leitura Atual'),3 => array(''));
+        'Leitura Anterior M³', 'Leitura Anterior LT', 'Leitura Atual M³', 'Leitura Atual LT', 'Consumo M³', 'Valor','Data leitura Anterior', 'Data leitura Atual'),3 => array(''));
 
         $unidades = Imovel::find($this->imovel)->unidade;
         foreach ($unidades as $unid) {
