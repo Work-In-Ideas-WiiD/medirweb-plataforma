@@ -39,30 +39,31 @@ class LeituraExport implements FromArray
             $prumadas = Unidade::find($unid->id)->prumada;
             foreach ($prumadas as $prumada)
             {
-                $leituraAnterior = $prumada->leitura() ->where('created_at', '>=', date($this->dataAnterior).' 00:00:00')->orderBy('created_at', 'asc')->first();
+                $leituraAnterior = $prumada->leitura()->where('created_at', '>=', date($this->dataAnterior).' 00:00:00')->orderBy('created_at', 'asc')->first();
 
-                $leituraAtual = $prumada->leitura() ->where('created_at', '<=', date($this->dataAtual).' 23:59:59')->orderBy('created_at', 'desc')->first();
+                $leituraAtual = $prumada->leitura()->where('created_at', '<=', date($this->dataAtual).' 23:59:59')->orderBy('created_at', 'desc')->first();
 
-                if(isset($leituraAnterior) && isset($leituraAtual))
+                //if(isset($leituraAnterior) && isset($leituraAtual))
+                if(isset($prumada))
                 {
-                    $consumo =  $leituraAtual->metro - $leituraAnterior->metro;
+                    $consumo = $prumada->leitura()->where('created_at', '>=', date($this->dataAnterior).' 00:00:00')->where('created_at', '<=', date($this->dataAtual).' 23:59:59')->sum('consumo');//($leituraAtual->metro ?? 0) - ($leituraAnterior->metro ?? 0);
 
-                    if(empty($consumo)){
-                        $consumo = 0;
-                    }
+                    // if(empty($consumo)){
+                    //     $consumo = 0;
+                    // }
 
-                    if($consumo > 10 && $consumo <= 15)
-                    {
-                        $valor = (($consumo - 10) * 11.37) + 59;
-                    }
-                    elseif ($consumo > 15)
-                    {
-                        $valor = (($consumo - 10) * 13.98) + 59;
-                    }
-                    else
-                    {
-                        $valor = 59;
-                    }
+                    // if($consumo > 10 && $consumo <= 15)
+                    // {
+                    //     $valor = (($consumo - 10) * 11.37) + 59;
+                    // }
+                    // elseif ($consumo > 15)
+                    // {
+                    //     $valor = (($consumo - 10) * 13.98) + 59;
+                    // }
+                    // else
+                    // {
+                    //     $valor = 59;
+                    // }
 
 
                     $relatorio = array(
@@ -70,15 +71,18 @@ class LeituraExport implements FromArray
                         'Torre' => $unid->agrupamento->nome,
                         'Apartamentos' => $unid->nome,
                         '# Hidrômetro' => $prumada->funcional_id,
-                        'Leitura Anterior' => $leituraAnterior->metro,
-                        'Leitura Atual' => $leituraAtual->metro,
+                        'Leitura Anterior M³' => $leituraAnterior->metro ?? 0,
+                        'Leitura Anterior LT' => $leituraAnterior->litro ?? 0,
+                        'Leitura Atual M³' => $leituraAtual->metro ?? 0,
+                        'Leitura Atual LT' => $leituraAtual->litro ?? 0,
                         'Consumo M³' => $consumo,
                         'Valor' => 'R$ '.number_format(0, 2, ',', '.'),
-                        'Data leitura Anterior' => date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)),
-                        'Data leitura Atual' => date('d/m/Y - H:i', strtotime($leituraAtual->created_at)),
+                        'Data leitura Anterior' => isset($leituraAnterior->created_at) ? date('d/m/Y - H:i', strtotime($leituraAnterior->created_at)) : '',
+                        'Data leitura Atual' => isset($leituraAtual->created_at) ? date('d/m/Y - H:i', strtotime($leituraAtual->created_at)) : '',
                     );
 
                     array_push($sheets, $relatorio);
+
                 }
             }
         }
