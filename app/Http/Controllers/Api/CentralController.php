@@ -461,12 +461,13 @@ class CentralController extends Controller
     public function webhook(Request $request)
     {
         Log::debug('debug webhook', compact('request'));
+        Log::debug('debug webhook - input', $request->input());
 
         $payload = json_decode($request->payload);
 
         LogDispositivo::create([
-            'dispositivo' => $payload->meta->device ?? null,
-            'base64' => $payload->params->payload ?? null,
+            'dispositivo' => $payload->meta->device,
+            'base64' => $payload->params->payload,
             'json' => $request->payload
         ]);
 
