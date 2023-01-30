@@ -25,12 +25,12 @@ class CentralController extends Controller
     {
         $imovel = Imovel::with('unidade.prumada', 'unidade.agrupamento')->where('ip', '192.168.130.13')->first();
         // $imovel = Imovel::with('unidade.prumada', 'unidade.agrupamento')->where('ip', '192.168.130.4')->first();
-        
+
         $arrayPrumadas = array();
 
         if ($imovel) {
             foreach ($imovel->unidade as $unidade) {
-        
+
                 foreach ($unidade->prumada as $prumada) {
 
                     if($prumada->funcional_id != ""){
@@ -51,17 +51,17 @@ class CentralController extends Controller
         // {
         //     if ($imovel) {
         //         foreach ($imovel->unidade as $unidade) {
-            
+
         //             foreach ($unidade->prumada as $prumada) {
-    
+
         //                 if($prumada->funcional_id != ""){
-    
+
         //                     $dados['EQP_IDUNI'] = $unidade->id;
         //                     $dados['EQP_IDPRU'] = $prumada->id;
         //                     $dados['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
         //                     $dados['EQP_BLOCO'] = $unidade->agrupamento->nome;
         //                     $dados['EQP_IDREPETIDOR'] = $unidade->agrupamento->repetidor_segundo_id;
-    
+
         //                     array_push($arrayPrumadas, $dados);
         //                 }
         //             }
@@ -72,24 +72,24 @@ class CentralController extends Controller
         // {
         //     if ($imovel) {
         //         foreach ($imovel->unidade as $unidade) {
-            
+
         //             foreach ($unidade->prumada as $prumada) {
-    
+
         //                 if($prumada->funcional_id != ""){
-    
+
         //                     $dados['EQP_IDUNI'] = $unidade->id;
         //                     $dados['EQP_IDPRU'] = $prumada->id;
         //                     $dados['EQP_IDFUNCIONAL'] = $prumada->funcional_id;
         //                     $dados['EQP_BLOCO'] = $unidade->agrupamento->nome;
         //                     $dados['EQP_IDREPETIDOR'] = $unidade->agrupamento->repetidor_id;
-    
+
         //                     array_push($arrayPrumadas, $dados);
         //                 }
         //             }
         //         }
         //     }
         // }
-        
+
 
         return response()->json(response()->make($arrayPrumadas), 200);
     }
@@ -98,15 +98,15 @@ class CentralController extends Controller
     {
         if (!$imovel)
             $imovel = Imovel::where('ip', $ip)->first();
-       
-        
+
+
         $response = Curl::to('http://'.$imovel->host.'/leituras/')
         //$response = Curl::to('http://29205fc9.ngrok.io/leituras/')
         ->get();
 
         $retornos = json_decode($response, TRUE);
 
-        
+
         foreach($retornos ?? [] as $resp)
         {
             $consumo = 0; // quando o loop iniciar ela vai zerar
@@ -115,18 +115,18 @@ class CentralController extends Controller
 
             if ($prumada) {
                 $leitura_anterior = $prumada->leitura()->select('id', 'metro')->orderByDesc('id')->first();
-                
+
                 if ($leitura_anterior) {
                     if ($leitura_anterior->funcional_id == $prumada->funcional_id) {
                         $consumo += intval($resp['LEI_METRO']) - intval($leitura_anterior->metro);
-                        
+
                     } else {
                         $consumo += intval($leitura_anterior->consumo);
                     }
 
                 }
             }
-            
+
             Leitura::firstOrCreate([
                 "prumada_id" => $resp['LEI_IDPRUMADA'],
                 "metro" => $resp['LEI_METRO'],
@@ -156,7 +156,7 @@ class CentralController extends Controller
     {
         if (!$imovel)
             $imovel = Imovel::where('ip', $ip)->first();
-        
+
         $response = Curl::to('http://'.$imovel->host.'/falhas/')
         //$response = Curl::to('http://9c4320a6.ngrok.io/falhas/')
         ->get();
@@ -269,7 +269,7 @@ class CentralController extends Controller
             $unidade = $agrupamento->unidade()->where('nome', $apartamento)->first();
 
             if ($unidade) {
-                
+
                 return [
                     'consumo_consolidado' => '',
                     'consumo_medio' => '',
@@ -277,8 +277,8 @@ class CentralController extends Controller
                     'media_consumo_todas_unidades' => '',
                     'media_consumo_por_dia_todas_unidades_mes_anterior' => '',
                     'media_consumo_por_dia_todas_unidades_mes_atual' => '',
-                ]; 
-                
+                ];
+
             } else {
                 return ['error' => 'apartamento não encontrado.'];
             }
@@ -316,9 +316,9 @@ class CentralController extends Controller
                     'media_consumo_todas_unidades_quantidade_moradores' => $this->_imovelConsumoTodasUnidades($unidade),
                     'media_consumo_por_dia_todas_unidades_quantidade_moradores_dia' => $this->_imovelConsumoTodasUnidadesMesAnterior($unidade),
                     'media_consumo_por_dia_todas_unidades_mes_atual' => $this->_imovelConsumoTodasUnidadesMesAtual($unidade),
-                    
-                ]; 
-                
+
+                ];
+
             } else {
                 return ['error' => 'apartamento não encontrado.'];
             }
@@ -342,7 +342,7 @@ class CentralController extends Controller
             $leitura_anterior = $prumada->leitura()
                 ->whereDate('created_at', $data['data1'])
                 ->orderByDesc('id')->first();
-            
+
             $leitura_atual = $prumada->leitura()
                 ->whereDate('created_at', '<=', $data['data2'])
                 ->orderByDesc('id')->first();
@@ -363,9 +363,9 @@ class CentralController extends Controller
         if (empty($data['data2']))
             $data['data2'] = now()->subMonth(0)->day(-0)->format('Y-m-d');
 
-        
+
         $diferenca = FaturaUnidade::whereDate('prumada_data_leitura_anterior', $data['data1'])->whereDate('prumada_data_leitura_atual', $data['data2'])->where('unidade_id', $unidade->id)->orderByDesc('id')->first();
-       
+
         return $diferenca->prumada_consumo ?? 0;
     }
 
@@ -381,7 +381,7 @@ class CentralController extends Controller
 
         if($unidade->quantidade_moradores === NULL)
             $unidade->quantidade_moradores = 2;
-        
+
         $unidades = Unidade::where('quantidade_moradores', $unidade->quantidade_moradores)->where('imovel_id', $unidade->imovel_id)->get();
 
         foreach ($unidades as $und) {
@@ -390,7 +390,7 @@ class CentralController extends Controller
 
             $diferenca += $cosumo->prumada_consumo;
         }
-       
+
         return $diferenca;
     }
 
@@ -460,22 +460,25 @@ class CentralController extends Controller
 
     public function webhook(Request $request)
     {
+        Log::debug('debug webhook', compact('request'));
+        Log::debug('debug webhook - input', $request->input());
+
         $payload = json_decode($request->payload);
 
         LogDispositivo::create([
-            'dispositivo' => $payload->meta->device ?? null,
-            'base64' => $payload->params->payload ?? null,
+            'dispositivo' => $payload->meta->device,
+            'base64' => $payload->params->payload,
             'json' => $request->payload
         ]);
 
         if ($payload->type == 'uplink') {
 
             $consumo = 0;
-            
+
             $relogio = ['ffff860d8ea87a6f' => 'relogio_04', 'ffff860d8ea82794' => 'relogio_02', 'ffff860d8ea87b1d' => 'relogio_03', 'ffff860d8ea82781' => 'relogio_04', 'ffff860d8ea87ba1' => 'relogio_02', 'ffff860d8ea87b80' => 'relogio_02', 'ffff860d8ea87a70' => 'relogio_02', 'ffff860d8ea87b3d' => 'relogio_01'];
 
             $leitura = leitura_nova_para_decimal($payload->params->payload);
-            
+
             $unidade = Unidade::where('device', $payload->meta->device)->first();
 
             if(!$unidade)
